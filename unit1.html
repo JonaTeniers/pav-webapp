@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit 1 – Wat is een landschap?</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background: #e3f2fd; padding: 2rem; }
+    h1 { color: #0288d1; }
+    .question-box {
+      background: white; padding: 1.5rem; margin: 1.5rem auto; border-radius: 10px;
+      max-width: 700px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .feedback {
+      margin-top: 1rem; padding: 1rem;
+      border-radius: 8px; font-weight: bold;
+    }
+    .success { background-color: #d0f8ce; color: #2e7d32; }
+    .error { background-color: #ffcdd2; color: #c62828; }
+    button {
+      margin-top: 10px; background: #0288d1; color: white;
+      padding: 0.6rem 1rem; border: none; border-radius: 6px; cursor: pointer;
+    }
+    .nav-buttons {
+      margin-top: 2rem; text-align: center;
+    }
+    .progress { font-weight: bold; text-align: center; margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <h1>🌍 Unit 1 – Wat is een landschap?</h1>
+  <div class="progress" id="status">0 van 10 beantwoord</div>
+
+  <div id="quiz">
+    <!-- Vragen 1 t.e.m. 10 worden hier normaal ingevoegd (placeholder test) -->
+    <div class="question-box">
+      <h3>1. Wat is een landschap?</h3>
+      <form id="q1">
+        <label><input type="radio" name="q1" value="juist"> Een gebied met zichtbare elementen</label><br>
+        <label><input type="radio" name="q1" value="fout"> Een voertuig</label><br>
+        <label><input type="radio" name="q1" value="fout"> Een schoolvak</label><br>
+        <button type="button" onclick="checkAnswer('q1', 'juist')">Controleer</button>
+        <div class="feedback" id="feedback_q1"></div>
+      </form>
+    </div>
+    <!-- Vervangbare content voor vragen 2–10... -->
+  </div>
+
+  <div class="nav-buttons">
+    <a href="index.html"><button>← Terug naar overzicht</button></a>
+    <button onclick="nextUnit()" id="nextBtn" disabled>→ Volgende unit</button>
+  </div>
+
+  <script>
+    let answered = {};
+    let correctCount = 0;
+
+    function checkAnswer(qid, correct) {
+      const form = document.getElementById(qid);
+      const feedback = document.getElementById("feedback_" + qid);
+      const selected = form.querySelector("input[type='radio']:checked");
+      if (!selected) {
+        feedback.textContent = "❗ Kies een antwoord.";
+        feedback.className = "feedback error";
+        return;
+      }
+
+      if (!answered[qid]) {
+        answered[qid] = true;
+      }
+
+      if (selected.value === correct) {
+        feedback.textContent = "✅ Juist! +3 XP";
+        feedback.className = "feedback success";
+      } else {
+        feedback.textContent = "❌ Fout antwoord. Probeer opnieuw.";
+        feedback.className = "feedback error";
+      }
+
+      updateStatus();
+    }
+
+    function updateStatus() {
+      const total = 10;
+      const done = Object.keys(answered).length;
+      document.getElementById("status").textContent = done + " van " + total + " beantwoord";
+
+      if (done === total) {
+        localStorage.setItem("unit1_done", "true");
+        localStorage.setItem("xp_unit1", "30"); // vereenvoudigd voorbeeld
+        document.getElementById("nextBtn").disabled = false;
+      }
+    }
+
+    function nextUnit() {
+      window.location.href = "unit2.html";
+    }
+  </script>
+</body>
+</html>
