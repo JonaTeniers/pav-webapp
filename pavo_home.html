@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PAV-O Leeromgeving</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #e3f2fd;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #0288d1;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+    .container {
+      max-width: 960px;
+      margin: auto;
+      padding: 2rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+    .card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .card button {
+      margin-top: 1rem;
+      padding: 0.6rem 1.2rem;
+      background: #00c853;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .lesson {
+      background: white;
+      padding: 2rem;
+      margin: 2rem auto;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .hidden {
+      display: none;
+    }
+    .back {
+      margin-top: 1.5rem;
+      display: inline-block;
+      background: #0288d1;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+    .info {
+      font-size: 0.95rem;
+      color: #444;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🏫 PAV-O Leeromgeving</h1>
+    <p>Kies een thema om te starten</p>
+  </header>
+
+  <div class="container" id="homepage">
+    <div class="grid">
+      <div class="card">
+        <h2>🌍 Thema 1: Landschappen</h2>
+        <p>Leer alles over natuurlijke en menselijke landschappen.</p>
+        <button onclick="showThema(1)">Start Thema 1</button>
+      </div>
+      <div class="card">
+        <h2>🌿 Thema 2: Levende natuur</h2>
+        <p>Komt binnenkort beschikbaar.</p>
+        <button disabled>🔒</button>
+      </div>
+      <div class="card">
+        <h2>🕰️ Thema 3: Verleden tijd</h2>
+        <p>Komt binnenkort beschikbaar.</p>
+        <button disabled>🔒</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container hidden" id="thema1">
+    <h2>🌍 Thema 1: Landschappen</h2>
+    <p>Kies een lesonderdeel:</p>
+    <div class="grid" id="unitGrid"></div>
+    <a class="back" href="#" onclick="goHome()">← Terug naar home</a>
+  </div>
+
+  <script>
+    const totalUnits = 12;
+    const leerdoelen = [
+      "Je leert wat een landschap is en welke elementen zichtbaar zijn.",
+      "Je ontdekt wat natuurlijke landschapselementen zijn.",
+      "Je herkent menselijke landschapselementen.",
+      "Je leert de soorten landschappen: natuurlijk, landelijk, stedelijk.",
+      "Je leert waarvoor landschappen gebruikt worden.",
+      "Je ziet hoe landschappen veranderen door tijd, mens of natuur.",
+      "Je ontdekt hoe de mens het landschap beïnvloedt.",
+      "Je leert de invloed van natuurkrachten op het landschap.",
+      "Je verkent grenzen: fysiek, administratief en visueel.",
+      "Je past kennis toe op herkenbare landschappen in de regio.",
+      "Je maakt oefeningen waarbij verschillende onderdelen samenkomen.",
+      "Je herhaalt alles uit de vorige lessen in een eindtest."
+    ];
+    const unitGrid = document.getElementById('unitGrid');
+    const thema1 = document.getElementById('thema1');
+    const homepage = document.getElementById('homepage');
+
+    function showThema(num) {
+      homepage.classList.add('hidden');
+      if (num === 1) {
+        thema1.classList.remove('hidden');
+        buildUnits();
+      }
+    }
+
+    function goHome() {
+      document.querySelectorAll('.container').forEach(c => c.classList.add('hidden'));
+      homepage.classList.remove('hidden');
+    }
+
+    function buildUnits() {
+      unitGrid.innerHTML = '';
+      for (let i = 1; i <= totalUnits; i++) {
+        const done = localStorage.getItem("unit" + i + "_done") === "true";
+        const locked = i > 1 && localStorage.getItem("unit" + (i - 1) + "_done") !== "true";
+        const div = document.createElement("div");
+        div.className = "card";
+        div.innerHTML = `
+          <h3>Deel ${i}</h3>
+          <p class="info">${leerdoelen[i-1]}</p>
+          <button ${locked ? "disabled" : ""} onclick="alert('🚧 Unit ${i} opent hier...')">
+            ${locked ? "🔒" : done ? "✔️ Voltooid" : "Start"}
+          </button>`;
+        unitGrid.appendChild(div);
+      }
+    }
+  </script>
+</body>
+</html>
