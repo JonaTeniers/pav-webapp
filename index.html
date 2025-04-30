@@ -146,7 +146,7 @@
         div.innerHTML = `
           <h3>Deel ${i}</h3>
           <p class="info">${leerdoelen[i-1]}</p>
-          <button ${locked ? "disabled" : ""} onclick="alert('🚧 Unit ${i} opent hier...')">
+          <button ${locked ? "disabled" : ""} onclick="location.href='unit${i}.html'">
             ${locked ? "🔒" : done ? "✔️ Voltooid" : "Start"}
           </button>`;
         unitGrid.appendChild(div);
