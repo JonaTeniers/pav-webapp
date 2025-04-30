@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🏞️ Unit 5 – Gebruik van landschappen</title>
+  <style>
+    body { font-family: "Segoe UI", sans-serif; background: #f1f8e9; padding: 2rem; }
+    .question-box { background: white; padding: 2rem; border-radius: 10px; max-width: 700px; margin: auto; }
+    .feedback { margin-top: 1rem; font-weight: bold; padding: 1rem; border-radius: 8px; }
+    .success { background-color: #c8e6c9; color: #2e7d32; }
+    .error { background-color: #ffcdd2; color: #c62828; }
+    button { margin-top: 1rem; background: #558b2f; color: white; padding: 0.6rem 1rem; border: none; border-radius: 6px; cursor: pointer; }
+    .hidden { display: none; }
+    .nav-buttons { margin-top: 2rem; text-align: center; }
+  </style>
+</head>
+<body>
+  <h1>🏞️ Unit 5 – Gebruik van landschappen</h1>
+  <div class="question-box" id="quizBox">
+    <h2 id="qCount">Vraag 1 van 1</h2>
+    <div id="questionText">Waarvoor kan een landschap gebruikt worden?</div>
+    <form id="answerForm">
+      <label><input type="radio" name="answer" value="correct"> Landbouw</label><br/>
+      <label><input type="radio" name="answer" value="fout"> Tikkertje spelen</label><br/>
+      <label><input type="radio" name="answer" value="fout"> Geen enkel doel</label><br/>
+    </form>
+    <button onclick="checkAnswer()">Controleer</button>
+    <div class="feedback" id="feedback"></div>
+    <div class="nav-buttons">
+      <button class="hidden" id="nextBtn" onclick="nextUnit()">→ Volgende unit</button>
+    </div>
+  </div>
+
+  <div class="question-box hidden" id="endScreen">
+    <h2>🎉 Unit 5 voltooid!</h2>
+    <p>Je behaalde <span id="xpScore">3</span> XP.</p>
+    <div class="nav-buttons">
+      <a href="index.html"><button>← Terug naar overzicht</button></a>
+      <a href="unit6.html"><button>→ Volgende unit</button></a>
+    </div>
+  </div>
+
+  <script>
+    let score = 0;
+    function checkAnswer() {
+      const selected = document.querySelector('input[name="answer"]:checked');
+      const feedback = document.getElementById("feedback");
+      if (!selected) return;
+
+      if (selected.value === "correct") {
+        score = 3;
+        feedback.innerText = "✅ Juist! +3 XP";
+        feedback.className = "feedback success";
+      } else {
+        feedback.innerText = "❌ Fout. Geen XP.";
+        feedback.className = "feedback error";
+      }
+
+      document.getElementById("nextBtn").classList.remove("hidden");
+      localStorage.setItem("unit5_done", "true");
+      localStorage.setItem("xp_unit5", score);
+    }
+    function nextUnit() {
+      document.getElementById("quizBox").classList.add("hidden");
+      document.getElementById("endScreen").classList.remove("hidden");
+      document.getElementById("xpScore").innerText = score;
+    }
+  </script>
+</body>
+</html>
