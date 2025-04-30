@@ -1,79 +1,133 @@
-
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8">
-  <title>Thema 2: Levende Natuur</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thema 2 – Levende Natuur</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fdf6ee;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #f57c00;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+    h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+    .container {
+      padding: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+    }
+    .unit-card {
+      background-color: #fffaf3;
+      border: 2px solid #f57c00;
+      border-radius: 10px;
+      padding: 1rem;
+      width: 250px;
+      box-shadow: 0 0 10px #e0dcd6;
+    }
+    .unit-card h2 {
+      margin-top: 0;
+      color: #4e342e;
+    }
+    .unit-card p {
+      color: #4e342e;
+    }
+    .btn {
+      background-color: #f57c00;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+    .status {
+      margin-top: 0.5rem;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <img src="img/pavomascotte.png" alt="PAVO Mascotte" class="mascot"/>
-    <h1>✨ Thema 2: Levende Natuur</h1>
-    <p>Kies een onderdeel van het thema om te starten</p>
-  </header>
 
-  <main class="unit-overview">
-    <div class="unit-card">
-      <h2>Unit 1</h2>
-      <p>Wat is levende natuur?</p>
-      <a href="thema2_unit1.html"><button>Start</button></a>
-    </div>
-    <div class="unit-card locked">
-      <h2>Unit 2</h2>
-      <p>Organismen en hun kenmerken</p>
-      <button disabled>🔒</button>
-    </div>
-    <div class="unit-card locked">
-      <h2>Unit 3</h2>
-      <p>Planten en dieren vergelijken</p>
-      <button disabled>🔒</button>
-    </div>
-    <div class="unit-card locked">
-      <h2>Unit 4</h2>
-      <p>Levensgemeenschappen</p>
-      <button disabled>🔒</button>
-    </div>
-    <div class="unit-card locked">
-      <h2>Unit 5</h2>
-      <p>Voedselketens en netwerken</p>
-      <button disabled>🔒</button>
-    </div>
-    <div class="unit-card locked">
-      <h2>Unit 6</h2>
-      <p>Balans in de natuur</p>
-      <button disabled>🔒</button>
-    </div>
-    <div class="unit-card locked">
-      <h2>Unit 7</h2>
-      <p>Veranderingen en aanpassingen</p>
-      <button disabled>🔒</button>
-    </div>
-    <div class="unit-card locked">
-      <h2>Unit 8</h2>
-      <p>De mens en de natuur</p>
-      <button disabled>🔒</button>
-    </div>
-    <div class="unit-card locked">
-      <h2>Unit 9</h2>
-      <p>Bedreigde soorten</p>
-      <button disabled>🔒</button>
-    </div>
-    <div class="unit-card locked">
-      <h2>Unit 10</h2>
-      <p>Voorbeelden uit België</p>
-      <button disabled>🔒</button>
-    </div>
-    <div class="unit-card locked">
-      <h2>Unit 11</h2>
-      <p>Toepassingen in het dagelijks leven</p>
-      <button disabled>🔒</button>
-    </div>
-    <div class="unit-card locked">
-      <h2>Unit 12</h2>
-      <p>Herhaling en afronding</p>
-      <button disabled>🔒</button>
-    </div>
-  </main>
+<header>
+  <h1>🧡 Thema 2 – Levende Natuur</h1>
+  <p>Kies een onderdeel en bekijk je voortgang</p>
+</header>
+
+<div class="container">
+
+  <div class="unit-card">
+    <h2>Unit 1</h2>
+    <p>Wat is levende natuur?</p>
+    <p class="status">Nog te doen</p>
+    <a href="thema2unit1.html"><button class="btn">Start</button></a>
+  </div>
+
+  <div class="unit-card">
+    <h2>Unit 2</h2>
+    <p>Organismen en hun kenmerken</p>
+    <p class="status">🔒 Vergrendeld</p>
+    <button class="btn" disabled>Start</button>
+  </div>
+
+  <div class="unit-card">
+    <h2>Unit 3</h2>
+    <p>Planten en dieren vergelijken</p>
+    <p class="status">🔒 Vergrendeld</p>
+    <button class="btn" disabled>Start</button>
+  </div>
+
+  <div class="unit-card">
+    <h2>Unit 4</h2>
+    <p>Levensgemeenschappen</p>
+    <p class="status">🔒 Vergrendeld</p>
+    <button class="btn" disabled>Start</button>
+  </div>
+
+  <div class="unit-card">
+    <h2>Unit 5</h2>
+    <p>Voedselrelaties</p>
+    <p class="status">🔒 Vergrendeld</p>
+    <button class="btn" disabled>Start</button>
+  </div>
+
+  <div class="unit-card">
+    <h2>Unit 6</h2>
+    <p>Invloed van mens op natuur</p>
+    <p class="status">🔒 Vergrendeld</p>
+    <button class="btn" disabled>Start</button>
+  </div>
+
+  <div class="unit-card">
+    <h2>Unit 7</h2>
+    <p>Waarnemen en meten in de natuur</p>
+    <p class="status">🔒 Vergrendeld</p>
+    <button class="btn" disabled>Start</button>
+  </div>
+
+  <div class="unit-card">
+    <h2>Unit 8</h2>
+    <p>Herhaling en verdieping</p>
+    <p class="status">🔒 Vergrendeld</p>
+    <button class="btn" disabled>Start</button>
+  </div>
+
+</div>
+
 </body>
 </html>
+
