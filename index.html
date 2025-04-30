@@ -10,12 +10,12 @@
       background: #e3f2fd;
       margin: 0;
       padding: 0;
+      text-align: center;
     }
     header {
       background: #0288d1;
       color: white;
       padding: 2rem;
-      text-align: center;
     }
     .container {
       max-width: 960px;
@@ -32,7 +32,6 @@
       padding: 1.5rem;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      text-align: center;
     }
     .card button {
       margin-top: 1rem;
@@ -44,24 +43,27 @@
       font-size: 1rem;
       cursor: pointer;
     }
-    .lesson {
-      background: white;
-      padding: 2rem;
-      margin: 2rem auto;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    .circle {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      margin: 1rem auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: bold;
+      background: conic-gradient(#00c853 var(--percent), #cfd8dc 0);
+      color: #2e7d32;
     }
-    .hidden {
-      display: none;
+    .medaille {
+      font-size: 2rem;
+      margin-top: 0.5rem;
     }
-    .back {
-      margin-top: 1.5rem;
-      display: inline-block;
-      background: #0288d1;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 6px;
-      text-decoration: none;
+    .feedback {
+      font-weight: bold;
+      margin-top: 0.3rem;
+      font-size: 1rem;
     }
     .info {
       font-size: 0.95rem;
@@ -73,38 +75,21 @@
 <body>
   <header>
     <h1>🏫 PAV-O Leeromgeving</h1>
-    <p>Kies een thema om te starten</p>
+    <p>Kies een onderdeel en bekijk je voortgang</p>
   </header>
 
-  <div class="container" id="homepage">
-    <div class="grid">
-      <div class="card">
-        <h2>🌍 Thema 1: Landschappen</h2>
-        <p>Leer alles over natuurlijke en menselijke landschappen.</p>
-        <button onclick="showThema(1)">Start Thema 1</button>
-      </div>
-      <div class="card">
-        <h2>🌿 Thema 2: Levende natuur</h2>
-        <p>Komt binnenkort beschikbaar.</p>
-        <button disabled>🔒</button>
-      </div>
-      <div class="card">
-        <h2>🕰️ Thema 3: Verleden tijd</h2>
-        <p>Komt binnenkort beschikbaar.</p>
-        <button disabled>🔒</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="container hidden" id="thema1">
-    <h2>🌍 Thema 1: Landschappen</h2>
-    <p>Kies een lesonderdeel:</p>
+  <div class="container">
     <div class="grid" id="unitGrid"></div>
-    <a class="back" href="#" onclick="goHome()">← Terug naar home</a>
+
+    <h2>🎯 Totaalscore Thema 1</h2>
+    <div class="circle" id="circle">0 / 360 XP</div>
+    <div class="medaille" id="badge"></div>
+    <div class="feedback" id="scoreText"></div>
   </div>
 
   <script>
     const totalUnits = 12;
+    const maxXP = 360;
     const leerdoelen = [
       "Je leert wat een landschap is en welke elementen zichtbaar zijn.",
       "Je ontdekt wat natuurlijke landschapselementen zijn.",
@@ -120,38 +105,56 @@
       "Je herhaalt alles uit de vorige lessen in een eindtest."
     ];
     const unitGrid = document.getElementById('unitGrid');
-    const thema1 = document.getElementById('thema1');
-    const homepage = document.getElementById('homepage');
+    const circle = document.getElementById('circle');
+    const badge = document.getElementById('badge');
+    const scoreText = document.getElementById('scoreText');
 
-    function showThema(num) {
-      homepage.classList.add('hidden');
-      if (num === 1) {
-        thema1.classList.remove('hidden');
-        buildUnits();
-      }
-    }
-
-    function goHome() {
-      document.querySelectorAll('.container').forEach(c => c.classList.add('hidden'));
-      homepage.classList.remove('hidden');
+    function getXP(unit) {
+      return parseInt(localStorage.getItem("xp_unit" + unit) || "0");
     }
 
     function buildUnits() {
+      let totalXP = 0;
       unitGrid.innerHTML = '';
       for (let i = 1; i <= totalUnits; i++) {
         const done = localStorage.getItem("unit" + i + "_done") === "true";
         const locked = i > 1 && localStorage.getItem("unit" + (i - 1) + "_done") !== "true";
+        const xp = getXP(i);
+        totalXP += xp;
+
         const div = document.createElement("div");
         div.className = "card";
         div.innerHTML = `
           <h3>Deel ${i}</h3>
           <p class="info">${leerdoelen[i-1]}</p>
+          <p>${done ? "✅ Afgewerkt" : "Nog te doen"}</p>
+          <p>XP: ${xp} / 30</p>
           <button ${locked ? "disabled" : ""} onclick="location.href='unit${i}.html'">
-            ${locked ? "🔒" : done ? "✔️ Voltooid" : "Start"}
+            ${locked ? "🔒" : done ? "✔️ Opnieuw" : "Start"}
           </button>`;
         unitGrid.appendChild(div);
       }
+
+      let percentage = Math.round((totalXP / maxXP) * 100);
+      circle.textContent = totalXP + " / 360 XP";
+      circle.style.setProperty('--percent', percentage + '%');
+
+      if (totalXP >= 300) {
+        badge.textContent = "🥇 Goud";
+        scoreText.textContent = "Topper! Je beheerst dit thema uitstekend.";
+      } else if (totalXP >= 180) {
+        badge.textContent = "🥈 Zilver";
+        scoreText.textContent = "Sterk! Je beheerst al veel.";
+      } else if (totalXP >= 1) {
+        badge.textContent = "🥉 Brons";
+        scoreText.textContent = "Goed geprobeerd! Je kan nog groeien.";
+      } else {
+        badge.textContent = "";
+        scoreText.textContent = "";
+      }
     }
+
+    buildUnits();
   </script>
 </body>
 </html>
