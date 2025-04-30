@@ -2,194 +2,73 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Unit 1 – Wat is een landschap?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thema 2 - Unit 1: Wat is levende natuur?</title>
   <style>
-    body {
-      font-family: "Segoe UI", sans-serif;
-      background: #e3f2fd;
-      padding: 2rem;
-    }
-    h1 {
-      color: #0288d1;
-      text-align: center;
-    }
-    .question-box {
-      background: white;
-      padding: 2rem;
-      margin: 2rem auto;
-      border-radius: 10px;
-      max-width: 700px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
-    button {
-      background: #0288d1;
-      color: white;
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: 6px;
-      margin-top: 1rem;
-      cursor: pointer;
-    }
-    .feedback {
-      margin-top: 1rem;
-      font-weight: bold;
-      padding: 1rem;
-      border-radius: 8px;
-    }
-    .success {
-      background-color: #c8e6c9;
-      color: #2e7d32;
-    }
-    .error {
-      background-color: #ffcdd2;
-      color: #c62828;
-    }
-    .nav-buttons {
-      margin-top: 2rem;
-      text-align: center;
-    }
-    .hidden {
-      display: none;
-    }
+    body { font-family: 'Segoe UI', sans-serif; background: #e8f5e9; padding: 2rem; }
+    h1 { text-align: center; color: #2e7d32; }
+    .question-box { background: white; padding: 2rem; margin: 2rem auto; border-radius: 10px; max-width: 700px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); }
+    button { background: #2e7d32; color: white; padding: 0.5rem 1rem; border: none; border-radius: 6px; margin-top: 1rem; cursor: pointer; }
+    .feedback { margin-top: 1rem; font-weight: bold; padding: 1rem; border-radius: 8px; }
+    .success { background-color: #c8e6c9; color: #2e7d32; }
+    .error { background-color: #ffcdd2; color: #c62828; }
+    .nav-buttons { margin-top: 2rem; text-align: center; }
+    .hidden { display: none; }
   </style>
 </head>
 <body>
-  <h1>🌍 Unit 1 – Wat is een landschap?</h1>
+  <h1>🌿 Thema 2 - Unit 1: Wat is levende natuur?</h1>
   <div class="question-box" id="quizBox">
     <h2 id="qCount">Vraag 1 van 10</h2>
-    <div id="questionText">Wat is een landschap?</div>
-    <form id="answerForm">
-      <label><input type="radio" name="answer" value="correct" /> Een gebied met zichtbare elementen</label><br/>
-      <label><input type="radio" name="answer" value="fout" /> Een voertuig</label><br/>
-      <label><input type="radio" name="answer" value="fout" /> Een schoolvak</label><br/>
-    </form>
+    <div id="questionText"></div>
+    <form id="answerForm"></form>
     <button onclick="checkAnswer()">Controleer</button>
     <div class="feedback" id="feedback"></div>
     <div class="nav-buttons">
       <button id="nextBtn" class="hidden" onclick="nextQuestion()">Volgende vraag →</button>
     </div>
   </div>
-
   <div class="question-box hidden" id="endScreen">
-    <h2>🎉 Unit afgerond!</h2>
+    <h2>🎉 Unit voltooid!</h2>
     <p>Je behaalde <span id="xpScore">0</span> XP.</p>
     <div class="nav-buttons">
-      <a href="index.html"><button>← Terug naar overzicht</button></a>
+      <a href="thema2.html"><button>← Terug naar Thema 2</button></a>
       <a href="unit2.html"><button>→ Volgende unit</button></a>
     </div>
   </div>
-
   <script>
     const questions = [
-      {
-        vraag: "Wat is een landschap?",
-        opties: [
-          { tekst: "Een gebied met zichtbare elementen", juist: true },
-          { tekst: "Een voertuig", juist: false },
-          { tekst: "Een schoolvak", juist: false },
-        ],
-      },
-      {
-        vraag: "Wat hoort bij een landschap?",
-        opties: [
-          { tekst: "Een berg of rivier", juist: true },
-          { tekst: "Een rekenmachine", juist: false },
-          { tekst: "Een boek", juist: false },
-        ],
-      },
-      {
-        vraag: "Wat zie je in een natuurlijk landschap?",
-        opties: [
-          { tekst: "Bomen en rivieren", juist: true },
-          { tekst: "Auto’s", juist: false },
-          { tekst: "Fabrieken", juist: false },
-        ],
-      },
-      {
-        vraag: "Wat is GEEN voorbeeld van een landschap?",
-        opties: [
-          { tekst: "Een lesboek", juist: true },
-          { tekst: "Een landbouwveld", juist: false },
-          { tekst: "Een bosgebied", juist: false },
-        ],
-      },
-      {
-        vraag: "Welke elementen bepalen een landschap?",
-        opties: [
-          { tekst: "Zichtbare dingen zoals heuvels", juist: true },
-          { tekst: "Dromen", juist: false },
-          { tekst: "Tijdreizen", juist: false },
-        ],
-      },
-      {
-        vraag: "Wat is een voorbeeld van een gemengd landschap?",
-        opties: [
-          { tekst: "Natuur met gebouwen", juist: true },
-          { tekst: "Enkel weilanden", juist: false },
-          { tekst: "Enkel snelwegen", juist: false },
-        ],
-      },
-      {
-        vraag: "Wat zie je in een stedelijk landschap?",
-        opties: [
-          { tekst: "Gebouwen en straten", juist: true },
-          { tekst: "Enkel bergen", juist: false },
-          { tekst: "Rotsformaties", juist: false },
-        ],
-      },
-      {
-        vraag: "Wat hoort bij een landelijk landschap?",
-        opties: [
-          { tekst: "Boerderijen en akkers", juist: true },
-          { tekst: "Wolkenkrabbers", juist: false },
-          { tekst: "Tramstations", juist: false },
-        ],
-      },
-      {
-        vraag: "Wat kan een landschap veranderen?",
-        opties: [
-          { tekst: "Mens en natuur", juist: true },
-          { tekst: "Tijdmachines", juist: false },
-          { tekst: "Wiskundige formules", juist: false },
-        ],
-      },
-      {
-        vraag: "Wat is het doel van deze unit?",
-        opties: [
-          { tekst: "Landschappen herkennen", juist: true },
-          { tekst: "Taalregels oefenen", juist: false },
-          { tekst: "Sportprestaties meten", juist: false },
-        ],
-      },
+      { vraag: "Wat is een voorbeeld van levende natuur?", opties: [ { tekst: "Een boom", juist: true }, { tekst: "Een rots", juist: false }, { tekst: "Water", juist: false } ] },
+      { vraag: "Wat is GEEN kenmerk van levende wezens?", opties: [ { tekst: "Ze groeien niet", juist: true }, { tekst: "Ze ademen", juist: false }, { tekst: "Ze hebben energie nodig", juist: false } ] },
+      { vraag: "Welke van deze hoort NIET bij levende natuur?", opties: [ { tekst: "Zandstrand", juist: true }, { tekst: "Bloem", juist: false }, { tekst: "Insect", juist: false } ] },
+      { vraag: "Wat hebben alle levende wezens gemeenschappelijk?", opties: [ { tekst: "Ze kunnen zich voortplanten", juist: true }, { tekst: "Ze zijn altijd groot", juist: false }, { tekst: "Ze blijven hetzelfde", juist: false } ] },
+      { vraag: "Welke hoort bij niet-levende natuur?", opties: [ { tekst: "Steen", juist: true }, { tekst: "Kat", juist: false }, { tekst: "Gras", juist: false } ] },
+      { vraag: "Wat hoort bij levende natuur in een vijver?", opties: [ { tekst: "Kikker", juist: true }, { tekst: "Modder", juist: false }, { tekst: "Zonlicht", juist: false } ] },
+      { vraag: "Waarom ademen mensen?", opties: [ { tekst: "Om zuurstof op te nemen", juist: true }, { tekst: "Om te slapen", juist: false }, { tekst: "Voor de kleur van bloed", juist: false } ] },
+      { vraag: "Wat betekent groeien bij levende wezens?", opties: [ { tekst: "Ze worden groter of veranderen", juist: true }, { tekst: "Ze blijven stil", juist: false }, { tekst: "Ze breken af", juist: false } ] },
+      { vraag: "Wat is GEEN teken van leven?", opties: [ { tekst: "Bewegingsloos voorwerp", juist: true }, { tekst: "Voedsel opnemen", juist: false }, { tekst: "Reageren op prikkels", juist: false } ] },
+      { vraag: "Wat betekent 'prikkel' bij levende wezens?", opties: [ { tekst: "Iets waar ze op reageren", juist: true }, { tekst: "Een geluid van een machine", juist: false }, { tekst: "Een kleur in de lucht", juist: false } ] }
     ];
-
-    let currentQuestion = 0;
-    let score = 0;
-
+    let currentQuestion = 0, score = 0;
     function loadQuestion() {
       const q = questions[currentQuestion];
       document.getElementById("qCount").innerText = `Vraag ${currentQuestion + 1} van ${questions.length}`;
       document.getElementById("questionText").innerText = q.vraag;
-
       const form = document.getElementById("answerForm");
       form.innerHTML = "";
-      q.opties.forEach((opt, i) => {
+      q.opties.forEach((opt) => {
         const label = document.createElement("label");
         label.innerHTML = `<input type="radio" name="answer" value="${opt.juist ? 'correct' : 'fout'}"> ${opt.tekst}`;
         form.appendChild(label);
         form.appendChild(document.createElement("br"));
       });
-
       document.getElementById("feedback").innerText = "";
       document.getElementById("feedback").className = "feedback";
       document.getElementById("nextBtn").classList.add("hidden");
     }
-
     function checkAnswer() {
       const selected = document.querySelector('input[name="answer"]:checked');
       if (!selected) return;
-
       const feedback = document.getElementById("feedback");
       if (selected.value === "correct") {
         score += 3;
@@ -199,23 +78,19 @@
         feedback.innerText = "❌ Fout. Geen XP.";
         feedback.classList.add("error");
       }
-
       document.getElementById("nextBtn").classList.remove("hidden");
     }
-
     function nextQuestion() {
       currentQuestion++;
-      if (currentQuestion < questions.length) {
-        loadQuestion();
-      } else {
-        localStorage.setItem("xp_unit1", score);
-        localStorage.setItem("unit1_done", "true");
+      if (currentQuestion < questions.length) loadQuestion();
+      else {
+        localStorage.setItem("xp_thema2_unit1", score);
+        localStorage.setItem("thema2_unit1_done", "true");
         document.getElementById("quizBox").classList.add("hidden");
         document.getElementById("endScreen").classList.remove("hidden");
         document.getElementById("xpScore").innerText = score;
       }
     }
-
     window.onload = loadQuestion;
   </script>
 </body>
