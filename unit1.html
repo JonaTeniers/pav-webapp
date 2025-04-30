@@ -1,138 +1,72 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Thema 1 - Deel 1: Wat is een landschap?</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit 1 – Wat is een landschap?</title>
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #e3f2fd;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background: #0288d1;
-      color: white;
-      padding: 2rem;
-      text-align: center;
-    }
-    .container {
-      max-width: 800px;
-      margin: auto;
-      padding: 2rem;
-    }
+    body { font-family: 'Segoe UI', sans-serif; background: #e3f2fd; padding: 2rem; }
+    h1 { color: #0288d1; }
     .question-box {
-      background: white;
-      padding: 1.5rem;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      margin-bottom: 2rem;
-    }
-    .question-box h2 {
-      margin-top: 0;
+      background: white; padding: 1.5rem; margin: 1.5rem auto; border-radius: 10px;
+      max-width: 700px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
     .feedback {
-      margin-top: 1rem;
-      padding: 0.8rem;
-      border-radius: 6px;
-      font-weight: bold;
+      margin-top: 1rem; padding: 1rem;
+      border-radius: 8px; font-weight: bold;
     }
-    .feedback.success {
-      background-color: #d0f8ce;
-      color: #2e7d32;
-    }
-    .feedback.error {
-      background-color: #ffcdd2;
-      color: #c62828;
-    }
+    .success { background-color: #d0f8ce; color: #2e7d32; }
+    .error { background-color: #ffcdd2; color: #c62828; }
     button {
-      margin-top: 0.8rem;
-      padding: 10px 20px;
-      font-size: 1rem;
-      background: #00c853;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
+      margin-top: 10px; background: #0288d1; color: white;
+      padding: 0.6rem 1rem; border: none; border-radius: 6px; cursor: pointer;
     }
+    .nav-buttons {
+      margin-top: 2rem; text-align: center;
+    }
+    .progress { font-weight: bold; text-align: center; margin-top: 1rem; }
   </style>
 </head>
 <body>
-  <header>
-    <h1>🌍 Thema 1 – Deel 1: Wat is een landschap?</h1>
-  </header>
-  <div class="container">
+  <h1>🌍 Unit 1 – Wat is een landschap?</h1>
+  <div class="progress" id="status">0 van 10 beantwoord</div>
+
+  <div id="quiz">
+    <!-- Vragen 1 t.e.m. 10 worden hier normaal ingevoegd (placeholder test) -->
     <div class="question-box">
-      <h2>Oefening 1:</h2>
-      <p>Wat is een landschap?</p>
+      <h3>1. Wat is een landschap?</h3>
       <form id="q1">
         <label><input type="radio" name="q1" value="juist"> Een gebied met zichtbare elementen</label><br>
-        <label><input type="radio" name="q1" value="fout"> Een voertuig op de weg</label><br>
-        <label><input type="radio" name="q1" value="fout"> Een vak op school</label><br>
+        <label><input type="radio" name="q1" value="fout"> Een voertuig</label><br>
+        <label><input type="radio" name="q1" value="fout"> Een schoolvak</label><br>
         <button type="button" onclick="checkAnswer('q1', 'juist')">Controleer</button>
+        <div class="feedback" id="feedback_q1"></div>
       </form>
-      <div id="feedback_q1" class="feedback"></div>
     </div>
+    <!-- Vervangbare content voor vragen 2–10... -->
+  </div>
 
-    <div class="question-box">
-      <h2>Oefening 2:</h2>
-      <p>Welke elementen horen bij een landschap?</p>
-      <form id="q2">
-        <label><input type="radio" name="q2" value="juist"> Wegen, bomen, gebouwen</label><br>
-        <label><input type="radio" name="q2" value="fout"> Fietsen, smartphones, muziek</label><br>
-        <label><input type="radio" name="q2" value="fout"> Vliegtuigen, boeken, keukens</label><br>
-        <button type="button" onclick="checkAnswer('q2', 'juist')">Controleer</button>
-      </form>
-      <div id="feedback_q2" class="feedback"></div>
-    </div>
-
-    <div class="question-box">
-      <h2>Oefening 3:</h2>
-      <p>Juist of fout: Een landschap is enkel wat je binnen ziet.</p>
-      <form id="q3">
-        <label><input type="radio" name="q3" value="fout"> Juist</label><br>
-        <label><input type="radio" name="q3" value="juist"> Fout</label><br>
-        <button type="button" onclick="checkAnswer('q3', 'juist')">Controleer</button>
-      </form>
-      <div id="feedback_q3" class="feedback"></div>
-    </div>
-
-    <div class="question-box">
-      <h2>Oefening 4:</h2>
-      <p>Een landschap bevat zowel natuurlijke als ... elementen.</p>
-      <form id="q4">
-        <label><input type="radio" name="q4" value="juist"> menselijke</label><br>
-        <label><input type="radio" name="q4" value="fout"> onzichtbare</label><br>
-        <label><input type="radio" name="q4" value="fout"> muzikale</label><br>
-        <button type="button" onclick="checkAnswer('q4', 'juist')">Controleer</button>
-      </form>
-      <div id="feedback_q4" class="feedback"></div>
-    </div>
-
-    <div class="question-box">
-      <h2>Oefening 5:</h2>
-      <p>Wat zie je NIET in een landschap?</p>
-      <form id="q5">
-        <label><input type="radio" name="q5" value="juist"> Je favoriete televisieprogramma</label><br>
-        <label><input type="radio" name="q5" value="fout"> Een boom</label><br>
-        <label><input type="radio" name="q5" value="fout"> Een straat</label><br>
-        <button type="button" onclick="checkAnswer('q5', 'juist')">Controleer</button>
-      </form>
-      <div id="feedback_q5" class="feedback"></div>
-    </div>
+  <div class="nav-buttons">
+    <a href="index.html"><button>← Terug naar overzicht</button></a>
+    <button onclick="nextUnit()" id="nextBtn" disabled>→ Volgende unit</button>
   </div>
 
   <script>
-    function checkAnswer(id, correct) {
-      const form = document.getElementById(id);
-      const feedback = document.getElementById("feedback_" + id);
-      const selected = form.querySelector("input[type='radio']:checked");
+    let answered = {};
+    let correctCount = 0;
 
+    function checkAnswer(qid, correct) {
+      const form = document.getElementById(qid);
+      const feedback = document.getElementById("feedback_" + qid);
+      const selected = form.querySelector("input[type='radio']:checked");
       if (!selected) {
-        feedback.textContent = "❗ Kies eerst een antwoord.";
+        feedback.textContent = "❗ Kies een antwoord.";
         feedback.className = "feedback error";
         return;
+      }
+
+      if (!answered[qid]) {
+        answered[qid] = true;
       }
 
       if (selected.value === correct) {
@@ -142,6 +76,24 @@
         feedback.textContent = "❌ Fout antwoord. Probeer opnieuw.";
         feedback.className = "feedback error";
       }
+
+      updateStatus();
+    }
+
+    function updateStatus() {
+      const total = 10;
+      const done = Object.keys(answered).length;
+      document.getElementById("status").textContent = done + " van " + total + " beantwoord";
+
+      if (done === total) {
+        localStorage.setItem("unit1_done", "true");
+        localStorage.setItem("xp_unit1", "30"); // vereenvoudigd voorbeeld
+        document.getElementById("nextBtn").disabled = false;
+      }
+    }
+
+    function nextUnit() {
+      window.location.href = "unit2.html";
     }
   </script>
 </body>
