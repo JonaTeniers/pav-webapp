@@ -1,88 +1,220 @@
-
+<!-- UNIT 4: SOORTEN LANDSCHAPPEN -->
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🌆 Unit 4 – Soorten landschappen</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Unit 4 – Soorten landschappen</title>
   <style>
-    body { font-family: 'Segoe UI', sans-serif; background: #fff3e0; padding: 2rem; }
-    h1 { color: #ef6c00; }
-    .question-box { background: white; padding: 1.5rem; margin: 1.5rem auto; border-radius: 10px;
-      max-width: 700px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-    .feedback { margin-top: 1rem; padding: 1rem; border-radius: 8px; font-weight: bold; }
-    .success { background-color: #d0f8ce; color: #2e7d32; }
-    .error { background-color: #ffcdd2; color: #c62828; }
-    button {
-      margin-top: 10px; background: #ef6c00; color: white;
-      padding: 0.6rem 1rem; border: none; border-radius: 6px; cursor: pointer;
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: #e3f2fd;
+      padding: 2rem;
     }
-    .nav-buttons { margin-top: 2rem; text-align: center; }
-    .progress { font-weight: bold; text-align: center; margin-top: 1rem; }
+    h1 {
+      color: #0277bd;
+      text-align: center;
+    }
+    .question-box {
+      background: white;
+      padding: 2rem;
+      margin: 2rem auto;
+      border-radius: 10px;
+      max-width: 700px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    button {
+      background: #0277bd;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 6px;
+      margin-top: 1rem;
+      cursor: pointer;
+    }
+    .feedback {
+      margin-top: 1rem;
+      font-weight: bold;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+    .success {
+      background-color: #c8e6c9;
+      color: #2e7d32;
+    }
+    .error {
+      background-color: #ffcdd2;
+      color: #c62828;
+    }
+    .nav-buttons {
+      margin-top: 2rem;
+      text-align: center;
+    }
+    .hidden {
+      display: none;
+    }
   </style>
 </head>
 <body>
-  <h1>🌆 Unit 4 – Soorten landschappen</h1>
-  <div class="progress" id="status">0 van 10 beantwoord</div>
-
-  <div class="question-box">
-    <h3>1. Voorbeeldvraag van 🌆 Unit 4 – Soorten landschappen</h3>
-    <form id="q1">
-      <label><input type="radio" name="q1" value="juist"> Juist</label><br>
-      <label><input type="radio" name="q1" value="fout"> Fout</label><br>
-      <button type="button" onclick="checkAnswer('q1', 'juist')">Controleer</button>
-      <div class="feedback" id="feedback_q1"></div>
-    </form>
+  <h1>🏞️ Unit 4 – Soorten landschappen</h1>
+  <div class="question-box" id="quizBox">
+    <h2 id="qCount">Vraag 1 van 10</h2>
+    <div id="questionText"></div>
+    <form id="answerForm"></form>
+    <button onclick="checkAnswer()">Controleer</button>
+    <div class="feedback" id="feedback"></div>
+    <div class="nav-buttons">
+      <button id="nextBtn" class="hidden" onclick="nextQuestion()">Volgende vraag →</button>
+    </div>
   </div>
 
-  <div class="nav-buttons">
-    <a href="index.html"><button>← Terug naar overzicht</button></a>
-    <button onclick="nextUnit()" id="nextBtn" disabled>→ Volgende unit</button>
+  <div class="question-box hidden" id="endScreen">
+    <h2>🎉 Unit voltooid!</h2>
+    <p>Je behaalde <span id="xpScore">0</span> XP.</p>
+    <div class="nav-buttons">
+      <a href="index.html"><button>← Terug naar overzicht</button></a>
+      <a href="unit5.html"><button>→ Volgende unit</button></a>
+    </div>
   </div>
 
   <script>
-    let answered = {};
-
-    function checkAnswer(qid, correct) {
-      const form = document.getElementById(qid);
-      const feedback = document.getElementById("feedback_" + qid);
-      const selected = form.querySelector("input[type='radio']:checked");
-      if (!selected) {
-        feedback.textContent = "❗ Kies een antwoord.";
-        feedback.className = "feedback error";
-        return;
+    const questions = [
+      {
+        vraag: "Wat is een stedelijk landschap?",
+        opties: [
+          { tekst: "Een gebied met veel gebouwen en wegen", juist: true },
+          { tekst: "Een ongerept bosgebied", juist: false },
+          { tekst: "Een landbouwgebied", juist: false }
+        ]
+      },
+      {
+        vraag: "Wat typeert een landelijk landschap?",
+        opties: [
+          { tekst: "Boerderijen en open velden", juist: true },
+          { tekst: "Flatgebouwen", juist: false },
+          { tekst: "Fabrieken", juist: false }
+        ]
+      },
+      {
+        vraag: "Wat zie je vooral in een natuurlijk landschap?",
+        opties: [
+          { tekst: "Bergen, bossen en rivieren", juist: true },
+          { tekst: "Winkels en straten", juist: false },
+          { tekst: "Sporthallen", juist: false }
+        ]
+      },
+      {
+        vraag: "Wat is GEEN natuurlijk landschapselement?",
+        opties: [
+          { tekst: "Een parkeerplaats", juist: true },
+          { tekst: "Een berg", juist: false },
+          { tekst: "Een meer", juist: false }
+        ]
+      },
+      {
+        vraag: "Wat hoort bij een stedelijk landschap?",
+        opties: [
+          { tekst: "Verkeerswegen", juist: true },
+          { tekst: "Natuurgebied", juist: false },
+          { tekst: "Weiland", juist: false }
+        ]
+      },
+      {
+        vraag: "Welk landschap heeft weinig menselijke invloed?",
+        opties: [
+          { tekst: "Natuurlijk landschap", juist: true },
+          { tekst: "Industriële zone", juist: false },
+          { tekst: "Stedelijk centrum", juist: false }
+        ]
+      },
+      {
+        vraag: "Waar vind je een landelijke omgeving?",
+        opties: [
+          { tekst: "Op het platteland", juist: true },
+          { tekst: "In een winkelcentrum", juist: false },
+          { tekst: "In de haven", juist: false }
+        ]
+      },
+      {
+        vraag: "Wat hoort bij een natuurlijk landschap?",
+        opties: [
+          { tekst: "Duinen", juist: true },
+          { tekst: "Appartementsgebouw", juist: false },
+          { tekst: "Supermarkt", juist: false }
+        ]
+      },
+      {
+        vraag: "Wat is een kenmerk van een landelijk landschap?",
+        opties: [
+          { tekst: "Landbouwactiviteit", juist: true },
+          { tekst: "Openbare parking", juist: false },
+          { tekst: "Spoorwegstation", juist: false }
+        ]
+      },
+      {
+        vraag: "Wat hoort NIET bij een stedelijk landschap?",
+        opties: [
+          { tekst: "Een bos", juist: true },
+          { tekst: "Een woonwijk", juist: false },
+          { tekst: "Een marktplein", juist: false }
+        ]
       }
+    ];
 
-      if (!answered[qid]) {
-        answered[qid] = true;
-      }
+    let currentQuestion = 0;
+    let score = 0;
 
-      if (selected.value === correct) {
-        feedback.textContent = "✅ Juist! +3 XP";
-        feedback.className = "feedback success";
+    function loadQuestion() {
+      const q = questions[currentQuestion];
+      document.getElementById("qCount").innerText = `Vraag ${currentQuestion + 1} van ${questions.length}`;
+      document.getElementById("questionText").innerText = q.vraag;
+
+      const form = document.getElementById("answerForm");
+      form.innerHTML = "";
+      q.opties.forEach((opt) => {
+        const label = document.createElement("label");
+        label.innerHTML = `<input type="radio" name="answer" value="${opt.juist ? 'correct' : 'fout'}"> ${opt.tekst}`;
+        form.appendChild(label);
+        form.appendChild(document.createElement("br"));
+      });
+
+      document.getElementById("feedback").innerText = "";
+      document.getElementById("feedback").className = "feedback";
+      document.getElementById("nextBtn").classList.add("hidden");
+    }
+
+    function checkAnswer() {
+      const selected = document.querySelector('input[name="answer"]:checked');
+      if (!selected) return;
+
+      const feedback = document.getElementById("feedback");
+      if (selected.value === "correct") {
+        score += 3;
+        feedback.innerText = "✅ Juist! +3 XP";
+        feedback.classList.add("success");
       } else {
-        feedback.textContent = "❌ Fout antwoord. Probeer opnieuw.";
-        feedback.className = "feedback error";
+        feedback.innerText = "❌ Fout. Geen XP.";
+        feedback.classList.add("error");
       }
 
-      updateStatus();
+      document.getElementById("nextBtn").classList.remove("hidden");
     }
 
-    function updateStatus() {
-      const total = 10;
-      const done = Object.keys(answered).length;
-      document.getElementById("status").textContent = done + " van " + total + " beantwoord";
-
-      if (done === total) {
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        loadQuestion();
+      } else {
+        localStorage.setItem("xp_unit4", score);
         localStorage.setItem("unit4_done", "true");
-        localStorage.setItem("xp_unit4", "30");
-        document.getElementById("nextBtn").disabled = false;
+        document.getElementById("quizBox").classList.add("hidden");
+        document.getElementById("endScreen").classList.remove("hidden");
+        document.getElementById("xpScore").innerText = score;
       }
     }
 
-    function nextUnit() {
-      window.location.href = "unit5.html";
-    }
+    window.onload = loadQuestion;
   </script>
 </body>
 </html>
+
