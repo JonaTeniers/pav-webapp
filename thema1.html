@@ -1,160 +1,141 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>PAV-O Leeromgeving</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thema 1 - Landschappen</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap">
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #e3f2fd;
+      background-color: #e7f4fb;
+      font-family: 'Fredoka One', cursive;
       margin: 0;
       padding: 0;
       text-align: center;
     }
+
     header {
-      background: #0288d1;
+      background-color: #0099e5;
       color: white;
-      padding: 2rem;
+      padding: 20px;
+      font-size: 2em;
     }
-    .container {
-      max-width: 960px;
-      margin: auto;
-      padding: 2rem;
-    }
-    .grid {
+
+    .board {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      padding: 40px;
+      max-width: 1200px;
+      margin: auto;
     }
-    .card {
-      background: white;
-      padding: 1.5rem;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+
+    .unit {
+      background-color: #fff;
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
     }
-    .card button {
-      margin-top: 1rem;
-      padding: 0.6rem 1.2rem;
-      background: #00c853;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 1rem;
-      cursor: pointer;
+
+    .unit:hover {
+      transform: scale(1.05);
     }
-    .circle {
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      margin: 1rem auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      font-weight: bold;
-      background: conic-gradient(#00c853 var(--percent), #cfd8dc 0);
-      color: #2e7d32;
+
+    .unit h2 {
+      font-size: 1.3em;
+      margin-bottom: 10px;
     }
-    .medaille {
-      font-size: 2rem;
-      margin-top: 0.5rem;
-    }
-    .feedback {
-      font-weight: bold;
-      margin-top: 0.3rem;
-      font-size: 1rem;
-    }
-    .info {
-      font-size: 0.95rem;
+
+    .unit p {
+      font-size: 1em;
       color: #444;
-      margin-top: 0.5rem;
+    }
+
+    .completed {
+      background-color: #d4edda;
+      border-left: 8px solid #28a745;
+    }
+
+    .locked {
+      background-color: #f8d7da;
+      border-left: 8px solid #dc3545;
+      opacity: 0.7;
+    }
+
+    .progress-box {
+      margin: 30px auto;
+      width: 200px;
+    }
+
+    .medal {
+      font-size: 3em;
+    }
+
+    .pavo {
+      width: 100px;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
+    .footer-note {
+      font-size: 1em;
+      margin-top: 10px;
+      color: #333;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>🏫 PAV-O Leeromgeving</h1>
-    <p>Kies een onderdeel en bekijk je voortgang</p>
+    🗺️ Thema 1: Landschappen
+    <img src="img/pavomascotte.png" class="pavo" alt="PAVo mascotte">
   </header>
 
-  <div class="container">
-    <div class="grid" id="unitGrid"></div>
-
-    <h2>🎯 Totaalscore Thema 1</h2>
-    <div class="circle" id="circle">0 / 360 XP</div>
-    <div class="medaille" id="badge"></div>
-    <div class="feedback" id="scoreText"></div>
+  <div class="progress-box">
+    <h3>🎯 Totaalscore Thema 1</h3>
+    <div class="medal">🥉</div>
+    <p>72 / 360 XP</p>
+    <p class="footer-note">Goed geprobeerd! Je kan nog groeien.</p>
   </div>
 
-  <script>
-    const totalUnits = 12;
-    const maxXP = 360;
-    const leerdoelen = [
-      "Je leert wat een landschap is en welke elementen zichtbaar zijn.",
-      "Je ontdekt wat natuurlijke landschapselementen zijn.",
-      "Je herkent menselijke landschapselementen.",
-      "Je leert de soorten landschappen: natuurlijk, landelijk, stedelijk.",
-      "Je leert waarvoor landschappen gebruikt worden.",
-      "Je ziet hoe landschappen veranderen door tijd, mens of natuur.",
-      "Je ontdekt hoe de mens het landschap beïnvloedt.",
-      "Je leert de invloed van natuurkrachten op het landschap.",
-      "Je verkent grenzen: fysiek, administratief en visueel.",
-      "Je past kennis toe op herkenbare landschappen in de regio.",
-      "Je maakt oefeningen waarbij verschillende onderdelen samenkomen.",
-      "Je herhaalt alles uit de vorige lessen in een eindtest."
-    ];
-    const unitGrid = document.getElementById('unitGrid');
-    const circle = document.getElementById('circle');
-    const badge = document.getElementById('badge');
-    const scoreText = document.getElementById('scoreText');
+  <div class="board">
+    <div class="unit completed">
+      <h2>Deel 1</h2>
+      <p>Wat is een landschap?</p>
+      <a href="unit1.html">🌟 Opnieuw</a>
+    </div>
 
-    function getXP(unit) {
-      return parseInt(localStorage.getItem("xp_unit" + unit) || "0");
-    }
+    <div class="unit completed">
+      <h2>Deel 2</h2>
+      <p>Natuurlijke elementen</p>
+      <a href="unit2.html">🌟 Opnieuw</a>
+    </div>
 
-    function buildUnits() {
-      let totalXP = 0;
-      unitGrid.innerHTML = '';
-      for (let i = 1; i <= totalUnits; i++) {
-        const done = localStorage.getItem("unit" + i + "_done") === "true";
-        const locked = i > 1 && localStorage.getItem("unit" + (i - 1) + "_done") !== "true";
-        const xp = getXP(i);
-        totalXP += xp;
+    <div class="unit completed">
+      <h2>Deel 3</h2>
+      <p>Menselijke elementen</p>
+      <a href="unit3.html">🌟 Opnieuw</a>
+    </div>
 
-        const div = document.createElement("div");
-        div.className = "card";
-        div.innerHTML = `
-          <h3>Deel ${i}</h3>
-          <p class="info">${leerdoelen[i-1]}</p>
-          <p>${done ? "✅ Afgewerkt" : "Nog te doen"}</p>
-          <p>XP: ${xp} / 30</p>
-          <button ${locked ? "disabled" : ""} onclick="location.href='unit${i}.html'">
-            ${locked ? "🔒" : done ? "✔️ Opnieuw" : "Start"}
-          </button>`;
-        unitGrid.appendChild(div);
-      }
+    <div class="unit">
+      <h2>Deel 4</h2>
+      <p>Soorten landschappen</p>
+      <a href="unit4.html">➡️ Start</a>
+    </div>
 
-      let percentage = Math.round((totalXP / maxXP) * 100);
-      circle.textContent = totalXP + " / 360 XP";
-      circle.style.setProperty('--percent', percentage + '%');
+    <div class="unit locked">
+      <h2>Deel 5</h2>
+      <p>Gebruik van landschappen</p>
+      <p>🔒 Nog vergrendeld</p>
+    </div>
 
-      if (totalXP >= 300) {
-        badge.textContent = "🥇 Goud";
-        scoreText.textContent = "Topper! Je beheerst dit thema uitstekend.";
-      } else if (totalXP >= 180) {
-        badge.textContent = "🥈 Zilver";
-        scoreText.textContent = "Sterk! Je beheerst al veel.";
-      } else if (totalXP >= 1) {
-        badge.textContent = "🥉 Brons";
-        scoreText.textContent = "Goed geprobeerd! Je kan nog groeien.";
-      } else {
-        badge.textContent = "";
-        scoreText.textContent = "";
-      }
-    }
-
-    buildUnits();
-  </script>
+    <div class="unit locked">
+      <h2>Deel 6</h2>
+      <p>Veranderingen door tijd</p>
+      <p>🔒 Nog vergrendeld</p>
+    </div>
+  </div>
 </body>
 </html>
+
