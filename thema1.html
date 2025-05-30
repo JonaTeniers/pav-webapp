@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thema 1 - Landschappen</title>
+  <title>Thema 1: Landschappen</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap">
   <style>
     body {
@@ -19,69 +19,62 @@
       color: white;
       padding: 20px;
       font-size: 2em;
+      position: relative;
+    }
+
+    .pavo {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      width: 80px;
+    }
+
+    .scoreboard {
+      margin: 30px 0;
     }
 
     .board {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-      padding: 40px;
-      max-width: 1200px;
-      margin: auto;
+      gap: 1rem;
+      padding: 20px;
+      justify-items: center;
     }
 
-    .unit {
-      background-color: #fff;
+    .card {
+      background: white;
       border-radius: 20px;
-      padding: 25px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      transition: transform 0.2s;
+      padding: 20px;
+      width: 220px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
 
-    .unit:hover {
-      transform: scale(1.05);
+    .card h2 {
+      margin: 0 0 10px;
+      font-size: 1.3rem;
     }
 
-    .unit h2 {
-      font-size: 1.3em;
-      margin-bottom: 10px;
+    .card p {
+      margin: 5px 0;
     }
 
-    .unit p {
-      font-size: 1em;
-      color: #444;
-    }
-
-    .completed {
-      background-color: #d4edda;
-      border-left: 8px solid #28a745;
-    }
-
-    .locked {
-      background-color: #f8d7da;
-      border-left: 8px solid #dc3545;
-      opacity: 0.7;
-    }
-
-    .progress-box {
-      margin: 30px auto;
-      width: 200px;
-    }
-
-    .medal {
-      font-size: 3em;
-    }
-
-    .pavo {
-      width: 100px;
-      position: absolute;
-      top: 20px;
-      right: 20px;
-    }
-
-    .footer-note {
-      font-size: 1em;
+    .start-button {
+      display: inline-block;
+      padding: 8px 16px;
       margin-top: 10px;
+      background-color: #00c853;
+      color: white;
+      border-radius: 20px;
+      text-decoration: none;
+    }
+
+    .start-button.locked {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    .score {
+      font-size: 1.2rem;
       color: #333;
     }
   </style>
@@ -92,50 +85,75 @@
     <img src="img/pavomascotte.png" class="pavo" alt="PAVo mascotte">
   </header>
 
-  <div class="progress-box">
-    <h3>🎯 Totaalscore Thema 1</h3>
-    <div class="medal">🥉</div>
-    <p>72 / 360 XP</p>
-    <p class="footer-note">Goed geprobeerd! Je kan nog groeien.</p>
-  </div>
+  <section class="scoreboard">
+    <h2>🎯 Totaalscore Thema 1</h2>
+    <p class="score">💡 240 / 360 XP</p>
+    <p>Je bent goed op weg!</p>
+  </section>
 
   <div class="board">
-    <div class="unit completed">
+    <div class="card" style="background-color: #dcf5e4">
       <h2>Deel 1</h2>
       <p>Wat is een landschap?</p>
-      <a href="unit1.html">🌟 Opnieuw</a>
+      <a href="unit1.html" class="start-button">Opnieuw</a>
     </div>
-
-    <div class="unit completed">
+    <div class="card" style="background-color: #dcf5e4">
       <h2>Deel 2</h2>
       <p>Natuurlijke elementen</p>
-      <a href="unit2.html">🌟 Opnieuw</a>
+      <a href="unit2.html" class="start-button">Opnieuw</a>
     </div>
-
-    <div class="unit completed">
+    <div class="card" style="background-color: #dcf5e4">
       <h2>Deel 3</h2>
       <p>Menselijke elementen</p>
-      <a href="unit3.html">🌟 Opnieuw</a>
+      <a href="unit3.html" class="start-button">Opnieuw</a>
     </div>
-
-    <div class="unit">
+    <div class="card" style="background-color: #dcf5e4">
       <h2>Deel 4</h2>
       <p>Soorten landschappen</p>
-      <a href="unit4.html">➡️ Start</a>
+      <a href="unit4.html" class="start-button">Opnieuw</a>
     </div>
-
-    <div class="unit locked">
+    <div class="card" style="background-color: #dcf5e4">
       <h2>Deel 5</h2>
       <p>Gebruik van landschappen</p>
-      <p>🔒 Nog vergrendeld</p>
+      <a href="unit5.html" class="start-button">Opnieuw</a>
     </div>
-
-    <div class="unit locked">
+    <div class="card" style="background-color: #dcf5e4">
       <h2>Deel 6</h2>
       <p>Veranderingen door tijd</p>
-      <p>🔒 Nog vergrendeld</p>
+      <a href="unit6.html" class="start-button">Opnieuw</a>
+    </div>
+    <div class="card" style="background-color: #dcf5e4">
+      <h2>Deel 7</h2>
+      <p>Invloed van de mens</p>
+      <a href="unit7.html" class="start-button">Opnieuw</a>
+    </div>
+    <div class="card" style="background-color: #dcf5e4">
+      <h2>Deel 8</h2>
+      <p>Invloed van de natuur</p>
+      <a href="unit8.html" class="start-button">Opnieuw</a>
+    </div>
+    <div class="card" style="background-color: #dcf5e4">
+      <h2>Deel 9</h2>
+      <p>Grenzen en regio’s</p>
+      <a href="unit9.html" class="start-button">Opnieuw</a>
+    </div>
+    <div class="card" style="background-color: #dcf5e4">
+      <h2>Deel 10</h2>
+      <p>Voorbeelden regio’s</p>
+      <a href="unit10.html" class="start-button">Opnieuw</a>
+    </div>
+    <div class="card" style="background-color: #dcf5e4">
+      <h2>Deel 11</h2>
+      <p>Toepassingen</p>
+      <a href="unit11.html" class="start-button">Opnieuw</a>
+    </div>
+    <div class="card" style="background-color: #dcf5e4">
+      <h2>Deel 12</h2>
+      <p>Grote herhaling & afsluiting</p>
+      <a href="unit12.html" class="start-button">Start</a>
     </div>
   </div>
 </body>
 </html>
+
 
