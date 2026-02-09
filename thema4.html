@@ -4,23 +4,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="data:," />
-  <title>Thema 1: Landschappen</title>
+  <title>Thema 4 – Wiskunde: Omtrek en Oppervlakte</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
   <style>
     :root {
       color-scheme: dark;
-      --bg: #061425;
-      --panel: rgba(12, 33, 58, 0.9);
-      --panel-border: rgba(88, 179, 255, 0.35);
+      --panel: rgba(10, 30, 48, 0.92);
+      --panel-border: rgba(79, 195, 255, 0.35);
       --accent: #4fc3ff;
-      --accent-2: #7b61ff;
+      --accent-2: #40c4ff;
       --text: #e9f6ff;
       --muted: #a6c2d6;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -41,7 +38,6 @@
     header h1 {
       margin: 0;
       font-size: 2.2rem;
-      letter-spacing: 0.5px;
     }
 
     header p {
@@ -78,7 +74,7 @@
       text-align: center;
       padding: 1rem;
       border-radius: 14px;
-      background: linear-gradient(135deg, rgba(79, 195, 255, 0.2), rgba(123, 97, 255, 0.15));
+      background: linear-gradient(135deg, rgba(79, 195, 255, 0.2), rgba(64, 196, 255, 0.15));
       border: 1px solid rgba(79, 195, 255, 0.35);
       margin-bottom: 1.5rem;
     }
@@ -90,6 +86,14 @@
 
     .score-card p {
       margin: 0.3rem 0;
+    }
+
+    .intro {
+      background: rgba(9, 24, 43, 0.9);
+      border-radius: 14px;
+      border: 1px solid rgba(79, 195, 255, 0.2);
+      padding: 1rem 1.2rem;
+      margin-bottom: 1.5rem;
     }
 
     .unit-grid {
@@ -110,17 +114,12 @@
 
     .unit-card h4 {
       margin: 0;
-      font-size: 1rem;
     }
 
     .unit-card p {
       margin: 0;
       color: var(--muted);
       font-size: 0.9rem;
-    }
-
-    .unit-card a {
-      align-self: flex-start;
     }
 
     .unit-card button {
@@ -131,6 +130,12 @@
       border-radius: 999px;
       font-weight: 700;
       cursor: pointer;
+    }
+
+    .status {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #81d4fa;
     }
 
     .chat-panel {
@@ -156,79 +161,84 @@
 </head>
 <body>
   <header>
-    <h1>📘 Thema 1: Landschappen</h1>
-    <p>Ontdek natuurlijke, menselijke elementen en hun gebruik.</p>
+    <h1>📐 Thema 4 – Wiskunde: Omtrek en Oppervlakte</h1>
+    <p>10 units met telkens 10 opdrachten: open vragen, meerkeuze en sleepoefeningen.</p>
   </header>
 
   <main class="layout">
     <section class="panel">
       <div class="score-card">
-        <h3>🎯 Totaalscore Thema 1</h3>
-        <p>💡 240 / 360 XP</p>
-        <p>Je bent goed op weg!</p>
+        <h3>🎯 Totaalscore Thema 4</h3>
+        <p>💡 0 / 300 XP</p>
+        <p>Start bij unit 1 om te beginnen.</p>
       </div>
 
-      <h2 class="panel-title">📚 Onderdelen</h2>
+      <div class="intro">
+        <h2 class="panel-title">Wat ga je oefenen?</h2>
+        <p>In dit thema leer je omtrek en oppervlakte berekenen van verschillende vormen. Elke unit heeft 10 opdrachten met een mix van open vragen, meerkeuze en sleepoefeningen.</p>
+      </div>
+
+      <h2 class="panel-title">📚 Units</h2>
       <div class="unit-grid">
         <div class="unit-card">
-          <h4>Deel 1</h4>
-          <p>Wat is een landschap?</p>
-          <a href="unit1.html"><button>Start</button></a>
+          <h4>Unit 1</h4>
+          <p>Basis omtrek.</p>
+          <p class="status">Beschikbaar</p>
+          <a href="thema4unit1.html"><button>Start</button></a>
         </div>
         <div class="unit-card">
-          <h4>Deel 2</h4>
-          <p>Natuurlijke elementen</p>
-          <a href="unit2.html"><button>Start</button></a>
+          <h4>Unit 2</h4>
+          <p>Basis oppervlakte.</p>
+          <p class="status">Beschikbaar</p>
+          <a href="thema4unit2.html"><button>Start</button></a>
         </div>
         <div class="unit-card">
-          <h4>Deel 3</h4>
-          <p>Menselijke elementen</p>
-          <a href="unit3.html"><button>Start</button></a>
+          <h4>Unit 3</h4>
+          <p>Driehoeken.</p>
+          <p class="status">Beschikbaar</p>
+          <a href="thema4unit3.html"><button>Start</button></a>
         </div>
         <div class="unit-card">
-          <h4>Deel 4</h4>
-          <p>Soorten landschappen</p>
-          <a href="unit4.html"><button>Start</button></a>
+          <h4>Unit 4</h4>
+          <p>Samengestelde figuren.</p>
+          <p class="status">Beschikbaar</p>
+          <a href="thema4unit4.html"><button>Start</button></a>
         </div>
         <div class="unit-card">
-          <h4>Deel 5</h4>
-          <p>Gebruik van landschappen</p>
-          <a href="unit5.html"><button>Start</button></a>
+          <h4>Unit 5</h4>
+          <p>Cirkels.</p>
+          <p class="status">Beschikbaar</p>
+          <a href="thema4unit5.html"><button>Start</button></a>
         </div>
         <div class="unit-card">
-          <h4>Deel 6</h4>
-          <p>Veranderingen door tijd</p>
-          <a href="unit6.html"><button>Start</button></a>
+          <h4>Unit 6</h4>
+          <p>Omtrek & oppervlakte in context.</p>
+          <p class="status">Beschikbaar</p>
+          <a href="thema4unit6.html"><button>Start</button></a>
         </div>
         <div class="unit-card">
-          <h4>Deel 7</h4>
-          <p>Invloed van de mens</p>
-          <a href="unit7.html"><button>Start</button></a>
+          <h4>Unit 7</h4>
+          <p>Omtrek van polygonen.</p>
+          <p class="status">Beschikbaar</p>
+          <a href="thema4unit7.html"><button>Start</button></a>
         </div>
         <div class="unit-card">
-          <h4>Deel 8</h4>
-          <p>Invloed van de natuur</p>
-          <a href="unit8.html"><button>Start</button></a>
+          <h4>Unit 8</h4>
+          <p>Oppervlakte met rooster.</p>
+          <p class="status">Beschikbaar</p>
+          <a href="thema4unit8.html"><button>Start</button></a>
         </div>
         <div class="unit-card">
-          <h4>Deel 9</h4>
-          <p>Grenzen en regio’s</p>
-          <a href="unit9.html"><button>Start</button></a>
+          <h4>Unit 9</h4>
+          <p>Vermenigvuldigingsstrategieën.</p>
+          <p class="status">Beschikbaar</p>
+          <a href="thema4unit9.html"><button>Start</button></a>
         </div>
         <div class="unit-card">
-          <h4>Deel 10</h4>
-          <p>Voorbeelden regio’s</p>
-          <a href="unit10.html"><button>Start</button></a>
-        </div>
-        <div class="unit-card">
-          <h4>Deel 11</h4>
-          <p>Toepassingen</p>
-          <a href="unit11.html"><button>Start</button></a>
-        </div>
-        <div class="unit-card">
-          <h4>Deel 12</h4>
-          <p>Grote herhaling & afsluiting</p>
-          <a href="unit12.html"><button>Start</button></a>
+          <h4>Unit 10</h4>
+          <p>Toets & herhaling.</p>
+          <p class="status">Beschikbaar</p>
+          <a href="thema4unit10.html"><button>Start</button></a>
         </div>
       </div>
     </section>
