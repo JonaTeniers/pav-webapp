@@ -7,102 +7,187 @@
   <title>Thema 3 – Verleden Tijd</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
   <style>
+    :root {
+      color-scheme: dark;
+      --panel: rgba(23, 12, 38, 0.92);
+      --panel-border: rgba(186, 104, 200, 0.35);
+      --accent: #ba68c8;
+      --accent-2: #7b1fa2;
+      --text: #f4e9ff;
+      --muted: #cdb8dd;
+    }
+
+    * { box-sizing: border-box; }
+
     body {
       margin: 0;
-      padding: 0;
       font-family: 'Nunito', sans-serif;
-      background: #f3e5f5;
-      color: #3c2a4d;
+      background: radial-gradient(circle at top, #3a1c59 0%, #190b28 55%, #0b0613 100%);
+      color: var(--text);
+      min-height: 100vh;
     }
 
     header {
-      background: #7b1fa2;
-      color: white;
-      padding: 2rem 1rem;
+      padding: 2rem 1.5rem 1rem;
       text-align: center;
+      background: linear-gradient(90deg, rgba(58, 28, 89, 0.95), rgba(43, 17, 66, 0.95));
+      border-bottom: 1px solid var(--panel-border);
+      box-shadow: 0 0 24px rgba(186, 104, 200, 0.2);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.2rem;
     }
 
     header p {
-      margin: 0.5rem 0 0;
-      color: #f2e7f6;
+      margin: 0.6rem 0 0;
+      color: var(--muted);
     }
 
-    .container {
-      max-width: 960px;
-      margin: 0 auto;
+    .layout {
+      display: grid;
+      grid-template-columns: 2.2fr 1fr;
+      gap: 1.5rem;
       padding: 2rem 1.5rem 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .panel {
+      background: var(--panel);
+      border-radius: 18px;
+      border: 1px solid var(--panel-border);
+      box-shadow: 0 12px 30px rgba(13, 6, 22, 0.6);
+      padding: 1.5rem;
+    }
+
+    .panel-title {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.2rem;
+      margin: 0 0 1rem;
+    }
+
+    .score-card {
+      text-align: center;
+      padding: 1rem;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(186, 104, 200, 0.2), rgba(123, 31, 162, 0.15));
+      border: 1px solid rgba(186, 104, 200, 0.35);
+      margin-bottom: 1.5rem;
+    }
+
+    .score-card h3 {
+      margin: 0 0 0.5rem;
+      font-size: 1.2rem;
+    }
+
+    .score-card p {
+      margin: 0.3rem 0;
     }
 
     .intro {
-      background: white;
-      border-radius: 16px;
-      padding: 1.5rem;
-      box-shadow: 0 6px 16px rgba(60, 42, 77, 0.12);
-      margin-bottom: 2rem;
-    }
-
-    .intro h2 {
-      margin-top: 0;
-      color: #6a1b9a;
+      background: rgba(35, 16, 52, 0.9);
+      border-radius: 14px;
+      border: 1px solid rgba(186, 104, 200, 0.2);
+      padding: 1rem 1.2rem;
+      margin-bottom: 1.5rem;
     }
 
     .unit-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.5rem;
+      gap: 1rem;
     }
 
     .unit-card {
-      background: #ffffff;
+      background: rgba(26, 12, 41, 0.9);
       border-radius: 14px;
-      padding: 1.25rem;
-      box-shadow: 0 4px 10px rgba(60, 42, 77, 0.08);
+      border: 1px solid rgba(186, 104, 200, 0.2);
+      padding: 1rem;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      gap: 0.6rem;
     }
 
-    .unit-card h3 {
-      margin: 0 0 0.4rem;
-      color: #5e2a84;
+    .unit-card h4 {
+      margin: 0;
     }
 
     .unit-card p {
-      margin: 0 0 0.8rem;
-      color: #5c4a68;
-      font-size: 0.95rem;
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .unit-card button {
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      border: none;
+      color: white;
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      font-weight: 700;
+      cursor: pointer;
     }
 
     .status {
+      font-size: 0.85rem;
       font-weight: 700;
-      color: #8e24aa;
-      margin-bottom: 0.75rem;
+      color: #ce93d8;
     }
 
-    .button {
-      background: #8e24aa;
-      color: white;
-      border: none;
+    .chat-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .chat-avatar {
+      width: 140px;
+      height: 140px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(186, 104, 200, 0.25), rgba(123, 31, 162, 0.25));
+      border: 1px solid rgba(186, 104, 200, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      margin: 0 auto;
+    }
+
+    .chat-box {
+      background: rgba(24, 10, 36, 0.9);
+      border-radius: 14px;
+      border: 1px solid rgba(186, 104, 200, 0.2);
+      padding: 1rem;
+    }
+
+    .chat-box input {
+      width: 100%;
+      padding: 0.6rem;
       border-radius: 10px;
-      padding: 0.6rem 1rem;
-      font-size: 0.95rem;
-      cursor: pointer;
-      text-decoration: none;
-      text-align: center;
-      display: inline-block;
+      border: 1px solid rgba(186, 104, 200, 0.3);
+      background: rgba(20, 8, 30, 0.9);
+      color: var(--text);
     }
 
-    .button.disabled {
-      background: #d1c4e9;
-      cursor: not-allowed;
-    }
-
-    .back-link {
-      display: inline-block;
-      margin-top: 2rem;
-      color: #6a1b9a;
-      text-decoration: none;
+    .chat-box button {
+      margin-top: 0.6rem;
+      width: 100%;
+      border: none;
+      border-radius: 999px;
+      padding: 0.5rem 0;
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      color: white;
       font-weight: 700;
+    }
+
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -112,36 +197,51 @@
     <p>Werkwoorden oefenen, zinnen bouwen en verhalen vertellen.</p>
   </header>
 
-  <main class="container">
-    <section class="intro">
-      <h2>Wat leer je in dit thema?</h2>
-      <p>Je gaat stap voor stap oefenen met de verleden tijd. Eerst leer je de basis, daarna maak je zinnen en korte verhalen. Nieuwe lessen worden binnenkort toegevoegd.</p>
+  <main class="layout">
+    <section class="panel">
+      <div class="score-card">
+        <h3>🎯 Totaalscore Thema 3</h3>
+        <p>💡 0 / 90 XP</p>
+        <p>Begin bij unit 1 om te starten.</p>
+      </div>
+
+      <div class="intro">
+        <h2 class="panel-title">Wat leer je in dit thema?</h2>
+        <p>Je gaat stap voor stap oefenen met de verleden tijd. Eerst leer je de basis, daarna maak je zinnen en korte verhalen.</p>
+      </div>
+
+      <h2 class="panel-title">📚 Units</h2>
+      <div class="unit-grid">
+        <div class="unit-card">
+          <h4>Unit 1</h4>
+          <p>De verleden tijd herkennen.</p>
+          <p class="status">Beschikbaar</p>
+          <a href="thema3unit1.html"><button>Start</button></a>
+        </div>
+        <div class="unit-card">
+          <h4>Unit 2</h4>
+          <p>Werkwoorden in de verleden tijd.</p>
+          <p class="status">Beschikbaar</p>
+          <a href="thema3unit2.html"><button>Start</button></a>
+        </div>
+        <div class="unit-card">
+          <h4>Unit 3</h4>
+          <p>Zinnen en korte verhalen maken.</p>
+          <p class="status">Beschikbaar</p>
+          <a href="thema3unit3.html"><button>Start</button></a>
+        </div>
+      </div>
     </section>
 
-    <section class="unit-grid">
-      <article class="unit-card">
-        <h3>Unit 1</h3>
-        <p>De verleden tijd herkennen.</p>
-        <div class="status">Beschikbaar</div>
-        <a class="button" href="thema3unit1.html">Start</a>
-      </article>
-
-      <article class="unit-card">
-        <h3>Unit 2</h3>
-        <p>Werkwoorden in de verleden tijd.</p>
-        <div class="status">Beschikbaar</div>
-        <a class="button" href="thema3unit2.html">Start</a>
-      </article>
-
-      <article class="unit-card">
-        <h3>Unit 3</h3>
-        <p>Zinnen en korte verhalen maken.</p>
-        <div class="status">Beschikbaar</div>
-        <a class="button" href="thema3unit3.html">Start</a>
-      </article>
-    </section>
-
-    <a class="back-link" href="index.html">← Terug naar thema-overzicht</a>
+    <aside class="panel chat-panel">
+      <h2 class="panel-title">🤖 Chattie (binnenkort)</h2>
+      <div class="chat-avatar">🦉</div>
+      <div class="chat-box">
+        <p>Hallo! Waarmee kan ik je helpen?</p>
+        <input type="text" placeholder="Typ hier je vraag..." disabled />
+        <button type="button" disabled>Verstuur</button>
+      </div>
+    </aside>
   </main>
 </body>
 </html>
