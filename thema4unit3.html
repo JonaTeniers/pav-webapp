@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="data:," />
+  <title>Thema 4 - Unit 3</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #e3f2fd;
+      padding: 2rem;
+      margin: 0;
+    }
+    h1 { text-align: center; color: #1565c0; }
+    .question-box {
+      background: white;
+      padding: 2rem;
+      margin: 2rem auto;
+      border-radius: 12px;
+      max-width: 720px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    }
+    button {
+      background: #1565c0;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 6px;
+      margin-top: 1rem;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .feedback {
+      margin-top: 1rem;
+      font-weight: bold;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+    .success { background-color: #c8e6c9; color: #2e7d32; }
+    .error { background-color: #ffcdd2; color: #c62828; }
+    .nav-buttons { margin-top: 2rem; text-align: center; }
+    .hidden { display: none; }
+    .helper { color: #546e7a; font-size: 0.95rem; }
+    .select-input, .text-input { padding: 0.4rem; font-size: 1rem; }
+  </style>
+</head>
+<body>
+  <h1>📐 Thema 4 - Unit 3</h1>
+  <div class="question-box" id="quizBox">
+    <h2 id="qCount">Vraag 1 van 10</h2>
+    <p class="helper" id="qType"></p>
+    <div id="questionText"></div>
+    <form id="answerForm"></form>
+    <button type="button" onclick="checkAnswer()">Controleer</button>
+    <div class="feedback" id="feedback"></div>
+    <div class="nav-buttons">
+      <button id="nextBtn" class="hidden" type="button" onclick="nextQuestion()">Volgende vraag →</button>
+    </div>
+  </div>
+  <div class="question-box hidden" id="endScreen">
+    <h2>🎉 Unit voltooid!</h2>
+    <p>Je behaalde <span id="xpScore">0</span> XP.</p>
+    <div class="nav-buttons">
+      <a href="thema4.html"><button type="button">← Terug naar thema</button></a>
+      <a href="thema4unit4.html"><button type="button">→ Volgende unit</button></a>
+    </div>
+  </div>
+  <script>
+    const questions = [{"type": "open", "typeLabel": "Open vraag", "question": "Bereken de omtrek van een driehoek met zijden 3, 4 en 5 cm.", "accepted": ["12", "12 cm", "12cm"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke formule hoort bij de oppervlakte van een driehoek?", "options": ["(basis × hoogte) / 2", "basis × hoogte", "2 × (basis + hoogte)"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies de juiste oppervlakte voor basis 8 cm en hoogte 5 cm.", "options": ["20 cm²", "40 cm²", "13 cm²"], "correctValue": "20 cm²"}, {"type": "open", "typeLabel": "Open vraag", "question": "Wat is de omtrek van een gelijkzijdige driehoek met zijde 6 cm?", "accepted": ["18", "18 cm", "18cm"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke zijde heb je nodig voor de omtrek?", "options": ["alle zijden", "alleen basis", "hoogte"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies de juiste factor: oppervlakte driehoek = 1/___ × basis × hoogte.", "options": ["2", "3", "4"], "correctValue": "2"}, {"type": "open", "typeLabel": "Open vraag", "question": "Bereken de oppervlakte: basis 10 cm, hoogte 3 cm.", "accepted": ["15", "15 cm2", "15 cm²", "15cm2", "15cm²"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke omtrek hoort bij zijden 5, 7 en 8 cm?", "options": ["20 cm", "19 cm", "21 cm"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies de juiste stap voor omtrek.", "options": ["alle zijden optellen", "basis × hoogte", "delen door 2"], "correctValue": "alle zijden optellen"}, {"type": "open", "typeLabel": "Open vraag", "question": "Omtrek van een driehoek met zijden 9, 4, 6 cm?", "accepted": ["19", "19 cm", "19cm"]}];
+    let currentQuestion = 0;
+    let score = 0;
+
+    function renderOptions(options, name) {
+      return options.map((opt, index) => (
+        `<label><input type="radio" name="${name}" value="${index}"> ${opt}</label><br>`
+      )).join('');
+    }
+
+    function loadQuestion() {
+      const q = questions[currentQuestion];
+      document.getElementById('qCount').innerText = `Vraag ${currentQuestion + 1} van ${questions.length}`;
+      document.getElementById('qType').innerText = q.typeLabel;
+      document.getElementById('questionText').innerText = q.question;
+      const form = document.getElementById('answerForm');
+      form.innerHTML = '';
+      if (q.type === 'mc') {
+        form.innerHTML = renderOptions(q.options, 'answer');
+      } else if (q.type === 'open') {
+        form.innerHTML = `<input class="text-input" type="text" name="answer" placeholder="Typ je antwoord...">`;
+      } else if (q.type === 'drag') {
+        const options = ['Kies...', ...q.options];
+        form.innerHTML = `<select class="select-input" name="answer">${options.map((opt) => `<option value="${opt}">${opt}</option>`).join('')}</select>`;
+      }
+      document.getElementById('feedback').innerText = '';
+      document.getElementById('feedback').className = 'feedback';
+      document.getElementById('nextBtn').classList.add('hidden');
+    }
+
+    function normalize(value) {
+      return value.trim().toLowerCase();
+    }
+
+    function checkAnswer() {
+      const q = questions[currentQuestion];
+      let isCorrect = false;
+      if (q.type === 'mc') {
+        const selected = document.querySelector('input[name="answer"]:checked');
+        if (!selected) return;
+        isCorrect = Number(selected.value) === q.correctIndex;
+      } else if (q.type === 'open') {
+        const input = document.querySelector('input[name="answer"]');
+        if (!input || !input.value.trim()) return;
+        const normalized = normalize(input.value);
+        isCorrect = q.accepted.some((answer) => normalize(answer) === normalized);
+      } else if (q.type === 'drag') {
+        const selected = document.querySelector('select[name="answer"]');
+        if (!selected || selected.value === 'Kies...') return;
+        isCorrect = normalize(selected.value) === normalize(q.correctValue);
+      }
+
+      const feedback = document.getElementById('feedback');
+      if (isCorrect) {
+        score += 3;
+        feedback.innerText = '✅ Juist! +3 XP';
+        feedback.classList.add('success');
+      } else {
+        feedback.innerText = '❌ Fout. Geen XP.';
+        feedback.classList.add('error');
+      }
+      document.getElementById('nextBtn').classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        loadQuestion();
+      } else {
+        localStorage.setItem('thema4unit3', score);
+        document.getElementById('quizBox').classList.add('hidden');
+        document.getElementById('endScreen').classList.remove('hidden');
+        document.getElementById('xpScore').innerText = score;
+      }
+    }
+
+    window.onload = loadQuestion;
+  </script>
+</body>
+</html>
