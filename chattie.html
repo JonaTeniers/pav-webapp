@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Chattie - AI-leerbuddy</title>
+<style>
+:root {
+  --bg1: #CFE3D3;
+  --bg2: #F9F8F4;
+  --card: #ffffff;
+  --bot: #eaf7ee;
+  --user: #E7DCC8;
+  --accent: #A9C2A6;
+  --muted: #8B8C89;
+  --chip-bg: #CBBBA0;
+  --chip-text: #3a301a;
+  --status-active-color: #4CAF50;
+  --status-escalation-color: #b45309;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+  background: linear-gradient(120deg, var(--bg1), var(--bg2));
+  color: #0f172a;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.container {
+  width: 100%;
+  height: 100vh;
+  background: var(--card);
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  overflow: hidden;
+}
+
+.left {
+  padding: 20px;
+  border-right: 1px solid rgba(0,0,0,0.04);
+  background: linear-gradient(180deg, #fff, var(--bg2));
+}
+
+.avatar {
+  width: 66px;
+  height: 66px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--accent), var(--chip-bg));
+  font-size: 28px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+}
+
+.title { font-weight: 700; margin-top: 6px; }
+.subtitle { color: var(--muted); font-size: 13px; margin-top: 6px; }
+
+.chat {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 18px;
+  gap: 12px;
+}
+
+#messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  border-radius: 12px;
+  background: var(--bg2);
+  border: 1px solid rgba(0,0,0,0.04);
+}
+
+.msg { display: flex; gap: 10px; margin: 10px 0; align-items: flex-end; }
+.msg.bot { justify-content: flex-start; }
+.msg.user { justify-content: flex-end; }
+.bubble {
+  max-width: 76%;
+  padding: 12px 14px;
+  border-radius: 14px;
+  font-size: 15px;
+  line-height: 1.35;
+}
+.bubble.bot { background: var(--bot); color: #05341a; border-radius: 14px 14px 14px 6px; }
+.bubble.user { background: var(--user); color: #3a301a; border-radius: 14px 14px 6px 14px; text-align: right; }
+
+.quick { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.chip-btn {
+  background: var(--chip-bg);
+  border-radius: 12px;
+  padding: 8px 10px;
+  border: 1px solid var(--muted);
+  cursor: pointer;
+  color: var(--chip-text);
+  font-weight: 600;
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+.input-row { display: flex; gap: 10px; }
+.input-row input {
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.06);
+  font-size: 15px;
+}
+.send-btn {
+  background: var(--accent);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.muted { color: var(--muted); font-size: 13px; }
+
+h4 { font-size: 16px; margin: 18px 0 8px 0; font-weight: 700; }
+
+.status-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.hack-badge {
+  display:inline-block;
+  margin-top:8px;
+  padding:6px 8px;
+  border-radius:10px;
+  background:#fff3cd;
+  color:#856404;
+  font-weight:700;
+  border:1px solid rgba(0,0,0,0.04);
+}
+
+@media (max-width:880px){
+  .container {
+    grid-template-columns: 1fr;
+    border-radius: 18px;
+    height: auto;
+  }
+  body { padding: 24px; }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+  <div class="left">
+    <div style="display:flex;gap:12px;align-items:center">
+      <div class="avatar">🤖</div>
+      <div>
+        <div class="title">Chattie je AI-leerbuddy</div>
+        <div class="subtitle">Begin met "start" eindig met "einde".</div>
+      </div>
+    </div>
+
+    <div style="margin-top:18px">
+      <button id="howBtn" class="send-btn" style="width:100%;text-align:center;">Hoe werken de lessen?</button>
+      <div class="muted" style="margin-top:10px;">Gebruik de knoppen onderin de chat voor snelle acties.</div>
+    </div>
+
+    <div style="margin-top:18px">
+      <h4>Status & instellingen</h4>
+      <div class="muted status-row">
+        <span>Gesprek actief:</span>
+        <span id="statusActive" style="font-weight:700;">Nee</span>
+      </div>
+      <div class="muted status-row" style="margin-top:6px;">
+        <span>Escalatie:</span>
+        <span id="escalation" style="font-weight:700;color:var(--status-escalation-color);">0</span>
+      </div>
+      <div class="muted" style="margin-top:8px">Geheugen:</div>
+      <div id="memList" class="muted" style="max-height:90px;overflow:auto;padding-top:6px">Geen</div>
+
+      <div style="margin-top:14px">
+        <button id="hackToggleBtn" class="chip-btn" style="width:100%;">Schakel Hack-modus (uit)</button>
+        <div id="hackBadge" class="hack-badge" style="display:none">Hack-modus actief — veilig sandbox</div>
+        <div class="muted" style="margin-top:8px;font-size:12px">In hack-modus krijgen leerlingen een <strong>sandbox</strong>. Buiten die modus detecteert Chattie wijzigingen en reageert menselijk.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <strong>Chat</strong>
+      <div id="topRight" class="muted">Chattie is klaar</div>
+    </div>
+
+    <div id="messages" aria-live="polite"></div>
+
+    <div class="quick" style="margin-top:10px; margin-bottom:12px;">
+      <button class="chip-btn" data-action="more">Meer info</button>
+      <button class="chip-btn" data-action="example">Voorbeeld</button>
+      <button class="chip-btn" data-action="dontget">Ik snap het niet</button>
+      <button class="chip-btn" data-action="assignment">Opdracht</button>
+      <button class="chip-btn" data-action="stap">Volgende stap</button>
+      <button class="chip-btn" data-action="samenvat">Samenvatting</button>
+      <button class="chip-btn" data-action="kernwoorden">Kernwoorden</button>
+    </div>
+
+    <div class="input-row" style="margin-top:12px">
+      <input id="userInput" placeholder='Typ "start" om te beginnen of stel een vraag' autocomplete="off" />
+      <button id="sendButton" class="send-btn">Verstuur</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// -------------------------
+// CONFIG & STATE
+// -------------------------
+const RESET_CODE = "resetchattie2025";
+const ESCALATION_LIMIT = 3;
+const TYPING_MS = 800;
+const FORBIDDEN = ["fuck","kut","lul","trut","sukkel","idioot","kanker","rotzak","hoer","slet","eikel","klootzak","mongool","flikker","aso","wijf","tyfus","tering","pleuris","pest","debiel","achterlijk","mafkees","lapzwans","snol","del","kech","zak","schijt","gay","lesbo","mietje","poot","pot","nicht","faggot","fag","dyke","tranny","transseksueel","homofiel","kontneuker","biseksueel","motherfucker","cunt"];
+
+const KNOWLEDGE = {
+  "ai":"AI is technologie die machines in staat stelt te denken en leren zoals mensen.",
+  "machine learning":"Machine learning is een tak van AI waarbij systemen leren van data.",
+  "deep learning":"Een vorm van machine learning met neurale netwerken die complexe patronen herkennen.",
+  "sociaal welzijn":"De mate waarin mensen zich goed voelen en kunnen deelnemen aan de samenleving.",
+  "pedagogisch werk":"Het begeleiden en opvoeden van jongeren in hun ontwikkeling.",
+  "ethiek":"Nadenken over wat goed of fout is in het handelen van mensen (en AI-systemen).",
+  "ethiek in het onderwijs":"Het nadenken over morele keuzes binnen onderwijs en opvoeding.",
+  "natuur":"Weinig of geen bebouwing, veel groen, bossen, velden en dieren.",
+  "industrieel":"Omgeving met fabrieken, transport, opslag en weinig groen.",
+  "landelijk":"Huizen staan verspreid, open ruimte, akkers en weilanden.",
+  "stedelijk":"Huizen dicht bij elkaar, hoogbouw, druk verkeer, weinig natuur.",
+  "toeristisch":"Omgeving met veel attracties, strand, bergen of musea voor bezoekers.",
+  "cognitieve vermogens":"Mentale vaardigheden zoals denken, leren en begrijpen.",
+  "autonoom":"Zelfstandig, zonder menselijke tussenkomst.",
+  "ethisch dilemma":"Een situatie waarbij je moet kiezen tussen twee waarden of principes.",
+  "privacy":"Het recht om persoonlijke informatie geheim te houden.",
+  "deepfake":"Een door AI gemanipuleerde video of foto die echt lijkt, maar nep is.",
+  "discriminatie door ai":"AI kan onbedoeld bevooroordeeld zijn, bijvoorbeeld bij sollicitaties.",
+  "energieverbruik van ai":"Het trainen van AI kost veel energie en water.",
+  "agi":"Artificial General Intelligence — een AI die net zo slim is als mensen.",
+  "ava technologie":"Technologie die automatisch de beste thumbnail kiest voor een video.",
+  "zelfrijdende auto":"Een voertuig dat zonder chauffeur rijdt door sensoren en AI.",
+  "autonome shuttle":"Een klein zelfrijdend busje, zoals in Leuven, dat leert uit zijn omgeving.",
+
+  // NIEUW TOEGEVOEGDE VZNS VAN HET ARTIKEL:
+  "senaat lek": "HLN meldde een ernstig datalek bij de Senaat, waarbij gevoelige info zoals terreurprotocollen en gsm-nummers van politici op straat kwamen door het gelekte wachtwoord van een conciërge.",
+  "infostealer": "Volgens HLN gaat het hier om 'infostealers', kwaadaardige software zoals Lumma Stealer, die ongemerkt alle ingevoerde gegevens stelen om ze door te verkopen aan criminelen.",
+  "multifactorauthenticatie": "HLN benadrukt dat Multifactorauthenticatie (MFA) cruciaal is; dit voegt een extra beveiligingsstap toe, wat het Senaat-lek had kunnen voorkomen.",
+  "wachtwoord hygiëne": "Uit het HLN-artikel blijkt hoe belangrijk goede Wachtwoordhygiëne is: gebruik unieke, lange wachtwoorden voor elke dienst om te voorkomen dat één lek alles compromitteert.",
+  "datingfraude AI": "VRT NWS onthulde hoe malafide datingsites AI gebruiken om kwetsbare singles financieel op te lichten met **deels AI-gegenereerde berichten** en een duur betaalmodel per letter.",
+  "jump4love": "VRT NWS noemt Jump4Love (J4L) als voorbeeld van een louche site met **nepprofielen en gestolen foto's**, waar gebruikers met callcenter-medewerkers of AI chatten zonder kans op een echte date.",
+  "AI en emotie": "Het VRT-onderzoek toonde aan dat AI-modellen emotionele gesprekken simuleren, puur om gebruikers zo lang mogelijk verslaafd te houden aan de chat, waardoor ze duizenden euro's verliezen.",
+  "kwetsbare singles": "VRT NWS waarschuwt dat vooral oudere en eenzame singles een makkelijk doelwit zijn voor deze fraude, omdat ze hopeloos verliefd kunnen worden op een **persoon die niet bestaat**.",
+  "internationale fraude": "Uit het VRT-artikel bleek dat de fraude wordt gerund via postbusfirma's op Cyprus en in Schotland, met intrigerende banden tot in de internationale politiek.",
+  "peter opgelicht crypto": "Volgens HLN werd Peter Van Welden slachtoffer van een georganiseerde oplichting via WhatsApp, waarbij hij door een nep-onderneemster werd verleid tot investeren in een vervalst crypto-platform en zo 300.000 euro verloor.",
+  "pig butchering": "Dit is de naam voor de oplichtingsmethode waarbij fraudeurs, zoals bij Peter, eerst langdurig vertrouwen opbouwen om het slachtoffer emotioneel te binden, waarna ze financieel toeslaan.",
+  "oplichting gevolgen": "Het verhaal van Peter in HLN toont de zware gevolgen van oplichting: hij verloor niet alleen zijn spaargeld, maar ook zijn relatie en zijn zelfvertrouwen, door de schaamte en het zwijgen over de fraude.",
+  "fraude psychologie": "HLN benadrukt dat deze fraudeurs psychologisch getraind zijn om in te spelen op de emoties en het vertrouwen van het slachtoffer, waardoor zelfs slimme mensen denken dat 'zij het zelf wel kunnen oplossen'.",
+  "rode vlaggen fraude": "Volgens Peter zijn de belangrijkste 'rode vlaggen' bij oplichting: berichten van onbekende nummers, het creëren van druk of urgentie, en de eis voor extra stortingen om je geld 'terug te krijgen'."
+
+};
+const CANONICAL_KNOWLEDGE = JSON.parse(JSON.stringify(KNOWLEDGE));
+const ASSIGNMENTS = {
+  "ai": "Geef een voorbeeld van hoe AI wordt gebruikt in je dagelijks leven en licht toe.",
+  "voorbeeld ai": "Noem een specifieke chatbot of AI-assistent en beschrijf kort waarvoor je die zou gebruiken.",
+  "machine learning": "Zoek een voorbeeld van een applicatie die leert van jouw data (bv. Spotify, Netflix) en leg uit hoe dit machine learning is.",
+  "deep learning": "Zoek een voorbeeld van deep learning (bv. gezichtsherkenning) en leg uit waarom het nuttig is.",
+  "sociaal welzijn": "Bedenk een situatie op school of stage waar het sociale welzijn van een leerling/cliënt verbetering nodig heeft.",
+  "pedagogisch werk": "Beschrijf een concrete begeleidingsactiviteit die je zou uitvoeren in het kader van pedagogisch werk.",
+  "ethiek": "Geef een voorbeeld van een ethische vraag die je je stelt bij het gebruik van sociale media.",
+  "privacy": "Wat zijn twee concrete stappen die je kunt nemen om je online privacy te verbeteren?",
+  "multifactorauthenticatie": "Geef twee voorbeelden van een tweede factor die je kunt gebruiken bij multifactorauthenticatie.",
+  "wachtwoord hygiëne": "Waarom is het gebruik van een wachtwoordmanager een belangrijk onderdeel van 'wachtwoord hygiëne'?",
+  "fraude psychologie": "Geef een voorbeeld van hoe fraudeurs 'tijdsdruk' kunnen gebruiken als een psychologische truc.",
+  "rode vlaggen fraude": "Noem één 'rode vlag' in een online conversatie die je onmiddellijk zou doen stoppen met chatten.",
+  "oplichting gevolgen": "Welke niet-financiële gevolgen kunnen slachtoffers van fraude ondervinden (bv. naast geldverlies)?",
+  "pig butchering": "Wat is het cruciale psychologische element in de 'pig butchering'-methode om het slachtoffer te overtuigen?",
+  "kwetsbare singles": "Wat maakt oudere, eenzame mensen extra kwetsbaar voor emotionele manipulatie door fraudeurs?",
+  "natuur": "Zoek een natuurgebied in jouw regio en beschrijf drie kenmerken.",
+  "industrieel": "Zoek een industrieterrein in de buurt en beschrijf de functie ervan.",
+  "landelijk": "Wat zijn de voor- en nadelen van wonen in een landelijke omgeving?",
+  "stedelijk": "Welke invloed heeft de hoge bevolkingsdichtheid in een stedelijke omgeving op het verkeer?",
+  "toeristisch": "Noem een toeristische trekpleister in Vlaanderen en leg uit waarom mensen die plaats bezoeken.",
+  "cognitieve vermogens": "Noem twee cognitieve vermogens die je nodig hebt om een moeilijke puzzel op te lossen.",
+  "windroos": "Teken een windroos en benoem alle vier de hoofdrichtingen en de vier tussenrichtingen.",
+  "legende": "Waarom is de 'legende' essentieel voor het correct begrijpen en interpreteren van een kaart?",
+  "schaal": "Als de 'schaal' van een kaart 1:50.000 is, hoeveel centimeter in werkelijkheid is 2 centimeter op de kaart?",
+  "staatkundige kaarten": "Waarvoor gebruik je een 'staatkundige kaart' (bv. een overzicht van een continent) in vergelijking met een 'reliëfkaart'?",
+  "reliëfkaarten": "Welke kleur wordt op een 'reliëfkaart' vaak gebruikt om bergachtige gebieden aan te duiden?",
+
+  // 🔵 Slimmere opdrachten
+  "ethiek in het onderwijs": "Welke ethische overweging maak je bij het beoordelen van werkstukken die (deels) door AI zijn gemaakt?",
+  "ethisch dilemma": "Formuleer een ethisch dilemma dat kan ontstaan bij het gebruik van AI in de gezondheidszorg.",
+  "discriminatie door ai": "Bedenk een scenario waarin AI-software onbedoeld zou kunnen discrimineren bij het selecteren van kandidaten voor een universiteit.",
+  "energieverbruik van ai": "Zoek op hoeveel stroom (ongeveer) één keer een afbeelding genereren met een populaire AI-tool kost, en vergelijk dit met een alledaagse activiteit.",
+  "agi": "Wat is het grootste ethische risico als AGI ooit zou bestaan?",
+  "ai en emotie": "Waarom is het nabootsen van menselijke emoties door AI riskant in de context van online fraude?",
+  "datingfraude ai": "Op welke twee manieren (naast gegenereerde berichten) maakt een louche datingsite gebruik van de kwetsbaarheid van singles?",
+  "jump4love": "Leg uit waarom sites zoals 'Jump4Love' hun chatmodellen vaak emoties laten simuleren.",
+  "senaat lek": "Welke maatregel had het datalek bij de Belgische Senaat vrijwel zeker kunnen voorkomen?",
+  "infostealer": "Leg in eigen woorden uit hoe een 'infostealer' aan je gegevens komt en wat er daarna mee gebeurt.",
+  "internationale fraude": "Wat is de belangrijkste reden waarom het moeilijk is om de daders van 'internationale fraude' te vervolgen?",
+  "peter opgelicht crypto": "Beschrijf de belangrijkste stap in de oplichtingsmethode die leidde tot het financiële verlies van 'Peter'.",
+  "autonoom": "Wat is het verschil tussen een traditionele auto en een autonome auto in termen van bestuurdersinput?",
+  "zelfrijdende auto": "Welke sensoren (bv. camera's, lidar) zijn essentieel voor een zelfrijdende auto om veilig te kunnen functioneren?",
+  "voorbeeld zelfrijdende auto": "Vergelijk de mate van autonomie tussen een Tesla in 'Autopilot' en de 'autonome shuttle' in Leuven.",
+  "autonome shuttle": "Wat is het grootste voordeel van een autonome shuttle in een afgesloten, vaste route?",
+  "ava technologie": "Leg uit waarom de keuze van een 'beste thumbnail' belangrijk is voor een YouTuber.",
+  "ruimtelijk bewustzijn": "Welke van de vier sleutelcompetenties (bv. in MAVO/PAV) vind je persoonlijk het belangrijkst en waarom?",
+  "ruimtelijk relationeel denken": "Geef een voorbeeld van een relatie tussen een natuurlijk proces (bv. een rivier) en een menselijk proces (bv. de locatie van een stad).",
+  "aardrijkskunde": "Wat is het verschil in focus tussen de oude, louter beschrijvende aardrijkskunde en de moderne, analytische aardrijkskunde?",
+  "fysische geografie": "Noem een proces dat bestudeerd wordt door de fysische geografie (bv. erosie of klimaatverandering).",
+  "sociale geografie": "Noem een onderwerp dat bestudeerd wordt door de sociale geografie (bv. migratiepatronen of verstedelijking).",
+  "lokaliseren": "Zoek een coördinaat (bv. GPS-coördinaat) van je school en leg uit waarom dit 'absoluut situeren' is.",
+  "oriënteren": "Leg uit hoe je je met behulp van de zon en een horloge zou kunnen oriënteren.",
+  "situeren": "Leg het verband tussen 'lokaliseren' en 'oriënteren' in de context van 'situeren'.",
+  "geografische hulpbronnen": "Noem drie voorbeelden van 'geografische hulpbronnen' die je in de klas zou kunnen gebruiken.",
+  "atlas": "Hoe helpt de structuur van een atlas (bv. de indeling) je bij het vinden van informatie over verschillende 'schaalniveaus'?",
+  "GIS-viewers": "Geef twee concrete voorbeelden van hoe een 'GIS-viewer' (bv. Geopunt Vlaanderen) het ruimtelijk bewustzijn kan vergroten.",
+  "breukschaal": "Wat betekent de 'breukschaal' 1:250 in de context van een plattegrond van een gebouw?",
+  "lijnschaal": "Wat is het voordeel van een 'lijnschaal' ten opzichte van een 'breukschaal' als je een kaart vergroot of verkleint?",
+  "thematische kaarten": "Welk specifiek onderwerp zou je terugvinden op een thematische kaart van België over de bevolking?",
+  "historisch referentie kader": "Maak een beknopt historisch referentiekader (minstens drie data) voor de geschiedenis van jouw gemeente/stad en noteer de belangrijkste domeinen (P, S, C, E)."
+
+};
+
+// -------------------------
+// STATE
+// -------------------------
+let isChatActive=false, escalation=0, memory={}, isDisabled=false;
+let awaitingStep=null, hackModeActive=false, sandboxKnowledge=null, tamperCount=0;
+
+// -------------------------
+// DOM
+// -------------------------
+const messagesEl=document.getElementById('messages');
+const inputEl=document.getElementById('userInput');
+const sendBtn=document.getElementById('sendButton');
+const chips=document.querySelectorAll('.chip-btn[data-action]');
+const howBtn=document.getElementById('howBtn');
+const statusActiveEl=document.getElementById('statusActive');
+const escalationEl=document.getElementById('escalation');
+const memListEl=document.getElementById('memList');
+const topRightEl=document.getElementById('topRight');
+const hackToggleBtn=document.getElementById('hackToggleBtn');
+const hackBadge=document.getElementById('hackBadge');
+
+// -------------------------
+// HELPERS
+// -------------------------
+function safeText(text){ const div=document.createElement('div'); div.textContent=text; return div.innerHTML; }
+function appendMessage(text,who='bot'){ const el=document.createElement('div'); el.className='msg '+who; const b=document.createElement('div'); b.className='bubble '+who; b.innerHTML=safeText(text).replace(/\\n/g,'<br>'); el.appendChild(b); messagesEl.appendChild(el); messagesEl.scrollTop=messagesEl.scrollHeight; }
+function updateUI(){ 
+  statusActiveEl.textContent=isChatActive?'Ja':'Nee';
+  statusActiveEl.style.color=isChatActive?'var(--status-active-color)':'var(--muted)';
+  escalationEl.textContent=escalation;
+  memListEl.textContent=Object.keys(memory).length?Object.keys(memory).join(\", \"):\"Geen\";
+}
+function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
+async function showTyping(){ appendMessage(\"Chattie denkt even na...\",'bot'); await sleep(TYPING_MS); messagesEl.lastChild?.remove(); }
+
+// -------------------------
+// CHAT FUNCTIES
+// -------------------------
+function handleUserInput(){
+  if(isDisabled){ appendMessage(\"🚫 Chattie is uitgeschakeld. Typ '\"+RESET_CODE+\"' om te resetten.\",\"bot\"); return; }
+  const input=inputEl.value.trim();
+  if(!input) return;
+  appendMessage(input,'user'); inputEl.value='';
+  processInput(input.toLowerCase());
+}
+
+async function processInput(input){
+  if(FORBIDDEN.some(w=>input.includes(w))){ escalation++; appendMessage(\"❗ Dat was niet gepast. Blijf beleefd a.u.b.\",'bot'); return; }
+  if(input===RESET_CODE){ escalation=0; isDisabled=false; memory={}; appendMessage(\"🔄 Chattie is herstart!\",'bot'); updateUI(); return; }
+  if(input===\"start\"){ isChatActive=true; appendMessage(\"🎉 Hallo! Typ 'leg uit: ai' om te starten.\",'bot'); updateUI(); return; }
+  if(input===\"einde\"){ isChatActive=false; appendMessage(\"👋 Tot later!\",'bot'); updateUI(); return; }
+  if(input.startsWith(\"leg uit:\")){ 
+    const topic=input.replace(/^leg uit:/,\"\").trim(); 
+    if(KNOWLEDGE[topic]){ await showTyping(); appendMessage(\"Hier is een uitleg over '\"+topic+\"':\",'bot'); appendMessage(KNOWLEDGE[topic],'bot'); memory.lastTopic=topic; updateUI(); }
+    else appendMessage(\"Sorry, ik ken dat onderwerp nog niet.\",'bot');
+    return;
+  }
+  if(input===\"opdracht\"){ 
+    if(memory.lastTopic && ASSIGNMENTS[memory.lastTopic]) appendMessage(\"📝 Opdracht: \"+ASSIGNMENTS[memory.lastTopic],'bot');
+    else appendMessage(\"Geen actieve opdracht. Leer eerst een onderwerp via 'leg uit: ...'\",'bot');
+    return;
+  }
+  appendMessage(\"🤔 Sorry, dat begrijp ik niet helemaal.\",'bot');
+}
+
+// -------------------------
+// EVENTS
+// -------------------------
+sendBtn.addEventListener('click',handleUserInput);
+inputEl.addEventListener('keydown',e=>{ if(e.key==='Enter') handleUserInput(); });
+
+chips.forEach(chip=>{
+  chip.addEventListener('click',()=>{
+    const action=chip.dataset.action;
+    if(!memory.lastTopic && ['samenvat','kernwoorden','assignment','stap','example'].includes(action)){
+      appendMessage(\"Leer eerst iets via 'leg uit: ...'\",'bot'); return;
+    }
+    switch(action){
+      case \"more\": appendMessage(\"💡 Gebruik 'leg uit: <onderwerp>' voor uitleg\",'bot'); break;
+      case \"example\": appendMessage(\"Stuur een voorbeeld met 'voorbeeld: <jouw voorbeeld>'\",'bot'); break;
+      case \"dontget\": processInput(\"ik snap het niet\"); break;
+      case \"assignment\": if(memory.lastTopic) appendMessage(\"📝 Opdracht: \"+ASSIGNMENTS[memory.lastTopic],'bot'); break;
+      case \"stap\": appendMessage(\"Gebruik 'leg uit: ...' om uitleg in stappen te krijgen.\",'bot'); break;
+      case \"samenvat\": appendMessage(\"📝 Samenvatting: \"+KNOWLEDGE[memory.lastTopic],'bot'); break;
+      case \"kernwoorden\": appendMessage(\"🔑 Kernwoorden: \"+KNOWLEDGE[memory.lastTopic].split(\" \").slice(0,5).join(\", \"),'bot'); break;
+    }
+  });
+});
+
+howBtn.addEventListener('click',()=>{ appendMessage(\"📚 Gebruik 'leg uit: <onderwerp>' om uitleg te krijgen, 'opdracht' voor een oefening, en de knoppen voor snelle acties.\",'bot'); });
+
+updateUI();
+</script>
+</body>
+</html>
