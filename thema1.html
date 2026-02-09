@@ -1,159 +1,279 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="data:," />
   <title>Thema 1: Landschappen</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
   <style>
+    :root {
+      color-scheme: dark;
+      --bg: #061425;
+      --panel: rgba(12, 33, 58, 0.9);
+      --panel-border: rgba(88, 179, 255, 0.35);
+      --accent: #4fc3ff;
+      --accent-2: #7b61ff;
+      --text: #e9f6ff;
+      --muted: #a6c2d6;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      background-color: #e7f4fb;
-      font-family: 'Fredoka One', cursive;
       margin: 0;
-      padding: 0;
-      text-align: center;
+      font-family: 'Nunito', sans-serif;
+      background: radial-gradient(circle at top, #123056 0%, #061425 55%, #030a14 100%);
+      color: var(--text);
+      min-height: 100vh;
     }
 
     header {
-      background-color: #0099e5;
-      color: white;
-      padding: 20px;
-      font-size: 2em;
-      position: relative;
+      padding: 2rem 1.5rem 1rem;
+      text-align: center;
+      background: linear-gradient(90deg, rgba(19, 54, 89, 0.95), rgba(15, 40, 68, 0.95));
+      border-bottom: 1px solid var(--panel-border);
+      box-shadow: 0 0 24px rgba(79, 195, 255, 0.2);
     }
 
-    .pavo {
-      position: absolute;
-      top: 10px;
-      right: 20px;
-      width: 80px;
+    header h1 {
+      margin: 0;
+      font-size: 2.2rem;
+      letter-spacing: 0.5px;
     }
 
-    .scoreboard {
-      margin: 30px 0;
+    header p {
+      margin: 0.6rem 0 0;
+      color: var(--muted);
     }
 
-    .board {
+    .layout {
+      display: grid;
+      grid-template-columns: 2.2fr 1fr;
+      gap: 1.5rem;
+      padding: 2rem 1.5rem 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .panel {
+      background: var(--panel);
+      border-radius: 18px;
+      border: 1px solid var(--panel-border);
+      box-shadow: 0 12px 30px rgba(3, 12, 24, 0.6);
+      padding: 1.5rem;
+    }
+
+    .panel-title {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.2rem;
+      margin: 0 0 1rem;
+    }
+
+    .score-card {
+      text-align: center;
+      padding: 1rem;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(79, 195, 255, 0.2), rgba(123, 97, 255, 0.15));
+      border: 1px solid rgba(79, 195, 255, 0.35);
+      margin-bottom: 1.5rem;
+    }
+
+    .score-card h3 {
+      margin: 0 0 0.5rem;
+      font-size: 1.2rem;
+    }
+
+    .score-card p {
+      margin: 0.3rem 0;
+    }
+
+    .unit-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 1rem;
-      padding: 20px;
-      justify-items: center;
     }
 
-    .card {
-      background: white;
-      border-radius: 20px;
-      padding: 20px;
-      width: 220px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    .unit-card {
+      background: rgba(9, 24, 43, 0.9);
+      border-radius: 14px;
+      border: 1px solid rgba(79, 195, 255, 0.2);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
     }
 
-    .card h2 {
-      margin: 0 0 10px;
-      font-size: 1.3rem;
+    .unit-card h4 {
+      margin: 0;
+      font-size: 1rem;
     }
 
-    .card p {
-      margin: 5px 0;
+    .unit-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
     }
 
-    .start-button {
-      display: inline-block;
-      padding: 8px 16px;
-      margin-top: 10px;
-      background-color: #00c853;
+    .unit-card a {
+      align-self: flex-start;
+    }
+
+    .unit-card button {
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      border: none;
       color: white;
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .chat-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .chat-avatar {
+      width: 140px;
+      height: 140px;
       border-radius: 20px;
-      text-decoration: none;
+      background: linear-gradient(135deg, rgba(79, 195, 255, 0.25), rgba(123, 97, 255, 0.25));
+      border: 1px solid rgba(79, 195, 255, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      margin: 0 auto;
     }
 
-    .start-button.locked {
-      background-color: #ccc;
-      cursor: not-allowed;
+    .chat-box {
+      background: rgba(7, 19, 34, 0.9);
+      border-radius: 14px;
+      border: 1px solid rgba(79, 195, 255, 0.2);
+      padding: 1rem;
     }
 
-    .score {
-      font-size: 1.2rem;
-      color: #333;
+    .chat-box input {
+      width: 100%;
+      padding: 0.6rem;
+      border-radius: 10px;
+      border: 1px solid rgba(79, 195, 255, 0.3);
+      background: rgba(6, 16, 30, 0.9);
+      color: var(--text);
+    }
+
+    .chat-box button {
+      margin-top: 0.6rem;
+      width: 100%;
+      border: none;
+      border-radius: 999px;
+      padding: 0.5rem 0;
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      color: white;
+      font-weight: 700;
+    }
+
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
   <header>
-    🗺️ Thema 1: Landschappen
-    <img src="img/pavomascotte.png" class="pavo" alt="PAVo mascotte">
+    <h1>📘 Thema 1: Landschappen</h1>
+    <p>Ontdek natuurlijke, menselijke elementen en hun gebruik.</p>
   </header>
 
-  <section class="scoreboard">
-    <h2>🎯 Totaalscore Thema 1</h2>
-    <p class="score">💡 240 / 360 XP</p>
-    <p>Je bent goed op weg!</p>
-  </section>
+  <main class="layout">
+    <section class="panel">
+      <div class="score-card">
+        <h3>🎯 Totaalscore Thema 1</h3>
+        <p>💡 240 / 360 XP</p>
+        <p>Je bent goed op weg!</p>
+      </div>
 
-  <div class="board">
-    <div class="card" style="background-color: #dcf5e4">
-      <h2>Deel 1</h2>
-      <p>Wat is een landschap?</p>
-      <a href="unit1.html" class="start-button">Opnieuw</a>
-    </div>
-    <div class="card" style="background-color: #dcf5e4">
-      <h2>Deel 2</h2>
-      <p>Natuurlijke elementen</p>
-      <a href="unit2.html" class="start-button">Opnieuw</a>
-    </div>
-    <div class="card" style="background-color: #dcf5e4">
-      <h2>Deel 3</h2>
-      <p>Menselijke elementen</p>
-      <a href="unit3.html" class="start-button">Opnieuw</a>
-    </div>
-    <div class="card" style="background-color: #dcf5e4">
-      <h2>Deel 4</h2>
-      <p>Soorten landschappen</p>
-      <a href="unit4.html" class="start-button">Opnieuw</a>
-    </div>
-    <div class="card" style="background-color: #dcf5e4">
-      <h2>Deel 5</h2>
-      <p>Gebruik van landschappen</p>
-      <a href="unit5.html" class="start-button">Opnieuw</a>
-    </div>
-    <div class="card" style="background-color: #dcf5e4">
-      <h2>Deel 6</h2>
-      <p>Veranderingen door tijd</p>
-      <a href="unit6.html" class="start-button">Opnieuw</a>
-    </div>
-    <div class="card" style="background-color: #dcf5e4">
-      <h2>Deel 7</h2>
-      <p>Invloed van de mens</p>
-      <a href="unit7.html" class="start-button">Opnieuw</a>
-    </div>
-    <div class="card" style="background-color: #dcf5e4">
-      <h2>Deel 8</h2>
-      <p>Invloed van de natuur</p>
-      <a href="unit8.html" class="start-button">Opnieuw</a>
-    </div>
-    <div class="card" style="background-color: #dcf5e4">
-      <h2>Deel 9</h2>
-      <p>Grenzen en regio’s</p>
-      <a href="unit9.html" class="start-button">Opnieuw</a>
-    </div>
-    <div class="card" style="background-color: #dcf5e4">
-      <h2>Deel 10</h2>
-      <p>Voorbeelden regio’s</p>
-      <a href="unit10.html" class="start-button">Opnieuw</a>
-    </div>
-    <div class="card" style="background-color: #dcf5e4">
-      <h2>Deel 11</h2>
-      <p>Toepassingen</p>
-      <a href="unit11.html" class="start-button">Opnieuw</a>
-    </div>
-    <div class="card" style="background-color: #dcf5e4">
-      <h2>Deel 12</h2>
-      <p>Grote herhaling & afsluiting</p>
-      <a href="unit12.html" class="start-button">Start</a>
-    </div>
-  </div>
+      <h2 class="panel-title">📚 Onderdelen</h2>
+      <div class="unit-grid">
+        <div class="unit-card">
+          <h4>Deel 1</h4>
+          <p>Wat is een landschap?</p>
+          <a href="unit1.html"><button>Start</button></a>
+        </div>
+        <div class="unit-card">
+          <h4>Deel 2</h4>
+          <p>Natuurlijke elementen</p>
+          <a href="unit2.html"><button>Start</button></a>
+        </div>
+        <div class="unit-card">
+          <h4>Deel 3</h4>
+          <p>Menselijke elementen</p>
+          <a href="unit3.html"><button>Start</button></a>
+        </div>
+        <div class="unit-card">
+          <h4>Deel 4</h4>
+          <p>Soorten landschappen</p>
+          <a href="unit4.html"><button>Start</button></a>
+        </div>
+        <div class="unit-card">
+          <h4>Deel 5</h4>
+          <p>Gebruik van landschappen</p>
+          <a href="unit5.html"><button>Start</button></a>
+        </div>
+        <div class="unit-card">
+          <h4>Deel 6</h4>
+          <p>Veranderingen door tijd</p>
+          <a href="unit6.html"><button>Start</button></a>
+        </div>
+        <div class="unit-card">
+          <h4>Deel 7</h4>
+          <p>Invloed van de mens</p>
+          <a href="unit7.html"><button>Start</button></a>
+        </div>
+        <div class="unit-card">
+          <h4>Deel 8</h4>
+          <p>Invloed van de natuur</p>
+          <a href="unit8.html"><button>Start</button></a>
+        </div>
+        <div class="unit-card">
+          <h4>Deel 9</h4>
+          <p>Grenzen en regio’s</p>
+          <a href="unit9.html"><button>Start</button></a>
+        </div>
+        <div class="unit-card">
+          <h4>Deel 10</h4>
+          <p>Voorbeelden regio’s</p>
+          <a href="unit10.html"><button>Start</button></a>
+        </div>
+        <div class="unit-card">
+          <h4>Deel 11</h4>
+          <p>Toepassingen</p>
+          <a href="unit11.html"><button>Start</button></a>
+        </div>
+        <div class="unit-card">
+          <h4>Deel 12</h4>
+          <p>Grote herhaling & afsluiting</p>
+          <a href="unit12.html"><button>Start</button></a>
+        </div>
+      </div>
+    </section>
+
+    <aside class="panel chat-panel">
+      <h2 class="panel-title">🤖 Chattie (binnenkort)</h2>
+      <div class="chat-avatar">🦉</div>
+      <div class="chat-box">
+        <p>Hallo! Waarmee kan ik je helpen?</p>
+        <input type="text" placeholder="Typ hier je vraag..." disabled />
+        <button type="button" disabled>Verstuur</button>
+      </div>
+    </aside>
+  </main>
 </body>
 </html>
-
-
