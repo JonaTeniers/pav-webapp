@@ -8,7 +8,7 @@
   <style>
     body { margin:0; font-family:'Nunito',sans-serif; background:#f5f3ff; color:#1f2937; }
     header { background:#7c3aed; color:#fff; text-align:center; padding:1.2rem; }
-    main { width:min(920px,95%); margin:1.2rem auto 2rem; }
+    main { width:min(960px,95%); margin:1.2rem auto 2rem; }
     .card { background:#fff; border-radius:14px; box-shadow:0 6px 16px rgba(0,0,0,.08); padding:1.1rem; margin-bottom:1rem; }
     .fragment { background:#faf5ff; border-left:4px solid #7c3aed; padding:0.8rem; border-radius:8px; }
     .helper { color:#4b5563; font-size:.95rem; }
@@ -21,7 +21,7 @@
     .error { color:#b91c1c; }
     .hidden { display:none; }
     .text-input, .select-input, textarea { width:100%; border:1px solid #c4b5fd; border-radius:8px; padding:.55rem; font-family:inherit; }
-    textarea { min-height:90px; margin-top:.45rem; }
+    textarea { min-height:95px; margin-top:.45rem; }
     .nav-buttons { display:flex; gap:.6rem; flex-wrap:wrap; margin-top:1rem; }
   </style>
 </head>
@@ -37,14 +37,14 @@
       <p><a href="https://www.canonvanvlaanderen.be/events/de-eerste-treinrit/" target="_blank" rel="noopener noreferrer">🔗 Ga naar de bron: De eerste treinrit</a></p>
       <div class="fragment">
         <strong>Tekstfragment (samengevat):</strong>
-        <p>In 1835 reed de eerste trein op het Europese vasteland tussen Brussel en Mechelen. Dat maakte reizen en handel sneller. Spoorwegen veranderden werk, steden en het dagelijkse leven in Vlaanderen ingrijpend.</p>
+        <p>In 1835 reed de eerste trein op het Europese vasteland tussen Brussel en Mechelen. Die trein was meer dan techniek: hij versnelde transport, handel en communicatie. Steden en industrie groeiden mee met het spoor. Zo zie je in het verhaal van Vlaanderen hoe technologie sociale en economische verandering aandrijft.</p>
       </div>
-      <p class="helper">Koppeling met de reeks: bekijk op VRT MAX <em>Het verhaal van Vlaanderen</em> en zoek het stuk dat bij dit onderwerp past.</p>
+      <p class="helper">Koppeling met de reeks: bekijk op VRT MAX <em>Het verhaal van Vlaanderen</em> en zoek het deel dat inhoudelijk aansluit.</p>
       <p><a href="https://www.vrt.be/vrtmax/a-z/het-verhaal-van-vlaanderen/" target="_blank" rel="noopener noreferrer">🎬 VRT MAX – Het verhaal van Vlaanderen</a></p>
     </section>
 
     <section class="question-box" id="quizBox">
-      <h2 id="qCount">Vraag 1 van 5</h2>
+      <h2 id="qCount">Vraag 1 van 8</h2>
       <p class="helper" id="qType"></p>
       <div id="questionText"></div>
       <form id="answerForm"></form>
@@ -56,9 +56,11 @@
     </section>
 
     <section class="card hidden" id="reflectieBox">
-      <h2>🧠 Reflectie: hoe voel je je bij dit deel van het verhaal?</h2>
-      <p>Waarom zorgde de trein voor een “versnelling” van de samenleving? Geef 1 concreet voorbeeld.</p>
-      <textarea id="gevoelInput" placeholder="Schrijf hier je gevoel, wat je begreep, en wat je nog wil vragen..."></textarea>
+      <h2>🧠 Reflectie: diep begrip</h2>
+      <p><strong>Begripsvraag:</strong> Leg uit hoe één technologische vernieuwing (de trein) meerdere delen van de samenleving tegelijk kon veranderen.</p>
+      <textarea id="gevoelInput" placeholder="Schrijf je antwoord in volledige zinnen..."></textarea>
+      <p><strong>Verdiepingsvraag:</strong> Verdiepingsopdracht: maak een mini-schema met 3 pijlen: trein → economie, trein → werk, trein → dagelijks leven. Schrijf bij elke pijl één concreet gevolg.</p>
+      <textarea id="verdiepingInput" placeholder="Werk je verdiepingsopdracht hier uit..."></textarea>
       <button type="button" onclick="bewaarReflectie()">Bewaar reflectie</button>
       <p class="helper" id="reflectieFeedback"></p>
     </section>
@@ -66,7 +68,7 @@
     <section class="question-box hidden" id="endScreen">
       <h2>🎉 Unit voltooid!</h2>
       <p>Je behaalde <span id="xpScore">0</span> XP.</p>
-      <p>Je reflectie is bewaard. Goed gewerkt aan jouw deel van <strong>het verhaal van Vlaanderen</strong>.</p>
+      <p>Top! Je hebt feiten, verbanden én reflectie verwerkt in jouw deel van <strong>het verhaal van Vlaanderen</strong>.</p>
       <div class="nav-buttons">
         <a href="thema9.html"><button type="button">← Terug naar thema</button></a>
         <a href="thema9unit4.html"><button type="button">→ Volgende unit</button></a>
@@ -75,7 +77,7 @@
   </main>
 
   <script>
-    const questions = [{'type': 'mc', 'typeLabel': 'Meerkeuze', 'question': 'Waarom was de eerste treinrit historisch?', 'options': ['Ze toonde dat technologie economie en mobiliteit kon veranderen', 'Ze was enkel voor sport', 'Ze had geen invloed buiten Brussel'], 'correctIndex': 0}, {'type': 'open', 'typeLabel': 'Open vraag', 'question': 'Tussen welke steden reed die eerste rit?', 'accepted': ['brussel en mechelen', 'mechelen en brussel']}, {'type': 'drag', 'typeLabel': 'Selectie', 'question': 'Kies het beste gevolg van spoorwegen.', 'options': ['Sneller vervoer van mensen en goederen', 'Minder contact tussen steden', 'Geen verandering in handel'], 'correctValue': 'Sneller vervoer van mensen en goederen'}, {'type': 'mc', 'typeLabel': 'Meerkeuze', 'question': 'Hoe past dit in het verhaal van Vlaanderen?', 'options': ['Het markeert de overgang naar een modern en industrieel Vlaanderen', 'Het gaat enkel over één station', 'Het betekent het einde van techniek'], 'correctIndex': 0}, {'type': 'open', 'typeLabel': 'Open vraag', 'question': 'Noem 1 domein dat veranderde door de trein.', 'accepted': ['handel', 'werk', 'mobiliteit', 'industrie', 'vervoer']}];
+    const questions = [{"type": "mc", "typeLabel": "Meerkeuze", "question": "Waarom is de eerste treinrit historisch relevant?", "options": ["Ze markeert het begin van snelle moderne mobiliteit op het vasteland", "Ze was een eenmalig experiment zonder impact", "Ze verving alle andere vervoermiddelen meteen"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Tussen welke twee steden reed de eerste rit?", "accepted": ["brussel en mechelen", "mechelen en brussel"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke sector profiteerde sterk van spoorwegen?", "options": ["Handel en industrie", "Alleen theater", "Geen enkele sector"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies het beste oorzaak-gevolgverband.", "options": ["Sneller goederenvervoer maakte markten groter", "Treinen maakten afstanden langer", "Spoorwegen stopten verstedelijking"], "correctValue": "Sneller goederenvervoer maakte markten groter"}, {"type": "open", "typeLabel": "Open vraag", "question": "Noem 1 sociaal gevolg van spoorwegen voor gewone mensen.", "accepted": ["sneller reizen", "meer werk", "mobiliteit", "verplaatsing", "steden groeiden"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Waarom past deze unit in het verhaal van Vlaanderen?", "options": ["Ze toont hoe modernisering niet alleen politiek, maar ook technologisch verliep", "Ze gaat enkel over locomotieven als hobby", "Ze bewijst dat verandering onmogelijk is"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Selectie", "question": "Welke verdiepende vraag is het sterkst?", "options": ["Wie won en wie verloor door de nieuwe mobiliteit?", "Welke trein was het mooist geschilderd?", "Waren stations altijd warm?"], "correctValue": "Wie won en wie verloor door de nieuwe mobiliteit?"}, {"type": "open", "typeLabel": "Open vraag", "question": "Geef 2 kernwoorden die deze unit samenvatten.", "accepted": ["industrialisatie", "mobiliteit", "modernisering", "handel", "spoorwegen"]}];
     let currentQuestion = 0;
     let score = 0;
 
@@ -131,7 +133,7 @@
         feedback.innerText = '✅ Juist! +3 XP';
         feedback.classList.add('success');
       } else {
-        feedback.innerText = '❌ Nog niet juist. Lees het fragment opnieuw.';
+        feedback.innerText = '❌ Nog niet juist. Lees opnieuw en zoek oorzaak-gevolg/nuance.';
         feedback.classList.add('error');
       }
       document.getElementById('nextBtn').classList.remove('hidden');
@@ -151,10 +153,12 @@
     }
 
     function bewaarReflectie() {
-      const txt = document.getElementById('gevoelInput').value.trim();
-      if (!txt) return;
-      localStorage.setItem('thema9unit3_reflectie', txt);
-      document.getElementById('reflectieFeedback').innerText = '✅ Reflectie bewaard.';
+      const begrip = document.getElementById('gevoelInput').value.trim();
+      const verdieping = document.getElementById('verdiepingInput').value.trim();
+      if (!begrip && !verdieping) return;
+      const payload = JSON.stringify({ begrip, verdieping });
+      localStorage.setItem('thema9unit3_reflectie', payload);
+      document.getElementById('reflectieFeedback').innerText = '✅ Reflectie en verdieping bewaard.';
     }
 
     window.onload = loadQuestion;

@@ -8,7 +8,7 @@
   <style>
     body { margin:0; font-family:'Nunito',sans-serif; background:#f5f3ff; color:#1f2937; }
     header { background:#7c3aed; color:#fff; text-align:center; padding:1.2rem; }
-    main { width:min(920px,95%); margin:1.2rem auto 2rem; }
+    main { width:min(960px,95%); margin:1.2rem auto 2rem; }
     .card { background:#fff; border-radius:14px; box-shadow:0 6px 16px rgba(0,0,0,.08); padding:1.1rem; margin-bottom:1rem; }
     .fragment { background:#faf5ff; border-left:4px solid #7c3aed; padding:0.8rem; border-radius:8px; }
     .helper { color:#4b5563; font-size:.95rem; }
@@ -21,7 +21,7 @@
     .error { color:#b91c1c; }
     .hidden { display:none; }
     .text-input, .select-input, textarea { width:100%; border:1px solid #c4b5fd; border-radius:8px; padding:.55rem; font-family:inherit; }
-    textarea { min-height:90px; margin-top:.45rem; }
+    textarea { min-height:95px; margin-top:.45rem; }
     .nav-buttons { display:flex; gap:.6rem; flex-wrap:wrap; margin-top:1rem; }
   </style>
 </head>
@@ -37,14 +37,14 @@
       <p><a href="https://www.canonvanvlaanderen.be/events/emilie-claeys/" target="_blank" rel="noopener noreferrer">🔗 Ga naar de bron: Emilie Claeys</a></p>
       <div class="fragment">
         <strong>Tekstfragment (samengevat):</strong>
-        <p>Emilie Claeys streed in de 19de eeuw voor de rechten van vrouwen en arbeiders. Ze vroeg aandacht voor gelijke kansen, betere leefomstandigheden en politieke inspraak. Zo gaf ze mee richting aan sociale verandering in Vlaanderen.</p>
+        <p>Emilie Claeys was een pionier in de socialistische en feministische beweging. Ze streed voor betere arbeidsomstandigheden en politieke rechten voor vrouwen. Haar verhaal maakt duidelijk dat maatschappelijke vooruitgang vaak komt door actie van burgers die ongelijkheid zichtbaar maken en blijven aandringen op verandering.</p>
       </div>
-      <p class="helper">Koppeling met de reeks: bekijk op VRT MAX <em>Het verhaal van Vlaanderen</em> en zoek het stuk dat bij dit onderwerp past.</p>
+      <p class="helper">Koppeling met de reeks: bekijk op VRT MAX <em>Het verhaal van Vlaanderen</em> en zoek het deel dat inhoudelijk aansluit.</p>
       <p><a href="https://www.vrt.be/vrtmax/a-z/het-verhaal-van-vlaanderen/" target="_blank" rel="noopener noreferrer">🎬 VRT MAX – Het verhaal van Vlaanderen</a></p>
     </section>
 
     <section class="question-box" id="quizBox">
-      <h2 id="qCount">Vraag 1 van 5</h2>
+      <h2 id="qCount">Vraag 1 van 8</h2>
       <p class="helper" id="qType"></p>
       <div id="questionText"></div>
       <form id="answerForm"></form>
@@ -56,9 +56,11 @@
     </section>
 
     <section class="card hidden" id="reflectieBox">
-      <h2>🧠 Reflectie: hoe voel je je bij dit deel van het verhaal?</h2>
-      <p>Welke ongelijkheid wilde Emilie Claeys aanpakken? Leg uit in je eigen woorden.</p>
-      <textarea id="gevoelInput" placeholder="Schrijf hier je gevoel, wat je begreep, en wat je nog wil vragen..."></textarea>
+      <h2>🧠 Reflectie: diep begrip</h2>
+      <p><strong>Begripsvraag:</strong> Leg uit waarom sociale verandering vaak traag gaat. Gebruik Emilie Claeys als voorbeeld.</p>
+      <textarea id="gevoelInput" placeholder="Schrijf je antwoord in volledige zinnen..."></textarea>
+      <p><strong>Verdiepingsvraag:</strong> Verdiepingsopdracht: noteer twee eisen van sociale bewegingen uit deze periode en koppel elke eis aan een probleem dat men wilde oplossen.</p>
+      <textarea id="verdiepingInput" placeholder="Werk je verdiepingsopdracht hier uit..."></textarea>
       <button type="button" onclick="bewaarReflectie()">Bewaar reflectie</button>
       <p class="helper" id="reflectieFeedback"></p>
     </section>
@@ -66,7 +68,7 @@
     <section class="question-box hidden" id="endScreen">
       <h2>🎉 Unit voltooid!</h2>
       <p>Je behaalde <span id="xpScore">0</span> XP.</p>
-      <p>Je reflectie is bewaard. Goed gewerkt aan jouw deel van <strong>het verhaal van Vlaanderen</strong>.</p>
+      <p>Top! Je hebt feiten, verbanden én reflectie verwerkt in jouw deel van <strong>het verhaal van Vlaanderen</strong>.</p>
       <div class="nav-buttons">
         <a href="thema9.html"><button type="button">← Terug naar thema</button></a>
         <a href="thema9unit5.html"><button type="button">→ Volgende unit</button></a>
@@ -75,7 +77,7 @@
   </main>
 
   <script>
-    const questions = [{'type': 'mc', 'typeLabel': 'Meerkeuze', 'question': 'Waarvoor is Emilie Claeys vooral bekend?', 'options': ['Strijd voor vrouwenrechten en sociale rechten', 'Uitvinden van de trein', 'Invoeren van de euro'], 'correctIndex': 0}, {'type': 'open', 'typeLabel': 'Open vraag', 'question': 'Noem 1 groep waarvoor ze opkwam.', 'accepted': ['vrouwen', 'arbeiders', 'werkende mensen']}, {'type': 'drag', 'typeLabel': 'Selectie', 'question': 'Welke uitspraak klopt het best?', 'options': ['Sociale bewegingen hielpen de samenleving rechtvaardiger maken', 'Sociale bewegingen maakten rechten onbelangrijk', 'Sociale bewegingen gingen enkel over mode'], 'correctValue': 'Sociale bewegingen hielpen de samenleving rechtvaardiger maken'}, {'type': 'mc', 'typeLabel': 'Meerkeuze', 'question': 'Waarom hoort deze unit in het verhaal van Vlaanderen?', 'options': ['Ze toont dat vooruitgang ook strijd voor rechten vraagt', 'Ze heeft niets met Vlaanderen te maken', 'Ze gaat alleen over één persoon zonder impact'], 'correctIndex': 0}, {'type': 'open', 'typeLabel': 'Open vraag', 'question': 'Welk kernwoord hoort bij Emilie Claeys?', 'accepted': ['emancipatie', 'gelijkheid', 'sociale strijd', 'rechten']}];
+    const questions = [{"type": "mc", "typeLabel": "Meerkeuze", "question": "Waarvoor is Emilie Claeys vooral bekend?", "options": ["Strijd voor vrouwenrechten en sociale rechtvaardigheid", "Ontwerp van de Belgische grondwet", "Invoering van de euro"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Noem 1 groep die volgens deze unit meer rechten nodig had.", "accepted": ["vrouwen", "arbeiders", "werkende mensen", "arbeidsters"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke bredere les leert haar verhaal?", "options": ["Rechten worden vaak afgedwongen door collectieve actie", "Rechten ontstaan vanzelf zonder strijd", "Enkel economische groei verandert rechten"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies het beste verband.", "options": ["Sociale bewegingen zetten ongelijkheid op de politieke agenda", "Sociale bewegingen maken wetten overbodig", "Sociale bewegingen gingen alleen over kunst"], "correctValue": "Sociale bewegingen zetten ongelijkheid op de politieke agenda"}, {"type": "open", "typeLabel": "Open vraag", "question": "Welk kernbegrip past hier het best: streven naar gelijke kansen voor mannen en vrouwen?", "accepted": ["emancipatie", "gelijkheid", "feminisme"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Waarom is dit essentieel in het verhaal van Vlaanderen?", "options": ["Het verbindt sociale strijd met democratische uitbreiding van rechten", "Het gaat enkel over één lokaal detail", "Het heeft geen invloed op vandaag"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Selectie", "question": "Welke verdiepende vraag helpt je het meest?", "options": ["Welke rechten lijken vandaag vanzelfsprekend maar waren ooit omstreden?", "Welke kleur had haar jas?", "Hoe lang waren haar toespraken exact?"], "correctValue": "Welke rechten lijken vandaag vanzelfsprekend maar waren ooit omstreden?"}, {"type": "open", "typeLabel": "Open vraag", "question": "Noem 2 kernwoorden voor deze unit.", "accepted": ["emancipatie", "sociale strijd", "rechten", "gelijkheid", "vrouwenrechten"]}];
     let currentQuestion = 0;
     let score = 0;
 
@@ -131,7 +133,7 @@
         feedback.innerText = '✅ Juist! +3 XP';
         feedback.classList.add('success');
       } else {
-        feedback.innerText = '❌ Nog niet juist. Lees het fragment opnieuw.';
+        feedback.innerText = '❌ Nog niet juist. Lees opnieuw en zoek oorzaak-gevolg/nuance.';
         feedback.classList.add('error');
       }
       document.getElementById('nextBtn').classList.remove('hidden');
@@ -151,10 +153,12 @@
     }
 
     function bewaarReflectie() {
-      const txt = document.getElementById('gevoelInput').value.trim();
-      if (!txt) return;
-      localStorage.setItem('thema9unit4_reflectie', txt);
-      document.getElementById('reflectieFeedback').innerText = '✅ Reflectie bewaard.';
+      const begrip = document.getElementById('gevoelInput').value.trim();
+      const verdieping = document.getElementById('verdiepingInput').value.trim();
+      if (!begrip && !verdieping) return;
+      const payload = JSON.stringify({ begrip, verdieping });
+      localStorage.setItem('thema9unit4_reflectie', payload);
+      document.getElementById('reflectieFeedback').innerText = '✅ Reflectie en verdieping bewaard.';
     }
 
     window.onload = loadQuestion;

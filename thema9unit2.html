@@ -8,7 +8,7 @@
   <style>
     body { margin:0; font-family:'Nunito',sans-serif; background:#f5f3ff; color:#1f2937; }
     header { background:#7c3aed; color:#fff; text-align:center; padding:1.2rem; }
-    main { width:min(920px,95%); margin:1.2rem auto 2rem; }
+    main { width:min(960px,95%); margin:1.2rem auto 2rem; }
     .card { background:#fff; border-radius:14px; box-shadow:0 6px 16px rgba(0,0,0,.08); padding:1.1rem; margin-bottom:1rem; }
     .fragment { background:#faf5ff; border-left:4px solid #7c3aed; padding:0.8rem; border-radius:8px; }
     .helper { color:#4b5563; font-size:.95rem; }
@@ -21,7 +21,7 @@
     .error { color:#b91c1c; }
     .hidden { display:none; }
     .text-input, .select-input, textarea { width:100%; border:1px solid #c4b5fd; border-radius:8px; padding:.55rem; font-family:inherit; }
-    textarea { min-height:90px; margin-top:.45rem; }
+    textarea { min-height:95px; margin-top:.45rem; }
     .nav-buttons { display:flex; gap:.6rem; flex-wrap:wrap; margin-top:1rem; }
   </style>
 </head>
@@ -37,14 +37,14 @@
       <p><a href="https://www.canonvanvlaanderen.be/events/een-liberale-grondwet/" target="_blank" rel="noopener noreferrer">🔗 Ga naar de bron: Een liberale grondwet</a></p>
       <div class="fragment">
         <strong>Tekstfragment (samengevat):</strong>
-        <p>Na de Belgische onafhankelijkheid kwam er in 1831 een grondwet met opvallend veel vrijheden, zoals persvrijheid en vrijheid van vereniging. Die regels legden de basis van de democratie zoals we die nu kennen.</p>
+        <p>De Belgische grondwet van 1831 was in Europa opvallend liberaal. Ze beschermde vrijheden zoals persvrijheid, vrijheid van vereniging en godsdienstvrijheid. Toch bleef politieke inspraak in het begin beperkt: niet iedereen mocht stemmen. Dat maakt deze unit belangrijk: rechten groeiden stap voor stap, niet in één keer.</p>
       </div>
-      <p class="helper">Koppeling met de reeks: bekijk op VRT MAX <em>Het verhaal van Vlaanderen</em> en zoek het stuk dat bij dit onderwerp past.</p>
+      <p class="helper">Koppeling met de reeks: bekijk op VRT MAX <em>Het verhaal van Vlaanderen</em> en zoek het deel dat inhoudelijk aansluit.</p>
       <p><a href="https://www.vrt.be/vrtmax/a-z/het-verhaal-van-vlaanderen/" target="_blank" rel="noopener noreferrer">🎬 VRT MAX – Het verhaal van Vlaanderen</a></p>
     </section>
 
     <section class="question-box" id="quizBox">
-      <h2 id="qCount">Vraag 1 van 5</h2>
+      <h2 id="qCount">Vraag 1 van 8</h2>
       <p class="helper" id="qType"></p>
       <div id="questionText"></div>
       <form id="answerForm"></form>
@@ -56,9 +56,11 @@
     </section>
 
     <section class="card hidden" id="reflectieBox">
-      <h2>🧠 Reflectie: hoe voel je je bij dit deel van het verhaal?</h2>
-      <p>Welke vrijheid uit de grondwet vind jij het belangrijkst? Leg uit waarom in 2 zinnen.</p>
-      <textarea id="gevoelInput" placeholder="Schrijf hier je gevoel, wat je begreep, en wat je nog wil vragen..."></textarea>
+      <h2>🧠 Reflectie: diep begrip</h2>
+      <p><strong>Begripsvraag:</strong> Kies één vrijheid uit de grondwet en leg uit waarom die vandaag nog essentieel is voor een democratie.</p>
+      <textarea id="gevoelInput" placeholder="Schrijf je antwoord in volledige zinnen..."></textarea>
+      <p><strong>Verdiepingsvraag:</strong> Verdiepingsopdracht: vergelijk “vrijheid op papier” met “vrijheid in de praktijk”. Geef één historisch voorbeeld waarbij een recht bestond, maar nog niet voor iedereen werkte.</p>
+      <textarea id="verdiepingInput" placeholder="Werk je verdiepingsopdracht hier uit..."></textarea>
       <button type="button" onclick="bewaarReflectie()">Bewaar reflectie</button>
       <p class="helper" id="reflectieFeedback"></p>
     </section>
@@ -66,7 +68,7 @@
     <section class="question-box hidden" id="endScreen">
       <h2>🎉 Unit voltooid!</h2>
       <p>Je behaalde <span id="xpScore">0</span> XP.</p>
-      <p>Je reflectie is bewaard. Goed gewerkt aan jouw deel van <strong>het verhaal van Vlaanderen</strong>.</p>
+      <p>Top! Je hebt feiten, verbanden én reflectie verwerkt in jouw deel van <strong>het verhaal van Vlaanderen</strong>.</p>
       <div class="nav-buttons">
         <a href="thema9.html"><button type="button">← Terug naar thema</button></a>
         <a href="thema9unit3.html"><button type="button">→ Volgende unit</button></a>
@@ -75,7 +77,7 @@
   </main>
 
   <script>
-    const questions = [{'type': 'mc', 'typeLabel': 'Meerkeuze', 'question': 'Waarvoor dient een grondwet?', 'options': ['Ze legt basisregels en rechten van burgers vast', 'Ze kiest elke dag het weer', 'Ze vervangt alle schoolregels'], 'correctIndex': 0}, {'type': 'open', 'typeLabel': 'Open vraag', 'question': 'Noem 1 vrijheid die in een liberale grondwet staat.', 'accepted': ['persvrijheid', 'vrijheid van meningsuiting', 'godsdienstvrijheid', 'vrijheid van vereniging']}, {'type': 'drag', 'typeLabel': 'Selectie', 'question': 'Welke link klopt met het verhaal van Vlaanderen?', 'options': ['Vrijheden zorgden voor meer burgerparticipatie', 'Vrijheden maakten stemmen onmogelijk', 'Vrijheden hadden geen effect'], 'correctValue': 'Vrijheden zorgden voor meer burgerparticipatie'}, {'type': 'mc', 'typeLabel': 'Meerkeuze', 'question': 'Wat is een gevolg van grondrechten?', 'options': ['Burgers kunnen de overheid beter controleren', 'Alle wetten verdwijnen', 'Alleen de koning beslist'], 'correctIndex': 0}, {'type': 'open', 'typeLabel': 'Open vraag', 'question': 'Welk kernwoord past het best bij deze unit?', 'accepted': ['democratie', 'vrijheid', 'grondrechten']}];
+    const questions = [{"type": "mc", "typeLabel": "Meerkeuze", "question": "Wat doet een grondwet in de eerste plaats?", "options": ["Ze legt de basisregels en grondrechten van een staat vast", "Ze vervangt alle gewone wetten", "Ze bepaalt enkel schoolregels"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Noem 1 klassieke vrijheid uit een liberale grondwet.", "accepted": ["persvrijheid", "vrijheid van meningsuiting", "godsdienstvrijheid", "vrijheid van vereniging"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke nuance klopt over 1831?", "options": ["De grondwet was vooruitstrevend, maar kiesrecht bleef beperkt", "Iedereen had meteen stemrecht", "Er waren geen burgerrechten"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies de beste democratische redenering.", "options": ["Grondrechten helpen burgers om macht te controleren", "Grondrechten maken burgers onbelangrijk", "Grondrechten zijn alleen symbolen"], "correctValue": "Grondrechten helpen burgers om macht te controleren"}, {"type": "open", "typeLabel": "Open vraag", "question": "Welk begrip past hier: burgers kunnen meepraten en meebeslissen in de politiek?", "accepted": ["democratie", "inspraak", "participatie"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Waarom is dit een sleutelstuk in het verhaal van Vlaanderen?", "options": ["Het legt een institutionele basis voor latere sociale en politieke strijd", "Het is losstaand zonder gevolgen", "Het gaat enkel over één politicus"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Selectie", "question": "Welke historische vraag verdiept je begrip het meest?", "options": ["Voor wie golden deze rechten nog niet volledig?", "Welke pen gebruikte men in 1831?", "Hoeveel ramen had het parlementsgebouw?"], "correctValue": "Voor wie golden deze rechten nog niet volledig?"}, {"type": "open", "typeLabel": "Open vraag", "question": "Noem 2 kernwoorden voor deze unit.", "accepted": ["grondwet", "vrijheid", "democratie", "rechten", "inspraak"]}];
     let currentQuestion = 0;
     let score = 0;
 
@@ -131,7 +133,7 @@
         feedback.innerText = '✅ Juist! +3 XP';
         feedback.classList.add('success');
       } else {
-        feedback.innerText = '❌ Nog niet juist. Lees het fragment opnieuw.';
+        feedback.innerText = '❌ Nog niet juist. Lees opnieuw en zoek oorzaak-gevolg/nuance.';
         feedback.classList.add('error');
       }
       document.getElementById('nextBtn').classList.remove('hidden');
@@ -151,10 +153,12 @@
     }
 
     function bewaarReflectie() {
-      const txt = document.getElementById('gevoelInput').value.trim();
-      if (!txt) return;
-      localStorage.setItem('thema9unit2_reflectie', txt);
-      document.getElementById('reflectieFeedback').innerText = '✅ Reflectie bewaard.';
+      const begrip = document.getElementById('gevoelInput').value.trim();
+      const verdieping = document.getElementById('verdiepingInput').value.trim();
+      if (!begrip && !verdieping) return;
+      const payload = JSON.stringify({ begrip, verdieping });
+      localStorage.setItem('thema9unit2_reflectie', payload);
+      document.getElementById('reflectieFeedback').innerText = '✅ Reflectie en verdieping bewaard.';
     }
 
     window.onload = loadQuestion;

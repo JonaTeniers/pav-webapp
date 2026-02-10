@@ -8,7 +8,7 @@
   <style>
     body { margin:0; font-family:'Nunito',sans-serif; background:#f5f3ff; color:#1f2937; }
     header { background:#7c3aed; color:#fff; text-align:center; padding:1.2rem; }
-    main { width:min(920px,95%); margin:1.2rem auto 2rem; }
+    main { width:min(960px,95%); margin:1.2rem auto 2rem; }
     .card { background:#fff; border-radius:14px; box-shadow:0 6px 16px rgba(0,0,0,.08); padding:1.1rem; margin-bottom:1rem; }
     .fragment { background:#faf5ff; border-left:4px solid #7c3aed; padding:0.8rem; border-radius:8px; }
     .helper { color:#4b5563; font-size:.95rem; }
@@ -21,7 +21,7 @@
     .error { color:#b91c1c; }
     .hidden { display:none; }
     .text-input, .select-input, textarea { width:100%; border:1px solid #c4b5fd; border-radius:8px; padding:.55rem; font-family:inherit; }
-    textarea { min-height:90px; margin-top:.45rem; }
+    textarea { min-height:95px; margin-top:.45rem; }
     .nav-buttons { display:flex; gap:.6rem; flex-wrap:wrap; margin-top:1rem; }
   </style>
 </head>
@@ -37,14 +37,14 @@
       <p><a href="https://www.canonvanvlaanderen.be/events/de-dossinkazerne/" target="_blank" rel="noopener noreferrer">🔗 Ga naar de bron: De Dossinkazerne</a></p>
       <div class="fragment">
         <strong>Tekstfragment (samengevat):</strong>
-        <p>Tijdens de Tweede Wereldoorlog gebruikten de nazi’s de Dossinkazerne in Mechelen als verzamelplaats voor Joden en Roma, die daarna gedeporteerd werden. Deze plek herinnert ons aan uitsluiting, geweld en het belang van mensenrechten.</p>
+        <p>Tijdens de nazi-bezetting werd de Dossinkazerne in Mechelen gebruikt als verzamelplaats vanwaar Joden en Roma werden gedeporteerd. Dit toont hoe een overheid en samenleving kunnen ontsporen wanneer mensen worden ontmenselijkt. In het verhaal van Vlaanderen is dit een moreel keerpunt: herinneren is nodig om waakzaam te blijven voor uitsluiting en racisme.</p>
       </div>
-      <p class="helper">Koppeling met de reeks: bekijk op VRT MAX <em>Het verhaal van Vlaanderen</em> en zoek het stuk dat bij dit onderwerp past.</p>
+      <p class="helper">Koppeling met de reeks: bekijk op VRT MAX <em>Het verhaal van Vlaanderen</em> en zoek het deel dat inhoudelijk aansluit.</p>
       <p><a href="https://www.vrt.be/vrtmax/a-z/het-verhaal-van-vlaanderen/" target="_blank" rel="noopener noreferrer">🎬 VRT MAX – Het verhaal van Vlaanderen</a></p>
     </section>
 
     <section class="question-box" id="quizBox">
-      <h2 id="qCount">Vraag 1 van 5</h2>
+      <h2 id="qCount">Vraag 1 van 8</h2>
       <p class="helper" id="qType"></p>
       <div id="questionText"></div>
       <form id="answerForm"></form>
@@ -56,9 +56,11 @@
     </section>
 
     <section class="card hidden" id="reflectieBox">
-      <h2>🧠 Reflectie: hoe voel je je bij dit deel van het verhaal?</h2>
-      <p>Welke les moeten we vandaag onthouden uit het verhaal van de Dossinkazerne?</p>
-      <textarea id="gevoelInput" placeholder="Schrijf hier je gevoel, wat je begreep, en wat je nog wil vragen..."></textarea>
+      <h2>🧠 Reflectie: diep begrip</h2>
+      <p><strong>Begripsvraag:</strong> Waarom is herinneringseducatie noodzakelijk voor een democratische samenleving? Geef 2 redenen.</p>
+      <textarea id="gevoelInput" placeholder="Schrijf je antwoord in volledige zinnen..."></textarea>
+      <p><strong>Verdiepingsvraag:</strong> Verdiepingsopdracht: schrijf 4 zinnen waarin je het verschil uitlegt tussen “kennen van feiten” en “historische verantwoordelijkheid opnemen”.</p>
+      <textarea id="verdiepingInput" placeholder="Werk je verdiepingsopdracht hier uit..."></textarea>
       <button type="button" onclick="bewaarReflectie()">Bewaar reflectie</button>
       <p class="helper" id="reflectieFeedback"></p>
     </section>
@@ -66,7 +68,7 @@
     <section class="question-box hidden" id="endScreen">
       <h2>🎉 Unit voltooid!</h2>
       <p>Je behaalde <span id="xpScore">0</span> XP.</p>
-      <p>Je reflectie is bewaard. Goed gewerkt aan jouw deel van <strong>het verhaal van Vlaanderen</strong>.</p>
+      <p>Top! Je hebt feiten, verbanden én reflectie verwerkt in jouw deel van <strong>het verhaal van Vlaanderen</strong>.</p>
       <div class="nav-buttons">
         <a href="thema9.html"><button type="button">← Terug naar thema</button></a>
         <a href="thema9unit6.html"><button type="button">→ Volgende unit</button></a>
@@ -75,7 +77,7 @@
   </main>
 
   <script>
-    const questions = [{'type': 'mc', 'typeLabel': 'Meerkeuze', 'question': 'Wat was de Dossinkazerne in WOII?', 'options': ['Een verzamel- en deportatieplaats onder nazi-bezetting', 'Een treinstation voor toeristen', 'Een moderne universiteit'], 'correctIndex': 0}, {'type': 'open', 'typeLabel': 'Open vraag', 'question': 'Welke groep werd onder andere gedeporteerd vanuit de Dossinkazerne?', 'accepted': ['joden', 'roma', 'joodse mensen']}, {'type': 'drag', 'typeLabel': 'Selectie', 'question': 'Welke historische houding is hier het belangrijkst?', 'options': ['Herinneren zodat uitsluiting en haat zich niet herhalen', 'Vergeten zodat het makkelijker is', 'Doen alsof het niet gebeurd is'], 'correctValue': 'Herinneren zodat uitsluiting en haat zich niet herhalen'}, {'type': 'mc', 'typeLabel': 'Meerkeuze', 'question': 'Waarom is dit essentieel in het verhaal van Vlaanderen?', 'options': ['Het maakt duidelijk wat er kan gebeuren als mensenrechten verdwijnen', 'Het is enkel lokaal nieuws', 'Het heeft geen link met vandaag'], 'correctIndex': 0}, {'type': 'open', 'typeLabel': 'Open vraag', 'question': 'Noem 1 waarde die je aan deze unit koppelt.', 'accepted': ['respect', 'mensenrechten', 'verdraagzaamheid', 'herinnering', 'solidariteit']}];
+    const questions = [{"type": "mc", "typeLabel": "Meerkeuze", "question": "Wat was de rol van de Dossinkazerne in WOII?", "options": ["Verzamel- en deportatieplaats onder nazi-bezetting", "Schuilplaats voor vervolgde groepen", "Cultureel centrum zonder oorlogsfunctie"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Noem 1 vervolgde groep die via deze plek gedeporteerd werd.", "accepted": ["joden", "joodse mensen", "roma"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke waarschuwing zit in dit verhaal?", "options": ["Uitsluiting kan escaleren als rechten niet beschermd worden", "Geschiedenis herhaalt zich nooit", "Mensenrechten zijn alleen belangrijk in oorlog"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies de beste maatschappelijke les.", "options": ["Herinneren helpt discriminatie en ontmenselijking herkennen", "Herinneren houdt haat levend en moet vermeden worden", "Verleden heeft geen invloed op keuzes vandaag"], "correctValue": "Herinneren helpt discriminatie en ontmenselijking herkennen"}, {"type": "open", "typeLabel": "Open vraag", "question": "Noem 1 waarde die je centraal vindt bij dit onderwerp.", "accepted": ["mensenrechten", "respect", "waardigheid", "verdraagzaamheid", "solidariteit"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Waarom is dit deel van het verhaal van Vlaanderen zo belangrijk?", "options": ["Omdat het confronteert met de gevolgen van haat en uitsluiting", "Omdat het alleen over één gebouw gaat", "Omdat het geen link heeft met burgerschap"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Selectie", "question": "Welke verdiepende vraag is het meest historisch relevant?", "options": ["Welke mechanismen maakten vervolging maatschappelijk mogelijk?", "Welke dag was het koudst in Mechelen?", "Hoe groot was elke kamer exact?"], "correctValue": "Welke mechanismen maakten vervolging maatschappelijk mogelijk?"}, {"type": "open", "typeLabel": "Open vraag", "question": "Geef 2 kernwoorden die deze unit samenvatten.", "accepted": ["herinnering", "mensenrechten", "uitsluiting", "holocaust", "waakzaamheid"]}];
     let currentQuestion = 0;
     let score = 0;
 
@@ -131,7 +133,7 @@
         feedback.innerText = '✅ Juist! +3 XP';
         feedback.classList.add('success');
       } else {
-        feedback.innerText = '❌ Nog niet juist. Lees het fragment opnieuw.';
+        feedback.innerText = '❌ Nog niet juist. Lees opnieuw en zoek oorzaak-gevolg/nuance.';
         feedback.classList.add('error');
       }
       document.getElementById('nextBtn').classList.remove('hidden');
@@ -151,10 +153,12 @@
     }
 
     function bewaarReflectie() {
-      const txt = document.getElementById('gevoelInput').value.trim();
-      if (!txt) return;
-      localStorage.setItem('thema9unit5_reflectie', txt);
-      document.getElementById('reflectieFeedback').innerText = '✅ Reflectie bewaard.';
+      const begrip = document.getElementById('gevoelInput').value.trim();
+      const verdieping = document.getElementById('verdiepingInput').value.trim();
+      if (!begrip && !verdieping) return;
+      const payload = JSON.stringify({ begrip, verdieping });
+      localStorage.setItem('thema9unit5_reflectie', payload);
+      document.getElementById('reflectieFeedback').innerText = '✅ Reflectie en verdieping bewaard.';
     }
 
     window.onload = loadQuestion;

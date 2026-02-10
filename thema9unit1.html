@@ -8,7 +8,7 @@
   <style>
     body { margin:0; font-family:'Nunito',sans-serif; background:#f5f3ff; color:#1f2937; }
     header { background:#7c3aed; color:#fff; text-align:center; padding:1.2rem; }
-    main { width:min(920px,95%); margin:1.2rem auto 2rem; }
+    main { width:min(960px,95%); margin:1.2rem auto 2rem; }
     .card { background:#fff; border-radius:14px; box-shadow:0 6px 16px rgba(0,0,0,.08); padding:1.1rem; margin-bottom:1rem; }
     .fragment { background:#faf5ff; border-left:4px solid #7c3aed; padding:0.8rem; border-radius:8px; }
     .helper { color:#4b5563; font-size:.95rem; }
@@ -21,7 +21,7 @@
     .error { color:#b91c1c; }
     .hidden { display:none; }
     .text-input, .select-input, textarea { width:100%; border:1px solid #c4b5fd; border-radius:8px; padding:.55rem; font-family:inherit; }
-    textarea { min-height:90px; margin-top:.45rem; }
+    textarea { min-height:95px; margin-top:.45rem; }
     .nav-buttons { display:flex; gap:.6rem; flex-wrap:wrap; margin-top:1rem; }
   </style>
 </head>
@@ -37,14 +37,14 @@
       <p><a href="https://www.canonvanvlaanderen.be/events/het-wetboek-van-napoleon/" target="_blank" rel="noopener noreferrer">🔗 Ga naar de bron: Het wetboek van Napoleon</a></p>
       <div class="fragment">
         <strong>Tekstfragment (samengevat):</strong>
-        <p>Napoleon voerde in onze streken een burgerlijk wetboek in. Daardoor stonden veel regels plots op papier en golden ze in principe voor iedereen. Dat was nieuw: vroeger verschilden regels vaak per streek of groep.</p>
+        <p>Napoleon voerde een burgerlijk wetboek in met regels over eigendom, huwelijk, erfenis en contracten. Het grote verschil met vroeger was dat regels systematisch op papier stonden en niet langer alleen afhingen van lokale gewoontes. Tegelijk was die gelijkheid niet volledig: vrouwen kregen bijvoorbeeld niet dezelfde rechten als mannen. Daarom is dit een sterk startpunt in het verhaal van Vlaanderen: modernisering én beperkingen naast elkaar.</p>
       </div>
-      <p class="helper">Koppeling met de reeks: bekijk op VRT MAX <em>Het verhaal van Vlaanderen</em> en zoek het stuk dat bij dit onderwerp past.</p>
+      <p class="helper">Koppeling met de reeks: bekijk op VRT MAX <em>Het verhaal van Vlaanderen</em> en zoek het deel dat inhoudelijk aansluit.</p>
       <p><a href="https://www.vrt.be/vrtmax/a-z/het-verhaal-van-vlaanderen/" target="_blank" rel="noopener noreferrer">🎬 VRT MAX – Het verhaal van Vlaanderen</a></p>
     </section>
 
     <section class="question-box" id="quizBox">
-      <h2 id="qCount">Vraag 1 van 5</h2>
+      <h2 id="qCount">Vraag 1 van 8</h2>
       <p class="helper" id="qType"></p>
       <div id="questionText"></div>
       <form id="answerForm"></form>
@@ -56,9 +56,11 @@
     </section>
 
     <section class="card hidden" id="reflectieBox">
-      <h2>🧠 Reflectie: hoe voel je je bij dit deel van het verhaal?</h2>
-      <p>Leg in 1 zin uit waarom het wetboek belangrijk was voor gewone mensen.</p>
-      <textarea id="gevoelInput" placeholder="Schrijf hier je gevoel, wat je begreep, en wat je nog wil vragen..."></textarea>
+      <h2>🧠 Reflectie: diep begrip</h2>
+      <p><strong>Begripsvraag:</strong> Leg uit: wat was vooruitstrevend aan dit wetboek, en wat was nog oneerlijk? Geef van elk 1 voorbeeld.</p>
+      <textarea id="gevoelInput" placeholder="Schrijf je antwoord in volledige zinnen..."></textarea>
+      <p><strong>Verdiepingsvraag:</strong> Verdiepingsopdracht: lees in de Canon één stuk over familie of eigendom. Schrijf daarna in 3-4 zinnen hoe zo’n regel het dagelijkse leven van een gewoon gezin kon veranderen.</p>
+      <textarea id="verdiepingInput" placeholder="Werk je verdiepingsopdracht hier uit..."></textarea>
       <button type="button" onclick="bewaarReflectie()">Bewaar reflectie</button>
       <p class="helper" id="reflectieFeedback"></p>
     </section>
@@ -66,7 +68,7 @@
     <section class="question-box hidden" id="endScreen">
       <h2>🎉 Unit voltooid!</h2>
       <p>Je behaalde <span id="xpScore">0</span> XP.</p>
-      <p>Je reflectie is bewaard. Goed gewerkt aan jouw deel van <strong>het verhaal van Vlaanderen</strong>.</p>
+      <p>Top! Je hebt feiten, verbanden én reflectie verwerkt in jouw deel van <strong>het verhaal van Vlaanderen</strong>.</p>
       <div class="nav-buttons">
         <a href="thema9.html"><button type="button">← Terug naar thema</button></a>
         <a href="thema9unit2.html"><button type="button">→ Volgende unit</button></a>
@@ -75,7 +77,7 @@
   </main>
 
   <script>
-    const questions = [{'type': 'mc', 'typeLabel': 'Meerkeuze', 'question': 'Wat veranderde er door het wetboek van Napoleon?', 'options': ['Regels werden duidelijker en meer gelijk voor iedereen', 'Iedereen moest soldaat worden', 'Alleen rijke mensen kregen rechten'], 'correctIndex': 0}, {'type': 'open', 'typeLabel': 'Open vraag', 'question': 'Welk woord past best: het wetboek zorgt voor meer ...', 'accepted': ['gelijkheid', 'gelijke regels', 'rechtszekerheid']}, {'type': 'drag', 'typeLabel': 'Selectie', 'question': 'Welke zin toont oorzaak en gevolg correct?', 'options': ['Omdat regels op papier stonden, konden rechters consequenter oordelen', 'Door het weer veranderde de wet', 'Een wetboek is hetzelfde als een trein'], 'correctValue': 'Omdat regels op papier stonden, konden rechters consequenter oordelen'}, {'type': 'mc', 'typeLabel': 'Meerkeuze', 'question': 'Waarom hoort dit bij het verhaal van Vlaanderen?', 'options': ['Het toont hoe de samenleving moderner en eerlijker werd', 'Het gaat enkel over mode', 'Het heeft geen invloed vandaag'], 'correctIndex': 0}, {'type': 'open', 'typeLabel': 'Open vraag', 'question': 'Noem 1 reden waarom vaste regels belangrijk zijn in een land.', 'accepted': ['eerlijkheid', 'duidelijkheid', 'gelijke behandeling', 'zekerheid']}];
+    const questions = [{"type": "mc", "typeLabel": "Meerkeuze", "question": "Wat maakte het wetboek van Napoleon historisch belangrijk?", "options": ["Regels werden gecodificeerd en breder toepasbaar", "Alle lokale regels verdwenen in één dag", "Het was enkel een militair handboek"], "correctIndex": 0}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke nuance klopt?", "options": ["Er was meer rechtsgelijkheid, maar niet voor iedereen in dezelfde mate", "Iedereen kreeg exact dezelfde rechten", "Het wetboek ging alleen over straffen"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Noem 1 domein dat in een burgerlijk wetboek geregeld wordt.", "accepted": ["eigendom", "erfenis", "huwelijk", "contracten", "familie"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies de beste oorzaak-gevolgzin.", "options": ["Omdat regels op papier stonden, werd rechtspraak voorspelbaarder", "Omdat Napoleon kwam, stopte alle ongelijkheid meteen", "Omdat men schreef, waren er geen rechters meer"], "correctValue": "Omdat regels op papier stonden, werd rechtspraak voorspelbaarder"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Waarom past dit in het verhaal van Vlaanderen?", "options": ["Het toont de overgang van traditionele naar moderne staatsregels", "Het is alleen een Frans verhaal zonder invloed hier", "Het gaat enkel over oorlogen"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Wie had in die tijd vaak minder juridische macht binnen het gezin?", "accepted": ["vrouwen", "de vrouw", "vrouwenrechten"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Welke historische vraag is hier het sterkst?", "options": ["Wie profiteerde van deze hervorming, en wie minder?", "Welke kleur had de kaft van het wetboek?", "Hoeveel pagina’s las Napoleon zelf?"], "correctValue": "Wie profiteerde van deze hervorming, en wie minder?"}, {"type": "open", "typeLabel": "Open vraag", "question": "Geef 2 kernwoorden die deze unit samenvatten.", "accepted": ["rechtszekerheid", "gelijkheid", "wetboek", "modernisering", "ongelijkheid"]}];
     let currentQuestion = 0;
     let score = 0;
 
@@ -131,7 +133,7 @@
         feedback.innerText = '✅ Juist! +3 XP';
         feedback.classList.add('success');
       } else {
-        feedback.innerText = '❌ Nog niet juist. Lees het fragment opnieuw.';
+        feedback.innerText = '❌ Nog niet juist. Lees opnieuw en zoek oorzaak-gevolg/nuance.';
         feedback.classList.add('error');
       }
       document.getElementById('nextBtn').classList.remove('hidden');
@@ -151,10 +153,12 @@
     }
 
     function bewaarReflectie() {
-      const txt = document.getElementById('gevoelInput').value.trim();
-      if (!txt) return;
-      localStorage.setItem('thema9unit1_reflectie', txt);
-      document.getElementById('reflectieFeedback').innerText = '✅ Reflectie bewaard.';
+      const begrip = document.getElementById('gevoelInput').value.trim();
+      const verdieping = document.getElementById('verdiepingInput').value.trim();
+      if (!begrip && !verdieping) return;
+      const payload = JSON.stringify({ begrip, verdieping });
+      localStorage.setItem('thema9unit1_reflectie', payload);
+      document.getElementById('reflectieFeedback').innerText = '✅ Reflectie en verdieping bewaard.';
     }
 
     window.onload = loadQuestion;
