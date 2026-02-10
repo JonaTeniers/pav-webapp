@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thema 8 – Actualiteit</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --panel: #ffffff;
+      --accent: #0f766e;
+      --accent-dark: #0b5f58;
+      --text: #1f2937;
+      --muted: #4b5563;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    header {
+      background: #14b8a6;
+      color: white;
+      padding: 1.8rem 1rem;
+      text-align: center;
+    }
+    main {
+      width: min(1100px, 95%);
+      margin: 1.5rem auto 2rem;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1rem;
+    }
+    .panel {
+      background: var(--panel);
+      border-radius: 14px;
+      padding: 1.2rem;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+    }
+    .task {
+      margin-top: 1rem;
+      border-top: 1px solid #dbe5ef;
+      padding-top: 1rem;
+    }
+    .task ul { margin: 0.4rem 0; padding-left: 1.2rem; }
+    .article-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.7rem;
+      margin-top: 0.8rem;
+    }
+    .article-card {
+      border: 1px solid #cce7e3;
+      border-radius: 10px;
+      padding: 0.8rem;
+      background: #f0fdfa;
+    }
+    .article-card a { color: #0f766e; font-weight: 700; text-decoration: none; }
+    .article-card a:hover { text-decoration: underline; }
+
+    .unit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 0.8rem;
+      margin-top: 0.8rem;
+    }
+    .unit-card {
+      border: 2px solid #bce7e1;
+      border-radius: 12px;
+      padding: 0.9rem;
+      background: #f0fdfa;
+    }
+    .unit-card h4 { margin: 0 0 0.35rem; }
+    .unit-card p {
+      margin: 0 0 0.65rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .unit-card .status {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #0b5f58;
+      margin-bottom: 0.7rem;
+    }
+    .unit-card a { text-decoration: none; }
+    .unit-card button {
+      width: 100%;
+      border: none;
+      border-radius: 8px;
+      padding: 0.5rem 0.7rem;
+      font-weight: 700;
+      color: #fff;
+      background: var(--accent);
+      cursor: pointer;
+    }
+    .unit-card button:hover { background: var(--accent-dark); }
+    .chat-embed {
+      width: 100%;
+      min-height: 520px;
+      border: none;
+      border-radius: 12px;
+      background: #f3f7ff;
+    }
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      margin-top: 0.8rem;
+      background: var(--accent);
+      color: white;
+      padding: 0.5rem 0.9rem;
+      border-radius: 999px;
+      font-weight: 700;
+    }
+    .btn:hover { background: var(--accent-dark); }
+    @media (max-width: 900px) {
+      main { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📰 Thema 8 – Actualiteit</h1>
+    <p>Werk met echte nieuwsartikels en oefen taal, vorm, lezen en luisteren.</p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>Focus van dit thema</h2>
+      <p>In dit thema werk je rond recente actualiteit. Je oefent met persoonsvorm en onderwerp, leest nieuws kritisch en luistert naar een podcastfragment.</p>
+
+      <div class="task">
+        <h3>Wat oefen je?</h3>
+        <ul>
+          <li>Onderwerp en persoonsvorm herkennen in zinnen uit nieuwsberichten.</li>
+          <li>Belangrijke info uit artikels halen (wie, wat, waar, wanneer, waarom).</li>
+          <li>Betrouwbare informatie herkennen en kernwoorden noteren.</li>
+          <li>Actief luisteren naar een nieuwsfragment en samenvatten.</li>
+        </ul>
+      </div>
+
+      <div class="task">
+        <h3>Bronnen voor de lessen</h3>
+        <div class="article-list">
+          <div class="article-card">
+            <strong>Artikel 1 (HLN)</strong><br>
+            <a href="https://www.hln.be/internet/microsoft-waarschuwt-voor-gevaarlijke-schaduw-ai-dit-creeert-blinde-vlekken~a793bb5f/" target="_blank" rel="noopener noreferrer">Microsoft waarschuwt voor gevaarlijke ‘schaduw-AI’</a>
+          </div>
+          <div class="article-card">
+            <strong>Artikel 2 (VRT NWS)</strong><br>
+            <a href="https://www.vrt.be/vrtnws/nl/2026/02/10/politie-stelt-97-overtredingen-vast-bij-grootschalige-controleac/" target="_blank" rel="noopener noreferrer">Politie stelt 97 overtredingen vast bij grootschalige controleactie</a>
+          </div>
+          <div class="article-card">
+            <strong>Artikel 3 (De Morgen)</strong><br>
+            <a href="https://www.demorgen.be/sport/vlaanderen-zet-zich-op-de-kaart-als-hotspot-voor-wintersporten~b8a6f556/" target="_blank" rel="noopener noreferrer">Vlaanderen zet zich op de kaart als hotspot voor wintersporten</a>
+          </div>
+          <div class="article-card">
+            <strong>Luisterfragment (VRT NWS)</strong><br>
+            <a href="https://www.vrt.be/vrtnws/nl/luister/podcasts/programma/het-kwartier~program-55f7d28c-af40-43ca-884d-980d5e96212e/" target="_blank" rel="noopener noreferrer">Podcast: Het Kwartier</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="task">
+        <h3>📚 Units</h3>
+        <div class="unit-grid">
+          <div class="unit-card">
+            <h4>Unit 1</h4>
+            <p>Lezen: info en hoofdgedachte uit nieuwsartikels.</p>
+            <p class="status">Beschikbaar</p>
+            <a href="thema8unit1.html"><button>Start</button></a>
+          </div>
+          <div class="unit-card">
+            <h4>Unit 2</h4>
+            <p>Taal en vorm: onderwerp en persoonsvorm.</p>
+            <p class="status">Beschikbaar</p>
+            <a href="thema8unit2.html"><button>Start</button></a>
+          </div>
+          <div class="unit-card">
+            <h4>Unit 3</h4>
+            <p>Luisteren: kernwoorden en korte samenvatting.</p>
+            <p class="status">Beschikbaar</p>
+            <a href="thema8unit3.html"><button>Start</button></a>
+          </div>
+        </div>
+      </div>
+
+      <a class="btn" href="index.html">← Terug naar overzicht</a>
+    </section>
+
+    <aside class="panel">
+      <h2>🤖 Chattie</h2>
+      <p style="color: var(--muted);">Laat Chattie je helpen met nieuwsbegrippen en taalvragen.</p>
+      <iframe class="chat-embed" title="Chattie" src="chattie.html?thema=Thema%208%20Actualiteit"></iframe>
+    </aside>
+  </main>
+</body>
+</html>
