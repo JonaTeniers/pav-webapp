@@ -97,9 +97,14 @@
     }
 
     .unit-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1rem;
+      display: block !important;
+      margin-top: 1rem;
+    }
+
+    .unit-grid > * {
+      display: block !important;
+      width: 100%;
+      margin-bottom: 1rem;
     }
 
     .unit-card {
