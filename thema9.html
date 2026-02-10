@@ -82,6 +82,51 @@
       border-radius: 999px; font-weight: 700;
     }
     .btn:hover { background: var(--accent-dark); }
+
+    .timeline-intro { margin-top: 1rem; }
+    .timeline-strip {
+      margin-top: 0.8rem;
+      border: 1px solid #e9d5ff;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .timeline-eras {
+      display: grid;
+      grid-template-columns: 2fr 1.3fr 1fr 1fr 0.8fr 0.8fr 0.7fr;
+      min-height: 88px;
+    }
+    .era {
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-weight: 800;
+      padding: 0.35rem;
+      line-height: 1.15;
+    }
+    .era.pre { background: #7e22ce; }
+    .era.near-east { background: #06b6d4; }
+    .era.classic { background: #22c55e; }
+    .era.middle { background: #eab308; color: #111827; }
+    .era.early-modern { background: #ef4444; }
+    .era.modern { background: #db2777; }
+    .era.today { background: #6b7280; }
+    .timeline-dates {
+      display: grid;
+      grid-template-columns: 2fr 1.3fr 1fr 1fr 0.8fr 0.8fr 0.7fr;
+      background: #faf5ff;
+      border-top: 1px solid #e9d5ff;
+    }
+    .timeline-dates span {
+      display: block;
+      text-align: center;
+      padding: 0.45rem 0.2rem;
+      font-size: 0.85rem;
+      color: #4b5563;
+      font-weight: 700;
+    }
     @media (max-width: 900px) { main { grid-template-columns: 1fr; } }
   </style>
 </head>
@@ -95,6 +140,33 @@
     <section class="panel">
       <h2>Focus van dit thema</h2>
       <p>Je werkt met de <strong>Canon van Vlaanderen</strong> en koppelt elke unit aan een episode uit <strong>Het verhaal van Vlaanderen</strong>. Zo begrijp je niet alleen feiten, maar ook het grotere verhaal.</p>
+
+      <div class="task timeline-intro">
+        <h3>🕰️ Tijdlijn als kapstok</h3>
+        <p>Gebruik deze tijdlijn eerst als overzicht: zo plaats je elke unit sneller in de juiste periode. Lees daarna de korte achtergrondbron.</p>
+        <p><a href="https://nl.wikipedia.org/wiki/Tijdvak" target="_blank" rel="noopener noreferrer">🔗 Achtergrondbron: historische tijdvakken (Wikipedia)</a></p>
+        <div class="timeline-strip" aria-label="Visuele tijdlijn van historische periodes">
+          <div class="timeline-eras">
+            <div class="era pre">Prehistorie</div>
+            <div class="era near-east">Oude Nabije Oosten</div>
+            <div class="era classic">Klassieke oudheid</div>
+            <div class="era middle">Middeleeuwen</div>
+            <div class="era early-modern">Vroegmoderne tijd</div>
+            <div class="era modern">Moderne tijd</div>
+            <div class="era today">Hedendaagse tijd</div>
+          </div>
+          <div class="timeline-dates">
+            <span>ca. 8500 v.Chr.</span>
+            <span>ca. 3500 v.Chr.</span>
+            <span>ca. 800 v.Chr.</span>
+            <span>476</span>
+            <span>ca. 1450</span>
+            <span>ca. 1750</span>
+            <span>1945</span>
+          </div>
+        </div>
+      </div>
+
 
       <div class="task">
         <h3>Wat oefen je?</h3>
@@ -110,12 +182,15 @@
       <div class="task">
         <h3>Bronnen voor de lessen</h3>
         <div class="article-list">
+          <div class="article-card"><strong>Startbron</strong><br><a href="https://nl.wikipedia.org/wiki/Tijdvak" target="_blank" rel="noopener noreferrer">Historische tijdvakken</a></div>
           <div class="article-card"><strong>Unit 1</strong><br><a href="https://www.canonvanvlaanderen.be/events/het-wetboek-van-napoleon/" target="_blank" rel="noopener noreferrer">Het wetboek van Napoleon</a></div>
           <div class="article-card"><strong>Unit 2</strong><br><a href="https://www.canonvanvlaanderen.be/events/een-liberale-grondwet/" target="_blank" rel="noopener noreferrer">Een liberale grondwet</a></div>
           <div class="article-card"><strong>Unit 3</strong><br><a href="https://www.canonvanvlaanderen.be/events/de-eerste-treinrit/" target="_blank" rel="noopener noreferrer">De eerste treinrit</a></div>
           <div class="article-card"><strong>Unit 4</strong><br><a href="https://www.canonvanvlaanderen.be/events/emilie-claeys/" target="_blank" rel="noopener noreferrer">Emilie Claeys</a></div>
           <div class="article-card"><strong>Unit 5</strong><br><a href="https://www.canonvanvlaanderen.be/events/de-dossinkazerne/" target="_blank" rel="noopener noreferrer">De Dossinkazerne</a></div>
           <div class="article-card"><strong>Unit 6</strong><br><a href="https://www.canonvanvlaanderen.be/events/de-euro/" target="_blank" rel="noopener noreferrer">De euro</a></div>
+          <div class="article-card"><strong>Unit 7</strong><br><a href="https://nl.wikipedia.org/wiki/Brabantse_Omwenteling" target="_blank" rel="noopener noreferrer">Brabantse Omwenteling</a> · <a href="https://historiek.net/de-boerenkrijg/8675/" target="_blank" rel="noopener noreferrer">Boerenkrijg</a> · <a href="https://encyclopedievlaamsebeweging.be/nl/boerenkrijg" target="_blank" rel="noopener noreferrer">EVB</a> · <a href="https://web.archive.org/web/20110206124041/http://genk.com/034/vanheusden.htm" target="_blank" rel="noopener noreferrer">Genk/Kempen</a></div>
+          <div class="article-card"><strong>Unit 8</strong><br><a href="https://nl.wikipedia.org/wiki/Belgische_Revolutie" target="_blank" rel="noopener noreferrer">Belgische Revolutie</a></div>
           <div class="article-card"><strong>Reeks</strong><br><a href="https://www.vrt.be/vrtmax/a-z/het-verhaal-van-vlaanderen/" target="_blank" rel="noopener noreferrer">VRT MAX: Het verhaal van Vlaanderen</a></div>
         </div>
       </div>
@@ -129,6 +204,8 @@
           <div class="unit-card"><h4>Unit 4</h4><p>Emilie Claeys en sociale rechten.</p><p class="status">Beschikbaar</p><a href="thema9unit4.html"><button>Start</button></a></div>
           <div class="unit-card"><h4>Unit 5</h4><p>Dossinkazerne: herinneren en begrijpen.</p><p class="status">Beschikbaar</p><a href="thema9unit5.html"><button>Start</button></a></div>
           <div class="unit-card"><h4>Unit 6</h4><p>De euro en Europa vandaag.</p><p class="status">Beschikbaar</p><a href="thema9unit6.html"><button>Start</button></a></div>
+          <div class="unit-card"><h4>Unit 7</h4><p>Brabantse Omwenteling en Boerenkrijg: wat is gelijk en wat verschilt?</p><p class="status">Nieuw</p><a href="thema9unit7.html"><button>Start</button></a></div>
+          <div class="unit-card"><h4>Unit 8</h4><p>Belgische Revolutie: oorzaken, sleutelmomenten en gevolgen.</p><p class="status">Nieuw</p><a href="thema9unit8.html"><button>Start</button></a></div>
         </div>
       </div>
 
