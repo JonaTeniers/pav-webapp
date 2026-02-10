@@ -106,15 +106,8 @@ body {
 .muted { color: var(--muted); font-size: 13px; }
 
 @media (max-width:880px){
-  .chat {
-    padding: 10px;
-  }
-  .chip-btn {
-    font-size: 12px;
-    padding: 6px 8px;
-  }
-  .send-btn {
-    padding: 9px 12px;
+  .container {
+    height: 100vh;
   }
 }
 </style>
@@ -288,128 +281,39 @@ if(themaNaam){
 // HELPERS
 // -------------------------
 function safeText(text){ const div=document.createElement('div'); div.textContent=text; return div.innerHTML; }
-function appendMessage(text,who='bot'){ const el=document.createElement('div'); el.className='msg '+who; const b=document.createElement('div'); b.className='bubble '+who; b.innerHTML=safeText(text).replace(/\n/g,'<br>'); el.appendChild(b); messagesEl.appendChild(el); messagesEl.scrollTop=messagesEl.scrollHeight; }
+function appendMessage(text,who='bot'){ const el=document.createElement('div'); el.className='msg '+who; const b=document.createElement('div'); b.className='bubble '+who; b.innerHTML=safeText(text).replace(/\\n/g,'<br>'); el.appendChild(b); messagesEl.appendChild(el); messagesEl.scrollTop=messagesEl.scrollHeight; }
 function updateUI(){}
 function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
 async function showTyping(){ appendMessage("Chattie denkt even na...",'bot'); await sleep(TYPING_MS); messagesEl.lastChild?.remove(); }
-function normalizeInput(value){ return value.toLowerCase().trim().replace(/[?!.,;:]/g,""); }
-function findTopicInInput(input){
-  if(KNOWLEDGE[input]) return input;
-  const keys=Object.keys(KNOWLEDGE);
-  const exactContains=keys.find((key)=>input.includes(key));
-  if(exactContains) return exactContains;
-  const words=input.split(/\s+/).filter(Boolean);
-  let bestMatch=null;
-  let bestScore=0;
-  keys.forEach((key)=>{
-    const keyWords=key.split(/\s+/);
-    const score=keyWords.reduce((acc,word)=>acc+(words.includes(word)?1:0),0);
-    if(score>bestScore){ bestScore=score; bestMatch=key; }
-  });
-  return bestScore>=2 ? bestMatch : null;
-}
-function getTopicSuggestions(){
-  return Object.keys(KNOWLEDGE).slice(0,8).join(", ");
-}
 
 // -------------------------
 // CHAT FUNCTIES
 // -------------------------
 function handleUserInput(){
   if(isDisabled){ appendMessage("🚫 Chattie is uitgeschakeld. Typ '"+RESET_CODE+"' om te resetten.","bot"); return; }
-  const rawInput=inputEl.value.trim();
-  if(!rawInput) return;
-  appendMessage(rawInput,'user'); inputEl.value='';
-  processInput(rawInput);
+  const input=inputEl.value.trim();
+  if(!input) return;
+  appendMessage(input,'user'); inputEl.value='';
+  processInput(input.toLowerCase());
 }
 
-async function processInput(rawInput){
-  const input=normalizeInput(rawInput);
-
+async function processInput(input){
   if(FORBIDDEN.some(w=>input.includes(w))){ escalation++; appendMessage("❗ Dat was niet gepast. Blijf beleefd a.u.b.",'bot'); return; }
   if(input===RESET_CODE){ escalation=0; isDisabled=false; memory={}; appendMessage("🔄 Chattie is herstart!",'bot'); updateUI(); return; }
-
-  if(["start","hallo","hey","goedemorgen","goedenavond"].includes(input)){
-    isChatActive=true;
-    await showTyping();
-    appendMessage("👋 Hallo! Ik help je graag. Zeg bv. 'leg uit: ai' of stel je vraag rechtstreeks.",'bot');
-    updateUI();
+  if(input==="start"){ isChatActive=true; appendMessage("🎉 Hallo! Typ 'leg uit: ai' om te starten.",'bot'); updateUI(); return; }
+  if(input==="einde"){ isChatActive=false; appendMessage("👋 Tot later!",'bot'); updateUI(); return; }
+  if(input.startsWith("leg uit:")){ 
+    const topic=input.replace(/^leg uit:/,"").trim(); 
+    if(KNOWLEDGE[topic]){ await showTyping(); appendMessage("Hier is een uitleg over '"+topic+"':",'bot'); appendMessage(KNOWLEDGE[topic],'bot'); memory.lastTopic=topic; updateUI(); }
+    else appendMessage("Sorry, ik ken dat onderwerp nog niet.",'bot');
     return;
   }
-
-  if(["einde","stop","bye","tot later"].includes(input)){
-    isChatActive=false;
-    appendMessage("👋 Tot later!",'bot');
-    updateUI();
-    return;
-  }
-
-  if(["dankje","dank u","thanks","bedankt"].includes(input)){
-    appendMessage("Graag gedaan! Wil je nog uitleg, een samenvatting of een opdracht?",'bot');
-    return;
-  }
-
-  if(input.startsWith("leg uit:")){
-    const topic=input.replace(/^leg uit:/,"").trim();
-    if(KNOWLEDGE[topic]){
-      await showTyping();
-      appendMessage("Hier is een uitleg over '"+topic+"':",'bot');
-      appendMessage(KNOWLEDGE[topic],'bot');
-      memory.lastTopic=topic;
-      updateUI();
-    } else {
-      const guessedTopic=findTopicInInput(topic);
-      if(guessedTopic){
-        await showTyping();
-        appendMessage("Bedoel je '"+guessedTopic+"'?",'bot');
-        appendMessage(KNOWLEDGE[guessedTopic],'bot');
-        memory.lastTopic=guessedTopic;
-        updateUI();
-      } else {
-        appendMessage("Dat onderwerp ken ik nog niet. Probeer één van deze thema's: "+getTopicSuggestions()+".",'bot');
-      }
-    }
-    return;
-  }
-
-  if(input.startsWith("voorbeeld:")){
-    const example=input.replace(/^voorbeeld:/,"").trim();
-    if(!example){
-      appendMessage("Typ je voorbeeld na 'voorbeeld:'. Ik geef dan feedback.",'bot');
-      return;
-    }
-    appendMessage("Mooi voorbeeld 👍. Wil je dat ik het kort verbeter of uitbreid?",'bot');
-    return;
-  }
-
-  if(input==="opdracht"){
+  if(input==="opdracht"){ 
     if(memory.lastTopic && ASSIGNMENTS[memory.lastTopic]) appendMessage("📝 Opdracht: "+ASSIGNMENTS[memory.lastTopic],'bot');
-    else appendMessage("Geen actieve opdracht. Kies eerst een onderwerp via 'leg uit: ...'.",'bot');
+    else appendMessage("Geen actieve opdracht. Leer eerst een onderwerp via 'leg uit: ...'",'bot');
     return;
   }
-
-  if(input==="samenvatting" || input==="samenvat"){
-    if(memory.lastTopic){ appendMessage("📝 Samenvatting: "+KNOWLEDGE[memory.lastTopic],'bot'); }
-    else appendMessage("Kies eerst een onderwerp (bv. 'leg uit: ai').",'bot');
-    return;
-  }
-
-  const directTopic=findTopicInInput(input);
-  if(directTopic){
-    await showTyping();
-    appendMessage("Goede vraag! Dit gaat over '"+directTopic+"'.",'bot');
-    appendMessage(KNOWLEDGE[directTopic],'bot');
-    memory.lastTopic=directTopic;
-    updateUI();
-    return;
-  }
-
-  if(input.includes("help") || input.includes("wat kan je")){
-    appendMessage("Ik kan: uitleg geven, samenvatten, kernwoorden tonen en opdrachten geven. Probeer: 'leg uit: ai'.",'bot');
-    return;
-  }
-
-  appendMessage("Ik begrijp je vraag nog niet volledig. Wil je uitleg, samenvatting of opdracht? Typ bv. 'leg uit: natuur'.",'bot');
+  appendMessage("🤔 Sorry, dat begrijp ik niet helemaal.",'bot');
 }
 
 // -------------------------
