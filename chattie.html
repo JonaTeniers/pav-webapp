@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Chattie - AI-leerbuddy</title>
 <style>
+html, body { height: 100%; }
 :root {
   --bg1: #CFE3D3;
   --bg2: #F9F8F4;
@@ -28,12 +29,12 @@ body {
   color: #0f172a;
   display: flex;
   justify-content: center;
-  min-height: 100vh;
+  height: 100%;
 }
 
 .container {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background: var(--card);
   display: flex;
   overflow: hidden;
@@ -42,8 +43,9 @@ body {
 .chat {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  padding: 18px;
+  height: 100%;
+  width: 100%;
+  padding: 14px;
   gap: 12px;
 }
 
@@ -282,13 +284,13 @@ function safeText(text){ const div=document.createElement('div'); div.textConten
 function appendMessage(text,who='bot'){ const el=document.createElement('div'); el.className='msg '+who; const b=document.createElement('div'); b.className='bubble '+who; b.innerHTML=safeText(text).replace(/\\n/g,'<br>'); el.appendChild(b); messagesEl.appendChild(el); messagesEl.scrollTop=messagesEl.scrollHeight; }
 function updateUI(){}
 function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
-async function showTyping(){ appendMessage(\"Chattie denkt even na...\",'bot'); await sleep(TYPING_MS); messagesEl.lastChild?.remove(); }
+async function showTyping(){ appendMessage("Chattie denkt even na...",'bot'); await sleep(TYPING_MS); messagesEl.lastChild?.remove(); }
 
 // -------------------------
 // CHAT FUNCTIES
 // -------------------------
 function handleUserInput(){
-  if(isDisabled){ appendMessage(\"🚫 Chattie is uitgeschakeld. Typ '\"+RESET_CODE+\"' om te resetten.\",\"bot\"); return; }
+  if(isDisabled){ appendMessage("🚫 Chattie is uitgeschakeld. Typ '"+RESET_CODE+"' om te resetten.","bot"); return; }
   const input=inputEl.value.trim();
   if(!input) return;
   appendMessage(input,'user'); inputEl.value='';
@@ -296,22 +298,22 @@ function handleUserInput(){
 }
 
 async function processInput(input){
-  if(FORBIDDEN.some(w=>input.includes(w))){ escalation++; appendMessage(\"❗ Dat was niet gepast. Blijf beleefd a.u.b.\",'bot'); return; }
-  if(input===RESET_CODE){ escalation=0; isDisabled=false; memory={}; appendMessage(\"🔄 Chattie is herstart!\",'bot'); updateUI(); return; }
-  if(input===\"start\"){ isChatActive=true; appendMessage(\"🎉 Hallo! Typ 'leg uit: ai' om te starten.\",'bot'); updateUI(); return; }
-  if(input===\"einde\"){ isChatActive=false; appendMessage(\"👋 Tot later!\",'bot'); updateUI(); return; }
-  if(input.startsWith(\"leg uit:\")){ 
-    const topic=input.replace(/^leg uit:/,\"\").trim(); 
-    if(KNOWLEDGE[topic]){ await showTyping(); appendMessage(\"Hier is een uitleg over '\"+topic+\"':\",'bot'); appendMessage(KNOWLEDGE[topic],'bot'); memory.lastTopic=topic; updateUI(); }
-    else appendMessage(\"Sorry, ik ken dat onderwerp nog niet.\",'bot');
+  if(FORBIDDEN.some(w=>input.includes(w))){ escalation++; appendMessage("❗ Dat was niet gepast. Blijf beleefd a.u.b.",'bot'); return; }
+  if(input===RESET_CODE){ escalation=0; isDisabled=false; memory={}; appendMessage("🔄 Chattie is herstart!",'bot'); updateUI(); return; }
+  if(input==="start"){ isChatActive=true; appendMessage("🎉 Hallo! Typ 'leg uit: ai' om te starten.",'bot'); updateUI(); return; }
+  if(input==="einde"){ isChatActive=false; appendMessage("👋 Tot later!",'bot'); updateUI(); return; }
+  if(input.startsWith("leg uit:")){ 
+    const topic=input.replace(/^leg uit:/,"").trim(); 
+    if(KNOWLEDGE[topic]){ await showTyping(); appendMessage("Hier is een uitleg over '"+topic+"':",'bot'); appendMessage(KNOWLEDGE[topic],'bot'); memory.lastTopic=topic; updateUI(); }
+    else appendMessage("Sorry, ik ken dat onderwerp nog niet.",'bot');
     return;
   }
-  if(input===\"opdracht\"){ 
-    if(memory.lastTopic && ASSIGNMENTS[memory.lastTopic]) appendMessage(\"📝 Opdracht: \"+ASSIGNMENTS[memory.lastTopic],'bot');
-    else appendMessage(\"Geen actieve opdracht. Leer eerst een onderwerp via 'leg uit: ...'\",'bot');
+  if(input==="opdracht"){ 
+    if(memory.lastTopic && ASSIGNMENTS[memory.lastTopic]) appendMessage("📝 Opdracht: "+ASSIGNMENTS[memory.lastTopic],'bot');
+    else appendMessage("Geen actieve opdracht. Leer eerst een onderwerp via 'leg uit: ...'",'bot');
     return;
   }
-  appendMessage(\"🤔 Sorry, dat begrijp ik niet helemaal.\",'bot');
+  appendMessage("🤔 Sorry, dat begrijp ik niet helemaal.",'bot');
 }
 
 // -------------------------
@@ -324,21 +326,21 @@ chips.forEach(chip=>{
   chip.addEventListener('click',()=>{
     const action=chip.dataset.action;
     if(!memory.lastTopic && ['samenvat','kernwoorden','assignment','stap','example'].includes(action)){
-      appendMessage(\"Leer eerst iets via 'leg uit: ...'\",'bot'); return;
+      appendMessage("Leer eerst iets via 'leg uit: ...'",'bot'); return;
     }
     switch(action){
-      case \"more\": appendMessage(\"💡 Gebruik 'leg uit: <onderwerp>' voor uitleg\",'bot'); break;
-      case \"example\": appendMessage(\"Stuur een voorbeeld met 'voorbeeld: <jouw voorbeeld>'\",'bot'); break;
-      case \"dontget\": processInput(\"ik snap het niet\"); break;
-      case \"assignment\": if(memory.lastTopic) appendMessage(\"📝 Opdracht: \"+ASSIGNMENTS[memory.lastTopic],'bot'); break;
-      case \"stap\": appendMessage(\"Gebruik 'leg uit: ...' om uitleg in stappen te krijgen.\",'bot'); break;
-      case \"samenvat\": appendMessage(\"📝 Samenvatting: \"+KNOWLEDGE[memory.lastTopic],'bot'); break;
-      case \"kernwoorden\": appendMessage(\"🔑 Kernwoorden: \"+KNOWLEDGE[memory.lastTopic].split(\" \").slice(0,5).join(\", \"),'bot'); break;
+      case "more": appendMessage("💡 Gebruik 'leg uit: <onderwerp>' voor uitleg",'bot'); break;
+      case "example": appendMessage("Stuur een voorbeeld met 'voorbeeld: <jouw voorbeeld>'",'bot'); break;
+      case "dontget": processInput("ik snap het niet"); break;
+      case "assignment": if(memory.lastTopic) appendMessage("📝 Opdracht: "+ASSIGNMENTS[memory.lastTopic],'bot'); break;
+      case "stap": appendMessage("Gebruik 'leg uit: ...' om uitleg in stappen te krijgen.",'bot'); break;
+      case "samenvat": appendMessage("📝 Samenvatting: "+KNOWLEDGE[memory.lastTopic],'bot'); break;
+      case "kernwoorden": appendMessage("🔑 Kernwoorden: "+KNOWLEDGE[memory.lastTopic].split(" ").slice(0,5).join(", "),'bot'); break;
     }
   });
 });
 
-howBtn.addEventListener('click',()=>{ appendMessage(\"📚 Gebruik 'leg uit: <onderwerp>' om uitleg te krijgen, 'opdracht' voor een oefening, en de knoppen voor snelle acties.\",'bot'); });
+howBtn.addEventListener('click',()=>{ appendMessage("📚 Gebruik 'leg uit: <onderwerp>' om uitleg te krijgen, 'opdracht' voor een oefening, en de knoppen voor snelle acties.",'bot'); });
 
 updateUI();
 </script>
