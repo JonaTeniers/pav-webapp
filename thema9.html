@@ -84,65 +84,46 @@
     .btn:hover { background: var(--accent-dark); }
 
     .timeline-intro { margin-top: 1rem; }
-    .timeline-strip {
+    .timeline-figure {
       margin-top: 0.8rem;
       border: 1px solid #e9d5ff;
       border-radius: 12px;
       overflow: hidden;
       background: #fff;
+      padding: 0.7rem;
     }
-    .timeline-eras {
+    .timeline-visual {
       display: grid;
-      grid-template-columns: 2fr 1.3fr 1fr 1fr 0.8fr 0.8fr 0.7fr;
-      min-height: 88px;
+      gap: 0.4rem;
     }
-    .era {
-      color: #fff;
-      display: flex;
+    .timeline-row {
+      display: grid;
+      grid-template-columns: 120px 1fr 110px;
+      gap: 0.5rem;
       align-items: center;
-      justify-content: center;
-      text-align: center;
-      font-weight: 800;
-      padding: 0.35rem;
-      line-height: 1.15;
+      font-size: 0.9rem;
     }
-    .era.pre { background: #7e22ce; }
-    .era.near-east { background: #06b6d4; }
-    .era.classic { background: #22c55e; }
-    .era.middle { background: #eab308; color: #111827; }
-    .era.early-modern { background: #ef4444; }
-    .era.modern { background: #db2777; }
-    .era.today { background: #6b7280; }
-    .timeline-dates {
-      display: grid;
-      grid-template-columns: 2fr 1.3fr 1fr 1fr 0.8fr 0.8fr 0.7fr;
-      background: #faf5ff;
-      border-top: 1px solid #e9d5ff;
-    }
-    .timeline-dates span {
-      display: block;
-      text-align: center;
-      padding: 0.45rem 0.2rem;
-      font-size: 0.85rem;
-      color: #4b5563;
-      font-weight: 700;
-    }
-
-    .timeline-focus {
-      margin-top: 0.65rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.45rem;
-    }
-    .focus-chip {
+    .timeline-row .period {
       background: #ede9fe;
       border: 1px solid #c4b5fd;
-      color: #4c1d95;
-      border-radius: 999px;
-      padding: 0.3rem 0.6rem;
-      font-size: 0.82rem;
+      border-radius: 8px;
+      padding: 0.35rem 0.45rem;
+      text-align: center;
       font-weight: 700;
+      color: #4c1d95;
     }
+    .timeline-row .start,
+    .timeline-row .end {
+      color: #4b5563;
+      font-weight: 700;
+      text-align: center;
+    }
+    .timeline-figure figcaption {
+      margin-top: 0.5rem;
+      color: #4b5563;
+      font-size: 0.88rem;
+    }
+
     .timeline-person {
       margin-top: 0.85rem;
       background: #f8fafc;
@@ -150,7 +131,7 @@
       border-radius: 10px;
       padding: 0.75rem;
       display: grid;
-      grid-template-columns: 120px 1fr;
+      grid-template-columns: 180px 1fr;
       gap: 0.75rem;
       align-items: start;
     }
@@ -158,13 +139,16 @@
       width: 100%;
       border-radius: 8px;
       display: block;
+      object-fit: cover;
     }
     .timeline-person p { margin: 0 0 0.45rem; color: var(--muted); }
     .timeline-person figcaption { font-size: 0.85rem; color: #6b7280; }
     @media (max-width: 900px) {
       main { grid-template-columns: 1fr; }
       .timeline-person { grid-template-columns: 1fr; }
-      .timeline-person img { max-width: 170px; }
+      .timeline-person img { max-width: 260px; }
+      .timeline-row { grid-template-columns: 1fr; }
+      .timeline-row .start, .timeline-row .end { text-align: left; }
     }
   </style>
 </head>
@@ -182,33 +166,19 @@
       <div class="task timeline-intro">
         <h3>🕰️ Tijdlijn als kapstok</h3>
         <p>Gebruik deze tijdlijn eerst als overzicht: zo plaats je elke unit sneller in de juiste periode. Lees daarna de korte achtergrondbron.</p>
-        <p><a href="https://nl.wikipedia.org/wiki/Tijdvak" target="_blank" rel="noopener noreferrer">🔗 Achtergrondbron: historische tijdvakken (Wikipedia)</a></p>
-        <div class="timeline-strip" aria-label="Visuele tijdlijn van historische periodes">
-          <div class="timeline-eras">
-            <div class="era pre">Prehistorie</div>
-            <div class="era near-east">Oude Nabije Oosten</div>
-            <div class="era classic">Klassieke oudheid</div>
-            <div class="era middle">Middeleeuwen</div>
-            <div class="era early-modern">Vroegmoderne tijd</div>
-            <div class="era modern">Moderne tijd</div>
-            <div class="era today">Hedendaagse tijd</div>
+        <p><a href="https://nl.wikipedia.org/wiki/Periodisering_van_de_geschiedenis" target="_blank" rel="noopener noreferrer">🔗 Achtergrondbron: periodisering van de geschiedenis (Wikipedia)</a></p>
+        <figure class="timeline-figure">
+          <div class="timeline-visual" aria-label="Tijdsbalk met duidelijke start- en eindmomenten per periode">
+            <div class="timeline-row"><span class="start">tot ±3500 v.C.</span><span class="period">Prehistorie</span><span class="end">±3500 v.C.</span></div>
+            <div class="timeline-row"><span class="start">±3500 v.C.</span><span class="period">Oude Nabije Oosten</span><span class="end">±800 v.C.</span></div>
+            <div class="timeline-row"><span class="start">±800 v.C.</span><span class="period">Klassieke Oudheid</span><span class="end">±500</span></div>
+            <div class="timeline-row"><span class="start">±500</span><span class="period">Middeleeuwen</span><span class="end">±1450</span></div>
+            <div class="timeline-row"><span class="start">±1450</span><span class="period">Vroegmoderne Tijd</span><span class="end">±1750</span></div>
+            <div class="timeline-row"><span class="start">±1750</span><span class="period">Moderne Tijd</span><span class="end">±1945</span></div>
+            <div class="timeline-row"><span class="start">±1945</span><span class="period">Hedendaagse Tijd</span><span class="end">nu</span></div>
           </div>
-          <div class="timeline-dates">
-            <span>ca. 8500 v.Chr.</span>
-            <span>ca. 3500 v.Chr.</span>
-            <span>ca. 800 v.Chr.</span>
-            <span>476</span>
-            <span>ca. 1450</span>
-            <span>ca. 1750</span>
-            <span>1945</span>
-          </div>
-        </div>
-        <div class="timeline-focus" aria-label="Belangrijke jaartallen voor dit thema">
-          <span class="focus-chip">1815: Willem I en Verenigd Koninkrijk der Nederlanden</span>
-          <span class="focus-chip">1830: Belgische Revolutie</span>
-          <span class="focus-chip">1940-1945: Tweede Wereldoorlog</span>
-          <span class="focus-chip">2002: Invoering euro</span>
-        </div>
+          <figcaption>Deze tijdsbalk gebruikt duidelijke begin- en eindpunten zodat elke periode eenduidig afgebakend is.</figcaption>
+        </figure>
         <figure class="timeline-person">
           <img src="https://commons.wikimedia.org/wiki/Special:FilePath/King_William_I_of_the_Netherlands.jpg" alt="Portret van Willem I der Nederlanden" loading="lazy">
           <figcaption>
@@ -233,7 +203,7 @@
       <div class="task">
         <h3>Bronnen voor de lessen</h3>
         <div class="article-list">
-          <div class="article-card"><strong>Startbron</strong><br><a href="https://nl.wikipedia.org/wiki/Tijdvak" target="_blank" rel="noopener noreferrer">Historische tijdvakken</a></div>
+          <div class="article-card"><strong>Startbron</strong><br><a href="https://nl.wikipedia.org/wiki/Periodisering_van_de_geschiedenis" target="_blank" rel="noopener noreferrer">Periodisering van de geschiedenis</a></div>
           <div class="article-card"><strong>Unit 1</strong><br><a href="https://www.canonvanvlaanderen.be/events/het-wetboek-van-napoleon/" target="_blank" rel="noopener noreferrer">Het wetboek van Napoleon</a></div>
           <div class="article-card"><strong>Unit 2</strong><br><a href="https://www.canonvanvlaanderen.be/events/een-liberale-grondwet/" target="_blank" rel="noopener noreferrer">Een liberale grondwet</a></div>
           <div class="article-card"><strong>Unit 3</strong><br><a href="https://www.canonvanvlaanderen.be/events/de-eerste-treinrit/" target="_blank" rel="noopener noreferrer">De eerste treinrit</a></div>
