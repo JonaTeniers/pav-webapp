@@ -15,61 +15,112 @@
       --muted: #4e5f47;
     }
     * { box-sizing: border-box; }
-    body { margin: 0; font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); }
-    header { background: #87b43b; color: white; padding: 1.8rem 1rem; text-align: center; }
-    main { width: min(1100px, 95%); margin: 1.5rem auto 2rem; display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; }
-    .panel { background: var(--panel); border-radius: 14px; padding: 1.2rem; box-shadow: 0 6px 16px rgba(0,0,0,0.08); }
-    .intro { background: #f7fbe8; border-radius: 10px; border: 1px solid #dce8c5; padding: 1rem; margin-bottom: 1rem; }
-    .steps { margin: 0.5rem 0; padding-left: 1.2rem; }
-    .unit-grid { display: flex; flex-wrap: wrap; gap: 0.8rem; }
-    .unit-grid .unit-card { flex: 1 1 220px; min-width: 220px; }
-    @supports (display: grid) {
-      .unit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-      .unit-grid .unit-card { min-width: 0; }
+    body {
+      margin: 0;
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      color: var(--text);
     }
-    .unit-card { border: 1px solid #dce8c5; border-radius: 12px; background: #f7fbe8; padding: 1rem; }
-    .unit-card h3 { margin: 0 0 .4rem; }
-    .unit-card p { margin: 0.2rem 0; color: var(--muted); }
-    .btn { display: inline-block; text-decoration: none; margin-top: 0.8rem; background: var(--accent); color: white; padding: 0.5rem 0.9rem; border-radius: 999px; font-weight: 700; }
+    header {
+      background: #87b43b;
+      color: white;
+      padding: 1.8rem 1rem;
+      text-align: center;
+    }
+    main {
+      width: min(1100px, 95%);
+      margin: 1.5rem auto 2rem;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1rem;
+    }
+    .panel {
+      background: var(--panel);
+      border-radius: 14px;
+      padding: 1.2rem;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+    }
+    h2 { margin-top: 0; }
+    .steps {
+      display: grid;
+      gap: 0.75rem;
+      margin: 1rem 0;
+    }
+    .step {
+      border-left: 5px solid #a4c85f;
+      background: #f7fbe8;
+      border-radius: 10px;
+      padding: 0.8rem;
+    }
+    .exercise {
+      margin-top: 1rem;
+      border-top: 1px solid #dce8c5;
+      padding-top: 1rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.6rem;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid #dce8c5;
+      padding: 0.45rem;
+      text-align: left;
+    }
+    th { background: #f4f9e2; }
+    .chat-embed {
+      width: 100%;
+      min-height: 520px;
+      border: none;
+      border-radius: 12px;
+      background: #f7fbec;
+    }
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      margin-top: 0.8rem;
+      background: var(--accent);
+      color: white;
+      padding: 0.5rem 0.9rem;
+      border-radius: 999px;
+      font-weight: 700;
+    }
     .btn:hover { background: var(--accent-dark); }
-    .chat-embed { width: 100%; min-height: 520px; border: none; border-radius: 12px; background: #f7fbec; }
-    @media (max-width: 900px) { main { grid-template-columns: 1fr; } }
+    @media (max-width: 900px) {
+      main { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
   <header>
     <h1>🧮 Thema 6 – Schatten</h1>
-    <p>Oefen schatten in 3 units met telkens 10 opdrachten.</p>
+    <p>Leer snel schatten met afgeronde getallen en controleer daarna je exacte uitkomst.</p>
   </header>
 
   <main>
     <section class="panel">
-      <div class="intro">
-        <h2>Stappenplan</h2>
-        <ol class="steps">
-          <li>Rond af naar handige getallen.</li>
-          <li>Bereken je schatting met die afgeronde getallen.</li>
-          <li>Controleer of je exacte antwoord logisch is.</li>
-        </ol>
+      <h2>Stappenplan schatten</h2>
+      <div class="steps">
+        <div class="step"><strong>Stap 1:</strong> Rond getallen af naar handige getallen om hoofdrekenen eenvoudiger te maken.</div>
+        <div class="step"><strong>Stap 2:</strong> Reken met de afgeronde getallen om een schatting te krijgen.</div>
+        <div class="step"><strong>Stap 3:</strong> Controleer of je exacte antwoord logisch is vergeleken met je schatting.</div>
       </div>
 
-      <h2>📚 Units</h2>
-      <div class="unit-grid">
-        <article class="unit-card">
-          <h3>Unit 1</h3>
-          <p>Optellen en aftrekken schatten.</p>
-          <a class="btn" href="thema6unit1.html">Start unit</a>
-        </article>
-        <article class="unit-card">
-          <h3>Unit 2</h3>
-          <p>Vermenigvuldigen en delen schatten.</p>
-          <a class="btn" href="thema6unit2.html">Start unit</a>
-        </article>
-        <article class="unit-card">
-          <h3>Unit 3</h3>
-          <p>Schatten in contextopgaven.</p>
-          <a class="btn" href="thema6unit3.html">Start unit</a>
-        </article>
+      <div class="exercise">
+        <h3>Oefenreeks</h3>
+        <p>Vul eerst een schatting in en bereken daarna exact:</p>
+        <table>
+          <thead>
+            <tr><th>Som</th><th>Schatting</th><th>Exacte uitkomst</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>319 + 86</td><td>≈ 320 + 90 = 410</td><td>405</td></tr>
+            <tr><td>87 − 23</td><td>≈ 90 − 20 = 70</td><td>64</td></tr>
+            <tr><td>24 × 19</td><td>≈ 20 × 20 = 400</td><td>456</td></tr>
+            <tr><td>243 : 9</td><td>≈ 240 : 10 = 24</td><td>27</td></tr>
+          </tbody>
+        </table>
       </div>
 
       <a class="btn" href="index.html">← Terug naar overzicht</a>
