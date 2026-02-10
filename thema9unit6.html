@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thema 9 – Unit 6: De euro</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
+  <style>
+    body { margin:0; font-family:'Nunito',sans-serif; background:#f5f3ff; color:#1f2937; }
+    header { background:#7c3aed; color:#fff; text-align:center; padding:1.2rem; }
+    main { width:min(960px,95%); margin:1.2rem auto 2rem; }
+    .card { background:#fff; border-radius:14px; box-shadow:0 6px 16px rgba(0,0,0,.08); padding:1.1rem; margin-bottom:1rem; }
+    .fragment { background:#faf5ff; border-left:4px solid #7c3aed; padding:0.8rem; border-radius:8px; }
+    .helper { color:#4b5563; font-size:.95rem; }
+    .question-box { background:#fff; border-radius:14px; box-shadow:0 6px 16px rgba(0,0,0,.08); padding:1.1rem; }
+    label { display:block; margin:.5rem 0; }
+    button { border:none; background:#6d28d9; color:#fff; border-radius:8px; padding:.6rem 1rem; font-weight:700; cursor:pointer; }
+    button:hover { background:#5b21b6; }
+    .feedback { margin-top:.75rem; font-weight:700; }
+    .success { color:#047857; }
+    .error { color:#b91c1c; }
+    .hidden { display:none; }
+    .text-input, .select-input, textarea { width:100%; border:1px solid #c4b5fd; border-radius:8px; padding:.55rem; font-family:inherit; }
+    textarea { min-height:95px; margin-top:.45rem; }
+    .nav-buttons { display:flex; gap:.6rem; flex-wrap:wrap; margin-top:1rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🏛️ Thema 9 – Unit 6</h1>
+    <p>De euro</p>
+  </header>
+  <main>
+    <section class="card">
+      <h2>Bron en leesopdracht</h2>
+      <p>Open de bron van de Canon van Vlaanderen en lees aandachtig.</p>
+      <p><a href="https://www.canonvanvlaanderen.be/events/de-euro/" target="_blank" rel="noopener noreferrer">🔗 Ga naar de bron: De euro</a></p>
+      <div class="fragment">
+        <strong>Tekstfragment (samengevat):</strong>
+        <p>De invoering van de euro betekende dat veel landen in Europa één munt gingen gebruiken. Dat vereenvoudigde reizen, handel en prijsvergelijking, maar riep ook vragen op over economische verschillen tussen landen. Voor Vlaanderen past de euro in een langer verhaal van internationalisering: lokale keuzes zijn steeds vaker verbonden met Europese besluitvorming.</p>
+      </div>
+      <p class="helper">Koppeling met de reeks: bekijk op VRT MAX <em>Het verhaal van Vlaanderen</em> en zoek het deel dat inhoudelijk aansluit.</p>
+      <p><a href="https://www.vrt.be/vrtmax/a-z/het-verhaal-van-vlaanderen/" target="_blank" rel="noopener noreferrer">🎬 VRT MAX – Het verhaal van Vlaanderen</a></p>
+    </section>
+
+    <section class="question-box" id="quizBox">
+      <h2 id="qCount">Vraag 1 van 8</h2>
+      <p class="helper" id="qType"></p>
+      <div id="questionText"></div>
+      <form id="answerForm"></form>
+      <button type="button" onclick="checkAnswer()">Controleer</button>
+      <div class="feedback" id="feedback"></div>
+      <div class="nav-buttons">
+        <button id="nextBtn" class="hidden" type="button" onclick="nextQuestion()">Volgende vraag →</button>
+      </div>
+    </section>
+
+    <section class="card hidden" id="reflectieBox">
+      <h2>🧠 Reflectie: diep begrip</h2>
+      <p><strong>Begripsvraag:</strong> Leg uit: wat is één voordeel én één uitdaging van een gezamenlijke munt voor burgers?</p>
+      <textarea id="gevoelInput" placeholder="Schrijf je antwoord in volledige zinnen..."></textarea>
+      <p><strong>Verdiepingsvraag:</strong> Verdiepingsopdracht: kies een product (bv. brood, smartphone, treinrit) en beschrijf in 3 zinnen hoe Europese samenwerking invloed heeft op prijs, handel of beschikbaarheid.</p>
+      <textarea id="verdiepingInput" placeholder="Werk je verdiepingsopdracht hier uit..."></textarea>
+      <button type="button" onclick="bewaarReflectie()">Bewaar reflectie</button>
+      <p class="helper" id="reflectieFeedback"></p>
+    </section>
+
+    <section class="question-box hidden" id="endScreen">
+      <h2>🎉 Unit voltooid!</h2>
+      <p>Je behaalde <span id="xpScore">0</span> XP.</p>
+      <p>Top! Je hebt feiten, verbanden én reflectie verwerkt in jouw deel van <strong>het verhaal van Vlaanderen</strong>.</p>
+      <div class="nav-buttons">
+        <a href="thema9.html"><button type="button">← Terug naar thema</button></a>
+
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const questions = [{"type": "mc", "typeLabel": "Meerkeuze", "question": "Wat was het hoofddoel van de euro?", "options": ["Economische samenwerking en betalingen tussen landen vergemakkelijken", "Meer nationale munten creëren", "Nationale economieën volledig scheiden"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Noem 1 concreet voordeel van één munt voor reizigers of consumenten.", "accepted": ["makkelijk vergelijken", "niet omrekenen", "eenvoudiger betalen", "prijsvergelijking"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke nuance klopt het best?", "options": ["Eén munt helpt handel, maar vraagt ook gezamenlijke afspraken", "Eén munt lost alle economische problemen op", "Eén munt maakt samenwerking overbodig"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies het beste verband.", "options": ["Gemeenschappelijke munt vraagt vertrouwen en coördinatie tussen landen", "Gemeenschappelijke munt maakt landen volledig onafhankelijk van elkaar", "Gemeenschappelijke munt stopt internationale handel"], "correctValue": "Gemeenschappelijke munt vraagt vertrouwen en coördinatie tussen landen"}, {"type": "open", "typeLabel": "Open vraag", "question": "In welk groter kader past de euro?", "accepted": ["europese samenwerking", "europa", "internationale samenwerking", "europese integratie"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Waarom hoort dit in het verhaal van Vlaanderen?", "options": ["Het toont hoe Vlaanderen economisch ingebed is in Europa", "Het is een los financieel detail zonder impact", "Het betekent dat lokale economie niet meer telt"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Selectie", "question": "Welke verdiepende vraag is het sterkst?", "options": ["Hoe beïnvloeden Europese beslissingen het dagelijks leven in Vlaanderen?", "Welke muntkleur vinden mensen mooier?", "Hoeveel portemonnees bestaan er in Europa?"], "correctValue": "Hoe beïnvloeden Europese beslissingen het dagelijks leven in Vlaanderen?"}, {"type": "open", "typeLabel": "Open vraag", "question": "Geef 2 kernwoorden die deze unit samenvatten.", "accepted": ["euro", "europa", "samenwerking", "handel", "integratie"]}];
+    let currentQuestion = 0;
+    let score = 0;
+
+    function renderOptions(options, name) {
+      return options.map((opt, index) => (`<label><input type="radio" name="${name}" value="${index}"> ${opt}</label>`)).join('');
+    }
+
+    function loadQuestion() {
+      const q = questions[currentQuestion];
+      document.getElementById('qCount').innerText = `Vraag ${currentQuestion + 1} van ${questions.length}`;
+      document.getElementById('qType').innerText = q.typeLabel;
+      document.getElementById('questionText').innerText = q.question;
+      const form = document.getElementById('answerForm');
+      form.innerHTML = '';
+      if (q.type === 'mc') {
+        form.innerHTML = renderOptions(q.options, 'answer');
+      } else if (q.type === 'open') {
+        form.innerHTML = `<input class="text-input" type="text" name="answer" placeholder="Typ je antwoord...">`;
+      } else if (q.type === 'drag') {
+        const options = ['Kies...', ...q.options];
+        form.innerHTML = `<select class="select-input" name="answer">${options.map((opt) => `<option value="${opt}">${opt}</option>`).join('')}</select>`;
+      }
+      const feedback = document.getElementById('feedback');
+      feedback.innerText = '';
+      feedback.className = 'feedback';
+      document.getElementById('nextBtn').classList.add('hidden');
+    }
+
+    function normalize(value) { return value.trim().toLowerCase(); }
+
+    function checkAnswer() {
+      const q = questions[currentQuestion];
+      let isCorrect = false;
+
+      if (q.type === 'mc') {
+        const selected = document.querySelector('input[name="answer"]:checked');
+        if (!selected) return;
+        isCorrect = Number(selected.value) === q.correctIndex;
+      } else if (q.type === 'open') {
+        const input = document.querySelector('input[name="answer"]');
+        if (!input || !input.value.trim()) return;
+        const normalized = normalize(input.value);
+        isCorrect = q.accepted.some((answer) => normalized.includes(normalize(answer)) || normalize(answer).includes(normalized));
+      } else if (q.type === 'drag') {
+        const selected = document.querySelector('select[name="answer"]');
+        if (!selected || selected.value === 'Kies...') return;
+        isCorrect = normalize(selected.value) === normalize(q.correctValue);
+      }
+
+      const feedback = document.getElementById('feedback');
+      if (isCorrect) {
+        score += 3;
+        feedback.innerText = '✅ Juist! +3 XP';
+        feedback.classList.add('success');
+      } else {
+        feedback.innerText = '❌ Nog niet juist. Lees opnieuw en zoek oorzaak-gevolg/nuance.';
+        feedback.classList.add('error');
+      }
+      document.getElementById('nextBtn').classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        loadQuestion();
+      } else {
+        localStorage.setItem('thema9unit6', score);
+        document.getElementById('quizBox').classList.add('hidden');
+        document.getElementById('reflectieBox').classList.remove('hidden');
+        document.getElementById('endScreen').classList.remove('hidden');
+        document.getElementById('xpScore').innerText = score;
+      }
+    }
+
+    function bewaarReflectie() {
+      const begrip = document.getElementById('gevoelInput').value.trim();
+      const verdieping = document.getElementById('verdiepingInput').value.trim();
+      if (!begrip && !verdieping) return;
+      const payload = JSON.stringify({ begrip, verdieping });
+      localStorage.setItem('thema9unit6_reflectie', payload);
+      document.getElementById('reflectieFeedback').innerText = '✅ Reflectie en verdieping bewaard.';
+    }
+
+    window.onload = loadQuestion;
+  </script>
+</body>
+</html>

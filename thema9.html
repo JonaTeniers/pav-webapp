@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thema 9 – Geschiedenis</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
+  <style>
+    :root {
+      --bg: #f8f7ff;
+      --panel: #ffffff;
+      --accent: #6d28d9;
+      --accent-dark: #5b21b6;
+      --text: #1f2937;
+      --muted: #4b5563;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    header {
+      background: #7c3aed;
+      color: white;
+      padding: 1.8rem 1rem;
+      text-align: center;
+    }
+    main {
+      width: min(1100px, 95%);
+      margin: 1.5rem auto 2rem;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1rem;
+    }
+    .panel {
+      background: var(--panel);
+      border-radius: 14px;
+      padding: 1.2rem;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+    }
+    .task {
+      margin-top: 1rem;
+      border-top: 1px solid #e5e7eb;
+      padding-top: 1rem;
+    }
+    .task ul { margin: 0.4rem 0; padding-left: 1.2rem; }
+    .article-list { display: grid; grid-template-columns: 1fr; gap: 0.7rem; margin-top: 0.8rem; }
+    .article-card {
+      border: 1px solid #ddd6fe;
+      border-radius: 10px;
+      padding: 0.8rem;
+      background: #f5f3ff;
+    }
+    .article-card a { color: #5b21b6; font-weight: 700; text-decoration: none; }
+    .article-card a:hover { text-decoration: underline; }
+    .unit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 0.8rem;
+      margin-top: 0.8rem;
+    }
+    .unit-card {
+      border: 2px solid #ddd6fe;
+      border-radius: 12px;
+      padding: 0.9rem;
+      background: #faf5ff;
+    }
+    .unit-card h4 { margin: 0 0 0.35rem; }
+    .unit-card p { margin: 0 0 0.65rem; color: var(--muted); font-size: 0.95rem; }
+    .unit-card .status { font-size: 0.82rem; font-weight: 700; color: #5b21b6; margin-bottom: 0.7rem; }
+    .unit-card button {
+      width: 100%; border: none; border-radius: 8px; padding: 0.5rem 0.7rem;
+      font-weight: 700; color: #fff; background: var(--accent); cursor: pointer;
+    }
+    .unit-card button:hover { background: var(--accent-dark); }
+    .chat-embed { width: 100%; min-height: 520px; border: none; border-radius: 12px; background: #f3f7ff; }
+    .btn {
+      display: inline-block; text-decoration: none; margin-top: 0.8rem;
+      background: var(--accent); color: white; padding: 0.5rem 0.9rem;
+      border-radius: 999px; font-weight: 700;
+    }
+    .btn:hover { background: var(--accent-dark); }
+    @media (max-width: 900px) { main { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🏛️ Thema 9 – Geschiedenis</h1>
+    <p>Van Napoleon tot de euro: stap voor stap mee in het verhaal van Vlaanderen.</p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>Focus van dit thema</h2>
+      <p>Je werkt met de <strong>Canon van Vlaanderen</strong> en koppelt elke unit aan een episode uit <strong>Het verhaal van Vlaanderen</strong>. Zo begrijp je niet alleen feiten, maar ook het grotere verhaal.</p>
+
+      <div class="task">
+        <h3>Wat oefen je?</h3>
+        <ul>
+          <li>Historische teksten lezen en de kern eruit halen.</li>
+          <li>Oorzaken en gevolgen uitleggen in eenvoudige taal.</li>
+          <li>Je eigen gevoel en mening noteren bij historische gebeurtenissen.</li>
+          <li>Na elke unit aantonen dat je het verhaal écht begrijpt.</li>
+          <li>Verbanden leggen via verdiepingsvragen (oorzaak-gevolg, continuïteit en nuance).</li>
+        </ul>
+      </div>
+
+      <div class="task">
+        <h3>Bronnen voor de lessen</h3>
+        <div class="article-list">
+          <div class="article-card"><strong>Unit 1</strong><br><a href="https://www.canonvanvlaanderen.be/events/het-wetboek-van-napoleon/" target="_blank" rel="noopener noreferrer">Het wetboek van Napoleon</a></div>
+          <div class="article-card"><strong>Unit 2</strong><br><a href="https://www.canonvanvlaanderen.be/events/een-liberale-grondwet/" target="_blank" rel="noopener noreferrer">Een liberale grondwet</a></div>
+          <div class="article-card"><strong>Unit 3</strong><br><a href="https://www.canonvanvlaanderen.be/events/de-eerste-treinrit/" target="_blank" rel="noopener noreferrer">De eerste treinrit</a></div>
+          <div class="article-card"><strong>Unit 4</strong><br><a href="https://www.canonvanvlaanderen.be/events/emilie-claeys/" target="_blank" rel="noopener noreferrer">Emilie Claeys</a></div>
+          <div class="article-card"><strong>Unit 5</strong><br><a href="https://www.canonvanvlaanderen.be/events/de-dossinkazerne/" target="_blank" rel="noopener noreferrer">De Dossinkazerne</a></div>
+          <div class="article-card"><strong>Unit 6</strong><br><a href="https://www.canonvanvlaanderen.be/events/de-euro/" target="_blank" rel="noopener noreferrer">De euro</a></div>
+          <div class="article-card"><strong>Reeks</strong><br><a href="https://www.vrt.be/vrtmax/a-z/het-verhaal-van-vlaanderen/" target="_blank" rel="noopener noreferrer">VRT MAX: Het verhaal van Vlaanderen</a></div>
+        </div>
+      </div>
+
+      <div class="task">
+        <h3>📚 Units</h3>
+        <div class="unit-grid">
+          <div class="unit-card"><h4>Unit 1</h4><p>Napoleon en gelijke regels voor iedereen.</p><p class="status">Beschikbaar</p><a href="thema9unit1.html"><button>Start</button></a></div>
+          <div class="unit-card"><h4>Unit 2</h4><p>Vrijheden en grondrechten in België.</p><p class="status">Beschikbaar</p><a href="thema9unit2.html"><button>Start</button></a></div>
+          <div class="unit-card"><h4>Unit 3</h4><p>De eerste treinrit en modernisering.</p><p class="status">Beschikbaar</p><a href="thema9unit3.html"><button>Start</button></a></div>
+          <div class="unit-card"><h4>Unit 4</h4><p>Emilie Claeys en sociale rechten.</p><p class="status">Beschikbaar</p><a href="thema9unit4.html"><button>Start</button></a></div>
+          <div class="unit-card"><h4>Unit 5</h4><p>Dossinkazerne: herinneren en begrijpen.</p><p class="status">Beschikbaar</p><a href="thema9unit5.html"><button>Start</button></a></div>
+          <div class="unit-card"><h4>Unit 6</h4><p>De euro en Europa vandaag.</p><p class="status">Beschikbaar</p><a href="thema9unit6.html"><button>Start</button></a></div>
+        </div>
+      </div>
+
+      <a class="btn" href="index.html">← Terug naar overzicht</a>
+    </section>
+
+    <aside class="panel">
+      <h2>🤖 Chattie</h2>
+      <p style="color: var(--muted);">Vraag hulp bij begrippen zoals grondwet, industrialisatie, Holocaust en euro.</p>
+      <iframe class="chat-embed" title="Chattie" src="chattie.html?thema=Thema%209%20Geschiedenis"></iframe>
+    </aside>
+  </main>
+</body>
+</html>
