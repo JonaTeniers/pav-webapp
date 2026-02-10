@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thema 9 – Unit 8: Belgische Revolutie</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
+  <style>
+    body { margin:0; font-family:'Nunito',sans-serif; background:#f5f3ff; color:#1f2937; }
+    header { background:#7c3aed; color:#fff; text-align:center; padding:1.2rem; }
+    main { width:min(960px,95%); margin:1.2rem auto 2rem; }
+    .card, .question-box { background:#fff; border-radius:14px; box-shadow:0 6px 16px rgba(0,0,0,.08); padding:1.1rem; margin-bottom:1rem; }
+    .fragment { background:#faf5ff; border-left:4px solid #7c3aed; padding:.8rem; border-radius:8px; }
+    .helper { color:#4b5563; font-size:.95rem; }
+    .figure-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:.8rem; margin-top:.8rem; }
+    figure { margin:0; background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:.65rem; }
+    figure img { width:100%; border-radius:8px; display:block; }
+    figcaption { margin-top:.45rem; font-size:.88rem; color:#4b5563; }
+    label { display:block; margin:.5rem 0; }
+    .text-input, .select-input, textarea { width:100%; border:1px solid #c4b5fd; border-radius:8px; padding:.55rem; font-family:inherit; }
+    textarea { min-height:100px; }
+    button { border:none; background:#6d28d9; color:#fff; border-radius:8px; padding:.6rem 1rem; font-weight:700; cursor:pointer; }
+    button:hover { background:#5b21b6; }
+    .feedback { margin-top:.75rem; font-weight:700; }
+    .success { color:#047857; }
+    .error { color:#b91c1c; }
+    .hidden { display:none; }
+    .nav-buttons { display:flex; gap:.6rem; flex-wrap:wrap; margin-top:1rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🏛️ Thema 9 – Unit 8</h1>
+    <p>Belgische Revolutie (1830): van opstand naar onafhankelijke staat</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Bron en leesopdracht</h2>
+      <p>Lees de bron en markeer in je notities: <strong>oorzaken</strong>, <strong>verloop</strong> en <strong>gevolgen</strong> van de Belgische Revolutie.</p>
+      <p><a href="https://nl.wikipedia.org/wiki/Belgische_Revolutie" target="_blank" rel="noopener noreferrer">🔗 Belgische Revolutie (Wikipedia)</a></p>
+
+      <div class="fragment">
+        <strong>Kern:</strong>
+        <p>In 1830 ontstond in de Zuidelijke Nederlanden een opstand tegen het Verenigd Koninkrijk der Nederlanden. Politieke spanningen, taal- en religieuze tegenstellingen en sociaal-economische onvrede kwamen samen. Uit die revolutie groeide een onafhankelijke Belgische staat met een eigen grondwet en monarchie.</p>
+      </div>
+
+      <div class="figure-grid">
+        <figure>
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Gustaf_Wappers%2C_Episode_of_the_Belgian_Revolution_of_1830.jpg" alt="Schilderij van een scène uit de Belgische Revolutie van 1830" loading="lazy">
+          <figcaption>Bron afbeelding: Wikimedia Commons (via Wikipedia), <a href="https://nl.wikipedia.org/wiki/Belgische_Revolutie" target="_blank" rel="noopener noreferrer">Belgische Revolutie</a>.</figcaption>
+        </figure>
+        <figure>
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Leopold_I_of_Belgium.jpg" alt="Portret van Leopold I" loading="lazy">
+          <figcaption>Bron afbeelding: Wikimedia Commons (via Wikipedia), <a href="https://nl.wikipedia.org/wiki/Leopold_I_van_Belgi%C3%AB" target="_blank" rel="noopener noreferrer">Leopold I</a>.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="question-box" id="quizBox">
+      <h2 id="qCount">Vraag 1 van 6</h2>
+      <p class="helper" id="qType"></p>
+      <div id="questionText"></div>
+      <form id="answerForm"></form>
+      <button type="button" onclick="checkAnswer()">Controleer</button>
+      <div class="feedback" id="feedback"></div>
+      <div class="nav-buttons">
+        <button id="nextBtn" class="hidden" type="button" onclick="nextQuestion()">Volgende vraag →</button>
+      </div>
+    </section>
+
+    <section class="card hidden" id="reflectieBox">
+      <h2>🧠 Reflectie-opdracht</h2>
+      <p><strong>Beschrijf een persoon:</strong> Kies één figuur uit deze unit (bv. Leopold I of een revolutionair in het schilderij) en leg in 4 zinnen uit wat die persoon symboliseert in het verhaal van 1830.</p>
+      <textarea id="persoonInput" placeholder="Schrijf je antwoord in volledige zinnen..."></textarea>
+      <p><strong>Combinatie-opdracht:</strong> Leg in 3 zinnen het verband tussen Brabantse Omwenteling, Boerenkrijg en Belgische Revolutie.</p>
+      <textarea id="linkInput" placeholder="Werk je vergelijking hier uit..."></textarea>
+      <button type="button" onclick="bewaarReflectie()">Bewaar reflectie</button>
+      <p class="helper" id="reflectieFeedback"></p>
+    </section>
+
+    <section class="question-box hidden" id="endScreen">
+      <h2>🎉 Unit voltooid!</h2>
+      <p>Je behaalde <span id="xpScore">0</span> XP.</p>
+      <div class="nav-buttons">
+        <a href="thema9.html"><button type="button">← Terug naar thema</button></a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const questions = [
+      {
+        type: 'open',
+        typeLabel: 'Leesopdracht',
+        multiline: true,
+        question: 'Noem <strong>2 oorzaken</strong> van de Belgische Revolutie en licht kort toe waarom die spanningen belangrijk waren.',
+        acceptedAll: ['oorzaak', 'spanning']
+      },
+      {
+        type: 'drag',
+        typeLabel: 'Aanduiden',
+        question: 'Welke combinatie is historisch correct?',
+        options: [
+          '1830: opstand in Zuidelijke Nederlanden → later onafhankelijk België',
+          '1830: invoering van de euro in België',
+          '1830: einde van alle monarchieën in Europa'
+        ],
+        correctValue: '1830: opstand in Zuidelijke Nederlanden → later onafhankelijk België'
+      },
+      {
+        type: 'open',
+        typeLabel: 'Persoonsbeschrijving',
+        multiline: true,
+        question: 'Wie was <strong>Leopold I</strong> en waarom was zijn aanstelling belangrijk voor de nieuwe Belgische staat?',
+        accepted: ['leopold', 'koning', 'belgië', 'staat']
+      },
+      {
+        type: 'open',
+        typeLabel: 'Bronanalyse',
+        multiline: true,
+        question: 'Bekijk het schilderij in deze unit. Noteer 2 details die tonen dat revolutie ook over emotie, conflict en symboliek gaat.',
+        accepted: ['revolutie', 'conflict', 'symboliek', 'emotie']
+      },
+      {
+        type: 'mc',
+        typeLabel: 'Inzicht',
+        question: 'Wat is het grootste verschil met de Boerenkrijg?',
+        options: [
+          'De Belgische Revolutie leidde tot een nieuwe onafhankelijke staat',
+          'De Belgische Revolutie ging alleen over spoorwegen',
+          'Er waren geen politieke eisen in 1830'
+        ],
+        correctIndex: 0
+      },
+      {
+        type: 'open',
+        typeLabel: 'Synthese',
+        multiline: true,
+        question: 'Leg in 3-4 zinnen uit wat de Brabantse Omwenteling, Boerenkrijg en Belgische Revolutie gemeen hebben.',
+        acceptedAll: ['opstand', 'zuidelijke', 'nederlanden']
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    function renderOptions(options, name) {
+      return options.map((opt, index) => (`<label><input type="radio" name="${name}" value="${index}"> ${opt}</label>`)).join('');
+    }
+
+    function loadQuestion() {
+      const q = questions[currentQuestion];
+      document.getElementById('qCount').innerText = `Vraag ${currentQuestion + 1} van ${questions.length}`;
+      document.getElementById('qType').innerText = q.typeLabel;
+      document.getElementById('questionText').innerHTML = q.question;
+
+      const form = document.getElementById('answerForm');
+      if (q.type === 'mc') {
+        form.innerHTML = renderOptions(q.options, 'answer');
+      } else if (q.type === 'open') {
+        form.innerHTML = q.multiline
+          ? '<textarea class="text-input" name="answer" placeholder="Schrijf je antwoord..."></textarea>'
+          : '<input class="text-input" type="text" name="answer" placeholder="Typ je antwoord...">';
+      } else if (q.type === 'drag') {
+        const options = ['Kies...', ...q.options];
+        form.innerHTML = `<select class="select-input" name="answer">${options.map((opt) => `<option value="${opt}">${opt}</option>`).join('')}</select>`;
+      }
+
+      const feedback = document.getElementById('feedback');
+      feedback.innerText = '';
+      feedback.className = 'feedback';
+      document.getElementById('nextBtn').classList.add('hidden');
+    }
+
+    function normalize(value) {
+      return value.trim().toLowerCase();
+    }
+
+    function checkAnswer() {
+      const q = questions[currentQuestion];
+      let isCorrect = false;
+
+      if (q.type === 'mc') {
+        const selected = document.querySelector('input[name="answer"]:checked');
+        if (!selected) return;
+        isCorrect = Number(selected.value) === q.correctIndex;
+      } else if (q.type === 'open') {
+        const input = document.querySelector('[name="answer"]');
+        if (!input || !input.value.trim()) return;
+        const normalized = normalize(input.value);
+        if (q.acceptedAll && q.acceptedAll.length) {
+          isCorrect = q.acceptedAll.every((answer) => normalized.includes(normalize(answer)));
+        } else {
+          isCorrect = q.accepted.some((answer) => normalized.includes(normalize(answer)));
+        }
+      } else if (q.type === 'drag') {
+        const selected = document.querySelector('select[name="answer"]');
+        if (!selected || selected.value === 'Kies...') return;
+        isCorrect = normalize(selected.value) === normalize(q.correctValue);
+      }
+
+      const feedback = document.getElementById('feedback');
+      if (isCorrect) {
+        score += 3;
+        feedback.innerText = '✅ Juist! +3 XP';
+        feedback.classList.add('success');
+      } else {
+        feedback.innerText = '❌ Nog niet juist. Lees je bronnotities opnieuw.';
+        feedback.classList.add('error');
+      }
+      document.getElementById('nextBtn').classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        loadQuestion();
+      } else {
+        localStorage.setItem('thema9unit8', score);
+        document.getElementById('quizBox').classList.add('hidden');
+        document.getElementById('reflectieBox').classList.remove('hidden');
+        document.getElementById('endScreen').classList.remove('hidden');
+        document.getElementById('xpScore').innerText = score;
+      }
+    }
+
+    function bewaarReflectie() {
+      const persoon = document.getElementById('persoonInput').value.trim();
+      const link = document.getElementById('linkInput').value.trim();
+      if (!persoon && !link) return;
+      localStorage.setItem('thema9unit8_reflectie', JSON.stringify({ persoon, link }));
+      document.getElementById('reflectieFeedback').innerText = '✅ Reflectie bewaard.';
+    }
+
+    window.onload = loadQuestion;
+  </script>
+</body>
+</html>

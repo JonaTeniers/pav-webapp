@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thema 9 – Unit 7: Brabantse Omwenteling en Boerenkrijg</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
+  <style>
+    body { margin:0; font-family:'Nunito',sans-serif; background:#f5f3ff; color:#1f2937; }
+    header { background:#7c3aed; color:#fff; text-align:center; padding:1.2rem; }
+    main { width:min(960px,95%); margin:1.2rem auto 2rem; }
+    .card { background:#fff; border-radius:14px; box-shadow:0 6px 16px rgba(0,0,0,.08); padding:1.1rem; margin-bottom:1rem; }
+    .fragment { background:#faf5ff; border-left:4px solid #7c3aed; padding:0.8rem; border-radius:8px; }
+    .helper { color:#4b5563; font-size:.95rem; }
+    .question-box { background:#fff; border-radius:14px; box-shadow:0 6px 16px rgba(0,0,0,.08); padding:1.1rem; }
+    label { display:block; margin:.5rem 0; }
+    button { border:none; background:#6d28d9; color:#fff; border-radius:8px; padding:.6rem 1rem; font-weight:700; cursor:pointer; }
+    button:hover { background:#5b21b6; }
+    .feedback { margin-top:.75rem; font-weight:700; }
+    .success { color:#047857; }
+    .error { color:#b91c1c; }
+    .hidden { display:none; }
+    .text-input, .select-input, textarea { width:100%; border:1px solid #c4b5fd; border-radius:8px; padding:.55rem; font-family:inherit; }
+    textarea { min-height:95px; margin-top:.45rem; }
+    .nav-buttons { display:flex; gap:.6rem; flex-wrap:wrap; margin-top:1rem; }
+    .compare-box { margin-top:.8rem; background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:.75rem; }
+    .compare-box h3 { margin-top:0; margin-bottom:.45rem; }
+    .map-figure { margin-top:.9rem; }
+    .map-figure img { width:100%; max-width:520px; border-radius:10px; display:block; }
+    .map-figure figcaption { margin-top:.4rem; color:#4b5563; font-size:.9rem; }
+    .person-box { margin-top:.9rem; background:#fff7ed; border:1px solid #fed7aa; border-radius:10px; padding:.75rem; }
+    .person-figure { margin:.75rem 0 0; }
+    .person-figure img { width:100%; max-width:280px; border-radius:10px; display:block; }
+    .person-figure figcaption { margin-top:.4rem; color:#4b5563; font-size:.9rem; }
+    .person-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:.8rem; margin-top:.8rem; }
+    .person-card { background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:.7rem; }
+    .person-card h4 { margin:.2rem 0 .45rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🏛️ Thema 9 – Unit 7</h1>
+    <p>Brabantse Omwenteling en Boerenkrijg</p>
+  </header>
+  <main>
+    <section class="card">
+      <h2>Bronnen en leesopdracht</h2>
+      <p>Open de drie bronnen en noteer telkens 2 kernpunten.</p>
+      <p><a href="https://nl.wikipedia.org/wiki/Brabantse_Omwenteling" target="_blank" rel="noopener noreferrer">🔗 Brabantse Omwenteling (Wikipedia)</a></p>
+      <p><a href="https://historiek.net/de-boerenkrijg/8675/" target="_blank" rel="noopener noreferrer">🔗 De Boerenkrijg (Historiek)</a></p>
+      <p><a href="https://encyclopedievlaamsebeweging.be/nl/boerenkrijg" target="_blank" rel="noopener noreferrer">🔗 Boerenkrijg (Encyclopedie van de Vlaamse Beweging)</a></p>
+      <div class="fragment">
+        <strong>Korte maar krachtige samenvatting:</strong>
+        <p>De <strong>Brabantse Omwenteling</strong> (tegen het Oostenrijkse bewind van Jozef II) was vooral een politieke opstand, met veel invloed van elites in steden. De <strong>Boerenkrijg</strong> was later vooral een volksopstand op het platteland tegen de Franse bezetting en de verplichte dienstplicht. Figuren zoals <strong>Jan Frans Vonck</strong> helpen om deze periode te begrijpen: ideeën over vrijheid, rechten en macht botsten met oude structuren en met buitenlandse controle.</p>
+      </div>
+      <div class="person-box">
+        <h3>Wie was Jan Frans Vonck? Wat was zijn idee?</h3>
+        <p><strong>Jan Frans Vonck</strong> was een jurist en een belangrijke figuur binnen de Brabantse Omwenteling. Hij vond dat politieke inspraak niet alleen bij een kleine elite mocht liggen, maar breder gedragen moest worden. Zijn idee draaide dus om <strong>meer vertegenwoordiging</strong> en een modernere politieke cultuur binnen de Zuidelijke Nederlanden.</p>
+        <figure class="person-figure">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/J.F_Vonck.jpg/250px-J.F_Vonck.jpg" alt="Portret van Jan Frans Vonck" loading="lazy">
+          <figcaption>Bron afbeelding: Wikipedia / Wikimedia Commons, <a href="https://nl.wikipedia.org/wiki/Jan_Frans_Vonck" target="_blank" rel="noopener noreferrer">Jan Frans Vonck</a>.</figcaption>
+        </figure>
+      </div>
+      <div class="person-grid">
+        <article class="person-card">
+          <h4>Hendrik van der Noot</h4>
+          <p>Van der Noot was een invloedrijke leider van de conservatieve stroming tijdens de Brabantse Omwenteling. Hij verdedigde traditionele privileges en verzette zich tegen de hervormingen van Jozef II.</p>
+          <figure class="person-figure">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Henri_van_der_Noot_1790.jpg/250px-Henri_van_der_Noot_1790.jpg" alt="Portret van Hendrik van der Noot" loading="lazy">
+            <figcaption>Bron afbeelding: Wikipedia / Wikimedia Commons, <a href="https://nl.wikipedia.org/wiki/Hendrik_van_der_Noot" target="_blank" rel="noopener noreferrer">Hendrik van der Noot</a>.</figcaption>
+          </figure>
+        </article>
+        <article class="person-card">
+          <h4>Keizer Jozef II</h4>
+          <p>Jozef II was de Habsburgse vorst tegen wie de Brabantse Omwenteling zich keerde. Zijn centraliserende hervormingen botsten met lokale tradities, instellingen en religieuze gevoeligheden.</p>
+          <figure class="person-figure">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Anton_von_Maron_006.png/330px-Anton_von_Maron_006.png" alt="Portret van Keizer Jozef II" loading="lazy">
+            <figcaption>Bron afbeelding: Wikipedia / Wikimedia Commons, <a href="https://nl.wikipedia.org/wiki/Keizer_Jozef_II" target="_blank" rel="noopener noreferrer">Keizer Jozef II</a>.</figcaption>
+          </figure>
+        </article>
+      </div>
+      <div class="compare-box">
+        <h3>Wat hebben ze gemeen? Wat verschilt er?</h3>
+        <p><strong>Gemeen:</strong> beide waren opstanden in de Zuidelijke Nederlanden, met verzet tegen buitenlandse macht en tegen ingrepen in tradities en religie.</p>
+        <p><strong>Verschil:</strong> de Brabantse Omwenteling was meer politiek-elitair en stedelijk; de Boerenkrijg was meer volks, landelijk en sterk gericht tegen dienstplicht en Franse bezetting.</p>
+      </div>
+      <p class="helper">Tip: focus op oorzaak, wie meedeed, en welke boodschap voor vandaag relevant blijft.</p>
+      <figure class="map-figure">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Map_of_the_Habsburg_Netherlands_by_Alexis-Marie_Gochet.png" alt="Kaart van de Zuidelijke Nederlanden in de Habsburgse periode" loading="lazy">
+        <figcaption>Bron kaart: Wikimedia Commons (via Wikipedia), <a href="https://nl.wikipedia.org/wiki/Zuidelijke_Nederlanden#/media/Bestand:Map_of_the_Habsburg_Netherlands_by_Alexis-Marie_Gochet.png" target="_blank" rel="noopener noreferrer">Zuidelijke Nederlanden</a>.</figcaption>
+      </figure>
+    </section>
+
+    <section class="question-box" id="quizBox">
+      <h2 id="qCount">Vraag 1 van 8</h2>
+      <p class="helper" id="qType"></p>
+      <div id="questionText"></div>
+      <form id="answerForm"></form>
+      <button type="button" onclick="checkAnswer()">Controleer</button>
+      <div class="feedback" id="feedback"></div>
+      <div class="nav-buttons">
+        <button id="nextBtn" class="hidden" type="button" onclick="nextQuestion()">Volgende vraag →</button>
+      </div>
+    </section>
+
+    <section class="card hidden" id="reflectieBox">
+      <h2>🧠 Reflectie: diep begrip</h2>
+      <p><strong>Begripsvraag:</strong> Leg in 3 zinnen uit waarom twee opstanden in dezelfde regio toch heel anders kunnen zijn.</p>
+      <textarea id="gevoelInput" placeholder="Schrijf je antwoord in volledige zinnen..."></textarea>
+      <p><strong>Verdiepingsvraag:</strong> Schrijf 4 zinnen: vergelijk de rol van leiders/elite (zoals Vonck) met de rol van gewone mensen in de Boerenkrijg.</p>
+      <textarea id="verdiepingInput" placeholder="Werk je verdiepingsopdracht hier uit..."></textarea>
+      <button type="button" onclick="bewaarReflectie()">Bewaar reflectie</button>
+      <p class="helper" id="reflectieFeedback"></p>
+    </section>
+
+    <section class="question-box hidden" id="endScreen">
+      <h2>🎉 Unit voltooid!</h2>
+      <p>Je behaalde <span id="xpScore">0</span> XP.</p>
+      <p>Sterk gewerkt! Je kan nu het verband leggen tussen politieke revolutie en volksopstand.</p>
+      <div class="nav-buttons">
+        <a href="thema9.html"><button type="button">← Terug naar thema</button></a>
+        <a href="thema9unit8.html"><button type="button">→ Volgende unit</button></a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const questions = [
+      {
+        type: 'open',
+        typeLabel: 'Leesopdracht',
+        multiline: true,
+        question: `<strong>Leesfragment A (Brabantse Omwenteling)</strong><br>"Stedelijke elites en juristen verzetten zich tegen de hervormingen van Jozef II."<br><br><strong>Opdracht:</strong> Schrijf in 2-3 zinnen: <em>tegen wie</em> richtte dit verzet zich en <em>welke groepen</em> namen vooral het initiatief?`,
+        acceptedAll: ['jozef', 'elites']
+      },
+      {
+        type: 'drag',
+        typeLabel: 'Aanduiden',
+        question: `<strong>Leesfragment B (Boerenkrijg)</strong><br>"Op het platteland groeide verzet tegen Franse bezetting en verplichte legerdienst."<br><br>Duid de combinatie aan die het best past bij dit fragment.`,
+        options: [
+          'Actor: plattelandsbevolking/boeren · Oorzaak: dienstplicht + Franse controle',
+          'Actor: stedelijke elite · Oorzaak: invoering van de euro',
+          'Actor: spoorwegmaatschappijen · Oorzaak: te weinig stations'
+        ],
+        correctValue: 'Actor: plattelandsbevolking/boeren · Oorzaak: dienstplicht + Franse controle'
+      },
+      {
+        type: 'open',
+        typeLabel: 'Combinatie-opdracht',
+        multiline: true,
+        question: 'Vergelijk beide opstanden in een kort schema in woorden: geef <strong>1 overeenkomst</strong> en <strong>1 verschil</strong> (minstens 3 sleutelwoorden gebruiken).',
+        acceptedAll: ['overeenkomst', 'verschil']
+      },
+      {
+        type: 'open',
+        typeLabel: 'Persoonsbeschrijving',
+        multiline: true,
+        question: 'Beschrijf <strong>Jan Frans Vonck</strong> in 2-4 zinnen: welke rol speelde hij, en waarom is hij belangrijk om de Brabantse Omwenteling te begrijpen?',
+        accepted: ['vonck', 'hervorming', 'brabantse omwenteling', 'politiek', 'patriotten']
+      },
+      {
+        type: 'drag',
+        typeLabel: 'Lees & duid aan',
+        question: 'Welke uitspraak toont het best de <strong>gemeenschappelijke kern</strong> van Brabantse Omwenteling en Boerenkrijg?',
+        options: [
+          'Beide waren verzet tegen buitenlandse macht en tegen ingrepen in bestaande orde',
+          'Beide waren puur economische discussies zonder politiek',
+          'Beide draaiden vooral om treinverkeer'
+        ],
+        correctValue: 'Beide waren verzet tegen buitenlandse macht en tegen ingrepen in bestaande orde'
+      },
+      {
+        type: 'open',
+        typeLabel: 'Brongebruik',
+        multiline: true,
+        question: 'Gebruik minstens <strong>2 bronnen</strong> (Wikipedia/Historiek/EVB): noteer per bron 1 element dat helpt om het verschil tussen elite-opstand en volksopstand te begrijpen.',
+        acceptedAll: ['bron', 'elite', 'volksopstand']
+      },
+      {
+        type: 'mc',
+        typeLabel: 'Inzichtsvraag',
+        question: 'Welke conclusie is historisch het sterkst?',
+        options: [
+          'De sociale samenstelling (elite of volk) beïnvloedt doelen, taal en verloop van een opstand',
+          'Elke opstand in de Zuidelijke Nederlanden had exact dezelfde oorzaken',
+          'Religie en traditie speelden nooit een rol'
+        ],
+        correctIndex: 0
+      },
+      {
+        type: 'open',
+        typeLabel: 'Synthese',
+        multiline: true,
+        question: 'Schrijf een mini-synthese (4 zinnen): leg de link tussen Brabantse Omwenteling en Boerenkrijg, noem 2 verschillen en besluit waarom dit belangrijk blijft voor burgerzin vandaag.',
+        acceptedAll: ['brabantse', 'boerenkrijg', 'verschil']
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    function renderOptions(options, name) {
+      return options.map((opt, index) => (`<label><input type="radio" name="${name}" value="${index}"> ${opt}</label>`)).join('');
+    }
+
+    function loadQuestion() {
+      const q = questions[currentQuestion];
+      document.getElementById('qCount').innerText = `Vraag ${currentQuestion + 1} van ${questions.length}`;
+      document.getElementById('qType').innerText = q.typeLabel;
+      document.getElementById('questionText').innerHTML = q.question;
+      const form = document.getElementById('answerForm');
+      form.innerHTML = '';
+      if (q.type === 'mc') {
+        form.innerHTML = renderOptions(q.options, 'answer');
+      } else if (q.type === 'open') {
+        form.innerHTML = q.multiline
+          ? `<textarea class="text-input" name="answer" placeholder="Schrijf je antwoord..."></textarea>`
+          : `<input class="text-input" type="text" name="answer" placeholder="Typ je antwoord...">`;
+      } else if (q.type === 'drag') {
+        const options = ['Kies...', ...q.options];
+        form.innerHTML = `<select class="select-input" name="answer">${options.map((opt) => `<option value="${opt}">${opt}</option>`).join('')}</select>`;
+      }
+      const feedback = document.getElementById('feedback');
+      feedback.innerText = '';
+      feedback.className = 'feedback';
+      document.getElementById('nextBtn').classList.add('hidden');
+    }
+
+    function normalize(value) { return value.trim().toLowerCase(); }
+
+    function checkAnswer() {
+      const q = questions[currentQuestion];
+      let isCorrect = false;
+
+      if (q.type === 'mc') {
+        const selected = document.querySelector('input[name="answer"]:checked');
+        if (!selected) return;
+        isCorrect = Number(selected.value) === q.correctIndex;
+      } else if (q.type === 'open') {
+        const input = document.querySelector('[name="answer"]');
+        if (!input || !input.value.trim()) return;
+        const normalized = normalize(input.value);
+        if (q.acceptedAll && q.acceptedAll.length) {
+          isCorrect = q.acceptedAll.every((answer) => normalized.includes(normalize(answer)));
+        } else {
+          isCorrect = q.accepted.some((answer) => normalized.includes(normalize(answer)) || normalize(answer).includes(normalized));
+        }
+      } else if (q.type === 'drag') {
+        const selected = document.querySelector('select[name="answer"]');
+        if (!selected || selected.value === 'Kies...') return;
+        isCorrect = normalize(selected.value) === normalize(q.correctValue);
+      }
+
+      const feedback = document.getElementById('feedback');
+      if (isCorrect) {
+        score += 3;
+        feedback.innerText = '✅ Juist! +3 XP';
+        feedback.classList.add('success');
+      } else {
+        feedback.innerText = '❌ Nog niet juist. Lees opnieuw en let op overeenkomsten en verschillen.';
+        feedback.classList.add('error');
+      }
+      document.getElementById('nextBtn').classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        loadQuestion();
+      } else {
+        localStorage.setItem('thema9unit7', score);
+        document.getElementById('quizBox').classList.add('hidden');
+        document.getElementById('reflectieBox').classList.remove('hidden');
+        document.getElementById('endScreen').classList.remove('hidden');
+        document.getElementById('xpScore').innerText = score;
+      }
+    }
+
+    function bewaarReflectie() {
+      const begrip = document.getElementById('gevoelInput').value.trim();
+      const verdieping = document.getElementById('verdiepingInput').value.trim();
+      if (!begrip && !verdieping) return;
+      const payload = JSON.stringify({ begrip, verdieping });
+      localStorage.setItem('thema9unit7_reflectie', payload);
+      document.getElementById('reflectieFeedback').innerText = '✅ Reflectie en verdieping bewaard.';
+    }
+
+    window.onload = loadQuestion;
+  </script>
+</body>
+</html>
