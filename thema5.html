@@ -15,52 +15,109 @@
       --muted: #5e6f55;
     }
     * { box-sizing: border-box; }
-    body { margin: 0; font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); }
-    header { background: #a4c93d; color: #fff; padding: 1.8rem 1rem; text-align: center; }
-    main { width: min(1100px, 95%); margin: 1.5rem auto 2rem; display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; }
-    .panel { background: var(--panel); border-radius: 14px; padding: 1.2rem; box-shadow: 0 6px 16px rgba(0,0,0,0.08); }
+    body {
+      margin: 0;
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    header {
+      background: #a4c93d;
+      color: #fff;
+      padding: 1.8rem 1rem;
+      text-align: center;
+    }
+    main {
+      width: min(1100px, 95%);
+      margin: 1.5rem auto 2rem;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1rem;
+    }
+    .panel {
+      background: var(--panel);
+      border-radius: 14px;
+      padding: 1.2rem;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+    }
     h2 { margin-top: 0; }
-    .intro { background: #f9fdea; border-radius: 12px; border: 1px solid #d6e8b2; padding: 1rem; margin-bottom: 1rem; }
-    .unit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.8rem; }
-    .unit-card { border: 1px solid #d6e8b2; background: #f9fdea; border-radius: 12px; padding: 1rem; }
-    .unit-card h3 { margin: 0 0 .4rem; }
-    .unit-card p { margin: 0.2rem 0; color: var(--muted); }
-    .btn { display: inline-block; text-decoration: none; margin-top: 0.8rem; background: var(--accent); color: white; padding: 0.5rem 0.9rem; border-radius: 999px; font-weight: 700; }
+    .columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .type-card {
+      border: 2px solid #d6e8b2;
+      border-radius: 12px;
+      padding: 1rem;
+      background: #f9fdea;
+    }
+    ul { margin: 0.4rem 0 0; padding-left: 1.2rem; }
+    .task {
+      border-top: 1px solid #dfead0;
+      margin-top: 1rem;
+      padding-top: 1rem;
+    }
+    .chat-embed {
+      width: 100%;
+      min-height: 520px;
+      border: none;
+      border-radius: 12px;
+      background: #f7fbec;
+    }
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      margin-top: 0.8rem;
+      background: var(--accent);
+      color: white;
+      padding: 0.5rem 0.9rem;
+      border-radius: 999px;
+      font-weight: 700;
+    }
     .btn:hover { background: var(--accent-dark); }
-    .chat-embed { width: 100%; min-height: 520px; border: none; border-radius: 12px; background: #f7fbec; }
-    @media (max-width: 900px) { main { grid-template-columns: 1fr; } }
+    @media (max-width: 900px) {
+      main { grid-template-columns: 1fr; }
+      .columns { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
   <header>
     <h1>📗 Thema 5 – Fictie en non-fictie</h1>
-    <p>Herken tekstsoorten en oefen doelgericht met 3 units.</p>
+    <p>Herken of een tekst fantasie of feiten gebruikt, en wat het doel is van de schrijver.</p>
   </header>
 
   <main>
     <section class="panel">
-      <div class="intro">
-        <h2>Wat leer je?</h2>
-        <p>Je leert fictie en non-fictie herkennen op basis van inhoud, doel van de schrijver en tekstkenmerken. Elke unit bevat 10 opdrachten met open vragen, meerkeuze en selecties.</p>
+      <h2>Uitleg</h2>
+      <div class="columns">
+        <article class="type-card">
+          <h3>Fictie</h3>
+          <ul>
+            <li>Verzonnen of gebaseerd op fantasie.</li>
+            <li>Doel: amuseren, ontroeren, iets laten beleven.</li>
+            <li>Voorbeelden: verhaal, roman, gedicht, film.</li>
+          </ul>
+        </article>
+        <article class="type-card">
+          <h3>Non-fictie</h3>
+          <ul>
+            <li>Gaat over feiten, informatie of meningen.</li>
+            <li>Doel: informeren, uitleggen of overtuigen.</li>
+            <li>Voorbeelden: artikel, handleiding, nieuwsbericht.</li>
+          </ul>
+        </article>
       </div>
 
-      <h2>📚 Units</h2>
-      <div class="unit-grid">
-        <article class="unit-card">
-          <h3>Unit 1</h3>
-          <p>Fictie of non-fictie herkennen.</p>
-          <a class="btn" href="thema5unit1.html">Start unit</a>
-        </article>
-        <article class="unit-card">
-          <h3>Unit 2</h3>
-          <p>Doel van de schrijver bepalen.</p>
-          <a class="btn" href="thema5unit2.html">Start unit</a>
-        </article>
-        <article class="unit-card">
-          <h3>Unit 3</h3>
-          <p>Teksten vergelijken en motiveren.</p>
-          <a class="btn" href="thema5unit3.html">Start unit</a>
-        </article>
+      <div class="task">
+        <h3>Oefening</h3>
+        <p>Bepaal voor elke tekst:</p>
+        <ol>
+          <li>Is het echt gebeurd (feiten) of verzonnen (fantasie)?</li>
+          <li>Wat is het doel van de schrijver?</li>
+          <li>Is het fictie of non-fictie?</li>
+        </ol>
       </div>
 
       <a class="btn" href="index.html">← Terug naar overzicht</a>
