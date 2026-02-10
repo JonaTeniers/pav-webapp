@@ -38,21 +38,24 @@
     }
 
     .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin: 2rem 1rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      margin: 2rem auto;
+      width: min(1100px, 95%);
     }
 
     .thema-card {
       background: white;
       padding: 1.5rem;
-      margin: 1rem;
+      margin: 0.25rem;
       border-radius: 16px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      width: 90%;
-      max-width: 400px;
       transition: transform 0.2s;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
     .thema-card:hover {
@@ -61,12 +64,14 @@
 
     .thema-card h2 {
       color: #1976d2;
-      margin-bottom: 0.4rem;
+      margin: 0 0 0.4rem;
+      font-size: 1.3rem;
     }
 
     .thema-card p {
       color: #444;
       font-size: 1rem;
+      margin: 0.3rem 0;
     }
 
     .thema-card button {
@@ -117,6 +122,24 @@
       <h2>Thema 4: Wiskunde</h2>
       <p>Omtrek en oppervlakte oefenen met gevarieerde opdrachten.</p>
       <a href="thema4.html"><button>Start Thema</button></a>
+    </div>
+
+    <div class="thema-card">
+      <h2>Thema 5: Fictie en non-fictie</h2>
+      <p>Leer teksten onderscheiden op basis van doel, inhoud en stijl.</p>
+      <a href="thema5.html"><button>Start Thema</button></a>
+    </div>
+
+    <div class="thema-card">
+      <h2>Thema 6: Schatten</h2>
+      <p>Schat uitkomsten met afronden en controleer daarna exact.</p>
+      <a href="thema6.html"><button>Start Thema</button></a>
+    </div>
+
+    <div class="thema-card">
+      <h2>Thema 7: Communiceren in het Nederlands</h2>
+      <p>Werk met het communicatiemodel en schrijf duidelijke berichten.</p>
+      <a href="thema7.html"><button>Start Thema</button></a>
     </div>
   </div>
 
