@@ -127,7 +127,45 @@
       color: #4b5563;
       font-weight: 700;
     }
-    @media (max-width: 900px) { main { grid-template-columns: 1fr; } }
+
+    .timeline-focus {
+      margin-top: 0.65rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+    .focus-chip {
+      background: #ede9fe;
+      border: 1px solid #c4b5fd;
+      color: #4c1d95;
+      border-radius: 999px;
+      padding: 0.3rem 0.6rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+    .timeline-person {
+      margin-top: 0.85rem;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 0.75rem;
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 0.75rem;
+      align-items: start;
+    }
+    .timeline-person img {
+      width: 100%;
+      border-radius: 8px;
+      display: block;
+    }
+    .timeline-person p { margin: 0 0 0.45rem; color: var(--muted); }
+    .timeline-person figcaption { font-size: 0.85rem; color: #6b7280; }
+    @media (max-width: 900px) {
+      main { grid-template-columns: 1fr; }
+      .timeline-person { grid-template-columns: 1fr; }
+      .timeline-person img { max-width: 170px; }
+    }
   </style>
 </head>
 <body>
@@ -165,6 +203,19 @@
             <span>1945</span>
           </div>
         </div>
+        <div class="timeline-focus" aria-label="Belangrijke jaartallen voor dit thema">
+          <span class="focus-chip">1815: Willem I en Verenigd Koninkrijk der Nederlanden</span>
+          <span class="focus-chip">1830: Belgische Revolutie</span>
+          <span class="focus-chip">1940-1945: Tweede Wereldoorlog</span>
+          <span class="focus-chip">2002: Invoering euro</span>
+        </div>
+        <figure class="timeline-person">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/King_William_I_of_the_Netherlands.jpg" alt="Portret van Willem I der Nederlanden" loading="lazy">
+          <figcaption>
+            <p><strong>Sleutelfiguur bij de tijdsbalk:</strong> Willem I (vanaf 1815) helpt om de overgang naar de Belgische Revolutie van 1830 te begrijpen.</p>
+            Bron afbeelding: Wikimedia Commons (via Wikipedia), <a href="https://nl.wikipedia.org/wiki/Willem_I_der_Nederlanden" target="_blank" rel="noopener noreferrer">Willem I der Nederlanden</a>.
+          </figcaption>
+        </figure>
       </div>
 
 
