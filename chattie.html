@@ -147,6 +147,7 @@ body {
 const RESET_CODE = "resetchattie2025";
 const ESCALATION_LIMIT = 3;
 const TYPING_MS = 800;
+const CUSTOM_STORAGE_KEY = "chattieCustomLeerstofV1";
 const FORBIDDEN = ["fuck","kut","lul","trut","sukkel","idioot","kanker","rotzak","hoer","slet","eikel","klootzak","mongool","flikker","aso","wijf","tyfus","tering","pleuris","pest","debiel","achterlijk","mafkees","lapzwans","snol","del","kech","zak","schijt","gay","lesbo","mietje","poot","pot","nicht","faggot","fag","dyke","tranny","transseksueel","homofiel","kontneuker","biseksueel","motherfucker","cunt"];
 
 const KNOWLEDGE = {
@@ -188,7 +189,30 @@ const KNOWLEDGE = {
   "pig butchering": "Dit is de naam voor de oplichtingsmethode waarbij fraudeurs, zoals bij Peter, eerst langdurig vertrouwen opbouwen om het slachtoffer emotioneel te binden, waarna ze financieel toeslaan.",
   "oplichting gevolgen": "Het verhaal van Peter in HLN toont de zware gevolgen van oplichting: hij verloor niet alleen zijn spaargeld, maar ook zijn relatie en zijn zelfvertrouwen, door de schaamte en het zwijgen over de fraude.",
   "fraude psychologie": "HLN benadrukt dat deze fraudeurs psychologisch getraind zijn om in te spelen op de emoties en het vertrouwen van het slachtoffer, waardoor zelfs slimme mensen denken dat 'zij het zelf wel kunnen oplossen'.",
-  "rode vlaggen fraude": "Volgens Peter zijn de belangrijkste 'rode vlaggen' bij oplichting: berichten van onbekende nummers, het creëren van druk of urgentie, en de eis voor extra stortingen om je geld 'terug te krijgen'."
+  "rode vlaggen fraude": "Volgens Peter zijn de belangrijkste 'rode vlaggen' bij oplichting: berichten van onbekende nummers, het creëren van druk of urgentie, en de eis voor extra stortingen om je geld 'terug te krijgen'.",
+
+  // EXTRA LEERSTOF UIT PAV-THEMA'S
+  "levende natuur": "Levende natuur bestaat uit organismen die groeien, ademen, zich voortplanten en reageren op prikkels.",
+  "niet-levende natuur": "Niet-levende natuur bevat elementen zoals water, lucht, rotsen en bodem; ze leven niet maar beïnvloeden organismen wel.",
+  "organisme": "Een organisme is een levend wezen, zoals een mens, dier, plant, schimmel of bacterie.",
+  "ecosysteem": "Een ecosysteem is een geheel van levende en niet-levende factoren die elkaar in een gebied beïnvloeden.",
+  "voedselketen": "Een voedselketen toont wie wie eet in de natuur: producenten, consumenten en opruimers.",
+  "verleden tijd": "De verleden tijd gebruik je om te vertellen wat er vroeger gebeurde; vaak eindigt de persoonsvorm op -te/-de of was/waren.",
+  "werkwoord": "Een werkwoord geeft aan wat iemand doet, wat er gebeurt of in welke toestand iets is.",
+  "zinsbouw": "Zinsbouw is de manier waarop woorden in een zin staan zodat de boodschap duidelijk en correct is.",
+  "omtrek": "De omtrek is de totale lengte van de rand van een figuur.",
+  "oppervlakte": "De oppervlakte is de grootte van het vlak binnen de randen van een figuur, meestal uitgedrukt in cm² of m².",
+  "fictie": "Fictie is een verzonnen verhaal, ook al kan het lijken op de werkelijkheid.",
+  "non-fictie": "Non-fictie is een informatieve tekst die gebaseerd is op feiten.",
+  "afronden": "Afronden betekent een getal vervangen door een eenvoudiger, dichtbij liggend getal om sneller te kunnen schatten.",
+  "schatten": "Schatten is een redelijke benadering maken van een uitkomst zonder exact te rekenen.",
+  "communicatiemodel": "Het communicatiemodel beschrijft hoe een zender via een boodschap en kanaal informatie doorgeeft aan een ontvanger.",
+  "zender": "De zender is degene die de boodschap opstelt en verstuurt.",
+  "ontvanger": "De ontvanger is degene voor wie de boodschap bedoeld is en die ze interpreteert.",
+  "boodschap": "De boodschap is de inhoud die je wil overbrengen in gesproken, geschreven of visuele vorm.",
+  "kanaal": "Het kanaal is het medium waarmee je communiceert, zoals chat, e-mail, telefoon of gesprek.",
+  "ruis": "Ruis is alles wat de communicatie verstoort, zoals lawaai, onduidelijke taal of technische problemen.",
+  "feedback": "Feedback is de reactie van de ontvanger waarmee je weet of de boodschap begrepen is."
 
 };
 const CANONICAL_KNOWLEDGE = JSON.parse(JSON.stringify(KNOWLEDGE));
@@ -208,6 +232,27 @@ const ASSIGNMENTS = {
   "oplichting gevolgen": "Welke niet-financiële gevolgen kunnen slachtoffers van fraude ondervinden (bv. naast geldverlies)?",
   "pig butchering": "Wat is het cruciale psychologische element in de 'pig butchering'-methode om het slachtoffer te overtuigen?",
   "kwetsbare singles": "Wat maakt oudere, eenzame mensen extra kwetsbaar voor emotionele manipulatie door fraudeurs?",
+  "levende natuur": "Noem drie kenmerken waaraan je kunt herkennen dat iets levende natuur is.",
+  "niet-levende natuur": "Geef drie voorbeelden van niet-levende natuur en leg per voorbeeld uit waarom het niet leeft.",
+  "organisme": "Kies één organisme uit je omgeving en beschrijf hoe het zich aanpast aan zijn leefomgeving.",
+  "ecosysteem": "Beschrijf een lokaal ecosysteem (bv. park of vijver) met minstens twee levende en twee niet-levende factoren.",
+  "voedselketen": "Maak een eenvoudige voedselketen met minstens vier schakels en duid producent en consumenten aan.",
+  "verleden tijd": "Schrijf vijf zinnen in de verleden tijd over wat je gisteren deed en markeer de persoonsvorm.",
+  "werkwoord": "Zoek in een krantenartikel vijf werkwoorden en bepaal per werkwoord de tijd.",
+  "zinsbouw": "Herschrijf een onduidelijke zin zodat de woordvolgorde correct en helder is.",
+  "omtrek": "Meet de omtrek van een voorwerp in de klas en toon je berekening.",
+  "oppervlakte": "Bereken de oppervlakte van je bank of tafelblad in cm² en in m².",
+  "fictie": "Leg uit waarom een gekozen boek of film onder fictie valt met twee argumenten.",
+  "non-fictie": "Vergelijk een non-fictietekst met een fictietekst en noem twee duidelijke verschillen.",
+  "afronden": "Rond de getallen 4.781, 267 en 0,049 af op een passend niveau en leg je keuze uit.",
+  "schatten": "Maak een schatting van een rekensom en controleer nadien met de exacte uitkomst hoe dicht je zat.",
+  "communicatiemodel": "Analyseer een recent bericht dat je verstuurde en benoem zender, ontvanger, kanaal en feedback.",
+  "zender": "Geef een voorbeeld waarbij de zender zijn boodschap moest aanpassen aan de doelgroep.",
+  "ontvanger": "Beschrijf een situatie waarin de ontvanger een boodschap anders begreep dan bedoeld.",
+  "boodschap": "Herschrijf een lange boodschap in drie duidelijke kernzinnen.",
+  "kanaal": "Vergelijk twee communicatiekanalen voor dezelfde boodschap en kies welk kanaal het meest geschikt is.",
+  "ruis": "Geef twee voorbeelden van ruis bij digitale communicatie en hoe je die voorkomt.",
+  "feedback": "Formuleer constructieve feedback op een klasopdracht volgens de ik-boodschap.",
   "natuur": "Zoek een natuurgebied in jouw regio en beschrijf drie kenmerken.",
   "industrieel": "Zoek een industrieterrein in de buurt en beschrijf de functie ervan.",
   "landelijk": "Wat zijn de voor- en nadelen van wonen in een landelijke omgeving?",
@@ -256,6 +301,47 @@ const ASSIGNMENTS = {
 
 };
 
+function normalizeTopic(topic){ return topic.trim().toLowerCase(); }
+function buildTopicIndex(source){ const index={}; Object.entries(source).forEach(([k,v])=>{ index[normalizeTopic(k)]=v; }); return index; }
+function escapeRegExp(value){ return value.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
+function parseTeachCommand(input,prefix){
+  const escapedPrefix=escapeRegExp(prefix);
+  const regex=new RegExp(`^${escapedPrefix}\\s*([^=]+)\\s*=\\s*(.+)$`,'i');
+  const match=input.match(regex);
+  if(!match) return null;
+  return { topic: normalizeTopic(match[1]), text: match[2].trim() };
+}
+function saveCustomLeerstof(){
+  const payload={ knowledge: customKnowledge, assignments: customAssignments };
+  localStorage.setItem(CUSTOM_STORAGE_KEY, JSON.stringify(payload));
+}
+function loadCustomLeerstof(){
+  try{
+    const raw=localStorage.getItem(CUSTOM_STORAGE_KEY);
+    if(!raw) return;
+    const parsed=JSON.parse(raw);
+    const loadedKnowledge=parsed?.knowledge ?? {};
+    const loadedAssignments=parsed?.assignments ?? {};
+    Object.entries(loadedKnowledge).forEach(([topic,text])=>{ if(text) knowledgeIndex[normalizeTopic(topic)]=text; });
+    Object.entries(loadedAssignments).forEach(([topic,text])=>{ if(text) assignmentsIndex[normalizeTopic(topic)]=text; });
+    customKnowledge=buildTopicIndex(loadedKnowledge);
+    customAssignments=buildTopicIndex(loadedAssignments);
+  }catch(_){
+    customKnowledge={};
+    customAssignments={};
+  }
+}
+function getKnowledge(topic){ return knowledgeIndex[normalizeTopic(topic)]; }
+function getAssignment(topic){ return assignmentsIndex[normalizeTopic(topic)]; }
+
+const baseKnowledgeIndex = buildTopicIndex(KNOWLEDGE);
+const baseAssignmentsIndex = buildTopicIndex(ASSIGNMENTS);
+const knowledgeIndex = { ...baseKnowledgeIndex };
+const assignmentsIndex = { ...baseAssignmentsIndex };
+let customKnowledge = {};
+let customAssignments = {};
+loadCustomLeerstof();
+
 // -------------------------
 // STATE
 // -------------------------
@@ -294,26 +380,75 @@ function handleUserInput(){
   const input=inputEl.value.trim();
   if(!input) return;
   appendMessage(input,'user'); inputEl.value='';
-  processInput(input.toLowerCase());
+  processInput(input);
 }
 
 async function processInput(input){
-  if(FORBIDDEN.some(w=>input.includes(w))){ escalation++; appendMessage("❗ Dat was niet gepast. Blijf beleefd a.u.b.",'bot'); return; }
-  if(input===RESET_CODE){ escalation=0; isDisabled=false; memory={}; appendMessage("🔄 Chattie is herstart!",'bot'); updateUI(); return; }
-  if(input==="start"){ isChatActive=true; appendMessage("🎉 Hallo! Typ 'leg uit: ai' om te starten.",'bot'); updateUI(); return; }
-  if(input==="einde"){ isChatActive=false; appendMessage("👋 Tot later!",'bot'); updateUI(); return; }
-  if(input.startsWith("leg uit:")){ 
-    const topic=input.replace(/^leg uit:/,"").trim(); 
-    if(KNOWLEDGE[topic]){ await showTyping(); appendMessage("Hier is een uitleg over '"+topic+"':",'bot'); appendMessage(KNOWLEDGE[topic],'bot'); memory.lastTopic=topic; updateUI(); }
-    else appendMessage("Sorry, ik ken dat onderwerp nog niet.",'bot');
+  const normalizedInput=input.trim().toLowerCase();
+  if(FORBIDDEN.some(w=>normalizedInput.includes(w))){ escalation++; appendMessage("❗ Dat was niet gepast. Blijf beleefd a.u.b.",'bot'); return; }
+  if(normalizedInput===RESET_CODE){
+    escalation=0; isDisabled=false; memory={};
+    customKnowledge={}; customAssignments={};
+    Object.keys(knowledgeIndex).forEach(topic=>{ delete knowledgeIndex[topic]; });
+    Object.keys(assignmentsIndex).forEach(topic=>{ delete assignmentsIndex[topic]; });
+    Object.assign(knowledgeIndex, baseKnowledgeIndex);
+    Object.assign(assignmentsIndex, baseAssignmentsIndex);
+    localStorage.removeItem(CUSTOM_STORAGE_KEY);
+    appendMessage("🔄 Chattie is herstart!",'bot');
+    updateUI();
     return;
   }
-  if(input==="opdracht"){ 
-    if(memory.lastTopic && ASSIGNMENTS[memory.lastTopic]) appendMessage("📝 Opdracht: "+ASSIGNMENTS[memory.lastTopic],'bot');
-    else appendMessage("Geen actieve opdracht. Leer eerst een onderwerp via 'leg uit: ...'",'bot');
+  if(normalizedInput==="start"){ isChatActive=true; appendMessage("🎉 Hallo! Typ 'leg uit: ai' om te starten.",'bot'); updateUI(); return; }
+  if(normalizedInput==="einde"){ isChatActive=false; appendMessage("👋 Tot later!",'bot'); updateUI(); return; }
+
+  const teachKnowledge=parseTeachCommand(input,"leer:");
+  if(teachKnowledge){
+    customKnowledge[teachKnowledge.topic]=teachKnowledge.text;
+    knowledgeIndex[teachKnowledge.topic]=teachKnowledge.text;
+    saveCustomLeerstof();
+    appendMessage(`✅ Nieuwe leerstof opgeslagen voor '${teachKnowledge.topic}'. Gebruik nu: leg uit: ${teachKnowledge.topic}`,'bot');
     return;
   }
-  appendMessage("🤔 Sorry, dat begrijp ik niet helemaal.",'bot');
+
+  const teachAssignment=parseTeachCommand(input,"opdracht voor:");
+  if(teachAssignment){
+    customAssignments[teachAssignment.topic]=teachAssignment.text;
+    assignmentsIndex[teachAssignment.topic]=teachAssignment.text;
+    saveCustomLeerstof();
+    appendMessage(`✅ Opdracht opgeslagen voor '${teachAssignment.topic}'.`,'bot');
+    return;
+  }
+
+  if(normalizedInput==="toon leerstof"){
+    const customTopics=Object.keys(customKnowledge);
+    if(!customTopics.length){ appendMessage("Er is nog geen extra leerstof opgeslagen. Gebruik: leer: onderwerp = uitleg",'bot'); return; }
+    appendMessage("📚 Opgeslagen extra leerstof: "+customTopics.sort().join(", "),'bot');
+    return;
+  }
+
+  if(normalizedInput.startsWith("leg uit:")){
+    const topic=normalizeTopic(input.replace(/^leg uit:/i,"").trim());
+    const knowledge=getKnowledge(topic);
+    if(knowledge){
+      await showTyping();
+      appendMessage("Hier is een uitleg over '"+topic+"':",'bot');
+      appendMessage(knowledge,'bot');
+      memory.lastTopic=topic;
+      updateUI();
+    } else {
+      appendMessage("Sorry, ik ken dat onderwerp nog niet. Voeg het toe met: leer: onderwerp = uitleg",'bot');
+    }
+    return;
+  }
+
+  if(normalizedInput==="opdracht"){
+    const assignment = memory.lastTopic ? getAssignment(memory.lastTopic) : null;
+    if(assignment) appendMessage("📝 Opdracht: "+assignment,'bot');
+    else appendMessage("Geen actieve opdracht. Leer eerst een onderwerp via 'leg uit: ...' of voeg er één toe met 'opdracht voor: onderwerp = ...'",'bot');
+    return;
+  }
+
+  appendMessage("🤔 Sorry, dat begrijp ik niet helemaal. Tip: gebruik 'leer: onderwerp = uitleg' om mij nieuwe leerstof te geven.",'bot');
 }
 
 // -------------------------
@@ -332,15 +467,15 @@ chips.forEach(chip=>{
       case "more": appendMessage("💡 Gebruik 'leg uit: <onderwerp>' voor uitleg",'bot'); break;
       case "example": appendMessage("Stuur een voorbeeld met 'voorbeeld: <jouw voorbeeld>'",'bot'); break;
       case "dontget": processInput("ik snap het niet"); break;
-      case "assignment": if(memory.lastTopic) appendMessage("📝 Opdracht: "+ASSIGNMENTS[memory.lastTopic],'bot'); break;
+      case "assignment": if(memory.lastTopic){ const assignment=getAssignment(memory.lastTopic); appendMessage(assignment?"📝 Opdracht: "+assignment:"Nog geen opdracht voor dit onderwerp.",'bot'); } break;
       case "stap": appendMessage("Gebruik 'leg uit: ...' om uitleg in stappen te krijgen.",'bot'); break;
-      case "samenvat": appendMessage("📝 Samenvatting: "+KNOWLEDGE[memory.lastTopic],'bot'); break;
-      case "kernwoorden": appendMessage("🔑 Kernwoorden: "+KNOWLEDGE[memory.lastTopic].split(" ").slice(0,5).join(", "),'bot'); break;
+      case "samenvat": { const knowledge=getKnowledge(memory.lastTopic); appendMessage(knowledge?"📝 Samenvatting: "+knowledge:"Nog geen samenvatting voor dit onderwerp.",'bot'); break; }
+      case "kernwoorden": { const knowledge=getKnowledge(memory.lastTopic)||""; appendMessage("🔑 Kernwoorden: "+(knowledge?knowledge.split(" ").slice(0,5).join(", "):"geen"),'bot'); break; }
     }
   });
 });
 
-howBtn.addEventListener('click',()=>{ appendMessage("📚 Gebruik 'leg uit: <onderwerp>' om uitleg te krijgen, 'opdracht' voor een oefening, en de knoppen voor snelle acties.",'bot'); });
+howBtn.addEventListener('click',()=>{ appendMessage("📚 Gebruik 'leg uit: <onderwerp>' voor uitleg, 'opdracht' voor een oefening. Nieuwe leerstof toevoegen? Typ: leer: onderwerp = uitleg en opdracht voor: onderwerp = opdracht.",'bot'); });
 
 updateUI();
 </script>
