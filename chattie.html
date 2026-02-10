@@ -211,7 +211,22 @@ const KNOWLEDGE = {
   "boodschap": "De boodschap is de inhoud die je wil overbrengen in gesproken, geschreven of visuele vorm.",
   "kanaal": "Het kanaal is het medium waarmee je communiceert, zoals chat, e-mail, telefoon of gesprek.",
   "ruis": "Ruis is alles wat de communicatie verstoort, zoals lawaai, onduidelijke taal of technische problemen.",
-  "feedback": "Feedback is de reactie van de ontvanger waarmee je weet of de boodschap begrepen is."
+  "feedback": "Feedback is de reactie van de ontvanger waarmee je weet of de boodschap begrepen is.",
+  "canon van vlaanderen": "De Canon van Vlaanderen is een selectie van historische vensters en gebeurtenissen die helpen om het verleden van Vlaanderen in context te begrijpen.",
+  "het verhaal van vlaanderen": "'Het verhaal van Vlaanderen' is een historische reeks die gebeurtenissen en maatschappelijke evoluties chronologisch in beeld brengt.",
+  "wetboek van napoleon": "Het wetboek van Napoleon (Code civil) bracht meer uniforme burgerlijke regels over eigendom, contracten en familie, maar bleef ongelijk op sommige vlakken zoals vrouwenrechten.",
+  "liberale grondwet": "De Belgische grondwet van 1831 was erg liberaal voor haar tijd, met vrijheden zoals persvrijheid en vereniging, al had nog niet iedereen politieke inspraak.",
+  "grondrechten": "Grondrechten zijn basisrechten die burgers beschermen tegen willekeurige macht, zoals vrijheid van meningsuiting, vereniging en godsdienst.",
+  "eerste treinrit": "De eerste treinrit op het Europese vasteland (Brussel-Mechelen, 1835) versnelde mobiliteit, handel en industrialisering.",
+  "industrialisering": "Industrialisering is de overgang naar machinale productie, met grote impact op werk, steden en sociale verhoudingen.",
+  "emilie claeys": "Emilie Claeys was een socialistische en feministische pionier die streed voor vrouwenrechten en betere leef- en arbeidsomstandigheden.",
+  "emancipatie": "Emancipatie is het proces waarbij groepen meer gelijke rechten, kansen en maatschappelijke positie verwerven.",
+  "dossinkazerne": "De Dossinkazerne in Mechelen was tijdens WOII een verzamel- en deportatieplaats voor Joden en Roma; vandaag is ze een plaats van herinnering en mensenrechteneducatie.",
+  "holocaust": "De Holocaust was de systematische vervolging en moord op Joden door het naziregime, met ook vervolging van andere groepen zoals Roma.",
+  "mensenrechten": "Mensenrechten zijn fundamentele rechten die voor iedereen gelden, ongeacht afkomst, geloof, geslacht of overtuiging.",
+  "de euro": "De euro is een gemeenschappelijke munt van meerdere Europese landen en maakt handel, reizen en prijsvergelijking eenvoudiger.",
+  "europese samenwerking": "Europese samenwerking betekent dat landen afspraken maken en samen beleid uitwerken rond economie, recht, mobiliteit en andere domeinen.",
+  "historisch redeneren": "Historisch redeneren is nadenken over oorzaken, gevolgen, continuïteit en verandering, en over wie voordeel of nadeel had bij gebeurtenissen."
 
 };
 const CANONICAL_KNOWLEDGE = JSON.parse(JSON.stringify(KNOWLEDGE));
@@ -296,7 +311,22 @@ const ASSIGNMENTS = {
   "breukschaal": "Wat betekent de 'breukschaal' 1:250 in de context van een plattegrond van een gebouw?",
   "lijnschaal": "Wat is het voordeel van een 'lijnschaal' ten opzichte van een 'breukschaal' als je een kaart vergroot of verkleint?",
   "thematische kaarten": "Welk specifiek onderwerp zou je terugvinden op een thematische kaart van België over de bevolking?",
-  "historisch referentie kader": "Maak een beknopt historisch referentiekader (minstens drie data) voor de geschiedenis van jouw gemeente/stad en noteer de belangrijkste domeinen (P, S, C, E)."
+  "historisch referentie kader": "Maak een beknopt historisch referentiekader (minstens drie data) voor de geschiedenis van jouw gemeente/stad en noteer de belangrijkste domeinen (P, S, C, E).",
+  "canon van vlaanderen": "Kies één Canon-venster uit je unit en leg in 4 zinnen uit wat de gebeurtenis verandert in het dagelijkse leven van mensen.",
+  "het verhaal van vlaanderen": "Koppel één scène uit de reeks aan je Canon-bron en noteer: oorzaak, gevolg en waarom dit past in het grotere verhaal.",
+  "wetboek van napoleon": "Geef 2 effecten van het wetboek: één dat voor meer duidelijkheid zorgde en één punt dat nog ongelijk bleef.",
+  "liberale grondwet": "Kies één grondrecht en leg uit hoe dat recht vandaag zichtbaar is op school, in media of in de samenleving.",
+  "grondrechten": "Vergelijk een situatie mét en zonder grondrechten en noteer in 3 zinnen wat dat verandert voor burgers.",
+  "eerste treinrit": "Maak een klein oorzaak-gevolgschema: trein -> economie, trein -> werk, trein -> dagelijks leven.",
+  "industrialisering": "Noem 2 voordelen en 2 nadelen van industrialisering voor gewone gezinnen in de 19e eeuw.",
+  "emilie claeys": "Schrijf 4 zinnen: welk onrecht wilde Emilie Claeys aanpakken en welke rechten lijken vandaag vanzelfsprekend door die strijd?",
+  "emancipatie": "Geef een voorbeeld van een recht dat via emancipatiestrijd sterker is geworden en leg uit waarom.",
+  "dossinkazerne": "Formuleer 2 lessen voor vandaag uit het verhaal van de Dossinkazerne rond uitsluiting, racisme en burgerschap.",
+  "holocaust": "Leg uit waarom herinneringseducatie belangrijk is voor democratie en mensenrechten in het heden.",
+  "mensenrechten": "Kies één mensenrecht en geef een concreet voorbeeld van hoe je dat recht kan beschermen in het dagelijks leven.",
+  "de euro": "Geef één voordeel en één uitdaging van een gezamenlijke munt voor burgers in Vlaanderen.",
+  "europese samenwerking": "Noem een Europese beslissing die je dagelijks leven beïnvloedt en leg het effect uit in 3 zinnen.",
+  "historisch redeneren": "Beantwoord over je unit: wat is de oorzaak, wat is het gevolg op korte termijn en wat verandert op lange termijn?"
 
 };
 
@@ -385,6 +415,13 @@ chips.forEach(chip=>{
 });
 
 howBtn.addEventListener('click',()=>{ appendMessage("📚 Gebruik 'leg uit: <onderwerp>' om uitleg te krijgen, 'opdracht' voor een oefening, en de knoppen voor snelle acties.",'bot'); });
+
+if(themaNaam){
+  const themaLower = themaNaam.toLowerCase();
+  if(themaLower.includes('thema 9') || themaLower.includes('geschiedenis')){
+    appendMessage("📖 Welkom bij Thema 9. Vraag bv. 'leg uit: wetboek van napoleon' of 'leg uit: dossinkazerne'.",'bot');
+  }
+}
 
 updateUI();
 </script>
