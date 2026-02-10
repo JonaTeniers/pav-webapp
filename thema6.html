@@ -57,6 +57,48 @@
       border-top: 1px solid #dce8c5;
       padding-top: 1rem;
     }
+    .unit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 0.8rem;
+      margin-top: 0.8rem;
+    }
+    .unit-card {
+      border: 2px solid #dce8c5;
+      border-radius: 12px;
+      padding: 0.9rem;
+      background: #f7fbe8;
+    }
+    .unit-card h4 {
+      margin: 0 0 0.35rem;
+    }
+    .unit-card p {
+      margin: 0 0 0.65rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .unit-card .status {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #557c1d;
+      margin-bottom: 0.7rem;
+    }
+    .unit-card a {
+      text-decoration: none;
+    }
+    .unit-card button {
+      width: 100%;
+      border: none;
+      border-radius: 8px;
+      padding: 0.5rem 0.7rem;
+      font-weight: 700;
+      color: #fff;
+      background: var(--accent);
+      cursor: pointer;
+    }
+    .unit-card button:hover {
+      background: var(--accent-dark);
+    }
     table {
       width: 100%;
       border-collapse: collapse;
@@ -121,6 +163,30 @@
             <tr><td>243 : 9</td><td>≈ 240 : 10 = 24</td><td>27</td></tr>
           </tbody>
         </table>
+      </div>
+
+      <div class="exercise">
+        <h3>📚 Units</h3>
+        <div class="unit-grid">
+          <div class="unit-card">
+            <h4>Unit 1</h4>
+            <p>Getallen slim afronden.</p>
+            <p class="status">Beschikbaar</p>
+            <a href="thema6unit1.html"><button>Start</button></a>
+          </div>
+          <div class="unit-card">
+            <h4>Unit 2</h4>
+            <p>Schatten bij plus en min.</p>
+            <p class="status">Beschikbaar</p>
+            <a href="thema6unit2.html"><button>Start</button></a>
+          </div>
+          <div class="unit-card">
+            <h4>Unit 3</h4>
+            <p>Schatten bij keer en delen.</p>
+            <p class="status">Beschikbaar</p>
+            <a href="thema6unit3.html"><button>Start</button></a>
+          </div>
+        </div>
       </div>
 
       <a class="btn" href="index.html">← Terug naar overzicht</a>
