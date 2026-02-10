@@ -58,6 +58,48 @@
       margin-top: 1rem;
       padding-top: 1rem;
     }
+    .unit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 0.8rem;
+      margin-top: 0.8rem;
+    }
+    .unit-card {
+      border: 2px solid #d6e8b2;
+      border-radius: 12px;
+      padding: 0.9rem;
+      background: #f9fdea;
+    }
+    .unit-card h4 {
+      margin: 0 0 0.35rem;
+    }
+    .unit-card p {
+      margin: 0 0 0.65rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .unit-card .status {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #5b7d23;
+      margin-bottom: 0.7rem;
+    }
+    .unit-card a {
+      text-decoration: none;
+    }
+    .unit-card button {
+      width: 100%;
+      border: none;
+      border-radius: 8px;
+      padding: 0.5rem 0.7rem;
+      font-weight: 700;
+      color: #fff;
+      background: var(--accent);
+      cursor: pointer;
+    }
+    .unit-card button:hover {
+      background: var(--accent-dark);
+    }
     .chat-embed {
       width: 100%;
       min-height: 520px;
@@ -118,6 +160,30 @@
           <li>Wat is het doel van de schrijver?</li>
           <li>Is het fictie of non-fictie?</li>
         </ol>
+      </div>
+
+      <div class="task">
+        <h3>📚 Units</h3>
+        <div class="unit-grid">
+          <div class="unit-card">
+            <h4>Unit 1</h4>
+            <p>Fictie of non-fictie herkennen.</p>
+            <p class="status">Beschikbaar</p>
+            <a href="thema5unit1.html"><button>Start</button></a>
+          </div>
+          <div class="unit-card">
+            <h4>Unit 2</h4>
+            <p>Doel van de schrijver bepalen.</p>
+            <p class="status">Beschikbaar</p>
+            <a href="thema5unit2.html"><button>Start</button></a>
+          </div>
+          <div class="unit-card">
+            <h4>Unit 3</h4>
+            <p>Tekstsoorten vergelijken en uitleggen.</p>
+            <p class="status">Beschikbaar</p>
+            <a href="thema5unit3.html"><button>Start</button></a>
+          </div>
+        </div>
       </div>
 
       <a class="btn" href="index.html">← Terug naar overzicht</a>

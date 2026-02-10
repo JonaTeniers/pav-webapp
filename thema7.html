@@ -61,6 +61,49 @@
       padding-top: 1rem;
     }
     .task ul { margin: 0.4rem 0; padding-left: 1.2rem; }
+
+    .unit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 0.8rem;
+      margin-top: 0.8rem;
+    }
+    .unit-card {
+      border: 2px solid #d6e5ff;
+      border-radius: 12px;
+      padding: 0.9rem;
+      background: #eef4ff;
+    }
+    .unit-card h4 {
+      margin: 0 0 0.35rem;
+    }
+    .unit-card p {
+      margin: 0 0 0.65rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .unit-card .status {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #2f61b7;
+      margin-bottom: 0.7rem;
+    }
+    .unit-card a {
+      text-decoration: none;
+    }
+    .unit-card button {
+      width: 100%;
+      border: none;
+      border-radius: 8px;
+      padding: 0.5rem 0.7rem;
+      font-weight: 700;
+      color: #fff;
+      background: var(--accent);
+      cursor: pointer;
+    }
+    .unit-card button:hover {
+      background: var(--accent-dark);
+    }
     .chat-embed {
       width: 100%;
       min-height: 520px;
@@ -117,6 +160,30 @@
       <div class="task">
         <h3>Voorbeeldopdracht</h3>
         <p>Herschrijf een kort bericht aan je leerkracht. Zorg voor een duidelijk onderwerp, een correcte aanhef, een heldere vraag en een beleefde afsluiting.</p>
+      </div>
+
+      <div class="task">
+        <h3>📚 Units</h3>
+        <div class="unit-grid">
+          <div class="unit-card">
+            <h4>Unit 1</h4>
+            <p>Onderdelen van het communicatiemodel herkennen.</p>
+            <p class="status">Beschikbaar</p>
+            <a href="thema7unit1.html"><button>Start</button></a>
+          </div>
+          <div class="unit-card">
+            <h4>Unit 2</h4>
+            <p>Formeel en beleefd formuleren.</p>
+            <p class="status">Beschikbaar</p>
+            <a href="thema7unit2.html"><button>Start</button></a>
+          </div>
+          <div class="unit-card">
+            <h4>Unit 3</h4>
+            <p>Berichten verbeteren voor duidelijkheid.</p>
+            <p class="status">Beschikbaar</p>
+            <a href="thema7unit3.html"><button>Start</button></a>
+          </div>
+        </div>
       </div>
 
       <a class="btn" href="index.html">← Terug naar overzicht</a>
