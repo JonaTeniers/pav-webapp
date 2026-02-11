@@ -3,9 +3,9 @@
  *
  * Verwachting:
  * - De Firebase SDK-tags staan in HTML vóór dit bestand:
- *   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
- *   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"></script>
- *   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"></script>
+ *   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+ *   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+ *   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
  *   <script src="firebase.js"></script>
  */
 
