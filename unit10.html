@@ -83,7 +83,9 @@
     </div>
   </div>
 
-  <script>
+    <script src="./firebase.js"></script>
+  <script src="./pavo-xp-sync.js"></script>
+<script>
     const questions = [
       {
         vraag: "Wat betekent dit symbool op een kaart?",
@@ -232,7 +234,9 @@
         loadQuestion();
       } else {
         localStorage.setItem("xp_unit10", score);
+        if (window.pavoSyncScore) window.pavoSyncScore("xp_unit10", score);
         localStorage.setItem("unit10_done", "true");
+        if (window.pavoSyncScore) window.pavoSyncScore("unit10_done", "true");
         document.getElementById("quizBox").classList.add("hidden");
         document.getElementById("endScreen").classList.remove("hidden");
         document.getElementById("xpScore").innerText = score;

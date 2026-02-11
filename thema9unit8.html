@@ -88,7 +88,9 @@
     </section>
   </main>
 
-  <script>
+    <script src="./firebase.js"></script>
+  <script src="./pavo-xp-sync.js"></script>
+<script>
     const questions = [
       {
         type: 'open',
@@ -218,6 +220,7 @@
         loadQuestion();
       } else {
         localStorage.setItem('thema9unit8', score);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema9unit8', score);
         document.getElementById('quizBox').classList.add('hidden');
         document.getElementById('reflectieBox').classList.remove('hidden');
         document.getElementById('endScreen').classList.remove('hidden');

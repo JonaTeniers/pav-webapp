@@ -81,6 +81,23 @@
   /**
    * Teken de tabelrijen op basis van data en geselecteerde klas-filter.
    */
+
+  function renderTotalScore(selectedKlas) {
+    const totalsEl = document.getElementById('teacherTotals');
+    if (!totalsEl) return;
+
+    const filtered = selectedKlas
+      ? allScores.filter((item) => item.klas === selectedKlas)
+      : allScores;
+
+    const totalXp = filtered.reduce((sum, item) => {
+      const score = Number(item.score);
+      return sum + (Number.isNaN(score) ? 0 : score);
+    }, 0);
+
+    totalsEl.innerHTML = `<strong>Totaal ${selectedKlas ? `(${escapeHtml(selectedKlas)})` : 'alle klassen'}:</strong> ${totalXp} XP`;
+  }
+
   function renderTable(selectedKlas) {
     const tbody = document.getElementById('scoresTableBody');
     if (!tbody) return;
@@ -92,6 +109,7 @@
 
     if (!filtered.length) {
       tbody.innerHTML = '<tr><td colspan="6">Geen resultaten gevonden.</td></tr>';
+      renderTotalScore(selectedKlas);
       return;
     }
 
@@ -107,6 +125,7 @@
         </tr>
       `;
     }).join('');
+    renderTotalScore(selectedKlas);
   }
 
   /**

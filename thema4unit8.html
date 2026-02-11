@@ -94,7 +94,9 @@
       <a href="thema4unit9.html"><button type="button">→ Volgende unit</button></a>
     </div>
   </div>
-  <script>
+    <script src="./firebase.js"></script>
+  <script src="./pavo-xp-sync.js"></script>
+<script>
     const questions = [{"type": "open", "typeLabel": "Open vraag", "question": "Een figuur vult 12 hele vakjes. Wat is de oppervlakte (1 vakje = 1 cm²)?", "accepted": ["12", "12 cm2", "12 cm²", "12cm2", "12cm²"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke figuur heeft grotere oppervlakte?", "options": ["8 vakjes", "6 vakjes", "4 vakjes"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies het juiste aantal vakjes: 3 rijen van 4 vakjes.", "options": ["12", "7", "9"], "correctValue": "12"}, {"type": "open", "typeLabel": "Open vraag", "question": "Tel 6 hele vakjes en 2 halve vakjes. Oppervlakte?", "accepted": ["7", "7 cm2", "7 cm²", "7cm2", "7cm²"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Wat gebruik je bij een rooster?", "options": ["tellen van vakjes", "formule π × r²", "lengte optellen"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies de juiste uitleg.", "options": ["oppervlakte is het aantal vakjes", "omtrek is het aantal vakjes", "inhoud is het aantal vakjes"], "correctValue": "oppervlakte is het aantal vakjes"}, {"type": "open", "typeLabel": "Open vraag", "question": "Een figuur vult 5 vakjes van 2 cm² per vakje. Oppervlakte?", "accepted": ["10", "10 cm2", "10 cm²", "10cm2", "10cm²"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Wat is het verschil tussen omtrek en oppervlakte?", "options": ["omtrek is rand, oppervlakte is binnenkant", "omtrek is inhoud", "oppervlakte is rand"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies de juiste stap bij halve vakjes.", "options": ["halve vakjes samen tellen", "vakjes schrappen", "delen door 4"], "correctValue": "halve vakjes samen tellen"}, {"type": "open", "typeLabel": "Open vraag", "question": "Een figuur heeft 9 vakjes. Oppervlakte?", "accepted": ["9", "9 cm2", "9 cm²", "9cm2", "9cm²"]}];
     let currentQuestion = 0;
     let score = 0;
@@ -165,6 +167,7 @@
         loadQuestion();
       } else {
         localStorage.setItem('thema4unit8', score);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema4unit8', score);
         document.getElementById('quizBox').classList.add('hidden');
         document.getElementById('endScreen').classList.remove('hidden');
         document.getElementById('xpScore').innerText = score;

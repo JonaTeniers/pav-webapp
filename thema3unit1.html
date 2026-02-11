@@ -95,7 +95,9 @@
       <a href="thema3unit2.html"><button type="button">→ Volgende unit</button></a>
     </div>
   </div>
-  <script>
+    <script src="./firebase.js"></script>
+  <script src="./pavo-xp-sync.js"></script>
+<script>
     const questions = [{"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke zin staat in de verleden tijd?", "options": ["Ik loop naar school.", "Ik liep naar school.", "Ik loopte naar school."], "correctIndex": 1}, {"type": "open", "typeLabel": "Open vraag", "question": "Schrijf de verleden tijd van: ik speel.", "accepted": ["ik speelde", "speelde"]}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies het juiste hulpwerkwoord bij de zin: ik ___ gelachen.", "options": ["heb", "ben"], "correctValue": "heb"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke vorm is juist?", "options": ["ik loopte", "ik liep", "ik loop"], "correctIndex": 1}, {"type": "open", "typeLabel": "Open vraag", "question": "Zet in verleden tijd: wij fietsen naar huis.", "accepted": ["wij fietsten naar huis", "wij fietsten naar huis.", "fietsten naar huis"]}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies de juiste vorm: zij ___ gisteren een film.", "options": ["kijkt", "keek", "kijken"], "correctValue": "keek"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke zin bevat een voltooid deelwoord?", "options": ["Ik speelde buiten.", "Ik heb buiten gespeeld.", "Ik speel buiten."], "correctIndex": 1}, {"type": "open", "typeLabel": "Open vraag", "question": "Schrijf de verleden tijd van: ik kan.", "accepted": ["ik kon", "kon"]}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies het juiste werkwoord: hij ___ gisteren vroeg.", "options": ["slaapt", "sliep", "slapen"], "correctValue": "sliep"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke zin is correct?", "options": ["Wij werd blij.", "Wij werden blij.", "Wij worden blij."], "correctIndex": 1}];
     let currentQuestion = 0;
     let score = 0;
@@ -166,6 +168,7 @@
         loadQuestion();
       } else {
         localStorage.setItem('thema3unit1', score);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema3unit1', score);
         document.getElementById('quizBox').classList.add('hidden');
         document.getElementById('endScreen').classList.remove('hidden');
         document.getElementById('xpScore').innerText = score;

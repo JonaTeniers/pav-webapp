@@ -94,7 +94,9 @@
       <a href="thema3.html"><button type="button">→ Terug naar thema</button></a>
     </div>
   </div>
-  <script>
+    <script src="./firebase.js"></script>
+  <script src="./pavo-xp-sync.js"></script>
+<script>
     const questions = [{"type": "open", "typeLabel": "Open vraag", "question": "Maak een zin in verleden tijd met \"rennen\".", "accepted": ["ik rende", "hij rende", "zij rende", "ik rende snel", "hij rende snel"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke zin is volledig in verleden tijd?", "options": ["Gisteren speel ik buiten.", "Gisteren speelde ik buiten.", "Gisteren speel ik buiten en eet ik."], "correctIndex": 1}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies de juiste vorm: wij ___ gisteren koekjes.", "options": ["bakten", "bakken", "bak"], "correctValue": "bakten"}, {"type": "open", "typeLabel": "Open vraag", "question": "Zet in verleden tijd: ik lees een boek.", "accepted": ["ik las een boek", "las een boek"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke zin bevat een tijdsbepaling?", "options": ["Ik speelde.", "Ik speelde gisteren.", "Ik speel."], "correctIndex": 1}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies het juiste woord: hij ___ naar huis.", "options": ["ging", "gaat", "ga"], "correctValue": "ging"}, {"type": "open", "typeLabel": "Open vraag", "question": "Schrijf een korte zin met \"was\".", "accepted": ["ik was blij", "hij was blij", "zij was blij", "het was leuk"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke zin is correct?", "options": ["Zij gingen naar school.", "Zij gaat naar school.", "Zij ga naar school."], "correctIndex": 0}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies de juiste vorm: jullie ___ een spel.", "options": ["speelden", "spelen", "speel"], "correctValue": "speelden"}, {"type": "open", "typeLabel": "Open vraag", "question": "Zet in verleden tijd: ik eet een appel.", "accepted": ["ik at een appel", "at een appel"]}];
     let currentQuestion = 0;
     let score = 0;
@@ -165,6 +167,7 @@
         loadQuestion();
       } else {
         localStorage.setItem('thema3unit3', score);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema3unit3', score);
         document.getElementById('quizBox').classList.add('hidden');
         document.getElementById('endScreen').classList.remove('hidden');
         document.getElementById('xpScore').innerText = score;

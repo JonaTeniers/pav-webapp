@@ -51,7 +51,9 @@
     </div>
   </div>
 
-  <script>
+    <script src="./firebase.js"></script>
+  <script src="./pavo-xp-sync.js"></script>
+<script>
     const questions = [{"type": "mc", "typeLabel": "Meerkeuze", "question": "24 × 19 schat je als...", "options": ["20 × 20", "25 × 20", "20 × 10"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Schat: 49 × 6", "accepted": ["300"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies schatting voor 243 : 9.", "options": ["24", "27", "30"], "correctValue": "24"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "89 × 11 ligt ongeveer rond...", "options": ["900", "1000", "1100"], "correctIndex": 1}, {"type": "open", "typeLabel": "Open vraag", "question": "Schat: 203 : 4", "accepted": ["50"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies beste schatting voor 73 × 8.", "options": ["560", "600", "640"], "correctValue": "600"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Bij delen rond je vaak af naar...", "options": ["0", "handige veelvouden", "een willekeurig getal"], "correctIndex": 1}, {"type": "open", "typeLabel": "Open vraag", "question": "Schat: 999 : 3", "accepted": ["330", "300"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies schatting voor 15 × 15.", "options": ["100", "200", "300"], "correctValue": "200"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "45 × 21 is ongeveer...", "options": ["900", "1000", "1100"], "correctIndex": 1}];
     let currentQuestion = 0;
     let score = 0;
@@ -118,6 +120,7 @@
         loadQuestion();
       } else {
         localStorage.setItem('thema6unit2', score);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema6unit2', score);
         document.getElementById('quizBox').classList.add('hidden');
         document.getElementById('endScreen').classList.remove('hidden');
         document.getElementById('xpScore').innerText = score;
