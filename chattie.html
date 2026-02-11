@@ -147,6 +147,7 @@ body {
 const RESET_CODE = "resetchattie2025";
 const ESCALATION_LIMIT = 3;
 const TYPING_MS = 800;
+const CUSTOM_STORAGE_KEY = "chattieCustomLeerstofV1";
 const FORBIDDEN = ["fuck","kut","lul","trut","sukkel","idioot","kanker","rotzak","hoer","slet","eikel","klootzak","mongool","flikker","aso","wijf","tyfus","tering","pleuris","pest","debiel","achterlijk","mafkees","lapzwans","snol","del","kech","zak","schijt","gay","lesbo","mietje","poot","pot","nicht","faggot","fag","dyke","tranny","transseksueel","homofiel","kontneuker","biseksueel","motherfucker","cunt"];
 
 const KNOWLEDGE = {
@@ -211,22 +212,27 @@ const KNOWLEDGE = {
   "boodschap": "De boodschap is de inhoud die je wil overbrengen in gesproken, geschreven of visuele vorm.",
   "kanaal": "Het kanaal is het medium waarmee je communiceert, zoals chat, e-mail, telefoon of gesprek.",
   "ruis": "Ruis is alles wat de communicatie verstoort, zoals lawaai, onduidelijke taal of technische problemen.",
-  "feedback": "Feedback is de reactie van de ontvanger waarmee je weet of de boodschap begrepen is.",
-  "canon van vlaanderen": "De Canon van Vlaanderen is een selectie van historische vensters en gebeurtenissen die helpen om het verleden van Vlaanderen in context te begrijpen.",
-  "het verhaal van vlaanderen": "'Het verhaal van Vlaanderen' is een historische reeks die gebeurtenissen en maatschappelijke evoluties chronologisch in beeld brengt.",
-  "wetboek van napoleon": "Het wetboek van Napoleon (Code civil) bracht meer uniforme burgerlijke regels over eigendom, contracten en familie, maar bleef ongelijk op sommige vlakken zoals vrouwenrechten.",
-  "liberale grondwet": "De Belgische grondwet van 1831 was erg liberaal voor haar tijd, met vrijheden zoals persvrijheid en vereniging, al had nog niet iedereen politieke inspraak.",
-  "grondrechten": "Grondrechten zijn basisrechten die burgers beschermen tegen willekeurige macht, zoals vrijheid van meningsuiting, vereniging en godsdienst.",
-  "eerste treinrit": "De eerste treinrit op het Europese vasteland (Brussel-Mechelen, 1835) versnelde mobiliteit, handel en industrialisering.",
-  "industrialisering": "Industrialisering is de overgang naar machinale productie, met grote impact op werk, steden en sociale verhoudingen.",
-  "emilie claeys": "Emilie Claeys was een socialistische en feministische pionier die streed voor vrouwenrechten en betere leef- en arbeidsomstandigheden.",
-  "emancipatie": "Emancipatie is het proces waarbij groepen meer gelijke rechten, kansen en maatschappelijke positie verwerven.",
-  "dossinkazerne": "De Dossinkazerne in Mechelen was tijdens WOII een verzamel- en deportatieplaats voor Joden en Roma; vandaag is ze een plaats van herinnering en mensenrechteneducatie.",
-  "holocaust": "De Holocaust was de systematische vervolging en moord op Joden door het naziregime, met ook vervolging van andere groepen zoals Roma.",
-  "mensenrechten": "Mensenrechten zijn fundamentele rechten die voor iedereen gelden, ongeacht afkomst, geloof, geslacht of overtuiging.",
-  "de euro": "De euro is een gemeenschappelijke munt van meerdere Europese landen en maakt handel, reizen en prijsvergelijking eenvoudiger.",
-  "europese samenwerking": "Europese samenwerking betekent dat landen afspraken maken en samen beleid uitwerken rond economie, recht, mobiliteit en andere domeinen.",
-  "historisch redeneren": "Historisch redeneren is nadenken over oorzaken, gevolgen, continuïteit en verandering, en over wie voordeel of nadeel had bij gebeurtenissen."
+  "jan frans vonck": "Jan Frans Vonck was een jurist en leider van de vonckisten tijdens de Brabantse Omwenteling. Hij wilde het feodale systeem afschaffen en pleitte voor een meer democratisch en centralistisch bestuur, geïnspireerd door de Franse Revolutie.",
+  "hendrik van der noot": "Hendrik van der Noot was een politicus en leider van de statisten tijdens de Brabantse Omwenteling. Hij verdedigde de oude privileges en werd eerste minister van de Verenigde Nederlandse Staten in 1790.",
+  "brabantse omwenteling": "De Brabantse Omwenteling (1789–1790) was een opstand tegen het Oostenrijkse bewind die leidde tot de oprichting van de Verenigde Nederlandse Staten.",
+  "vonckisten": "De vonckisten waren een revolutionaire groep die hervormingen, gelijkheid en een sterk centraal bestuur wilden.",
+  "statisten": "De statisten waren een conservatieve groep die de oude privileges en macht van de standen wilden behouden.",
+  "verenigde nederlandse staten": "De Verenigde Nederlandse Staten waren een onafhankelijke staat die in 1790 ontstond maar slechts één jaar bestond.",
+  "boerenkrijg": "De Boerenkrijg (1798) was een volksopstand tegen de Franse bezetting en verplichte maatregelen zoals dienstplicht en belastingen.",
+  "belgische revolutie": "De Belgische Revolutie van 1830 leidde tot het ontstaan van België als onafhankelijke staat.",
+  "onderdaan": "Een onderdaan is iemand die onder het gezag van een vorst of overheid leeft.",
+  "heer": "Een heer is een persoon met macht en rechten over een gebied en de mensen die er wonen.",
+  "horige": "Een horige is een boer die gebonden is aan het land van een heer en daarvoor moet werken.",
+  "feodalisme": "Feodalisme is een bestuurssysteem waarbij heren macht hadden over land en onderdanen.",
+  "privileges": "Privileges zijn speciale rechten die alleen voor bepaalde groepen gelden.",
+  "standenmaatschappij": "De standenmaatschappij is een samenleving verdeeld in groepen met ongelijke rechten.",
+  "centralisatie": "Centralisatie betekent dat de macht wordt samengebracht bij één centrale overheid.",
+  "revolutie": "Een revolutie is een snelle en ingrijpende verandering van het bestuur of de samenleving.",
+  "verlichting": "De Verlichting was een ideeënstroming die rede, vrijheid en gelijkheid benadrukte.",
+  "grondwet": "Een grondwet is een document met de belangrijkste regels van een staat.",
+  "soevereiniteit": "Soevereiniteit is de hoogste macht binnen een land.",
+  "dienstplicht": "Dienstplicht betekent dat burgers verplicht zijn om in het leger te dienen.",
+  "feedback": "Feedback is de reactie van de ontvanger waarmee je weet of de boodschap begrepen is."
 
 };
 const CANONICAL_KNOWLEDGE = JSON.parse(JSON.stringify(KNOWLEDGE));
@@ -278,6 +284,7 @@ const ASSIGNMENTS = {
   "schaal": "Als de 'schaal' van een kaart 1:50.000 is, hoeveel centimeter in werkelijkheid is 2 centimeter op de kaart?",
   "staatkundige kaarten": "Waarvoor gebruik je een 'staatkundige kaart' (bv. een overzicht van een continent) in vergelijking met een 'reliëfkaart'?",
   "reliëfkaarten": "Welke kleur wordt op een 'reliëfkaart' vaak gebruikt om bergachtige gebieden aan te duiden?",
+  
 
   // 🔵 Slimmere opdrachten
   "ethiek in het onderwijs": "Welke ethische overweging maak je bij het beoordelen van werkstukken die (deels) door AI zijn gemaakt?",
@@ -330,6 +337,47 @@ const ASSIGNMENTS = {
 
 };
 
+function normalizeTopic(topic){ return topic.trim().toLowerCase(); }
+function buildTopicIndex(source){ const index={}; Object.entries(source).forEach(([k,v])=>{ index[normalizeTopic(k)]=v; }); return index; }
+function escapeRegExp(value){ return value.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
+function parseTeachCommand(input,prefix){
+  const escapedPrefix=escapeRegExp(prefix);
+  const regex=new RegExp(`^${escapedPrefix}\\s*([^=]+)\\s*=\\s*(.+)$`,'i');
+  const match=input.match(regex);
+  if(!match) return null;
+  return { topic: normalizeTopic(match[1]), text: match[2].trim() };
+}
+function saveCustomLeerstof(){
+  const payload={ knowledge: customKnowledge, assignments: customAssignments };
+  localStorage.setItem(CUSTOM_STORAGE_KEY, JSON.stringify(payload));
+}
+function loadCustomLeerstof(){
+  try{
+    const raw=localStorage.getItem(CUSTOM_STORAGE_KEY);
+    if(!raw) return;
+    const parsed=JSON.parse(raw);
+    const loadedKnowledge=parsed?.knowledge ?? {};
+    const loadedAssignments=parsed?.assignments ?? {};
+    Object.entries(loadedKnowledge).forEach(([topic,text])=>{ if(text) knowledgeIndex[normalizeTopic(topic)]=text; });
+    Object.entries(loadedAssignments).forEach(([topic,text])=>{ if(text) assignmentsIndex[normalizeTopic(topic)]=text; });
+    customKnowledge=buildTopicIndex(loadedKnowledge);
+    customAssignments=buildTopicIndex(loadedAssignments);
+  }catch(_){
+    customKnowledge={};
+    customAssignments={};
+  }
+}
+function getKnowledge(topic){ return knowledgeIndex[normalizeTopic(topic)]; }
+function getAssignment(topic){ return assignmentsIndex[normalizeTopic(topic)]; }
+
+const baseKnowledgeIndex = buildTopicIndex(KNOWLEDGE);
+const baseAssignmentsIndex = buildTopicIndex(ASSIGNMENTS);
+const knowledgeIndex = { ...baseKnowledgeIndex };
+const assignmentsIndex = { ...baseAssignmentsIndex };
+let customKnowledge = {};
+let customAssignments = {};
+loadCustomLeerstof();
+
 // -------------------------
 // STATE
 // -------------------------
@@ -368,26 +416,75 @@ function handleUserInput(){
   const input=inputEl.value.trim();
   if(!input) return;
   appendMessage(input,'user'); inputEl.value='';
-  processInput(input.toLowerCase());
+  processInput(input);
 }
 
 async function processInput(input){
-  if(FORBIDDEN.some(w=>input.includes(w))){ escalation++; appendMessage("❗ Dat was niet gepast. Blijf beleefd a.u.b.",'bot'); return; }
-  if(input===RESET_CODE){ escalation=0; isDisabled=false; memory={}; appendMessage("🔄 Chattie is herstart!",'bot'); updateUI(); return; }
-  if(input==="start"){ isChatActive=true; appendMessage("🎉 Hallo! Typ 'leg uit: ai' om te starten.",'bot'); updateUI(); return; }
-  if(input==="einde"){ isChatActive=false; appendMessage("👋 Tot later!",'bot'); updateUI(); return; }
-  if(input.startsWith("leg uit:")){ 
-    const topic=input.replace(/^leg uit:/,"").trim(); 
-    if(KNOWLEDGE[topic]){ await showTyping(); appendMessage("Hier is een uitleg over '"+topic+"':",'bot'); appendMessage(KNOWLEDGE[topic],'bot'); memory.lastTopic=topic; updateUI(); }
-    else appendMessage("Sorry, ik ken dat onderwerp nog niet.",'bot');
+  const normalizedInput=input.trim().toLowerCase();
+  if(FORBIDDEN.some(w=>normalizedInput.includes(w))){ escalation++; appendMessage("❗ Dat was niet gepast. Blijf beleefd a.u.b.",'bot'); return; }
+  if(normalizedInput===RESET_CODE){
+    escalation=0; isDisabled=false; memory={};
+    customKnowledge={}; customAssignments={};
+    Object.keys(knowledgeIndex).forEach(topic=>{ delete knowledgeIndex[topic]; });
+    Object.keys(assignmentsIndex).forEach(topic=>{ delete assignmentsIndex[topic]; });
+    Object.assign(knowledgeIndex, baseKnowledgeIndex);
+    Object.assign(assignmentsIndex, baseAssignmentsIndex);
+    localStorage.removeItem(CUSTOM_STORAGE_KEY);
+    appendMessage("🔄 Chattie is herstart!",'bot');
+    updateUI();
     return;
   }
-  if(input==="opdracht"){ 
-    if(memory.lastTopic && ASSIGNMENTS[memory.lastTopic]) appendMessage("📝 Opdracht: "+ASSIGNMENTS[memory.lastTopic],'bot');
-    else appendMessage("Geen actieve opdracht. Leer eerst een onderwerp via 'leg uit: ...'",'bot');
+  if(normalizedInput==="start"){ isChatActive=true; appendMessage("🎉 Hallo! Typ 'leg uit: ai' om te starten.",'bot'); updateUI(); return; }
+  if(normalizedInput==="einde"){ isChatActive=false; appendMessage("👋 Tot later!",'bot'); updateUI(); return; }
+
+  const teachKnowledge=parseTeachCommand(input,"leer:");
+  if(teachKnowledge){
+    customKnowledge[teachKnowledge.topic]=teachKnowledge.text;
+    knowledgeIndex[teachKnowledge.topic]=teachKnowledge.text;
+    saveCustomLeerstof();
+    appendMessage(`✅ Nieuwe leerstof opgeslagen voor '${teachKnowledge.topic}'. Gebruik nu: leg uit: ${teachKnowledge.topic}`,'bot');
     return;
   }
-  appendMessage("🤔 Sorry, dat begrijp ik niet helemaal.",'bot');
+
+  const teachAssignment=parseTeachCommand(input,"opdracht voor:");
+  if(teachAssignment){
+    customAssignments[teachAssignment.topic]=teachAssignment.text;
+    assignmentsIndex[teachAssignment.topic]=teachAssignment.text;
+    saveCustomLeerstof();
+    appendMessage(`✅ Opdracht opgeslagen voor '${teachAssignment.topic}'.`,'bot');
+    return;
+  }
+
+  if(normalizedInput==="toon leerstof"){
+    const customTopics=Object.keys(customKnowledge);
+    if(!customTopics.length){ appendMessage("Er is nog geen extra leerstof opgeslagen. Gebruik: leer: onderwerp = uitleg",'bot'); return; }
+    appendMessage("📚 Opgeslagen extra leerstof: "+customTopics.sort().join(", "),'bot');
+    return;
+  }
+
+  if(normalizedInput.startsWith("leg uit:")){
+    const topic=normalizeTopic(input.replace(/^leg uit:/i,"").trim());
+    const knowledge=getKnowledge(topic);
+    if(knowledge){
+      await showTyping();
+      appendMessage("Hier is een uitleg over '"+topic+"':",'bot');
+      appendMessage(knowledge,'bot');
+      memory.lastTopic=topic;
+      updateUI();
+    } else {
+      appendMessage("Sorry, ik ken dat onderwerp nog niet. Voeg het toe met: leer: onderwerp = uitleg",'bot');
+    }
+    return;
+  }
+
+  if(normalizedInput==="opdracht"){
+    const assignment = memory.lastTopic ? getAssignment(memory.lastTopic) : null;
+    if(assignment) appendMessage("📝 Opdracht: "+assignment,'bot');
+    else appendMessage("Geen actieve opdracht. Leer eerst een onderwerp via 'leg uit: ...' of voeg er één toe met 'opdracht voor: onderwerp = ...'",'bot');
+    return;
+  }
+
+  appendMessage("🤔 Sorry, dat begrijp ik niet helemaal. Tip: gebruik 'leer: onderwerp = uitleg' om mij nieuwe leerstof te geven.",'bot');
 }
 
 // -------------------------
@@ -406,15 +503,15 @@ chips.forEach(chip=>{
       case "more": appendMessage("💡 Gebruik 'leg uit: <onderwerp>' voor uitleg",'bot'); break;
       case "example": appendMessage("Stuur een voorbeeld met 'voorbeeld: <jouw voorbeeld>'",'bot'); break;
       case "dontget": processInput("ik snap het niet"); break;
-      case "assignment": if(memory.lastTopic) appendMessage("📝 Opdracht: "+ASSIGNMENTS[memory.lastTopic],'bot'); break;
+      case "assignment": if(memory.lastTopic){ const assignment=getAssignment(memory.lastTopic); appendMessage(assignment?"📝 Opdracht: "+assignment:"Nog geen opdracht voor dit onderwerp.",'bot'); } break;
       case "stap": appendMessage("Gebruik 'leg uit: ...' om uitleg in stappen te krijgen.",'bot'); break;
-      case "samenvat": appendMessage("📝 Samenvatting: "+KNOWLEDGE[memory.lastTopic],'bot'); break;
-      case "kernwoorden": appendMessage("🔑 Kernwoorden: "+KNOWLEDGE[memory.lastTopic].split(" ").slice(0,5).join(", "),'bot'); break;
+      case "samenvat": { const knowledge=getKnowledge(memory.lastTopic); appendMessage(knowledge?"📝 Samenvatting: "+knowledge:"Nog geen samenvatting voor dit onderwerp.",'bot'); break; }
+      case "kernwoorden": { const knowledge=getKnowledge(memory.lastTopic)||""; appendMessage("🔑 Kernwoorden: "+(knowledge?knowledge.split(" ").slice(0,5).join(", "):"geen"),'bot'); break; }
     }
   });
 });
 
-howBtn.addEventListener('click',()=>{ appendMessage("📚 Gebruik 'leg uit: <onderwerp>' om uitleg te krijgen, 'opdracht' voor een oefening, en de knoppen voor snelle acties.",'bot'); });
+howBtn.addEventListener('click',()=>{ appendMessage("📚 Gebruik 'leg uit: <onderwerp>' voor uitleg, 'opdracht' voor een oefening. Nieuwe leerstof toevoegen? Typ: leer: onderwerp = uitleg en opdracht voor: onderwerp = opdracht.",'bot'); });
 
 if(themaNaam){
   const themaLower = themaNaam.toLowerCase();
