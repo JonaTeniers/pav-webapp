@@ -13,7 +13,7 @@
 
   // Thema-overzicht op basis van huidige webapp-structuur.
   const THEMAS = [
-    { id: 1, naam: 'Thema 1', maxUnit: 0, startLink: 'thema1.html' },
+    { id: 1, naam: 'Thema 1', maxUnit: 12, startLink: 'thema1.html' },
     { id: 2, naam: 'Thema 2', maxUnit: 2, startLink: 'thema2.html' },
     { id: 3, naam: 'Thema 3', maxUnit: 3, startLink: 'thema3.html' },
     { id: 4, naam: 'Thema 4', maxUnit: 10, startLink: 'thema4.html' },
@@ -63,11 +63,16 @@
 
   function extractNumbers(item) {
     const bron = String(item.bronPagina || '');
+    const bronStorageKey = String(item.bronStorageKey || '');
     const themaText = String(item.thema || '');
     const unitText = String(item.unit || '');
 
-    const themaMatch = themaText.match(/thema\s*(\d+)/i) || bron.match(/thema(\d+)/i);
-    const unitMatch = unitText.match(/unit\s*(\d+)/i) || bron.match(/unit(\d+)/i);
+    const themaMatch = themaText.match(/thema\s*(\d+)/i)
+      || bron.match(/thema(\d+)/i)
+      || bronStorageKey.match(/thema(\d+)/i);
+    const unitMatch = unitText.match(/unit\s*(\d+)/i)
+      || bron.match(/unit(\d+)/i)
+      || bronStorageKey.match(/unit(\d+)/i);
 
     return {
       themaNummer: themaMatch ? Number(themaMatch[1]) : null,
@@ -147,6 +152,19 @@
     return rows;
   }
 
+
+  function renderTotalScore(items) {
+    const totalEl = document.getElementById('studentTotalScore');
+    if (!totalEl) return;
+
+    const total = items.reduce((sum, item) => {
+      const value = Number(item.score);
+      return sum + (Number.isNaN(value) ? 0 : value);
+    }, 0);
+
+    totalEl.innerHTML = `<strong>Totaalscore:</strong> ${total} XP`;
+  }
+
   function renderRows(items) {
     const tbody = document.getElementById('studentScoresTableBody');
     if (!tbody) return;
@@ -178,6 +196,7 @@
       .map((item) => ({ ...item, ...extractNumbers(item) }));
 
     renderRows(items);
+    renderTotalScore(items);
     setStatus(`${items.length} opgeslagen resultaat/resultaten gevonden.`, false);
   }
 

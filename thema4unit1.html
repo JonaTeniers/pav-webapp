@@ -95,7 +95,9 @@
       <a href="thema4unit2.html"><button type="button">→ Volgende unit</button></a>
     </div>
   </div>
-  <script>
+    <script src="./firebase.js"></script>
+  <script src="./pavo-xp-sync.js"></script>
+<script>
     const questions = [{"type": "open", "typeLabel": "Open vraag", "question": "Bereken de omtrek van een vierkant met zijde 6 cm.", "accepted": ["24", "24 cm", "24cm"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke formule hoort bij de omtrek van een rechthoek?", "options": ["2 × (l + b)", "l × b", "l + b"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies de juiste omtrek voor een rechthoek van 8 cm bij 3 cm.", "options": ["22 cm", "24 cm", "26 cm"], "correctValue": "22 cm"}, {"type": "open", "typeLabel": "Open vraag", "question": "Bereken de omtrek van een rechthoek: 12 cm bij 4 cm.", "accepted": ["32", "32 cm", "32cm"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke omtrek is groter?", "options": ["Vierkant zijde 5 cm", "Rechthoek 6 cm bij 3 cm", "Ze zijn gelijk"], "correctIndex": 1}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies de juiste omtrek voor een vierkant met zijde 9 cm.", "options": ["18 cm", "36 cm", "27 cm"], "correctValue": "36 cm"}, {"type": "open", "typeLabel": "Open vraag", "question": "Wat is de omtrek van een vierkant met zijde 2 m?", "accepted": ["8", "8 m", "8m"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke omtrek hoort bij een rechthoek van 10 cm bij 5 cm?", "options": ["30 cm", "50 cm", "15 cm"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies de juiste formule in woorden.", "options": ["twee keer lengte plus breedte", "lengte keer breedte", "lengte plus breedte"], "correctValue": "twee keer lengte plus breedte"}, {"type": "open", "typeLabel": "Open vraag", "question": "Bereken de omtrek van een vierkant met zijde 7 cm.", "accepted": ["28", "28 cm", "28cm"]}];
     let currentQuestion = 0;
     let score = 0;
@@ -166,6 +168,7 @@
         loadQuestion();
       } else {
         localStorage.setItem('thema4unit1', score);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema4unit1', score);
         document.getElementById('quizBox').classList.add('hidden');
         document.getElementById('endScreen').classList.remove('hidden');
         document.getElementById('xpScore').innerText = score;

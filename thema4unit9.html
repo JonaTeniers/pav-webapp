@@ -94,7 +94,9 @@
       <a href="thema4unit10.html"><button type="button">→ Volgende unit</button></a>
     </div>
   </div>
-  <script>
+    <script src="./firebase.js"></script>
+  <script src="./pavo-xp-sync.js"></script>
+<script>
     const questions = [{"type": "open", "typeLabel": "Open vraag", "question": "Bereken 12 × 8.", "accepted": ["96"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke strategie past bij 15 × 6?", "options": ["15×3 verdubbelen", "aftrekken", "delen door 2"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies de juiste uitkomst: 7 × 14.", "options": ["98", "84", "91"], "correctValue": "98"}, {"type": "open", "typeLabel": "Open vraag", "question": "Omtrek met herhaald optellen: 5 + 5 + 5 + 5.", "accepted": ["20", "20 cm", "20cm"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke uitkomst klopt? 9 × 6 =", "options": ["54", "45", "56"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies de juiste tussenstap voor 12 × 7.", "options": ["12×5 + 12×2", "12×3 + 7", "12+7"], "correctValue": "12×5 + 12×2"}, {"type": "open", "typeLabel": "Open vraag", "question": "Bereken 7 × 14 als oppervlakte.", "accepted": ["98"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke tussenstap is handig bij 18 × 5?", "options": ["18×10 / 2", "18+5", "18×3"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies de juiste splitsing: 14 × 9.", "options": ["(10×9) + (4×9)", "(14×10) - 9", "(9×9) + 5"], "correctValue": "(10×9) + (4×9)"}, {"type": "open", "typeLabel": "Open vraag", "question": "Schat de uitkomst van 19 × 6 (afronden naar 20×6).", "accepted": ["120"]}];
     let currentQuestion = 0;
     let score = 0;
@@ -165,6 +167,7 @@
         loadQuestion();
       } else {
         localStorage.setItem('thema4unit9', score);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema4unit9', score);
         document.getElementById('quizBox').classList.add('hidden');
         document.getElementById('endScreen').classList.remove('hidden');
         document.getElementById('xpScore').innerText = score;

@@ -51,7 +51,9 @@
     </div>
   </div>
 
-  <script>
+    <script src="./firebase.js"></script>
+  <script src="./pavo-xp-sync.js"></script>
+<script>
     const questions = [{"type": "mc", "typeLabel": "Meerkeuze", "question": "Je koopt 19 broodjes van €2,10. Welke schatting past?", "options": ["ongeveer €40", "ongeveer €20", "ongeveer €60"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Een busrit duurt 58 min. Schat voor 3 ritten.", "accepted": ["180", "3 uur", "ongeveer 180"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies logische schatting: 198 leerlingen, 9 per groep.", "options": ["ongeveer 20 groepen", "ongeveer 10 groepen", "ongeveer 40 groepen"], "correctValue": "ongeveer 20 groepen"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke stap doe je eerst bij schatten?", "options": ["controleren", "afronden", "exact delen"], "correctIndex": 1}, {"type": "open", "typeLabel": "Open vraag", "question": "Een jas kost €47, een trui €36. Schat samen.", "accepted": ["80", "ongeveer 80"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies best passende schatting voor 612 km in 7 dagen.", "options": ["ongeveer 90 km/dag", "ongeveer 60 km/dag", "ongeveer 120 km/dag"], "correctValue": "ongeveer 90 km/dag"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Is 60,1 logisch als je schatting 60 was?", "options": ["ja", "nee"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Schat 43 bezoekers per dag voor 7 dagen.", "accepted": ["280", "300"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies beste schatting voor 5 dozen van 98 potloden.", "options": ["ongeveer 500", "ongeveer 400", "ongeveer 600"], "correctValue": "ongeveer 500"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Schatten helpt vooral om...", "options": ["te controleren of antwoord logisch is", "exact te werken zonder rekenen", "komma's te verwijderen"], "correctIndex": 0}];
     let currentQuestion = 0;
     let score = 0;
@@ -118,6 +120,7 @@
         loadQuestion();
       } else {
         localStorage.setItem('thema6unit3', score);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema6unit3', score);
         document.getElementById('quizBox').classList.add('hidden');
         document.getElementById('endScreen').classList.remove('hidden');
         document.getElementById('xpScore').innerText = score;

@@ -85,7 +85,9 @@
     </section>
   </main>
 
-  <script>
+    <script src="./firebase.js"></script>
+  <script src="./pavo-xp-sync.js"></script>
+<script>
     const questions = [{"type": "mc", "typeLabel": "Meerkeuze", "question": "Waarvoor is Emilie Claeys vooral bekend?", "options": ["Strijd voor vrouwenrechten en sociale rechtvaardigheid", "Ontwerp van de Belgische grondwet", "Invoering van de euro"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Noem 1 groep die volgens deze unit meer rechten nodig had.", "accepted": ["vrouwen", "arbeiders", "werkende mensen", "arbeidsters"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke bredere les leert haar verhaal?", "options": ["Rechten worden vaak afgedwongen door collectieve actie", "Rechten ontstaan vanzelf zonder strijd", "Enkel economische groei verandert rechten"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies het beste verband.", "options": ["Sociale bewegingen zetten ongelijkheid op de politieke agenda", "Sociale bewegingen maken wetten overbodig", "Sociale bewegingen gingen alleen over kunst"], "correctValue": "Sociale bewegingen zetten ongelijkheid op de politieke agenda"}, {"type": "open", "typeLabel": "Open vraag", "question": "Welk kernbegrip past hier het best: streven naar gelijke kansen voor mannen en vrouwen?", "accepted": ["emancipatie", "gelijkheid", "feminisme"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Waarom is dit essentieel in het verhaal van Vlaanderen?", "options": ["Het verbindt sociale strijd met democratische uitbreiding van rechten", "Het gaat enkel over één lokaal detail", "Het heeft geen invloed op vandaag"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Selectie", "question": "Welke verdiepende vraag helpt je het meest?", "options": ["Welke rechten lijken vandaag vanzelfsprekend maar waren ooit omstreden?", "Welke kleur had haar jas?", "Hoe lang waren haar toespraken exact?"], "correctValue": "Welke rechten lijken vandaag vanzelfsprekend maar waren ooit omstreden?"}, {"type": "open", "typeLabel": "Open vraag", "question": "Noem 2 kernwoorden voor deze unit.", "accepted": ["emancipatie", "sociale strijd", "rechten", "gelijkheid", "vrouwenrechten"]}];
     let currentQuestion = 0;
     let score = 0;
@@ -154,6 +156,7 @@
         loadQuestion();
       } else {
         localStorage.setItem('thema9unit4', score);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema9unit4', score);
         document.getElementById('quizBox').classList.add('hidden');
         document.getElementById('reflectieBox').classList.remove('hidden');
         document.getElementById('endScreen').classList.remove('hidden');
@@ -167,6 +170,7 @@
       if (!begrip && !verdieping) return;
       const payload = JSON.stringify({ begrip, verdieping });
       localStorage.setItem('thema9unit4_reflectie', payload);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema9unit4_reflectie', payload);
       document.getElementById('reflectieFeedback').innerText = '✅ Reflectie en verdieping bewaard.';
     }
 

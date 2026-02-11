@@ -51,7 +51,9 @@
     </div>
   </div>
 
-  <script>
+    <script src="./firebase.js"></script>
+  <script src="./pavo-xp-sync.js"></script>
+<script>
     const questions = [{"type": "mc", "typeLabel": "Meerkeuze", "question": "Een sprookje hoort bij...", "options": ["fictie", "non-fictie", "reclame"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Is een handleiding fictie of non-fictie?", "accepted": ["non-fictie", "non fictie"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies de juiste categorie voor een krantenartikel.", "options": ["fictie", "non-fictie"], "correctValue": "non-fictie"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Wat is typisch voor fictie?", "options": ["feiten en cijfers", "fantasie en verbeelding", "stappenplan"], "correctIndex": 1}, {"type": "open", "typeLabel": "Open vraag", "question": "Een roman is meestal fictie of non-fictie?", "accepted": ["fictie"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies de juiste tekstsoort: nieuwsbericht.", "options": ["fictie", "non-fictie"], "correctValue": "non-fictie"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Een gedicht kan vaak gezien worden als...", "options": ["fictie", "handleiding", "schema"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Vul in: non-fictie bevat meestal ...", "accepted": ["feiten", "informatie", "feiten en informatie"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies de categorie: biografie.", "options": ["fictie", "non-fictie"], "correctValue": "non-fictie"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke tekst is verzonnen?", "options": ["sprookje", "schoolreglement", "nieuwsartikel"], "correctIndex": 0}];
     let currentQuestion = 0;
     let score = 0;
@@ -118,6 +120,7 @@
         loadQuestion();
       } else {
         localStorage.setItem('thema5unit1', score);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema5unit1', score);
         document.getElementById('quizBox').classList.add('hidden');
         document.getElementById('endScreen').classList.remove('hidden');
         document.getElementById('xpScore').innerText = score;

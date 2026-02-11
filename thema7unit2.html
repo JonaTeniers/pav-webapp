@@ -55,7 +55,9 @@
     </div>
   </div>
 
-  <script>
+    <script src="./firebase.js"></script>
+  <script src="./pavo-xp-sync.js"></script>
+<script>
     const questions = [{"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke aanhef is formeel?", "options": ["Hey jij", "Beste meneer Van Hee", "Yo"], "correctIndex": 1}, {"type": "open", "typeLabel": "Open vraag", "question": "Is 'Hoi!!!' in een mail naar school formeel of informeel?", "accepted": ["informeel"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies formele afsluiting.", "options": ["Met vriendelijke groeten", "Groetjes", "Ciao"], "correctValue": "Met vriendelijke groeten"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Wat is duidelijker als onderwerp?", "options": ["Help", "Inhalen toets Nederlands 2B"], "correctIndex": 1}, {"type": "open", "typeLabel": "Open vraag", "question": "Welke toon gebruik je naar een leerkracht?", "accepted": ["formeel", "beleefd", "formeel en beleefd"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies beste zin.", "options": ["Kan ik de toets op dinsdag inhalen?", "Ik wil da ge da regelt."], "correctValue": "Kan ik de toets op dinsdag inhalen?"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Waarom vermijd je straattaal in schoolmails?", "options": ["onprofessioneel", "korter", "altijd grappig"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Vul in: een goede mail heeft een duidelijk ...", "accepted": ["onderwerp"]}, {"type": "rewrite", "typeLabel": "Herschrijf-opdracht", "question": "Herschrijf deze e-mail zodat ze beleefd, duidelijk en respectvol is.", "mailSubject": "die taak", "mailBody": ["Beste,", "", "Die taak van u was echt super moeilijk en ik snapte er bijna niks van.", "U had dat ook wel beter kunnen uitleggen want zo kon niemand het maken.", "Ik heb er wel aan gezeten maar het lukte gewoon niet en dat is niet echt mijn fout eigenlijk.", "", "Ik wist ook niet goed wat precies moest dus ja.", "Ik hoop dat u daar rekening mee houd want anders is dat niet eerlijk.", "", "Mvg,", "[naam]"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke zin klinkt het beleefdst?", "options": ["Stuur mij dat nu.", "Zou u dat kunnen doorsturen, alstublieft?"], "correctIndex": 1}];
     let currentQuestion = 0;
     let score = 0;
@@ -138,6 +140,7 @@
         loadQuestion();
       } else {
         localStorage.setItem('thema7unit2', score);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema7unit2', score);
         document.getElementById('quizBox').classList.add('hidden');
         document.getElementById('endScreen').classList.remove('hidden');
         document.getElementById('xpScore').innerText = score;

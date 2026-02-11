@@ -94,7 +94,9 @@
       <a href="thema4unit4.html"><button type="button">→ Volgende unit</button></a>
     </div>
   </div>
-  <script>
+    <script src="./firebase.js"></script>
+  <script src="./pavo-xp-sync.js"></script>
+<script>
     const questions = [{"type": "open", "typeLabel": "Open vraag", "question": "Bereken de omtrek van een driehoek met zijden 3, 4 en 5 cm.", "accepted": ["12", "12 cm", "12cm"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke formule hoort bij de oppervlakte van een driehoek?", "options": ["(basis × hoogte) / 2", "basis × hoogte", "2 × (basis + hoogte)"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies de juiste oppervlakte voor basis 8 cm en hoogte 5 cm.", "options": ["20 cm²", "40 cm²", "13 cm²"], "correctValue": "20 cm²"}, {"type": "open", "typeLabel": "Open vraag", "question": "Wat is de omtrek van een gelijkzijdige driehoek met zijde 6 cm?", "accepted": ["18", "18 cm", "18cm"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke zijde heb je nodig voor de omtrek?", "options": ["alle zijden", "alleen basis", "hoogte"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies de juiste factor: oppervlakte driehoek = 1/___ × basis × hoogte.", "options": ["2", "3", "4"], "correctValue": "2"}, {"type": "open", "typeLabel": "Open vraag", "question": "Bereken de oppervlakte: basis 10 cm, hoogte 3 cm.", "accepted": ["15", "15 cm2", "15 cm²", "15cm2", "15cm²"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke omtrek hoort bij zijden 5, 7 en 8 cm?", "options": ["20 cm", "19 cm", "21 cm"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies de juiste stap voor omtrek.", "options": ["alle zijden optellen", "basis × hoogte", "delen door 2"], "correctValue": "alle zijden optellen"}, {"type": "open", "typeLabel": "Open vraag", "question": "Omtrek van een driehoek met zijden 9, 4, 6 cm?", "accepted": ["19", "19 cm", "19cm"]}];
     let currentQuestion = 0;
     let score = 0;
@@ -165,6 +167,7 @@
         loadQuestion();
       } else {
         localStorage.setItem('thema4unit3', score);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema4unit3', score);
         document.getElementById('quizBox').classList.add('hidden');
         document.getElementById('endScreen').classList.remove('hidden');
         document.getElementById('xpScore').innerText = score;

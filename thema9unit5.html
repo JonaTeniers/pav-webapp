@@ -85,7 +85,9 @@
     </section>
   </main>
 
-  <script>
+    <script src="./firebase.js"></script>
+  <script src="./pavo-xp-sync.js"></script>
+<script>
     const questions = [{"type": "mc", "typeLabel": "Meerkeuze", "question": "Wat was de rol van de Dossinkazerne in WOII?", "options": ["Verzamel- en deportatieplaats onder nazi-bezetting", "Schuilplaats voor vervolgde groepen", "Cultureel centrum zonder oorlogsfunctie"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Noem 1 vervolgde groep die via deze plek gedeporteerd werd.", "accepted": ["joden", "joodse mensen", "roma"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke waarschuwing zit in dit verhaal?", "options": ["Uitsluiting kan escaleren als rechten niet beschermd worden", "Geschiedenis herhaalt zich nooit", "Mensenrechten zijn alleen belangrijk in oorlog"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies de beste maatschappelijke les.", "options": ["Herinneren helpt discriminatie en ontmenselijking herkennen", "Herinneren houdt haat levend en moet vermeden worden", "Verleden heeft geen invloed op keuzes vandaag"], "correctValue": "Herinneren helpt discriminatie en ontmenselijking herkennen"}, {"type": "open", "typeLabel": "Open vraag", "question": "Noem 1 waarde die je centraal vindt bij dit onderwerp.", "accepted": ["mensenrechten", "respect", "waardigheid", "verdraagzaamheid", "solidariteit"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Waarom is dit deel van het verhaal van Vlaanderen zo belangrijk?", "options": ["Omdat het confronteert met de gevolgen van haat en uitsluiting", "Omdat het alleen over één gebouw gaat", "Omdat het geen link heeft met burgerschap"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Selectie", "question": "Welke verdiepende vraag is het meest historisch relevant?", "options": ["Welke mechanismen maakten vervolging maatschappelijk mogelijk?", "Welke dag was het koudst in Mechelen?", "Hoe groot was elke kamer exact?"], "correctValue": "Welke mechanismen maakten vervolging maatschappelijk mogelijk?"}, {"type": "open", "typeLabel": "Open vraag", "question": "Geef 2 kernwoorden die deze unit samenvatten.", "accepted": ["herinnering", "mensenrechten", "uitsluiting", "holocaust", "waakzaamheid"]}];
     let currentQuestion = 0;
     let score = 0;
@@ -154,6 +156,7 @@
         loadQuestion();
       } else {
         localStorage.setItem('thema9unit5', score);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema9unit5', score);
         document.getElementById('quizBox').classList.add('hidden');
         document.getElementById('reflectieBox').classList.remove('hidden');
         document.getElementById('endScreen').classList.remove('hidden');
@@ -167,6 +170,7 @@
       if (!begrip && !verdieping) return;
       const payload = JSON.stringify({ begrip, verdieping });
       localStorage.setItem('thema9unit5_reflectie', payload);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema9unit5_reflectie', payload);
       document.getElementById('reflectieFeedback').innerText = '✅ Reflectie en verdieping bewaard.';
     }
 
