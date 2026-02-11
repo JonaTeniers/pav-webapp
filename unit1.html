@@ -36,7 +36,9 @@
       <a href="unit2.html"><button>→ Volgende unit</button></a>
     </div>
   </div>
-  <script>
+    <script src="./firebase.js"></script>
+  <script src="./pavo-xp-sync.js"></script>
+<script>
     const questions = [
       { vraag: "Wat is een voorbeeld van levende natuur?", opties: [ { tekst: "Een boom", juist: true }, { tekst: "Een rots", juist: false }, { tekst: "Water", juist: false } ] },
       { vraag: "Wat is GEEN kenmerk van levende wezens?", opties: [ { tekst: "Ze groeien niet", juist: true }, { tekst: "Ze ademen", juist: false }, { tekst: "Ze hebben energie nodig", juist: false } ] },
@@ -85,7 +87,9 @@
       if (currentQuestion < questions.length) loadQuestion();
       else {
         localStorage.setItem("xp_thema2_unit1", score);
+        if (window.pavoSyncScore) window.pavoSyncScore("xp_thema2_unit1", score);
         localStorage.setItem("thema2_unit1_done", "true");
+        if (window.pavoSyncScore) window.pavoSyncScore("thema2_unit1_done", "true");
         document.getElementById("quizBox").classList.add("hidden");
         document.getElementById("endScreen").classList.remove("hidden");
         document.getElementById("xpScore").innerText = score;

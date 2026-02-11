@@ -51,7 +51,9 @@
     </div>
   </div>
 
-  <script>
+    <script src="./firebase.js"></script>
+  <script src="./pavo-xp-sync.js"></script>
+<script>
     const questions = [{"type": "mc", "typeLabel": "Meerkeuze", "question": "Een auteur wil je laten lachen. Het doel is...", "options": ["informeren", "amuseren", "instrueren"], "correctIndex": 1}, {"type": "open", "typeLabel": "Open vraag", "question": "Doel van een handleiding?", "accepted": ["uitleggen", "informeren", "instrueren"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies doel bij reclame.", "options": ["overtuigen", "ontroeren", "vertellen"], "correctValue": "overtuigen"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Bij een nieuwsartikel is het hoofddoel meestal...", "options": ["informeren", "amuseren", "fantaseren"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Een verhaal dat gevoelens oproept wil vooral...", "accepted": ["ontroeren", "amuseren", "laten beleven"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies doel bij lesmateriaal.", "options": ["informeren", "misleiden", "grappig zijn"], "correctValue": "informeren"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "'Koop nu!' past bij welk doel?", "options": ["overtuigen", "informeren", "samenvatten"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Een verslag op school dient om te ...", "accepted": ["informeren", "uitleggen"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies doel bij stripverhaal.", "options": ["amuseren", "instrueren", "waarschuwen"], "correctValue": "amuseren"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Een tekst met feiten en bronnen wil meestal...", "options": ["informeren", "amuseren", "verwarren"], "correctIndex": 0}];
     let currentQuestion = 0;
     let score = 0;
@@ -118,6 +120,7 @@
         loadQuestion();
       } else {
         localStorage.setItem('thema5unit2', score);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema5unit2', score);
         document.getElementById('quizBox').classList.add('hidden');
         document.getElementById('endScreen').classList.remove('hidden');
         document.getElementById('xpScore').innerText = score;

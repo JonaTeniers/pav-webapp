@@ -94,7 +94,9 @@
       <a href="thema4unit6.html"><button type="button">→ Volgende unit</button></a>
     </div>
   </div>
-  <script>
+    <script src="./firebase.js"></script>
+  <script src="./pavo-xp-sync.js"></script>
+<script>
     const questions = [{"type": "open", "typeLabel": "Open vraag", "question": "Bereken de omtrek van een cirkel met diameter 10 cm (π=3,14).", "accepted": ["31,4", "31.4", "31,4 cm", "31.4 cm"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke formule hoort bij de omtrek van een cirkel?", "options": ["π × diameter", "π × straal × straal", "2 × (l + b)"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies de juiste straal bij diameter 12 cm.", "options": ["6 cm", "12 cm", "24 cm"], "correctValue": "6 cm"}, {"type": "open", "typeLabel": "Open vraag", "question": "Oppervlakte van een cirkel met straal 6 cm (π=3,14)?", "accepted": ["113,04", "113.04", "113,04 cm2", "113,04 cm²", "113.04 cm2", "113.04 cm²"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke eenheid hoort bij oppervlakte?", "options": ["cm²", "cm", "cm³"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies de juiste formule voor oppervlakte cirkel.", "options": ["π × r × r", "π × d", "2 × (l + b)"], "correctValue": "π × r × r"}, {"type": "open", "typeLabel": "Open vraag", "question": "Bereken de omtrek bij straal 5 m (π=3,14).", "accepted": ["31,4", "31.4", "31,4 m", "31.4 m"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Wat gebeurt er met de oppervlakte als de straal verdubbelt?", "options": ["wordt 4× zo groot", "wordt 2× zo groot", "blijft gelijk"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies de juiste uitkomst: π × 3 × 3.", "options": ["28,26", "18,84", "9,42"], "correctValue": "28,26"}, {"type": "open", "typeLabel": "Open vraag", "question": "Omtrek van een cirkel met diameter 7 cm (π=3,14)?", "accepted": ["21,98", "21.98", "21,98 cm", "21.98 cm"]}];
     let currentQuestion = 0;
     let score = 0;
@@ -165,6 +167,7 @@
         loadQuestion();
       } else {
         localStorage.setItem('thema4unit5', score);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema4unit5', score);
         document.getElementById('quizBox').classList.add('hidden');
         document.getElementById('endScreen').classList.remove('hidden');
         document.getElementById('xpScore').innerText = score;

@@ -76,7 +76,9 @@
     </section>
   </main>
 
-  <script>
+    <script src="./firebase.js"></script>
+  <script src="./pavo-xp-sync.js"></script>
+<script>
     const questions = [{"type": "mc", "typeLabel": "Meerkeuze", "question": "Wat was het hoofddoel van de euro?", "options": ["Economische samenwerking en betalingen tussen landen vergemakkelijken", "Meer nationale munten creëren", "Nationale economieën volledig scheiden"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Noem 1 concreet voordeel van één munt voor reizigers of consumenten.", "accepted": ["makkelijk vergelijken", "niet omrekenen", "eenvoudiger betalen", "prijsvergelijking"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke nuance klopt het best?", "options": ["Eén munt helpt handel, maar vraagt ook gezamenlijke afspraken", "Eén munt lost alle economische problemen op", "Eén munt maakt samenwerking overbodig"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies het beste verband.", "options": ["Gemeenschappelijke munt vraagt vertrouwen en coördinatie tussen landen", "Gemeenschappelijke munt maakt landen volledig onafhankelijk van elkaar", "Gemeenschappelijke munt stopt internationale handel"], "correctValue": "Gemeenschappelijke munt vraagt vertrouwen en coördinatie tussen landen"}, {"type": "open", "typeLabel": "Open vraag", "question": "In welk groter kader past de euro?", "accepted": ["europese samenwerking", "europa", "internationale samenwerking", "europese integratie"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Waarom hoort dit in het verhaal van Vlaanderen?", "options": ["Het toont hoe Vlaanderen economisch ingebed is in Europa", "Het is een los financieel detail zonder impact", "Het betekent dat lokale economie niet meer telt"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Selectie", "question": "Welke verdiepende vraag is het sterkst?", "options": ["Hoe beïnvloeden Europese beslissingen het dagelijks leven in Vlaanderen?", "Welke muntkleur vinden mensen mooier?", "Hoeveel portemonnees bestaan er in Europa?"], "correctValue": "Hoe beïnvloeden Europese beslissingen het dagelijks leven in Vlaanderen?"}, {"type": "open", "typeLabel": "Open vraag", "question": "Geef 2 kernwoorden die deze unit samenvatten.", "accepted": ["euro", "europa", "samenwerking", "handel", "integratie"]}];
     let currentQuestion = 0;
     let score = 0;
@@ -145,6 +147,7 @@
         loadQuestion();
       } else {
         localStorage.setItem('thema9unit6', score);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema9unit6', score);
         document.getElementById('quizBox').classList.add('hidden');
         document.getElementById('reflectieBox').classList.remove('hidden');
         document.getElementById('endScreen').classList.remove('hidden');
@@ -158,6 +161,7 @@
       if (!begrip && !verdieping) return;
       const payload = JSON.stringify({ begrip, verdieping });
       localStorage.setItem('thema9unit6_reflectie', payload);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema9unit6_reflectie', payload);
       document.getElementById('reflectieFeedback').innerText = '✅ Reflectie en verdieping bewaard.';
     }
 

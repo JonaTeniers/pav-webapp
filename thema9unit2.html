@@ -76,7 +76,9 @@
     </section>
   </main>
 
-  <script>
+    <script src="./firebase.js"></script>
+  <script src="./pavo-xp-sync.js"></script>
+<script>
     const questions = [{"type": "mc", "typeLabel": "Meerkeuze", "question": "Wat doet een grondwet in de eerste plaats?", "options": ["Ze legt de basisregels en grondrechten van een staat vast", "Ze vervangt alle gewone wetten", "Ze bepaalt enkel schoolregels"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Noem 1 klassieke vrijheid uit een liberale grondwet.", "accepted": ["persvrijheid", "vrijheid van meningsuiting", "godsdienstvrijheid", "vrijheid van vereniging"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke nuance klopt over 1831?", "options": ["De grondwet was vooruitstrevend, maar kiesrecht bleef beperkt", "Iedereen had meteen stemrecht", "Er waren geen burgerrechten"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies de beste democratische redenering.", "options": ["Grondrechten helpen burgers om macht te controleren", "Grondrechten maken burgers onbelangrijk", "Grondrechten zijn alleen symbolen"], "correctValue": "Grondrechten helpen burgers om macht te controleren"}, {"type": "open", "typeLabel": "Open vraag", "question": "Welk begrip past hier: burgers kunnen meepraten en meebeslissen in de politiek?", "accepted": ["democratie", "inspraak", "participatie"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Waarom is dit een sleutelstuk in het verhaal van Vlaanderen?", "options": ["Het legt een institutionele basis voor latere sociale en politieke strijd", "Het is losstaand zonder gevolgen", "Het gaat enkel over één politicus"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Selectie", "question": "Welke historische vraag verdiept je begrip het meest?", "options": ["Voor wie golden deze rechten nog niet volledig?", "Welke pen gebruikte men in 1831?", "Hoeveel ramen had het parlementsgebouw?"], "correctValue": "Voor wie golden deze rechten nog niet volledig?"}, {"type": "open", "typeLabel": "Open vraag", "question": "Noem 2 kernwoorden voor deze unit.", "accepted": ["grondwet", "vrijheid", "democratie", "rechten", "inspraak"]}];
     let currentQuestion = 0;
     let score = 0;
@@ -145,6 +147,7 @@
         loadQuestion();
       } else {
         localStorage.setItem('thema9unit2', score);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema9unit2', score);
         document.getElementById('quizBox').classList.add('hidden');
         document.getElementById('reflectieBox').classList.remove('hidden');
         document.getElementById('endScreen').classList.remove('hidden');
@@ -158,6 +161,7 @@
       if (!begrip && !verdieping) return;
       const payload = JSON.stringify({ begrip, verdieping });
       localStorage.setItem('thema9unit2_reflectie', payload);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema9unit2_reflectie', payload);
       document.getElementById('reflectieFeedback').innerText = '✅ Reflectie en verdieping bewaard.';
     }
 

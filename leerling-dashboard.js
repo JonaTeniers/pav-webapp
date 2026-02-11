@@ -147,6 +147,19 @@
     return rows;
   }
 
+
+  function renderTotalScore(items) {
+    const totalEl = document.getElementById('studentTotalScore');
+    if (!totalEl) return;
+
+    const total = items.reduce((sum, item) => {
+      const value = Number(item.score);
+      return sum + (Number.isNaN(value) ? 0 : value);
+    }, 0);
+
+    totalEl.innerHTML = `<strong>Totaalscore:</strong> ${total} XP`;
+  }
+
   function renderRows(items) {
     const tbody = document.getElementById('studentScoresTableBody');
     if (!tbody) return;
@@ -178,6 +191,7 @@
       .map((item) => ({ ...item, ...extractNumbers(item) }));
 
     renderRows(items);
+    renderTotalScore(items);
     setStatus(`${items.length} opgeslagen resultaat/resultaten gevonden.`, false);
   }
 
