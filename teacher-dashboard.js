@@ -239,7 +239,7 @@
       docs = fallbackSnapshot.docs;
     }
 
-    allScores = snapshot.docs
+    allScores = docs
       .map((doc) => ({ id: doc.id, ...doc.data() }))
       .map(normalizeScoreItem);
 
