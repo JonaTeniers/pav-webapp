@@ -2,12 +2,14 @@
  * teacher-dashboard.js
  *
  * Doel:
+ * - Laat enkel leerkrachten inloggen op het dashboard
  * - Haalt alle score-documenten op uit Firestore collectie `scores`
  * - Toont de resultaten in een tabel
  * - Laat filteren op klas
  *
  * Vereist:
  * - firebase.js moet eerst geladen zijn (levert window.firebaseReady + window.db + window.auth)
+ * - window.TEACHER_EMAILS bevat de toegelaten leerkracht-mailadressen
  */
 
 (function () {
@@ -23,6 +25,18 @@
 
     statusEl.textContent = message;
     statusEl.style.color = isError ? '#b00020' : '#166534';
+  }
+
+  /**
+   * Escape HTML-tekens zodat tabelinhoud veilig weergegeven wordt.
+   */
+  function escapeHtml(value) {
+    return String(value ?? '-')
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#39;');
   }
 
   /**
@@ -45,6 +59,26 @@
   }
 
   /**
+   * Zet dashboard zichtbaar en loginblok verborgen.
+   */
+  function showDashboard() {
+    const dashboardPanel = document.getElementById('dashboardPanel');
+    const authCard = document.getElementById('authCard');
+    if (dashboardPanel) dashboardPanel.style.display = 'block';
+    if (authCard) authCard.style.display = 'none';
+  }
+
+  /**
+   * Zet loginblok zichtbaar en dashboard verborgen.
+   */
+  function showLogin() {
+    const dashboardPanel = document.getElementById('dashboardPanel');
+    const authCard = document.getElementById('authCard');
+    if (dashboardPanel) dashboardPanel.style.display = 'none';
+    if (authCard) authCard.style.display = 'block';
+  }
+
+  /**
    * Teken de tabelrijen op basis van data en geselecteerde klas-filter.
    */
   function renderTable(selectedKlas) {
@@ -64,11 +98,11 @@
     tbody.innerHTML = filtered.map((item) => {
       return `
         <tr>
-          <td>${item.naam || '-'}</td>
-          <td>${item.klas || '-'}</td>
-          <td>${item.thema || '-'}</td>
-          <td>${item.score ?? '-'}</td>
-          <td>${formatDate(item.createdAt)}</td>
+          <td>${escapeHtml(item.naam)}</td>
+          <td>${escapeHtml(item.klas)}</td>
+          <td>${escapeHtml(item.thema)}</td>
+          <td>${escapeHtml(item.score)}</td>
+          <td>${escapeHtml(formatDate(item.createdAt))}</td>
         </tr>
       `;
     }).join('');
@@ -101,7 +135,7 @@
   async function loadScores() {
     setStatus('Scores worden geladen...', false);
 
-    // Sorteer op recentste score eerst. Dit werkt goed zodra createdAt overal aanwezig is.
+    // Sorteer op recentste score eerst.
     const snapshot = await window.db
       .collection('scores')
       .orderBy('createdAt', 'desc')
@@ -115,6 +149,69 @@
   }
 
   /**
+   * Login-handler voor het leerkrachtformulier.
+   */
+  async function handleTeacherLogin(event) {
+    event.preventDefault();
+
+    const email = document.getElementById('teacherEmail')?.value?.trim();
+    const password = document.getElementById('teacherPassword')?.value;
+
+    if (!email || !password) {
+      setStatus('Vul e-mail en wachtwoord in.', true);
+      return;
+    }
+
+    if (!(window.isTeacherEmail && window.isTeacherEmail(email))) {
+      setStatus('Dit account staat niet in de leerkrachtlijst.', true);
+      return;
+    }
+
+    try {
+      await window.auth.signInWithEmailAndPassword(email, password);
+      // Verdere checks en data laden gebeuren centraal in onAuthStateChanged.
+    } catch (error) {
+      console.error('Loginfout leerkracht:', error);
+      setStatus('Inloggen als leerkracht mislukt.', true);
+    }
+  }
+
+  /**
+   * Uitlog-handler voor leerkracht.
+   */
+  async function handleTeacherLogout() {
+    try {
+      await window.auth.signOut();
+      setStatus('Uitgelogd.', false);
+    } catch (error) {
+      console.error('Uitlogfout:', error);
+      setStatus('Uitloggen is mislukt.', true);
+    }
+  }
+
+  /**
+   * Bepaal wat er moet gebeuren als auth-status verandert.
+   */
+  async function handleAuthState(user) {
+    if (!user) {
+      showLogin();
+      setStatus('Niet ingelogd. Log in als leerkracht om scores te bekijken.', true);
+      return;
+    }
+
+    if (!(window.isTeacherEmail && window.isTeacherEmail(user.email))) {
+      setStatus('Dit account is geen leerkrachtaccount. Gebruik leerlingomgeving.', true);
+      await window.auth.signOut();
+      showLogin();
+      return;
+    }
+
+    showDashboard();
+    setStatus(`Ingelogd als leerkracht: ${user.email}.`, false);
+    await loadScores();
+  }
+
+  /**
    * Start de dashboardlogica nadat Firebase klaar is.
    */
   async function initDashboard() {
@@ -124,6 +221,8 @@
 
       const klasFilter = document.getElementById('klasFilter');
       const refreshButton = document.getElementById('refreshButton');
+      const teacherLoginForm = document.getElementById('teacherLoginForm');
+      const teacherLogoutButton = document.getElementById('teacherLogoutButton');
 
       // Re-render wanneer de leerkracht een klas kiest in de filter.
       if (klasFilter) {
@@ -137,15 +236,20 @@
         refreshButton.addEventListener('click', loadScores);
       }
 
-      // Controleer of er iemand is ingelogd (leerkracht-flow).
-      window.auth.onAuthStateChanged(async (user) => {
-        if (!user) {
-          setStatus('Je bent niet ingelogd. Log in als leerkracht om scores te bekijken.', true);
-          return;
-        }
+      // Login/uitlog knoppen koppelen.
+      if (teacherLoginForm) {
+        teacherLoginForm.addEventListener('submit', handleTeacherLogin);
+      }
+      if (teacherLogoutButton) {
+        teacherLogoutButton.addEventListener('click', handleTeacherLogout);
+      }
 
-        // Hier kan je later rollencheck toevoegen (bv. via custom claims) voor echte leerkrachtbeveiliging.
-        await loadScores();
+      // Controleer auth-status en enforce leerkracht-only toegang.
+      window.auth.onAuthStateChanged((user) => {
+        handleAuthState(user).catch((error) => {
+          console.error('Auth-state fout:', error);
+          setStatus('Fout bij controleren van loginstatus.', true);
+        });
       });
     } catch (error) {
       console.error('Fout bij dashboard-initialisatie:', error);

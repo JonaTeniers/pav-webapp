@@ -17,6 +17,9 @@
  *     messagingSenderId: "...",
  *     appId: "..."
  *   };
+ *
+ *   // Optioneel: lijst van leerkracht-mailadressen (kleine/hoofdletters maakt niet uit)
+ *   window.TEACHER_EMAILS = ["leerkracht@school.be"];
  * </script>
  * <script src="./firebase.js"></script>
  */
@@ -36,10 +39,30 @@
   };
 
   /**
+   * Optionele fallback-lijst voor leerkrachten.
+   * Voor productie: bij voorkeur invullen via window.TEACHER_EMAILS in HTML.
+   */
+  const defaultTeacherEmails = [];
+
+  /**
    * Gebruik config uit window.FIREBASE_CONFIG als die bestaat,
    * anders val terug op de default hierboven.
    */
   const firebaseConfig = window.FIREBASE_CONFIG || defaultFirebaseConfig;
+
+  /**
+   * Gebruik externe teacher-lijst of fallback.
+   */
+  const teacherEmails = (window.TEACHER_EMAILS || defaultTeacherEmails)
+    .filter(Boolean)
+    .map((email) => String(email).toLowerCase());
+
+  /**
+   * Hulpfunctie: controleer of een e-mail een leerkrachtaccount is.
+   */
+  function isTeacherEmail(email) {
+    return teacherEmails.includes(String(email || '').toLowerCase());
+  }
 
   /**
    * Hulpfunctie om een script-tag dynamisch te laden.
@@ -80,10 +103,12 @@
     const db = window.firebase.firestore(app);
     const auth = window.firebase.auth(app);
 
-    // Maak app + db + auth globaal beschikbaar voor je andere scripts.
+    // Maak app + db + auth + rolhulpjes globaal beschikbaar voor je andere scripts.
     window.firebaseApp = app;
     window.db = db;
     window.auth = auth;
+    window.teacherEmails = teacherEmails;
+    window.isTeacherEmail = isTeacherEmail;
 
     console.info("Firebase is geïnitialiseerd (Firestore + Auth). ");
 

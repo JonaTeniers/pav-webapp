@@ -45,7 +45,16 @@
 
     try {
       // Firebase Auth: inloggen met email + wachtwoord.
-      await window.auth.signInWithEmailAndPassword(email, password);
+      const credential = await window.auth.signInWithEmailAndPassword(email, password);
+      const loggedInEmail = credential?.user?.email || email;
+
+      // Extra beveiliging: blokkeer leerkrachtaccounts op de leerlingpagina.
+      if (window.isTeacherEmail && window.isTeacherEmail(loggedInEmail)) {
+        await window.auth.signOut();
+        setStatus("Leerkrachtaccounts horen thuis in de leerkrachtomgeving.", true);
+        return;
+      }
+
       setStatus("Inloggen gelukt. Je kan nu je score opslaan.", false);
     } catch (error) {
       console.error("Login fout:", error);
@@ -63,6 +72,12 @@
     const user = window.auth.currentUser;
     if (!user) {
       setStatus("Je moet eerst inloggen voor je kan starten.", true);
+      return;
+    }
+
+    // Extra beveiliging: leerkrachtaccount mag niet opslaan als leerling.
+    if (window.isTeacherEmail && window.isTeacherEmail(user.email)) {
+      setStatus("Gebruik als leerkracht de leerkrachtomgeving, niet de leerlingomgeving.", true);
       return;
     }
 
@@ -127,11 +142,17 @@
 
       // Optionele status bij auth-wijziging (vb. na refresh nog ingelogd).
       window.auth.onAuthStateChanged((user) => {
-        if (user) {
+        if (user && !(window.isTeacherEmail && window.isTeacherEmail(user.email))) {
           setStatus(`Ingelogd als ${user.email}.`, false);
-        } else {
-          setStatus("Niet ingelogd. Log eerst in om scores op te slaan.", true);
+          return;
         }
+
+        if (user) {
+          setStatus("Leerkracht gedetecteerd op leerlingpagina. Log in als leerling.", true);
+          return;
+        }
+
+        setStatus("Niet ingelogd. Log eerst in om scores op te slaan.", true);
       });
     } catch (error) {
       console.error("Init fout score-form:", error);

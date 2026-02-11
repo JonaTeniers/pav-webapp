@@ -64,31 +64,60 @@
       color: #0b4da2;
     }
 
+    .auth-card {
+      background: white;
+      border-radius: 12px;
+      padding: 14px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+      margin-bottom: 14px;
+    }
+
+    .auth-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: end;
+    }
+
+    .auth-row label {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .auth-row input {
+      min-width: 240px;
+      padding: 8px 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .btn {
+      padding: 9px 12px;
+      border-radius: 8px;
+      border: none;
+      background: #0b4da2;
+      color: white;
+      cursor: pointer;
+    }
+
+    .btn-secondary {
+      background: #64748b;
+    }
+
+    .dashboard-panel {
+      display: none;
+    }
+
     .controls {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
       align-items: center;
       margin-bottom: 14px;
-    }
-
-    label {
-      font-weight: bold;
-    }
-
-    select,
-    button.refresh {
-      padding: 8px 10px;
-      border-radius: 8px;
-      border: 1px solid #cbd5e1;
-      font-size: 14px;
-    }
-
-    button.refresh {
-      background: #0b4da2;
-      color: white;
-      border: none;
-      cursor: pointer;
     }
 
     #status {
@@ -134,41 +163,69 @@
 
   <main class="wrapper">
     <h1>Leerkracht Dashboard</h1>
-    <p>Overzicht van alle opgeslagen scores uit Firestore collectie <strong>scores</strong>.</p>
 
-    <div class="controls">
-      <label for="klasFilter">Filter op klas:</label>
-      <select id="klasFilter">
-        <option value="">Alle klassen</option>
-      </select>
-
-      <button class="refresh" id="refreshButton" type="button">Vernieuwen</button>
-    </div>
+    <!-- Loginblok specifiek voor leerkrachtaccounts. -->
+    <section class="auth-card" id="authCard">
+      <p>Log in als <strong>leerkracht</strong> om de scores te bekijken.</p>
+      <form id="teacherLoginForm" class="auth-row">
+        <label>
+          E-mail
+          <input type="email" id="teacherEmail" required />
+        </label>
+        <label>
+          Wachtwoord
+          <input type="password" id="teacherPassword" required />
+        </label>
+        <button class="btn" type="submit">Inloggen</button>
+        <button class="btn btn-secondary" id="teacherLogoutButton" type="button">Uitloggen</button>
+      </form>
+    </section>
 
     <p id="status">Dashboard start op...</p>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Naam</th>
-          <th>Klas</th>
-          <th>Thema</th>
-          <th>Score</th>
-          <th>Datum</th>
-        </tr>
-      </thead>
-      <tbody id="scoresTableBody">
-        <tr>
-          <td colspan="5">Nog geen gegevens geladen.</td>
-        </tr>
-      </tbody>
-    </table>
+    <!-- Dashboard (alleen zichtbaar als ingelogde gebruiker een leerkracht is). -->
+    <section class="dashboard-panel" id="dashboardPanel">
+      <p>Overzicht van alle opgeslagen scores uit Firestore collectie <strong>scores</strong>.</p>
+
+      <div class="controls">
+        <label for="klasFilter"><strong>Filter op klas:</strong></label>
+        <select id="klasFilter">
+          <option value="">Alle klassen</option>
+        </select>
+
+        <button class="btn" id="refreshButton" type="button">Vernieuwen</button>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Naam</th>
+            <th>Klas</th>
+            <th>Thema</th>
+            <th>Score</th>
+            <th>Datum</th>
+          </tr>
+        </thead>
+        <tbody id="scoresTableBody">
+          <tr>
+            <td colspan="5">Nog geen gegevens geladen.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
   </main>
+
+  <!-- Optioneel: zet hier je whitelist van leerkrachtaccounts. -->
+  <script>
+    window.TEACHER_EMAILS = [
+      // "leerkracht@school.be"
+    ];
+  </script>
 
   <!-- Firebase-instellingen en koppelingen. -->
   <script src="./firebase.js"></script>
 
-  <!-- Dashboardlogica: ophalen, filteren en tonen van scores. -->
+  <!-- Dashboardlogica: login + ophalen, filteren en tonen van scores. -->
   <script src="./teacher-dashboard.js"></script>
 
   <script>
