@@ -21,20 +21,14 @@
   }
 
   function updateThemeUnits() {
-    const themeContainer = document.querySelector('[data-theme-id]') || document.querySelector('main');
+    const themeContainer = document.querySelector('[data-theme-id]');
     if (!themeContainer) return;
 
-    const themeId = Number(themeContainer.dataset.themeId || document.getElementById('themeTotalScore')?.dataset?.themeId);
+    const themeId = Number(themeContainer.dataset.themeId);
     if (!themeId) return;
 
-    const unitCards = [...document.querySelectorAll('.unit-card')]
-      .filter((card) => card.querySelector('button'));
-
-    unitCards.forEach((card, index) => {
-      if (!card.dataset.unit) card.dataset.unit = String(index + 1);
-    });
-
-    unitCards.sort((a, b) => Number(a.dataset.unit) - Number(b.dataset.unit));
+    const unitCards = [...document.querySelectorAll('.unit-card[data-unit]')]
+      .sort((a, b) => Number(a.dataset.unit) - Number(b.dataset.unit));
 
     unitCards.forEach((card) => {
       const unitNumber = Number(card.dataset.unit);
@@ -56,20 +50,10 @@
         statusEl.textContent = isUnitCompleted(themeId, unitNumber) ? '✅ Gespeeld' : 'Beschikbaar';
         statusEl.className = 'status ready';
         buttonEl.disabled = false;
-        const linkEl = card.querySelector('a');
-        if (linkEl && linkEl.dataset.lockedHref) {
-          linkEl.href = linkEl.dataset.lockedHref;
-          delete linkEl.dataset.lockedHref;
-        }
       } else {
         statusEl.textContent = '🔒 Vergrendeld';
         statusEl.className = 'status locked';
         buttonEl.disabled = true;
-        const linkEl = card.querySelector('a[href]');
-        if (linkEl && !linkEl.dataset.lockedHref) {
-          linkEl.dataset.lockedHref = linkEl.getAttribute('href') || '';
-          linkEl.removeAttribute('href');
-        }
       }
     });
   }
