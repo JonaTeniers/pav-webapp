@@ -30,12 +30,12 @@
    * Tip: je kunt deze ook vanuit HTML zetten via window.FIREBASE_CONFIG.
    */
   const defaultFirebaseConfig = {
-    apiKey: "JOUW_API_KEY",
-    authDomain: "jouw-project-id.firebaseapp.com",
-    projectId: "jouw-project-id",
-    storageBucket: "jouw-project-id.firebasestorage.app",
-    messagingSenderId: "JOUW_MESSAGING_SENDER_ID",
-    appId: "JOUW_APP_ID"
+    apiKey: "AIzaSyBDMQauk2ZHfbGl6p99CDNEA1cl1rF8OUs",
+    authDomain: "pavowebapp.firebaseapp.com",
+    projectId: "pavowebapp",
+    storageBucket: "pavowebapp.firebasestorage.app",
+    messagingSenderId: "886245311147",
+    appId: "1:886245311147:web:2ca222c1e1c766e2adedee"
   };
 
   /**

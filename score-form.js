@@ -1,19 +1,18 @@
 /**
  * score-form.js
  *
- * Dit script werkt samen met firebase.js en doet 2 dingen:
- * 1) Laat een leerling inloggen (email + wachtwoord)
- * 2) Leest een score-formulier uit en schrijft de data naar Firestore collectie `scores`
+ * Doel:
+ * - Leerlingen hoeven NIET meer in te loggen.
+ * - Leerlingen vullen enkel naam + klas in (thema/score mag optioneel mee).
+ * - Elke inzending wordt opgeslagen in Firestore collectie `scores` met timestamp.
+ * - We bewaren ook waar de inzending gebeurde (pagina + sessie-id) zodat je als leerkracht kan zien vanwaar het kwam.
  *
  * Verwachte HTML-ids:
- * - Login formulier: #loginForm
- *   - input email: #email
- *   - input wachtwoord: #password
  * - Score formulier: #scoreForm
- *   - input naam: #naam
- *   - input klas: #klas
- *   - input thema: #thema
- *   - input score: #score
+ *   - input naam: #naam (verplicht)
+ *   - input klas: #klas (verplicht)
+ *   - input thema: #thema (optioneel)
+ *   - input score: #score (optioneel)
  * - Optionele statusmelding: #status
  */
 
@@ -22,98 +21,77 @@
    * Kleine helper om statusberichten in de UI te tonen.
    */
   function setStatus(tekst, isError) {
-    const statusEl = document.getElementById("status");
+    const statusEl = document.getElementById('status');
     if (!statusEl) return;
 
     statusEl.textContent = tekst;
-    statusEl.style.color = isError ? "#b00020" : "#006400";
+    statusEl.style.color = isError ? '#b00020' : '#006400';
   }
 
   /**
-   * Deze functie laat de leerling inloggen met email/wachtwoord.
+   * Maak (of hergebruik) een eenvoudige sessie-id per browser.
+   * Zo kan je in Firestore zien welke inzendingen uit dezelfde browsersessie komen.
    */
-  async function handleLogin(event) {
-    event.preventDefault();
+  function getSessionId() {
+    const storageKey = 'pavo_leerling_sessie_id';
+    const existing = window.localStorage.getItem(storageKey);
+    if (existing) return existing;
 
-    const email = document.getElementById("email")?.value?.trim();
-    const password = document.getElementById("password")?.value;
-
-    if (!email || !password) {
-      setStatus("Vul zowel e-mail als wachtwoord in.", true);
-      return;
-    }
-
-    try {
-      // Firebase Auth: inloggen met email + wachtwoord.
-      const credential = await window.auth.signInWithEmailAndPassword(email, password);
-      const loggedInEmail = credential?.user?.email || email;
-
-      // Extra beveiliging: blokkeer leerkrachtaccounts op de leerlingpagina.
-      if (window.isTeacherEmail && window.isTeacherEmail(loggedInEmail)) {
-        await window.auth.signOut();
-        setStatus("Leerkrachtaccounts horen thuis in de leerkrachtomgeving.", true);
-        return;
-      }
-
-      setStatus("Inloggen gelukt. Je kan nu je score opslaan.", false);
-    } catch (error) {
-      console.error("Login fout:", error);
-      setStatus("Inloggen mislukt. Controleer je gegevens.", true);
-    }
+    const newId = `sessie_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+    window.localStorage.setItem(storageKey, newId);
+    return newId;
   }
 
   /**
-   * Deze functie leest het formulier uit en schrijft de data naar Firestore.
+   * Lees het scoreformulier uit en schrijf de data naar Firestore.
    */
   async function handleScoreSubmit(event) {
     event.preventDefault();
 
-    // Stap 1: controleer of de leerling ingelogd is.
-    const user = window.auth.currentUser;
-    if (!user) {
-      setStatus("Je moet eerst inloggen voor je kan starten.", true);
+    // Stap 1: lees de verplichte velden uit.
+    const naam = document.getElementById('naam')?.value?.trim();
+    const klas = document.getElementById('klas')?.value?.trim();
+
+    // Stap 2: lees optionele velden uit (indien aanwezig op de pagina).
+    const themaValue = document.getElementById('thema')?.value?.trim();
+    const scoreRaw = document.getElementById('score')?.value;
+    const scoreNumber = Number(scoreRaw);
+
+    // Stap 3: valideer enkel naam + klas (zoals gevraagd).
+    if (!naam || !klas) {
+      setStatus('Vul minstens naam en klas in.', true);
       return;
     }
 
-    // Extra beveiliging: leerkrachtaccount mag niet opslaan als leerling.
-    if (window.isTeacherEmail && window.isTeacherEmail(user.email)) {
-      setStatus("Gebruik als leerkracht de leerkrachtomgeving, niet de leerlingomgeving.", true);
-      return;
-    }
-
-    // Stap 2: lees de formuliervelden uit.
-    const naam = document.getElementById("naam")?.value?.trim();
-    const klas = document.getElementById("klas")?.value?.trim();
-    const thema = document.getElementById("thema")?.value?.trim();
-    const score = Number(document.getElementById("score")?.value);
-
-    // Stap 3: basisvalidatie op verplichte velden.
-    if (!naam || !klas || !thema || Number.isNaN(score)) {
-      setStatus("Vul naam, klas, thema en score correct in.", true);
-      return;
-    }
-
-    // Stap 4: bouw het document op dat naar Firestore gaat.
+    // Stap 4: bouw het Firestore-document op.
     const scoreData = {
       naam,
       klas,
-      thema,
-      score,
-      leerlingUid: user.uid,
-      leerlingEmail: user.email || null,
+      // Thema/score worden enkel opgeslagen als ze effectief ingevuld zijn.
+      ...(themaValue ? { thema: themaValue } : {}),
+      ...(scoreRaw !== undefined && scoreRaw !== '' && !Number.isNaN(scoreNumber) ? { score: scoreNumber } : {}),
+
+      // Handig voor leerkrachtinzichten: vanwaar kwam de inzending?
+      bronPagina: window.location.pathname,
+      sessieId: getSessionId(),
+
+      // Type van inzending expliciet zetten (geen auth-login nodig voor leerlingen).
+      leerlingAuthType: 'naam-klas-zonder-login',
+
+      // Server timestamp zodat volgorde/datum betrouwbaar is.
       createdAt: window.firebase.firestore.FieldValue.serverTimestamp()
     };
 
     try {
       // Stap 5: schrijf naar collectie `scores` in Firestore.
-      await window.db.collection("scores").add(scoreData);
+      await window.db.collection('scores').add(scoreData);
 
       // Stap 6: feedback tonen en formulier resetten.
-      setStatus("Score opgeslagen in Firestore.", false);
+      setStatus('Gegevens opgeslagen in Firestore.', false);
       event.target.reset();
     } catch (error) {
-      console.error("Opslaan fout:", error);
-      setStatus("Opslaan mislukt. Probeer opnieuw.", true);
+      console.error('Opslaan fout:', error);
+      setStatus('Opslaan mislukt. Probeer opnieuw.', true);
     }
   }
 
@@ -122,41 +100,19 @@
    */
   async function initScoreForm() {
     try {
-      // Wacht op firebase.js (app + firestore + auth).
       await window.firebaseReady;
 
-      const loginForm = document.getElementById("loginForm");
-      const scoreForm = document.getElementById("scoreForm");
-
-      if (!loginForm) {
-        console.warn("#loginForm niet gevonden.");
-      } else {
-        loginForm.addEventListener("submit", handleLogin);
-      }
-
+      const scoreForm = document.getElementById('scoreForm');
       if (!scoreForm) {
-        console.warn("#scoreForm niet gevonden.");
-      } else {
-        scoreForm.addEventListener("submit", handleScoreSubmit);
+        console.warn('#scoreForm niet gevonden.');
+        return;
       }
 
-      // Optionele status bij auth-wijziging (vb. na refresh nog ingelogd).
-      window.auth.onAuthStateChanged((user) => {
-        if (user && !(window.isTeacherEmail && window.isTeacherEmail(user.email))) {
-          setStatus(`Ingelogd als ${user.email}.`, false);
-          return;
-        }
-
-        if (user) {
-          setStatus("Leerkracht gedetecteerd op leerlingpagina. Log in als leerling.", true);
-          return;
-        }
-
-        setStatus("Niet ingelogd. Log eerst in om scores op te slaan.", true);
-      });
+      scoreForm.addEventListener('submit', handleScoreSubmit);
+      setStatus('Vul naam en klas in en klik op opslaan.', false);
     } catch (error) {
-      console.error("Init fout score-form:", error);
-      setStatus("Kon score-module niet initialiseren.", true);
+      console.error('Init fout score-form:', error);
+      setStatus('Kon score-module niet initialiseren.', true);
     }
   }
 

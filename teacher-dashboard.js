@@ -91,7 +91,7 @@
       : allScores;
 
     if (!filtered.length) {
-      tbody.innerHTML = '<tr><td colspan="5">Geen resultaten gevonden.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="6">Geen resultaten gevonden.</td></tr>';
       return;
     }
 
@@ -103,6 +103,7 @@
           <td>${escapeHtml(item.thema)}</td>
           <td>${escapeHtml(item.score)}</td>
           <td>${escapeHtml(formatDate(item.createdAt))}</td>
+          <td>${escapeHtml(item.bronPagina || item.leerlingAuthType || '-')}</td>
         </tr>
       `;
     }).join('');
