@@ -1,19 +1,13 @@
 /**
  * firebase.js
  *
- * Verwachting:
- * - De Firebase SDK-tags staan in HTML vóór dit bestand:
- *   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
- *   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
- *   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
- *   <script src="firebase.js"></script>
+ * Werking:
+ * - Probeert eerst Firebase SDK te gebruiken die al via HTML script-tags geladen is.
+ * - Als die ontbreekt, laadt dit bestand automatisch de compat SDK's bij.
+ * - Initialiseert Firebase en exporteert `window.auth`, `window.db`, `window.firebaseReady`.
  */
 
 (function () {
-  /**
-   * Standaardconfig voor jouw Firebase-project.
-   * Kan overschreven worden via window.FIREBASE_CONFIG in HTML.
-   */
   const defaultFirebaseConfig = {
     apiKey: "AIzaSyBDMQauk2ZHfbGl6p99CDNEA1cl1rF8OUs",
     authDomain: "pavowebapp.firebaseapp.com",
@@ -23,10 +17,8 @@
     appId: "1:886245311147:web:2ca222c1e1c766e2adedee"
   };
 
-  /**
-   * Optionele leerkracht-whitelist.
-   */
-  const defaultTeacherEmails = [];
+  // Standaard whitelist met opgegeven leerkrachtaccount.
+  const defaultTeacherEmails = ["jona@pavo.be"];
 
   const firebaseConfig = window.FIREBASE_CONFIG || defaultFirebaseConfig;
   const teacherEmails = (window.TEACHER_EMAILS || defaultTeacherEmails)
@@ -37,29 +29,46 @@
     return teacherEmails.includes(String(email || '').toLowerCase());
   }
 
-  /**
-   * Controleer of Firebase via script-tags beschikbaar is.
-   */
-  if (!window.firebase) {
-    console.error('Firebase SDK ontbreekt. Voeg eerst de 10.8.0 script-tags toe in je HTML vóór firebase.js.');
-    window.firebaseReady = Promise.reject(new Error('Firebase SDK niet gevonden'));
-    return;
+  function loadScript(src) {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = src;
+      script.async = true;
+      script.onload = resolve;
+      script.onerror = () => reject(new Error(`Kon Firebase SDK niet laden: ${src}`));
+      document.head.appendChild(script);
+    });
   }
 
-  // Firebase initialiseren
-  const app = window.firebase.apps.length
-    ? window.firebase.app()
-    : window.firebase.initializeApp(firebaseConfig);
-  const auth = window.firebase.auth();
-  const db = window.firebase.firestore();
+  async function ensureFirebaseSdk() {
+    if (window.firebase) return;
 
-  // Exporteer voor gebruik in andere JS-bestanden
-  window.firebaseApp = app;
-  window.auth = auth;
-  window.db = db;
-  window.teacherEmails = teacherEmails;
-  window.isTeacherEmail = isTeacherEmail;
+    await loadScript('https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js');
+    await loadScript('https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js');
+    await loadScript('https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js');
+  }
 
-  // Houd dezelfde API aan voor bestaande scripts die op firebaseReady wachten.
-  window.firebaseReady = Promise.resolve({ app, auth, db });
+  async function initFirebase() {
+    await ensureFirebaseSdk();
+
+    const app = window.firebase.apps.length
+      ? window.firebase.app()
+      : window.firebase.initializeApp(firebaseConfig);
+
+    const auth = window.firebase.auth();
+    const db = window.firebase.firestore();
+
+    window.firebaseApp = app;
+    window.auth = auth;
+    window.db = db;
+    window.teacherEmails = teacherEmails;
+    window.isTeacherEmail = isTeacherEmail;
+
+    return { app, auth, db };
+  }
+
+  window.firebaseReady = initFirebase().catch((error) => {
+    console.error('Fout bij Firebase-initialisatie:', error);
+    throw error;
+  });
 })();
