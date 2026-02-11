@@ -32,6 +32,28 @@
     return { thema: null, unit: null };
   }
 
+  function inferFromStorageKey(storageKey) {
+    const key = String(storageKey || '');
+
+    const compactMatch = key.match(/thema(\d+)unit(\d+)/i);
+    if (compactMatch) {
+      return {
+        thema: `thema${compactMatch[1]}`,
+        unit: `unit${compactMatch[2]}`
+      };
+    }
+
+    const underscoredMatch = key.match(/thema(\d+)_unit(\d+)/i);
+    if (underscoredMatch) {
+      return {
+        thema: `thema${underscoredMatch[1]}`,
+        unit: `unit${underscoredMatch[2]}`
+      };
+    }
+
+    return { thema: null, unit: null };
+  }
+
   async function syncScore(storageKey, score) {
     const numericScore = Number(score);
     if (Number.isNaN(numericScore)) return;
@@ -45,7 +67,13 @@
     const lastSynced = Number(window.localStorage.getItem(dedupeKey));
     if (!Number.isNaN(lastSynced) && lastSynced === numericScore) return;
 
-    const inferred = inferFromPath();
+    const inferredFromKey = inferFromStorageKey(storageKey);
+    const inferredFromPath = inferFromPath();
+
+    const inferred = {
+      thema: inferredFromKey.thema || inferredFromPath.thema,
+      unit: inferredFromKey.unit || inferredFromPath.unit
+    };
 
     const payload = {
       naam: profile.voornaam,

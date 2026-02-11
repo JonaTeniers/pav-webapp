@@ -63,11 +63,16 @@
 
   function extractNumbers(item) {
     const bron = String(item.bronPagina || '');
+    const bronStorageKey = String(item.bronStorageKey || '');
     const themaText = String(item.thema || '');
     const unitText = String(item.unit || '');
 
-    const themaMatch = themaText.match(/thema\s*(\d+)/i) || bron.match(/thema(\d+)/i);
-    const unitMatch = unitText.match(/unit\s*(\d+)/i) || bron.match(/unit(\d+)/i);
+    const themaMatch = themaText.match(/thema\s*(\d+)/i)
+      || bron.match(/thema(\d+)/i)
+      || bronStorageKey.match(/thema(\d+)/i);
+    const unitMatch = unitText.match(/unit\s*(\d+)/i)
+      || bron.match(/unit(\d+)/i)
+      || bronStorageKey.match(/unit(\d+)/i);
 
     return {
       themaNummer: themaMatch ? Number(themaMatch[1]) : null,
