@@ -3,12 +3,26 @@
  *
  * Doel:
  * - Leerling logt in met voornaam + klas (zonder Firebase auth)
- * - Haalt resultaten uit Firestore collectie `scores`
- * - Toont thema, unit, score en datum
+ * - Toont per thema of het al gespeeld is
+ * - Als thema gespeeld is: toon unit 1 t.e.m. laatste unit met score/status
+ * - Als thema nog niet gespeeld is: toon "Nog niet gespeeld (Start spelen)"
  */
 
 (function () {
   const STORAGE_KEY = 'pavo_leerling_profiel';
+
+  // Thema-overzicht op basis van huidige webapp-structuur.
+  const THEMAS = [
+    { id: 1, naam: 'Thema 1', maxUnit: 0, startLink: 'thema1.html' },
+    { id: 2, naam: 'Thema 2', maxUnit: 2, startLink: 'thema2.html' },
+    { id: 3, naam: 'Thema 3', maxUnit: 3, startLink: 'thema3.html' },
+    { id: 4, naam: 'Thema 4', maxUnit: 10, startLink: 'thema4.html' },
+    { id: 5, naam: 'Thema 5', maxUnit: 3, startLink: 'thema5.html' },
+    { id: 6, naam: 'Thema 6', maxUnit: 3, startLink: 'thema6.html' },
+    { id: 7, naam: 'Thema 7', maxUnit: 3, startLink: 'thema7.html' },
+    { id: 8, naam: 'Thema 8', maxUnit: 3, startLink: 'thema8.html' },
+    { id: 9, naam: 'Thema 9', maxUnit: 8, startLink: 'thema9.html' }
+  ];
 
   function setStatus(text, isError) {
     const el = document.getElementById('status');
@@ -47,41 +61,112 @@
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(profile));
   }
 
+  function extractNumbers(item) {
+    const bron = String(item.bronPagina || '');
+    const themaText = String(item.thema || '');
+    const unitText = String(item.unit || '');
+
+    const themaMatch = themaText.match(/thema\s*(\d+)/i) || bron.match(/thema(\d+)/i);
+    const unitMatch = unitText.match(/unit\s*(\d+)/i) || bron.match(/unit(\d+)/i);
+
+    return {
+      themaNummer: themaMatch ? Number(themaMatch[1]) : null,
+      unitNummer: unitMatch ? Number(unitMatch[1]) : null
+    };
+  }
+
+  function timestampToMs(ts) {
+    if (!ts) return 0;
+    if (typeof ts.toDate === 'function') return ts.toDate().getTime();
+    const date = new Date(ts);
+    return Number.isNaN(date.getTime()) ? 0 : date.getTime();
+  }
+
+  // Bouw rijen: per thema tonen wat gespeeld is, met unit-detail.
+  function buildRows(items) {
+    const rows = [];
+
+    THEMAS.forEach((thema) => {
+      const itemsForTheme = items
+        .filter((item) => item.themaNummer === thema.id)
+        .sort((a, b) => timestampToMs(b.createdAt) - timestampToMs(a.createdAt));
+
+      // Thema nog nooit gespeeld.
+      if (!itemsForTheme.length) {
+        rows.push({
+          thema: thema.naam,
+          unit: '-',
+          score: '-',
+          wanneer: '-',
+          status: `Nog niet gespeeld (<a href="${thema.startLink}">Start spelen</a>)`
+        });
+        return;
+      }
+
+      // Thema zonder unit-structuur (Thema 1).
+      if (thema.maxUnit === 0) {
+        const latest = itemsForTheme[0];
+        rows.push({
+          thema: thema.naam,
+          unit: '-',
+          score: latest.score ?? '-',
+          wanneer: formatDate(latest.createdAt),
+          status: 'Gespeeld'
+        });
+        return;
+      }
+
+      // Thema met units: toon unit 1 t.e.m. laatste unit.
+      for (let unit = 1; unit <= thema.maxUnit; unit += 1) {
+        const itemsForUnit = itemsForTheme
+          .filter((item) => item.unitNummer === unit)
+          .sort((a, b) => timestampToMs(b.createdAt) - timestampToMs(a.createdAt));
+
+        if (!itemsForUnit.length) {
+          rows.push({
+            thema: thema.naam,
+            unit: `Unit ${unit}`,
+            score: '-',
+            wanneer: '-',
+            status: `Nog niet gespeeld (<a href="thema${thema.id}unit${unit}.html">Start spelen</a>)`
+          });
+          continue;
+        }
+
+        const latest = itemsForUnit[0];
+        rows.push({
+          thema: thema.naam,
+          unit: `Unit ${unit}`,
+          score: latest.score ?? '-',
+          wanneer: formatDate(latest.createdAt),
+          status: 'Gespeeld'
+        });
+      }
+    });
+
+    return rows;
+  }
+
   function renderRows(items) {
     const tbody = document.getElementById('studentScoresTableBody');
     if (!tbody) return;
 
-    if (!items.length) {
-      tbody.innerHTML = '<tr><td colspan="4">Geen resultaten gevonden voor deze leerling.</td></tr>';
-      return;
-    }
+    const rows = buildRows(items);
 
-    tbody.innerHTML = items.map((item) => `
+    tbody.innerHTML = rows.map((row) => `
       <tr>
-        <td>${escapeHtml(item.thema || '-')}</td>
-        <td>${escapeHtml(item.unit || '-')}</td>
-        <td>${escapeHtml(item.score ?? '-')}</td>
-        <td>${escapeHtml(formatDate(item.createdAt))}</td>
+        <td>${escapeHtml(row.thema)}</td>
+        <td>${escapeHtml(row.unit)}</td>
+        <td>${escapeHtml(row.score)}</td>
+        <td>${escapeHtml(row.wanneer)}</td>
+        <td>${row.status}</td>
       </tr>
     `).join('');
-  }
-
-  function deriveThemaUnit(item) {
-    const bron = String(item.bronPagina || '');
-    const themaMatch = bron.match(/thema\d+/i);
-    const unitMatch = bron.match(/unit\d+/i);
-
-    return {
-      ...item,
-      thema: item.thema || (themaMatch ? themaMatch[0] : '-'),
-      unit: item.unit || (unitMatch ? unitMatch[0] : '-')
-    };
   }
 
   async function loadStudentScores(profile) {
     setStatus('Resultaten laden...', false);
 
-    // Query op voornaam + klas zodat leerling enkel eigen resultaten ziet.
     const snapshot = await window.db
       .collection('scores')
       .where('naam', '==', profile.voornaam)
@@ -90,15 +175,10 @@
 
     const items = snapshot.docs
       .map((doc) => ({ id: doc.id, ...doc.data() }))
-      .map(deriveThemaUnit)
-      .sort((a, b) => {
-        const aDate = a.createdAt?.toDate ? a.createdAt.toDate().getTime() : 0;
-        const bDate = b.createdAt?.toDate ? b.createdAt.toDate().getTime() : 0;
-        return bDate - aDate;
-      });
+      .map((item) => ({ ...item, ...extractNumbers(item) }));
 
     renderRows(items);
-    setStatus(`${items.length} resultaat/resultaten geladen.`, false);
+    setStatus(`${items.length} opgeslagen resultaat/resultaten gevonden.`, false);
   }
 
   function showActiveProfile(profile) {
