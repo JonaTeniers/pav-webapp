@@ -170,7 +170,7 @@
       : allScores;
 
     if (!filtered.length) {
-      tbody.innerHTML = '<tr><td colspan="7">Geen resultaten gevonden.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="6">Geen resultaten gevonden.</td></tr>';
       renderTotalScore(selectedKlas);
       return;
     }
