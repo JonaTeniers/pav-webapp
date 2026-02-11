@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thema 9 – Unit 4: Emilie Claeys</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
+  <style>
+    body { margin:0; font-family:'Nunito',sans-serif; background:#f5f3ff; color:#1f2937; }
+    header { background:#7c3aed; color:#fff; text-align:center; padding:1.2rem; }
+    main { width:min(960px,95%); margin:1.2rem auto 2rem; }
+    .card { background:#fff; border-radius:14px; box-shadow:0 6px 16px rgba(0,0,0,.08); padding:1.1rem; margin-bottom:1rem; }
+    .fragment { background:#faf5ff; border-left:4px solid #7c3aed; padding:0.8rem; border-radius:8px; }
+    .historiek-figure { margin:1rem 0; }
+    .historiek-figure img { width:100%; max-width:380px; border-radius:10px; display:block; }
+    .historiek-figure figcaption { margin-top:.45rem; color:#4b5563; font-size:.9rem; }
+    .helper { color:#4b5563; font-size:.95rem; }
+    .question-box { background:#fff; border-radius:14px; box-shadow:0 6px 16px rgba(0,0,0,.08); padding:1.1rem; }
+    label { display:block; margin:.5rem 0; }
+    button { border:none; background:#6d28d9; color:#fff; border-radius:8px; padding:.6rem 1rem; font-weight:700; cursor:pointer; }
+    button:hover { background:#5b21b6; }
+    .feedback { margin-top:.75rem; font-weight:700; }
+    .success { color:#047857; }
+    .error { color:#b91c1c; }
+    .hidden { display:none; }
+    .text-input, .select-input, textarea { width:100%; border:1px solid #c4b5fd; border-radius:8px; padding:.55rem; font-family:inherit; }
+    textarea { min-height:95px; margin-top:.45rem; }
+    .nav-buttons { display:flex; gap:.6rem; flex-wrap:wrap; margin-top:1rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🏛️ Thema 9 – Unit 4</h1>
+    <p>Emilie Claeys</p>
+  </header>
+  <main>
+    <section class="card">
+      <h2>Bron en leesopdracht</h2>
+      <p>Open de bron van de Canon van Vlaanderen en lees aandachtig.</p>
+      <p><a href="https://www.canonvanvlaanderen.be/events/emilie-claeys/" target="_blank" rel="noopener noreferrer">🔗 Ga naar de bron: Emilie Claeys</a></p>
+      <div class="fragment">
+        <strong>Tekstfragment (samengevat):</strong>
+        <p>Emilie Claeys was een pionier in de socialistische en feministische beweging. Ze streed voor betere arbeidsomstandigheden en politieke rechten voor vrouwen. Haar verhaal maakt duidelijk dat maatschappelijke vooruitgang vaak komt door actie van burgers die ongelijkheid zichtbaar maken en blijven aandringen op verandering.</p>
+      </div>
+      <figure class="historiek-figure">
+        <img src="https://www.canonvanvlaanderen.be/content/uploads/2024/10/34.0.-fo004473_V02.jpg" alt="Portret van Emilie Claeys" loading="lazy">
+        <figcaption>
+          Bron afbeelding: Canon van Vlaanderen, <a href="https://www.canonvanvlaanderen.be/events/emilie-claeys/" target="_blank" rel="noopener noreferrer">Emilie Claeys</a>.
+        </figcaption>
+      </figure>
+      <p class="helper">Koppeling met de reeks: bekijk op VRT MAX <em>Het verhaal van Vlaanderen</em> en zoek het deel dat inhoudelijk aansluit.</p>
+      <p><a href="https://www.vrt.be/vrtmax/a-z/het-verhaal-van-vlaanderen/" target="_blank" rel="noopener noreferrer">🎬 VRT MAX – Het verhaal van Vlaanderen</a></p>
+    </section>
+
+    <section class="question-box" id="quizBox">
+      <h2 id="qCount">Vraag 1 van 8</h2>
+      <p class="helper" id="qType"></p>
+      <div id="questionText"></div>
+      <form id="answerForm"></form>
+      <button type="button" onclick="checkAnswer()">Controleer</button>
+      <div class="feedback" id="feedback"></div>
+      <div class="nav-buttons">
+        <button id="nextBtn" class="hidden" type="button" onclick="nextQuestion()">Volgende vraag →</button>
+      </div>
+    </section>
+
+    <section class="card hidden" id="reflectieBox">
+      <h2>🧠 Reflectie: diep begrip</h2>
+      <p><strong>Begripsvraag:</strong> Leg uit waarom sociale verandering vaak traag gaat. Gebruik Emilie Claeys als voorbeeld.</p>
+      <textarea id="gevoelInput" placeholder="Schrijf je antwoord in volledige zinnen..."></textarea>
+      <p><strong>Verdiepingsvraag:</strong> Verdiepingsopdracht: noteer twee eisen van sociale bewegingen uit deze periode en koppel elke eis aan een probleem dat men wilde oplossen.</p>
+      <textarea id="verdiepingInput" placeholder="Werk je verdiepingsopdracht hier uit..."></textarea>
+      <button type="button" onclick="bewaarReflectie()">Bewaar reflectie</button>
+      <p class="helper" id="reflectieFeedback"></p>
+    </section>
+
+    <section class="question-box hidden" id="endScreen">
+      <h2>🎉 Unit voltooid!</h2>
+      <p>Je behaalde <span id="xpScore">0</span> XP.</p>
+      <p>Top! Je hebt feiten, verbanden én reflectie verwerkt in jouw deel van <strong>het verhaal van Vlaanderen</strong>.</p>
+      <div class="nav-buttons">
+        <a href="thema9.html"><button type="button">← Terug naar thema</button></a>
+        <a href="thema9unit5.html"><button type="button">→ Volgende unit</button></a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const questions = [{"type": "mc", "typeLabel": "Meerkeuze", "question": "Waarvoor is Emilie Claeys vooral bekend?", "options": ["Strijd voor vrouwenrechten en sociale rechtvaardigheid", "Ontwerp van de Belgische grondwet", "Invoering van de euro"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Noem 1 groep die volgens deze unit meer rechten nodig had.", "accepted": ["vrouwen", "arbeiders", "werkende mensen", "arbeidsters"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke bredere les leert haar verhaal?", "options": ["Rechten worden vaak afgedwongen door collectieve actie", "Rechten ontstaan vanzelf zonder strijd", "Enkel economische groei verandert rechten"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies het beste verband.", "options": ["Sociale bewegingen zetten ongelijkheid op de politieke agenda", "Sociale bewegingen maken wetten overbodig", "Sociale bewegingen gingen alleen over kunst"], "correctValue": "Sociale bewegingen zetten ongelijkheid op de politieke agenda"}, {"type": "open", "typeLabel": "Open vraag", "question": "Welk kernbegrip past hier het best: streven naar gelijke kansen voor mannen en vrouwen?", "accepted": ["emancipatie", "gelijkheid", "feminisme"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Waarom is dit essentieel in het verhaal van Vlaanderen?", "options": ["Het verbindt sociale strijd met democratische uitbreiding van rechten", "Het gaat enkel over één lokaal detail", "Het heeft geen invloed op vandaag"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Selectie", "question": "Welke verdiepende vraag helpt je het meest?", "options": ["Welke rechten lijken vandaag vanzelfsprekend maar waren ooit omstreden?", "Welke kleur had haar jas?", "Hoe lang waren haar toespraken exact?"], "correctValue": "Welke rechten lijken vandaag vanzelfsprekend maar waren ooit omstreden?"}, {"type": "open", "typeLabel": "Open vraag", "question": "Noem 2 kernwoorden voor deze unit.", "accepted": ["emancipatie", "sociale strijd", "rechten", "gelijkheid", "vrouwenrechten"]}];
+    let currentQuestion = 0;
+    let score = 0;
+
+    function renderOptions(options, name) {
+      return options.map((opt, index) => (`<label><input type="radio" name="${name}" value="${index}"> ${opt}</label>`)).join('');
+    }
+
+    function loadQuestion() {
+      const q = questions[currentQuestion];
+      document.getElementById('qCount').innerText = `Vraag ${currentQuestion + 1} van ${questions.length}`;
+      document.getElementById('qType').innerText = q.typeLabel;
+      document.getElementById('questionText').innerText = q.question;
+      const form = document.getElementById('answerForm');
+      form.innerHTML = '';
+      if (q.type === 'mc') {
+        form.innerHTML = renderOptions(q.options, 'answer');
+      } else if (q.type === 'open') {
+        form.innerHTML = `<input class="text-input" type="text" name="answer" placeholder="Typ je antwoord...">`;
+      } else if (q.type === 'drag') {
+        const options = ['Kies...', ...q.options];
+        form.innerHTML = `<select class="select-input" name="answer">${options.map((opt) => `<option value="${opt}">${opt}</option>`).join('')}</select>`;
+      }
+      const feedback = document.getElementById('feedback');
+      feedback.innerText = '';
+      feedback.className = 'feedback';
+      document.getElementById('nextBtn').classList.add('hidden');
+    }
+
+    function normalize(value) { return value.trim().toLowerCase(); }
+
+    function checkAnswer() {
+      const q = questions[currentQuestion];
+      let isCorrect = false;
+
+      if (q.type === 'mc') {
+        const selected = document.querySelector('input[name="answer"]:checked');
+        if (!selected) return;
+        isCorrect = Number(selected.value) === q.correctIndex;
+      } else if (q.type === 'open') {
+        const input = document.querySelector('input[name="answer"]');
+        if (!input || !input.value.trim()) return;
+        const normalized = normalize(input.value);
+        isCorrect = q.accepted.some((answer) => normalized.includes(normalize(answer)) || normalize(answer).includes(normalized));
+      } else if (q.type === 'drag') {
+        const selected = document.querySelector('select[name="answer"]');
+        if (!selected || selected.value === 'Kies...') return;
+        isCorrect = normalize(selected.value) === normalize(q.correctValue);
+      }
+
+      const feedback = document.getElementById('feedback');
+      if (isCorrect) {
+        score += 3;
+        feedback.innerText = '✅ Juist! +3 XP';
+        feedback.classList.add('success');
+      } else {
+        feedback.innerText = '❌ Nog niet juist. Lees opnieuw en zoek oorzaak-gevolg/nuance.';
+        feedback.classList.add('error');
+      }
+      document.getElementById('nextBtn').classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        loadQuestion();
+      } else {
+        localStorage.setItem('thema9unit4', score);
+        document.getElementById('quizBox').classList.add('hidden');
+        document.getElementById('reflectieBox').classList.remove('hidden');
+        document.getElementById('endScreen').classList.remove('hidden');
+        document.getElementById('xpScore').innerText = score;
+      }
+    }
+
+    function bewaarReflectie() {
+      const begrip = document.getElementById('gevoelInput').value.trim();
+      const verdieping = document.getElementById('verdiepingInput').value.trim();
+      if (!begrip && !verdieping) return;
+      const payload = JSON.stringify({ begrip, verdieping });
+      localStorage.setItem('thema9unit4_reflectie', payload);
+      document.getElementById('reflectieFeedback').innerText = '✅ Reflectie en verdieping bewaard.';
+    }
+
+    window.onload = loadQuestion;
+  </script>
+</body>
+</html>
