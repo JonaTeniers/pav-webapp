@@ -13,7 +13,7 @@
 
   // Thema-overzicht op basis van huidige webapp-structuur.
   const THEMAS = [
-    { id: 1, naam: 'Thema 1', maxUnit: 0, startLink: 'thema1.html' },
+    { id: 1, naam: 'Thema 1', maxUnit: 12, startLink: 'thema1.html' },
     { id: 2, naam: 'Thema 2', maxUnit: 2, startLink: 'thema2.html' },
     { id: 3, naam: 'Thema 3', maxUnit: 3, startLink: 'thema3.html' },
     { id: 4, naam: 'Thema 4', maxUnit: 10, startLink: 'thema4.html' },

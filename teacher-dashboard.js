@@ -218,11 +218,26 @@
   async function loadScores() {
     setStatus('Scores worden geladen...', false);
 
-    // Sorteer op recentste score eerst.
-    const snapshot = await window.db
-      .collection('scores')
-      .orderBy('createdAt', 'desc')
-      .get();
+    let docs = [];
+
+    try {
+      // Probeer eerst op createdAt te sorteren (kan falen of leeg lijken als veld ontbreekt in oudere docs).
+      const snapshot = await window.db
+        .collection('scores')
+        .orderBy('createdAt', 'desc')
+        .get();
+      docs = snapshot.docs;
+    } catch (error) {
+      console.warn('orderBy(createdAt) mislukte, fallback zonder sortering:', error);
+    }
+
+    // Fallback: haal alles op zonder orderBy zodat ook oudere docs zonder createdAt zichtbaar blijven.
+    if (!docs.length) {
+      const fallbackSnapshot = await window.db
+        .collection('scores')
+        .get();
+      docs = fallbackSnapshot.docs;
+    }
 
     allScores = snapshot.docs
       .map((doc) => ({ id: doc.id, ...doc.data() }))
