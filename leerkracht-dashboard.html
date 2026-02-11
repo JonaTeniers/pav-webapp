@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leerkracht Dashboard - PAV-O</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f2f6fb;
+      color: #1f2937;
+    }
+
+    /* Hamburgerknop linksboven om snel tussen omgevingen te navigeren. */
+    .menu-button {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      width: 44px;
+      height: 44px;
+      border: none;
+      border-radius: 10px;
+      background: #0b4da2;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .menu-panel {
+      position: fixed;
+      top: 62px;
+      left: 12px;
+      width: 220px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+      padding: 10px;
+      display: none;
+      z-index: 100;
+    }
+
+    .menu-panel a {
+      display: block;
+      text-decoration: none;
+      color: #1f2937;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    .menu-panel a:hover {
+      background: #e8f1ff;
+    }
+
+    .wrapper {
+      max-width: 1100px;
+      margin: 70px auto 24px;
+      padding: 0 16px;
+    }
+
+    h1 {
+      margin-bottom: 12px;
+      color: #0b4da2;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    select,
+    button.refresh {
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      font-size: 14px;
+    }
+
+    button.refresh {
+      background: #0b4da2;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    #status {
+      margin: 10px 0 16px;
+      font-weight: bold;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    th,
+    td {
+      text-align: left;
+      padding: 10px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    th {
+      background: #0b4da2;
+      color: white;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- Drie-streepjesknop linksboven: hiermee open je het navigatiemenu. -->
+  <button class="menu-button" id="menuButton" aria-label="Open menu">☰</button>
+
+  <!-- Simpel menu met o.a. de leerkrachtomgeving. -->
+  <nav class="menu-panel" id="menuPanel">
+    <a href="index.html">Naar leerlingomgeving</a>
+    <a href="leerkracht-dashboard.html">Naar leerkrachtomgeving</a>
+  </nav>
+
+  <main class="wrapper">
+    <h1>Leerkracht Dashboard</h1>
+    <p>Overzicht van alle opgeslagen scores uit Firestore collectie <strong>scores</strong>.</p>
+
+    <div class="controls">
+      <label for="klasFilter">Filter op klas:</label>
+      <select id="klasFilter">
+        <option value="">Alle klassen</option>
+      </select>
+
+      <button class="refresh" id="refreshButton" type="button">Vernieuwen</button>
+    </div>
+
+    <p id="status">Dashboard start op...</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Naam</th>
+          <th>Klas</th>
+          <th>Thema</th>
+          <th>Score</th>
+          <th>Datum</th>
+        </tr>
+      </thead>
+      <tbody id="scoresTableBody">
+        <tr>
+          <td colspan="5">Nog geen gegevens geladen.</td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+
+  <!-- Firebase-instellingen en koppelingen. -->
+  <script src="./firebase.js"></script>
+
+  <!-- Dashboardlogica: ophalen, filteren en tonen van scores. -->
+  <script src="./teacher-dashboard.js"></script>
+
+  <script>
+    // Eenvoudige JS voor open/dicht-klikken van het menu.
+    const menuButton = document.getElementById('menuButton');
+    const menuPanel = document.getElementById('menuPanel');
+
+    menuButton.addEventListener('click', () => {
+      menuPanel.style.display = menuPanel.style.display === 'block' ? 'none' : 'block';
+    });
+
+    document.addEventListener('click', (event) => {
+      const clickedInsideMenu = menuPanel.contains(event.target) || menuButton.contains(event.target);
+      if (!clickedInsideMenu) {
+        menuPanel.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
