@@ -1,33 +1,18 @@
 /**
  * firebase.js
  *
- * Doel:
- * - Laadt de Firebase SDK's via CDN (geschikt voor statische sites zoals GitHub Pages)
- * - Initialiseert Firebase met jouw configuratie
- * - Maakt Firestore + Auth beschikbaar
- *
- * Gebruik in je HTML:
- * <script>
- *   // Optioneel: overschrijf hier je config voordat firebase.js wordt geladen
- *   window.FIREBASE_CONFIG = {
- *     apiKey: "...",
- *     authDomain: "...",
- *     projectId: "...",
- *     storageBucket: "...",
- *     messagingSenderId: "...",
- *     appId: "..."
- *   };
- *
- *   // Optioneel: lijst van leerkracht-mailadressen (kleine/hoofdletters maakt niet uit)
- *   window.TEACHER_EMAILS = ["leerkracht@school.be"];
- * </script>
- * <script src="./firebase.js"></script>
+ * Verwachting:
+ * - De Firebase SDK-tags staan in HTML vóór dit bestand:
+ *   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
+ *   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"></script>
+ *   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"></script>
+ *   <script src="firebase.js"></script>
  */
 
 (function () {
   /**
-   * Vervang deze waarden met jouw Firebase-projectgegevens.
-   * Tip: je kunt deze ook vanuit HTML zetten via window.FIREBASE_CONFIG.
+   * Standaardconfig voor jouw Firebase-project.
+   * Kan overschreven worden via window.FIREBASE_CONFIG in HTML.
    */
   const defaultFirebaseConfig = {
     apiKey: "AIzaSyBDMQauk2ZHfbGl6p99CDNEA1cl1rF8OUs",
@@ -39,90 +24,42 @@
   };
 
   /**
-   * Optionele fallback-lijst voor leerkrachten.
-   * Voor productie: bij voorkeur invullen via window.TEACHER_EMAILS in HTML.
+   * Optionele leerkracht-whitelist.
    */
   const defaultTeacherEmails = [];
 
-  /**
-   * Gebruik config uit window.FIREBASE_CONFIG als die bestaat,
-   * anders val terug op de default hierboven.
-   */
   const firebaseConfig = window.FIREBASE_CONFIG || defaultFirebaseConfig;
-
-  /**
-   * Gebruik externe teacher-lijst of fallback.
-   */
   const teacherEmails = (window.TEACHER_EMAILS || defaultTeacherEmails)
     .filter(Boolean)
     .map((email) => String(email).toLowerCase());
 
-  /**
-   * Hulpfunctie: controleer of een e-mail een leerkrachtaccount is.
-   */
   function isTeacherEmail(email) {
     return teacherEmails.includes(String(email || '').toLowerCase());
   }
 
   /**
-   * Hulpfunctie om een script-tag dynamisch te laden.
-   * Retourneert een Promise zodat we kunnen wachten tot laden klaar is.
+   * Controleer of Firebase via script-tags beschikbaar is.
    */
-  function loadScript(src) {
-    return new Promise((resolve, reject) => {
-      const script = document.createElement("script");
-      script.src = src;
-      script.async = true;
-      script.onload = resolve;
-      script.onerror = () => reject(new Error(`Kon script niet laden: ${src}`));
-      document.head.appendChild(script);
-    });
+  if (!window.firebase) {
+    console.error('Firebase SDK ontbreekt. Voeg eerst de 10.8.0 script-tags toe in je HTML vóór firebase.js.');
+    window.firebaseReady = Promise.reject(new Error('Firebase SDK niet gevonden'));
+    return;
   }
 
-  /**
-   * Initialisatie-flow:
-   * 1) Firebase App SDK laden
-   * 2) Firestore SDK laden
-   * 3) Auth SDK laden
-   * 4) Firebase initialiseren
-   * 5) Firestore + Auth instantie aanmaken
-   */
-  async function initFirebase() {
-    // Als Firebase al geladen is, initialiseer direct zonder opnieuw scripts te laden.
-    if (!window.firebase) {
-      await loadScript("https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js");
-      await loadScript("https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js");
-      await loadScript("https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js");
-    }
+  // Firebase initialiseren
+  const app = window.firebase.apps.length
+    ? window.firebase.app()
+    : window.firebase.initializeApp(firebaseConfig);
+  const auth = window.firebase.auth();
+  const db = window.firebase.firestore();
 
-    // Voorkom dubbele initialisatie bij herhaald laden van hetzelfde script.
-    const app = window.firebase.apps.length
-      ? window.firebase.app()
-      : window.firebase.initializeApp(firebaseConfig);
+  // Exporteer voor gebruik in andere JS-bestanden
+  window.firebaseApp = app;
+  window.auth = auth;
+  window.db = db;
+  window.teacherEmails = teacherEmails;
+  window.isTeacherEmail = isTeacherEmail;
 
-    const db = window.firebase.firestore(app);
-    const auth = window.firebase.auth(app);
-
-    // Maak app + db + auth + rolhulpjes globaal beschikbaar voor je andere scripts.
-    window.firebaseApp = app;
-    window.db = db;
-    window.auth = auth;
-    window.teacherEmails = teacherEmails;
-    window.isTeacherEmail = isTeacherEmail;
-
-    console.info("Firebase is geïnitialiseerd (Firestore + Auth). ");
-
-    return { app, db, auth };
-  }
-
-  /**
-   * Exporteer een Promise zodat andere scripts (bijv. score-form.js)
-   * netjes kunnen wachten op Firebase.
-   */
-  window.firebaseReady = initFirebase();
-
-  // Start de initialisatie en log een duidelijke fout als er iets misgaat.
-  window.firebaseReady.catch((error) => {
-    console.error("Fout bij Firebase-initialisatie:", error);
-  });
+  // Houd dezelfde API aan voor bestaande scripts die op firebaseReady wachten.
+  window.firebaseReady = Promise.resolve({ app, auth, db });
 })();
