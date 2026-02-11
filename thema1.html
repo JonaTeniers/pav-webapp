@@ -4,8 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="data:," />
-  <title>Thema 1: Landschappen</title>
+  <title>Thema 1 – Landschappen</title>
+
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
+
   <style>
     :root {
       color-scheme: dark;
@@ -16,18 +18,16 @@
       --accent-2: #7b61ff;
       --text: #e9f6ff;
       --muted: #a6c2d6;
+      --soft: rgba(79,195,255,0.12);
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
       font-family: 'Nunito', sans-serif;
       background: radial-gradient(circle at top, #123056 0%, #061425 55%, #030a14 100%);
       color: var(--text);
-      min-height: 100vh;
     }
 
     header {
@@ -35,27 +35,18 @@
       text-align: center;
       background: linear-gradient(90deg, rgba(19, 54, 89, 0.95), rgba(15, 40, 68, 0.95));
       border-bottom: 1px solid var(--panel-border);
-      box-shadow: 0 0 24px rgba(79, 195, 255, 0.2);
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 2.2rem;
-      letter-spacing: 0.5px;
-    }
+    header h1 { margin: 0; font-size: 2.2rem; }
+    header p { margin: 0.6rem 0 0; color: var(--muted); }
 
-    header p {
-      margin: 0.6rem 0 0;
-      color: var(--muted);
-    }
-
-    .layout {
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 3rem;
       display: grid;
       grid-template-columns: 2.2fr 1fr;
       gap: 1.5rem;
-      padding: 2rem 1.5rem 3rem;
-      max-width: 1200px;
-      margin: 0 auto;
     }
 
     .panel {
@@ -67,70 +58,72 @@
     }
 
     .panel-title {
+      font-size: 1.25rem;
+      margin: 1.8rem 0 1rem;
       display: flex;
+      gap: 0.6rem;
       align-items: center;
-      gap: 0.75rem;
-      font-size: 1.2rem;
-      margin: 0 0 1rem;
     }
 
+    /* SCORE */
     .score-card {
       text-align: center;
       padding: 1rem;
       border-radius: 14px;
-      background: linear-gradient(135deg, rgba(79, 195, 255, 0.2), rgba(123, 97, 255, 0.15));
-      border: 1px solid rgba(79, 195, 255, 0.35);
+      background: linear-gradient(135deg, rgba(79,195,255,0.2), rgba(123,97,255,0.15));
+      border: 1px solid rgba(79,195,255,0.35);
       margin-bottom: 1.5rem;
     }
 
-    .score-card h3 {
-      margin: 0 0 0.5rem;
-      font-size: 1.2rem;
+    /* INFO KADERS */
+    .info-box {
+      background: var(--soft);
+      border-left: 5px solid var(--accent);
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1.2rem;
     }
 
-    .score-card p {
-      margin: 0.3rem 0;
+    .info-box h3 {
+      margin: 0 0 0.4rem;
+      font-size: 1.05rem;
     }
 
+    .info-box p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .concept-grid,
+    .landscape-grid,
     .unit-grid {
-      display: block;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
     }
 
-    .unit-grid > * {
-      margin-bottom: 1rem;
-    }
-
-    @supports (display: grid) {
-      .unit-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 1rem;
-      }
-
-      .unit-grid > * {
-        margin-bottom: 0;
-      }
-    }
-
+    .concept-card,
+    .landscape-card,
     .unit-card {
       background: rgba(9, 24, 43, 0.9);
       border-radius: 14px;
-      border: 1px solid rgba(79, 195, 255, 0.2);
+      border: 1px solid rgba(79,195,255,0.25);
       padding: 1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
     }
 
+    .concept-card h4,
+    .landscape-card h4,
     .unit-card h4 {
-      margin: 0;
-      font-size: 1rem;
+      margin: 0 0 0.4rem;
     }
 
+    .concept-card p,
+    .landscape-card p,
     .unit-card p {
       margin: 0;
-      color: var(--muted);
       font-size: 0.9rem;
+      color: var(--muted);
     }
 
     .status {
@@ -138,19 +131,11 @@
       font-weight: 700;
     }
 
-    .status.locked {
-      color: #9ec3df;
-    }
-
-    .status.ready {
-      color: #d9efff;
-    }
-
-    .unit-card a {
-      align-self: flex-start;
-    }
+    .status.ready { color: #d9efff; }
+    .status.locked { color: #9ec3df; }
 
     .unit-card button {
+      margin-top: 0.6rem;
       background: linear-gradient(120deg, var(--accent), var(--accent-2));
       border: none;
       color: white;
@@ -158,12 +143,6 @@
       border-radius: 999px;
       font-weight: 700;
       cursor: pointer;
-    }
-
-    .chat-panel {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
     }
 
     .chat-embed {
@@ -175,108 +154,95 @@
     }
 
     @media (max-width: 900px) {
-      .layout {
-        grid-template-columns: 1fr;
-      }
+      main { grid-template-columns: 1fr; }
     }
   </style>
 </head>
+
 <body>
-  <header>
-    <h1>📘 Thema 1: Landschappen</h1>
-    <p>Ontdek natuurlijke, menselijke elementen en hun gebruik.</p>
-  </header>
+<header>
+  <h1>📘 Thema 1 – Landschappen</h1>
+  <p>Ontdek natuurlijke en menselijke elementen en hun gebruik</p>
+</header>
 
-  <main class="layout" data-theme-id="1">
-    <section class="panel">
-      <div class="score-card">
-        <h3>🎯 Totaalscore Thema 1</h3>
-        <p id="themeTotalScore" data-theme-id="1">💡 240 / 360 XP</p>
-        <p>Je bent goed op weg!</p>
-      </div>
+<main data-theme-id="1">
+  <section class="panel">
 
-      <h2 class="panel-title">📚 Onderdelen</h2>
-      <div class="unit-grid">
-        <div class="unit-card" data-unit="1">
-          <h4>Deel 1</h4>
-          <p class="status ready">Beschikbaar</p>
-          <p>Wat is een landschap?</p>
-          <a href="thema1unit1.html"><button>Start</button></a>
-        </div>
-        <div class="unit-card" data-unit="2">
-          <h4>Deel 2</h4>
-          <p class="status locked">🔒 Vergrendeld</p>
-          <p>Natuurlijke elementen</p>
-          <a href="unit2.html"><button>Start</button></a>
-        </div>
-        <div class="unit-card" data-unit="3">
-          <h4>Deel 3</h4>
-          <p class="status locked">🔒 Vergrendeld</p>
-          <p>Menselijke elementen</p>
-          <a href="unit3.html"><button>Start</button></a>
-        </div>
-        <div class="unit-card" data-unit="4">
-          <h4>Deel 4</h4>
-          <p class="status locked">🔒 Vergrendeld</p>
-          <p>Soorten landschappen</p>
-          <a href="unit4.html"><button>Start</button></a>
-        </div>
-        <div class="unit-card" data-unit="5">
-          <h4>Deel 5</h4>
-          <p class="status locked">🔒 Vergrendeld</p>
-          <p>Gebruik van landschappen</p>
-          <a href="unit5.html"><button>Start</button></a>
-        </div>
-        <div class="unit-card" data-unit="6">
-          <h4>Deel 6</h4>
-          <p class="status locked">🔒 Vergrendeld</p>
-          <p>Veranderingen door tijd</p>
-          <a href="unit6.html"><button>Start</button></a>
-        </div>
-        <div class="unit-card" data-unit="7">
-          <h4>Deel 7</h4>
-          <p class="status locked">🔒 Vergrendeld</p>
-          <p>Invloed van de mens</p>
-          <a href="unit7.html"><button>Start</button></a>
-        </div>
-        <div class="unit-card" data-unit="8">
-          <h4>Deel 8</h4>
-          <p class="status locked">🔒 Vergrendeld</p>
-          <p>Invloed van de natuur</p>
-          <a href="unit8.html"><button>Start</button></a>
-        </div>
-        <div class="unit-card" data-unit="9">
-          <h4>Deel 9</h4>
-          <p class="status locked">🔒 Vergrendeld</p>
-          <p>Grenzen en regio’s</p>
-          <a href="unit9.html"><button>Start</button></a>
-        </div>
-        <div class="unit-card" data-unit="10">
-          <h4>Deel 10</h4>
-          <p class="status locked">🔒 Vergrendeld</p>
-          <p>Voorbeelden regio’s</p>
-          <a href="unit10.html"><button>Start</button></a>
-        </div>
-        <div class="unit-card" data-unit="11">
-          <h4>Deel 11</h4>
-          <p class="status locked">🔒 Vergrendeld</p>
-          <p>Toepassingen</p>
-          <a href="unit11.html"><button>Start</button></a>
-        </div>
-        <div class="unit-card" data-unit="12">
-          <h4>Deel 12</h4>
-          <p class="status locked">🔒 Vergrendeld</p>
-          <p>Grote herhaling & afsluiting</p>
-          <a href="unit12.html"><button>Start</button></a>
-        </div>
-      </div>
-    </section>
+    <!-- SCORE -->
+    <div class="score-card">
+      <h3>🎯 Totaalscore Thema 1</h3>
+      <p id="themeTotalScore">💡 240 / 360 XP</p>
+      <p>Je bent goed op weg!</p>
+    </div>
 
-    <aside class="panel chat-panel">
-      <h2 class="panel-title">🤖 Chattie</h2>
-      <iframe class="chat-embed" title="Chattie" src="chattie.html?thema=Thema%201%20Landschappen"></iframe>
-    </aside>
-  </main>
-  <script src="./pavo-xp-sync.js"></script>
+    <!-- THEORIE -->
+    <h2 class="panel-title">🧭 1.3 Het referentiekader</h2>
+
+    <div class="info-box">
+      <p>
+        Een <strong>ruimtelijk referentiekader</strong> helpt om fenomenen te situeren
+        en verbanden te leggen tussen plaatsen, processen en menselijke activiteiten.
+      </p>
+    </div>
+
+    <div class="concept-grid">
+      <div class="concept-card"><h4>📍 Lokalisatie</h4><p>Plaatsbepaling van objecten en fenomenen.</p></div>
+      <div class="concept-card"><h4>🏘️ Plaatsbegrip</h4><p>Kenmerken en betekenis van een plaats.</p></div>
+      <div class="concept-card"><h4>🔄 Ruimtelijke processen</h4><p>Natuurlijke en menselijke veranderingen.</p></div>
+      <div class="concept-card"><h4>🤝 Ruimtelijke interacties</h4><p>Wisselwerking tussen mens en natuur.</p></div>
+      <div class="concept-card"><h4>🗺️ Ruimtelijke technieken</h4><p>Kaarten, luchtfoto’s en terreinwerk.</p></div>
+    </div>
+
+    <h2 class="panel-title">📐 1.3.1 Ruimte en plaats</h2>
+
+    <div class="info-box">
+      <h3>Ruimte</h3>
+      <p>De fysieke, meetbare omgeving (wegen, gebouwen, parken).</p>
+    </div>
+
+    <div class="info-box">
+      <h3>Plaats</h3>
+      <p>Ruimte met betekenis door gebruik, herinneringen en gevoelens.</p>
+    </div>
+
+    <h2 class="panel-title">🌍 Opvallende elementen in het landschap</h2>
+
+    <div class="landscape-grid">
+      <div class="landscape-card"><h4>Stedelijk – residentieel</h4><p>Dicht bebouwd, vooral woningen.</p></div>
+      <div class="landscape-card"><h4>Stedelijk – commercieel</h4><p>Winkels en handelszaken.</p></div>
+      <div class="landscape-card"><h4>Industrieel</h4><p>Fabrieken en industriële infrastructuur.</p></div>
+      <div class="landscape-card"><h4>Landelijk – agrarisch</h4><p>Akkers, weilanden en open ruimte.</p></div>
+      <div class="landscape-card"><h4>Plattelandskern</h4><p>Woningen rond kerk, landbouw eromheen.</p></div>
+    </div>
+
+    <!-- UNITS -->
+    <h2 class="panel-title">📚 Onderdelen</h2>
+
+    <div class="unit-grid">
+      <div class="unit-card"><h4>Deel 1</h4><p class="status ready">Beschikbaar</p><p>Wat is een landschap?</p><a href="thema1unit1.html"><button>Start</button></a></div>
+      <div class="unit-card"><h4>Deel 2</h4><p class="status locked">🔒 Vergrendeld</p><p>Natuurlijke elementen</p><button disabled>Start</button></div>
+      <div class="unit-card"><h4>Deel 3</h4><p class="status locked">🔒 Vergrendeld</p><p>Menselijke elementen</p><button disabled>Start</button></div>
+      <div class="unit-card"><h4>Deel 4</h4><p class="status locked">🔒 Vergrendeld</p><p>Soorten landschappen</p><button disabled>Start</button></div>
+      <div class="unit-card"><h4>Deel 5</h4><p class="status locked">🔒 Vergrendeld</p><p>Gebruik van landschappen</p><button disabled>Start</button></div>
+      <div class="unit-card"><h4>Deel 6</h4><p class="status locked">🔒 Vergrendeld</p><p>Veranderingen door tijd</p><button disabled>Start</button></div>
+      <div class="unit-card"><h4>Deel 7</h4><p class="status locked">🔒 Vergrendeld</p><p>Invloed van de mens</p><button disabled>Start</button></div>
+      <div class="unit-card"><h4>Deel 8</h4><p class="status locked">🔒 Vergrendeld</p><p>Invloed van de natuur</p><button disabled>Start</button></div>
+      <div class="unit-card"><h4>Deel 9</h4><p class="status locked">🔒 Vergrendeld</p><p>Grenzen en regio’s</p><button disabled>Start</button></div>
+      <div class="unit-card"><h4>Deel 10</h4><p class="status locked">🔒 Vergrendeld</p><p>Voorbeelden regio’s</p><button disabled>Start</button></div>
+      <div class="unit-card"><h4>Deel 11</h4><p class="status locked">🔒 Vergrendeld</p><p>Toepassingen</p><button disabled>Start</button></div>
+      <div class="unit-card"><h4>Deel 12</h4><p class="status locked">🔒 Vergrendeld</p><p>Grote herhaling</p><button disabled>Start</button></div>
+    </div>
+
+  </section>
+
+  <aside class="panel">
+    <h2 class="panel-title">🤖 Chattie</h2>
+    <iframe class="chat-embed"
+      src="chattie.html?thema=Thema%201%20Landschappen"
+      title="Chattie"></iframe>
+  </aside>
+</main>
+
+<script src="./pavo-xp-sync.js"></script>
 </body>
 </html>
