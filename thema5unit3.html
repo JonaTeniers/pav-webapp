@@ -51,7 +51,9 @@
     </div>
   </div>
 
-  <script>
+    <script src="./firebase.js"></script>
+  <script src="./pavo-xp-sync.js"></script>
+<script>
     const questions = [{"type": "mc", "typeLabel": "Meerkeuze", "question": "Tekst A: receptenboek. Tekst B: fantasyboek. Welke is fictie?", "options": ["A", "B", "beide"], "correctIndex": 1}, {"type": "open", "typeLabel": "Open vraag", "question": "Een interview met een wetenschapper is meestal...", "accepted": ["non-fictie", "non fictie"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies wat best past bij een dagboekroman.", "options": ["fictie", "non-fictie"], "correctValue": "fictie"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke combinatie klopt?", "options": ["fantasie + amuseren", "feiten + amuseren", "regels + ontroeren"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Noem 1 kenmerk van non-fictie.", "accepted": ["feiten", "informatie", "bronnen"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies juiste categorie: encyclopedie.", "options": ["fictie", "non-fictie"], "correctValue": "non-fictie"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Een verhaal over draken en magie is...", "options": ["non-fictie", "fictie", "handleiding"], "correctIndex": 1}, {"type": "open", "typeLabel": "Open vraag", "question": "Wat doet een schrijver van fictie vaak met taal?", "accepted": ["verbeelden", "fantaseren", "creatief zijn"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies doel: artikel over klimaatcijfers.", "options": ["informeren", "amuseren", "ontroeren"], "correctValue": "informeren"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke tekst is het meest objectief?", "options": ["nieuwsrapport", "kort verhaal", "gedicht"], "correctIndex": 0}];
     let currentQuestion = 0;
     let score = 0;
@@ -118,6 +120,7 @@
         loadQuestion();
       } else {
         localStorage.setItem('thema5unit3', score);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema5unit3', score);
         document.getElementById('quizBox').classList.add('hidden');
         document.getElementById('endScreen').classList.remove('hidden');
         document.getElementById('xpScore').innerText = score;

@@ -58,6 +58,68 @@
     }).format(date);
   }
 
+
+  function extractThemaUnit(source) {
+    const text = String(source || '');
+    const match = text.match(/thema\s*(\d+)\s*[_-]?\s*unit\s*(\d+)/i)
+      || text.match(/thema(\d+)unit(\d+)/i)
+      || text.match(/thema(\d+)_unit(\d+)/i)
+      || text.match(/thema(\d+).*unit(\d+)/i);
+
+    if (!match) return { thema: null, unit: null };
+    return { thema: `thema${match[1]}`, unit: `unit${match[2]}` };
+  }
+
+  function normalizeScoreItem(item) {
+    const inferredFromStorage = extractThemaUnit(item.bronStorageKey);
+    const inferredFromPage = extractThemaUnit(item.bronPagina);
+
+    return {
+      ...item,
+      thema: item.thema || inferredFromStorage.thema || inferredFromPage.thema,
+      unit: item.unit || inferredFromStorage.unit || inferredFromPage.unit
+    };
+  }
+
+  async function backfillMissingThemaUnit() {
+    setStatus('Ontbrekende thema/unit-velden bijwerken...', false);
+
+    const candidates = allScores.filter((item) => {
+      const hasThema = String(item.thema || '').trim();
+      const hasUnit = String(item.unit || '').trim();
+      if (hasThema && hasUnit) return false;
+
+      const inferredFromStorage = extractThemaUnit(item.bronStorageKey);
+      const inferredFromPage = extractThemaUnit(item.bronPagina);
+      return Boolean(inferredFromStorage.thema || inferredFromPage.thema);
+    });
+
+    if (!candidates.length) {
+      setStatus('Geen ontbrekende thema/unit-velden gevonden.', false);
+      return;
+    }
+
+    let updated = 0;
+    for (const item of candidates) {
+      const inferredFromStorage = extractThemaUnit(item.bronStorageKey);
+      const inferredFromPage = extractThemaUnit(item.bronPagina);
+
+      const thema = item.thema || inferredFromStorage.thema || inferredFromPage.thema;
+      const unit = item.unit || inferredFromStorage.unit || inferredFromPage.unit;
+
+      if (!thema && !unit) continue;
+
+      await window.db.collection('scores').doc(item.id).set({
+        ...(thema ? { thema } : {}),
+        ...(unit ? { unit } : {})
+      }, { merge: true });
+      updated += 1;
+    }
+
+    setStatus(`${updated} score(s) bijgewerkt met thema/unit.`, false);
+    await loadScores();
+  }
+
   /**
    * Zet dashboard zichtbaar en loginblok verborgen.
    */
@@ -81,6 +143,23 @@
   /**
    * Teken de tabelrijen op basis van data en geselecteerde klas-filter.
    */
+
+  function renderTotalScore(selectedKlas) {
+    const totalsEl = document.getElementById('teacherTotals');
+    if (!totalsEl) return;
+
+    const filtered = selectedKlas
+      ? allScores.filter((item) => item.klas === selectedKlas)
+      : allScores;
+
+    const totalXp = filtered.reduce((sum, item) => {
+      const score = Number(item.score);
+      return sum + (Number.isNaN(score) ? 0 : score);
+    }, 0);
+
+    totalsEl.innerHTML = `<strong>Totaal ${selectedKlas ? `(${escapeHtml(selectedKlas)})` : 'alle klassen'}:</strong> ${totalXp} XP`;
+  }
+
   function renderTable(selectedKlas) {
     const tbody = document.getElementById('scoresTableBody');
     if (!tbody) return;
@@ -91,7 +170,8 @@
       : allScores;
 
     if (!filtered.length) {
-      tbody.innerHTML = '<tr><td colspan="6">Geen resultaten gevonden.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="7">Geen resultaten gevonden.</td></tr>';
+      renderTotalScore(selectedKlas);
       return;
     }
 
@@ -101,12 +181,14 @@
           <td>${escapeHtml(item.naam)}</td>
           <td>${escapeHtml(item.klas)}</td>
           <td>${escapeHtml(item.thema)}</td>
+          <td>${escapeHtml(item.unit)}</td>
           <td>${escapeHtml(item.score)}</td>
           <td>${escapeHtml(formatDate(item.createdAt))}</td>
           <td>${escapeHtml(item.bronPagina || item.leerlingAuthType || '-')}</td>
         </tr>
       `;
     }).join('');
+    renderTotalScore(selectedKlas);
   }
 
   /**
@@ -136,13 +218,35 @@
   async function loadScores() {
     setStatus('Scores worden geladen...', false);
 
-    // Sorteer op recentste score eerst.
-    const snapshot = await window.db
-      .collection('scores')
-      .orderBy('createdAt', 'desc')
-      .get();
+    let docs = [];
 
-    allScores = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    try {
+      // Probeer eerst op createdAt te sorteren (kan falen of leeg lijken als veld ontbreekt in oudere docs).
+      const snapshot = await window.db
+        .collection('scores')
+        .orderBy('createdAt', 'desc')
+        .get();
+      docs = snapshot.docs;
+    } catch (error) {
+      console.warn('orderBy(createdAt) mislukte, fallback zonder sortering:', error);
+    }
+
+    // Fallback: haal alles op zonder orderBy zodat ook oudere docs zonder createdAt zichtbaar blijven.
+    if (!docs.length) {
+      const fallbackSnapshot = await window.db
+        .collection('scores')
+        .get();
+      docs = fallbackSnapshot.docs;
+    }
+
+    allScores = docs
+      .map((doc) => ({ id: doc.id, ...doc.data() }))
+      .map(normalizeScoreItem)
+      .sort((a, b) => {
+        const aMs = a.createdAt && typeof a.createdAt.toDate === 'function' ? a.createdAt.toDate().getTime() : 0;
+        const bMs = b.createdAt && typeof b.createdAt.toDate === 'function' ? b.createdAt.toDate().getTime() : 0;
+        return bMs - aMs;
+      });
 
     populateClassFilter();
     renderTable('');
@@ -222,6 +326,7 @@
 
       const klasFilter = document.getElementById('klasFilter');
       const refreshButton = document.getElementById('refreshButton');
+      const backfillButton = document.getElementById('backfillButton');
       const teacherLoginForm = document.getElementById('teacherLoginForm');
       const teacherLogoutButton = document.getElementById('teacherLogoutButton');
 
@@ -235,6 +340,14 @@
       // Laat manueel herladen toe.
       if (refreshButton) {
         refreshButton.addEventListener('click', loadScores);
+      }
+      if (backfillButton) {
+        backfillButton.addEventListener('click', () => {
+          backfillMissingThemaUnit().catch((error) => {
+            console.error('Backfill fout:', error);
+            setStatus('Kon thema/unit niet bijwerken.', true);
+          });
+        });
       }
 
       // Login/uitlog knoppen koppelen.

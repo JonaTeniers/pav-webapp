@@ -133,6 +133,19 @@
       font-size: 0.9rem;
     }
 
+    .status {
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .status.locked {
+      color: #9ec3df;
+    }
+
+    .status.ready {
+      color: #d9efff;
+    }
+
     .unit-card a {
       align-self: flex-start;
     }
@@ -174,73 +187,85 @@
     <p>Ontdek natuurlijke, menselijke elementen en hun gebruik.</p>
   </header>
 
-  <main class="layout">
+  <main class="layout" data-theme-id="1">
     <section class="panel">
       <div class="score-card">
         <h3>🎯 Totaalscore Thema 1</h3>
-        <p>💡 240 / 360 XP</p>
+        <p id="themeTotalScore" data-theme-id="1">💡 240 / 360 XP</p>
         <p>Je bent goed op weg!</p>
       </div>
 
       <h2 class="panel-title">📚 Onderdelen</h2>
       <div class="unit-grid">
-        <div class="unit-card">
+        <div class="unit-card" data-unit="1">
           <h4>Deel 1</h4>
+          <p class="status ready">Beschikbaar</p>
           <p>Wat is een landschap?</p>
-          <a href="unit1.html"><button>Start</button></a>
+          <a href="thema1unit1.html"><button>Start</button></a>
         </div>
-        <div class="unit-card">
+        <div class="unit-card" data-unit="2">
           <h4>Deel 2</h4>
+          <p class="status locked">🔒 Vergrendeld</p>
           <p>Natuurlijke elementen</p>
           <a href="unit2.html"><button>Start</button></a>
         </div>
-        <div class="unit-card">
+        <div class="unit-card" data-unit="3">
           <h4>Deel 3</h4>
+          <p class="status locked">🔒 Vergrendeld</p>
           <p>Menselijke elementen</p>
           <a href="unit3.html"><button>Start</button></a>
         </div>
-        <div class="unit-card">
+        <div class="unit-card" data-unit="4">
           <h4>Deel 4</h4>
+          <p class="status locked">🔒 Vergrendeld</p>
           <p>Soorten landschappen</p>
           <a href="unit4.html"><button>Start</button></a>
         </div>
-        <div class="unit-card">
+        <div class="unit-card" data-unit="5">
           <h4>Deel 5</h4>
+          <p class="status locked">🔒 Vergrendeld</p>
           <p>Gebruik van landschappen</p>
           <a href="unit5.html"><button>Start</button></a>
         </div>
-        <div class="unit-card">
+        <div class="unit-card" data-unit="6">
           <h4>Deel 6</h4>
+          <p class="status locked">🔒 Vergrendeld</p>
           <p>Veranderingen door tijd</p>
           <a href="unit6.html"><button>Start</button></a>
         </div>
-        <div class="unit-card">
+        <div class="unit-card" data-unit="7">
           <h4>Deel 7</h4>
+          <p class="status locked">🔒 Vergrendeld</p>
           <p>Invloed van de mens</p>
           <a href="unit7.html"><button>Start</button></a>
         </div>
-        <div class="unit-card">
+        <div class="unit-card" data-unit="8">
           <h4>Deel 8</h4>
+          <p class="status locked">🔒 Vergrendeld</p>
           <p>Invloed van de natuur</p>
           <a href="unit8.html"><button>Start</button></a>
         </div>
-        <div class="unit-card">
+        <div class="unit-card" data-unit="9">
           <h4>Deel 9</h4>
+          <p class="status locked">🔒 Vergrendeld</p>
           <p>Grenzen en regio’s</p>
           <a href="unit9.html"><button>Start</button></a>
         </div>
-        <div class="unit-card">
+        <div class="unit-card" data-unit="10">
           <h4>Deel 10</h4>
+          <p class="status locked">🔒 Vergrendeld</p>
           <p>Voorbeelden regio’s</p>
           <a href="unit10.html"><button>Start</button></a>
         </div>
-        <div class="unit-card">
+        <div class="unit-card" data-unit="11">
           <h4>Deel 11</h4>
+          <p class="status locked">🔒 Vergrendeld</p>
           <p>Toepassingen</p>
           <a href="unit11.html"><button>Start</button></a>
         </div>
-        <div class="unit-card">
+        <div class="unit-card" data-unit="12">
           <h4>Deel 12</h4>
+          <p class="status locked">🔒 Vergrendeld</p>
           <p>Grote herhaling & afsluiting</p>
           <a href="unit12.html"><button>Start</button></a>
         </div>
@@ -252,5 +277,7 @@
       <iframe class="chat-embed" title="Chattie" src="chattie.html?thema=Thema%201%20Landschappen"></iframe>
     </aside>
   </main>
+  <script src="./pavo-xp-sync.js"></script>
+  <script src="./pavo-theme-progress.js"></script>
 </body>
 </html>

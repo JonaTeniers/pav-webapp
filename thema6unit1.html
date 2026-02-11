@@ -51,7 +51,9 @@
     </div>
   </div>
 
-  <script>
+    <script src="./firebase.js"></script>
+  <script src="./pavo-xp-sync.js"></script>
+<script>
     const questions = [{"type": "mc", "typeLabel": "Meerkeuze", "question": "87 + 23 schat je best als...", "options": ["90 + 20", "80 + 20", "90 + 30"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Schat: 201 + 98 (één getal volstaat)", "accepted": ["300"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies beste schatting voor 154 - 52.", "options": ["100", "110", "120"], "correctValue": "100"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "319 + 86 ligt het dichtst bij...", "options": ["400", "410", "390"], "correctIndex": 1}, {"type": "open", "typeLabel": "Open vraag", "question": "Schat: 62 - 39", "accepted": ["20"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies afronding van 48 + 51.", "options": ["50 + 50", "40 + 50", "50 + 60"], "correctValue": "50 + 50"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Is 64 een logische uitkomst voor 87 - 23?", "options": ["ja", "nee"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Schat: 499 + 204", "accepted": ["700"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies beste schatting voor 735 - 198.", "options": ["540", "500", "620"], "correctValue": "540"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Rond 276 af op tientallen.", "options": ["270", "280", "300"], "correctIndex": 1}];
     let currentQuestion = 0;
     let score = 0;
@@ -118,6 +120,7 @@
         loadQuestion();
       } else {
         localStorage.setItem('thema6unit1', score);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema6unit1', score);
         document.getElementById('quizBox').classList.add('hidden');
         document.getElementById('endScreen').classList.remove('hidden');
         document.getElementById('xpScore').innerText = score;

@@ -94,7 +94,9 @@
       <a href="thema3unit3.html"><button type="button">→ Volgende unit</button></a>
     </div>
   </div>
-  <script>
+    <script src="./firebase.js"></script>
+  <script src="./pavo-xp-sync.js"></script>
+<script>
     const questions = [{"type": "open", "typeLabel": "Open vraag", "question": "Zet in verleden tijd: ik werk.", "accepted": ["ik werkte", "werkte"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke verleden tijd hoort bij \"wonen\"?", "options": ["woonde", "wonende", "woont"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies de juiste vorm: jullie ___ gisteren laat.", "options": ["kwam", "kwamen", "komen"], "correctValue": "kwamen"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke vorm is juist?", "options": ["ik luisterde", "ik luisterte", "ik luister"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Zet in verleden tijd: zij zwemmen.", "accepted": ["zij zwommen", "zwommen"]}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies het juiste werkwoord: hij ___ de bal.", "options": ["gooide", "gooit", "gooien"], "correctValue": "gooide"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke verleden tijd hoort bij \"brengen\"?", "options": ["bracht", "brengde", "breng"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Schrijf de verleden tijd van: ik ga.", "accepted": ["ik ging", "ging"]}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies het juiste hulpwerkwoord: wij ___ gelopen.", "options": ["hebben", "zijn"], "correctValue": "hebben"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke zin is correct?", "options": ["Ik was bang.", "Ik waren bang.", "Ik ben bang."], "correctIndex": 0}];
     let currentQuestion = 0;
     let score = 0;
@@ -165,6 +167,7 @@
         loadQuestion();
       } else {
         localStorage.setItem('thema3unit2', score);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema3unit2', score);
         document.getElementById('quizBox').classList.add('hidden');
         document.getElementById('endScreen').classList.remove('hidden');
         document.getElementById('xpScore').innerText = score;

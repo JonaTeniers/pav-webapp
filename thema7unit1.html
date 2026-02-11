@@ -51,7 +51,9 @@
     </div>
   </div>
 
-  <script>
+    <script src="./firebase.js"></script>
+  <script src="./pavo-xp-sync.js"></script>
+<script>
     const questions = [{"type": "mc", "typeLabel": "Meerkeuze", "question": "Wie stuurt het bericht?", "options": ["zender", "ontvanger", "lezer"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Hoe noem je de inhoud van een bericht?", "accepted": ["boodschap"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies het kanaal: WhatsApp.", "options": ["kanaal", "doel", "feedback"], "correctValue": "kanaal"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Waarom stuur je een bericht?", "options": ["doel", "zender", "ruis"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Wie ontvangt de boodschap?", "accepted": ["ontvanger"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies juiste term: reactie op bericht.", "options": ["feedback", "zender", "kanaal"], "correctValue": "feedback"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke is GEEN onderdeel van het model?", "options": ["boodschap", "ontvanger", "hoofdstuk"], "correctIndex": 2}, {"type": "open", "typeLabel": "Open vraag", "question": "Noem 1 mogelijk kanaal.", "accepted": ["e-mail", "sms", "chat", "brief"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies juiste term: leerling die mailt.", "options": ["zender", "ontvanger", "feedback"], "correctValue": "zender"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Je vraagt iets aan je leerkracht. Doel?", "options": ["informeren of vragen", "amuseren", "negeren"], "correctIndex": 0}];
     let currentQuestion = 0;
     let score = 0;
@@ -118,6 +120,7 @@
         loadQuestion();
       } else {
         localStorage.setItem('thema7unit1', score);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema7unit1', score);
         document.getElementById('quizBox').classList.add('hidden');
         document.getElementById('endScreen').classList.remove('hidden');
         document.getElementById('xpScore').innerText = score;
