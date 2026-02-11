@@ -76,7 +76,9 @@
     </section>
   </main>
 
-  <script>
+    <script src="./firebase.js"></script>
+  <script src="./pavo-xp-sync.js"></script>
+<script>
     const questions = [{"type": "mc", "typeLabel": "Meerkeuze", "question": "Waarom is de eerste treinrit historisch relevant?", "options": ["Ze markeert het begin van snelle moderne mobiliteit op het vasteland", "Ze was een eenmalig experiment zonder impact", "Ze verving alle andere vervoermiddelen meteen"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Tussen welke twee steden reed de eerste rit?", "accepted": ["brussel en mechelen", "mechelen en brussel"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke sector profiteerde sterk van spoorwegen?", "options": ["Handel en industrie", "Alleen theater", "Geen enkele sector"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies het beste oorzaak-gevolgverband.", "options": ["Sneller goederenvervoer maakte markten groter", "Treinen maakten afstanden langer", "Spoorwegen stopten verstedelijking"], "correctValue": "Sneller goederenvervoer maakte markten groter"}, {"type": "open", "typeLabel": "Open vraag", "question": "Noem 1 sociaal gevolg van spoorwegen voor gewone mensen.", "accepted": ["sneller reizen", "meer werk", "mobiliteit", "verplaatsing", "steden groeiden"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Waarom past deze unit in het verhaal van Vlaanderen?", "options": ["Ze toont hoe modernisering niet alleen politiek, maar ook technologisch verliep", "Ze gaat enkel over locomotieven als hobby", "Ze bewijst dat verandering onmogelijk is"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Selectie", "question": "Welke verdiepende vraag is het sterkst?", "options": ["Wie won en wie verloor door de nieuwe mobiliteit?", "Welke trein was het mooist geschilderd?", "Waren stations altijd warm?"], "correctValue": "Wie won en wie verloor door de nieuwe mobiliteit?"}, {"type": "open", "typeLabel": "Open vraag", "question": "Geef 2 kernwoorden die deze unit samenvatten.", "accepted": ["industrialisatie", "mobiliteit", "modernisering", "handel", "spoorwegen"]}];
     let currentQuestion = 0;
     let score = 0;
@@ -145,6 +147,7 @@
         loadQuestion();
       } else {
         localStorage.setItem('thema9unit3', score);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema9unit3', score);
         document.getElementById('quizBox').classList.add('hidden');
         document.getElementById('reflectieBox').classList.remove('hidden');
         document.getElementById('endScreen').classList.remove('hidden');
@@ -158,6 +161,7 @@
       if (!begrip && !verdieping) return;
       const payload = JSON.stringify({ begrip, verdieping });
       localStorage.setItem('thema9unit3_reflectie', payload);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema9unit3_reflectie', payload);
       document.getElementById('reflectieFeedback').innerText = '✅ Reflectie en verdieping bewaard.';
     }
 

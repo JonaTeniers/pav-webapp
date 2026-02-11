@@ -94,7 +94,9 @@
       <a href="thema4unit7.html"><button type="button">→ Volgende unit</button></a>
     </div>
   </div>
-  <script>
+    <script src="./firebase.js"></script>
+  <script src="./pavo-xp-sync.js"></script>
+<script>
     const questions = [{"type": "open", "typeLabel": "Open vraag", "question": "Een tuin is 12 m bij 8 m. Wat is de omtrek?", "accepted": ["40", "40 m", "40m"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Wat bereken je voor een hek om een veld?", "options": ["omtrek", "oppervlakte", "inhoud"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies de juiste formule voor oppervlakte van een vloer.", "options": ["lengte × breedte", "2 × (l + b)", "π × r × r"], "correctValue": "lengte × breedte"}, {"type": "open", "typeLabel": "Open vraag", "question": "Een lokaal is 9 m bij 7 m. Wat is de oppervlakte?", "accepted": ["63", "63 m2", "63 m²", "63m2", "63m²"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke vorm herken je bij een zwembad van 10 m bij 4 m?", "options": ["rechthoek", "driehoek", "cirkel"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies de juiste eenheid bij oppervlakte.", "options": ["m²", "m", "cm"], "correctValue": "m²"}, {"type": "open", "typeLabel": "Open vraag", "question": "Hoeveel meter hek voor een tuin van 5 m bij 6 m?", "accepted": ["22", "22 m", "22m"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Wanneer kies je oppervlakte?", "options": ["bij tegelvloer", "bij hekwerk", "bij omtrek"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies de juiste stap: eerst ...", "options": ["vorm herkennen", "antwoord afronden", "meten in liters"], "correctValue": "vorm herkennen"}, {"type": "open", "typeLabel": "Open vraag", "question": "Bereken de verf: 3 m bij 2 m muur. Wat is de oppervlakte?", "accepted": ["6", "6 m2", "6 m²", "6m2", "6m²"]}];
     let currentQuestion = 0;
     let score = 0;
@@ -165,6 +167,7 @@
         loadQuestion();
       } else {
         localStorage.setItem('thema4unit6', score);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema4unit6', score);
         document.getElementById('quizBox').classList.add('hidden');
         document.getElementById('endScreen').classList.remove('hidden');
         document.getElementById('xpScore').innerText = score;

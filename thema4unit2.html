@@ -94,7 +94,9 @@
       <a href="thema4unit3.html"><button type="button">→ Volgende unit</button></a>
     </div>
   </div>
-  <script>
+    <script src="./firebase.js"></script>
+  <script src="./pavo-xp-sync.js"></script>
+<script>
     const questions = [{"type": "open", "typeLabel": "Open vraag", "question": "Bereken de oppervlakte van een vierkant met zijde 7 cm.", "accepted": ["49", "49 cm2", "49 cm²", "49cm2", "49cm²"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke formule hoort bij oppervlakte van een rechthoek?", "options": ["l × b", "2 × (l + b)", "l + b"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies de juiste oppervlakte voor 9 cm bij 4 cm.", "options": ["36 cm²", "26 cm²", "45 cm²"], "correctValue": "36 cm²"}, {"type": "open", "typeLabel": "Open vraag", "question": "Oppervlakte van een rechthoek 5 cm bij 12 cm?", "accepted": ["60", "60 cm2", "60 cm²", "60cm2", "60cm²"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke eenheid hoort bij oppervlakte?", "options": ["cm", "cm²", "cm³"], "correctIndex": 1}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies de juiste invulling: oppervlakte = lengte ___ breedte.", "options": ["×", "+", "−"], "correctValue": "×"}, {"type": "open", "typeLabel": "Open vraag", "question": "Bereken de oppervlakte van een vierkant met zijde 3 m.", "accepted": ["9", "9 m2", "9 m²", "9m2", "9m²"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Als beide zijden verdubbelen, dan wordt de oppervlakte...", "options": ["vier keer zo groot", "twee keer zo groot", "gelijk"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies de juiste stap als eerste.", "options": ["lengte × breedte", "optellen", "delen"], "correctValue": "lengte × breedte"}, {"type": "open", "typeLabel": "Open vraag", "question": "Oppervlakte van een veld van 20 m bij 6 m?", "accepted": ["120", "120 m2", "120 m²", "120m2", "120m²"]}];
     let currentQuestion = 0;
     let score = 0;
@@ -165,6 +167,7 @@
         loadQuestion();
       } else {
         localStorage.setItem('thema4unit2', score);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema4unit2', score);
         document.getElementById('quizBox').classList.add('hidden');
         document.getElementById('endScreen').classList.remove('hidden');
         document.getElementById('xpScore').innerText = score;

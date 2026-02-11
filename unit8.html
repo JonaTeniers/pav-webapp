@@ -75,7 +75,9 @@
     </div>
   </div>
 
-  <script>
+    <script src="./firebase.js"></script>
+  <script src="./pavo-xp-sync.js"></script>
+<script>
     const questions = [
       {
         vraag: "Wat is een natuurlijke kracht die het landschap verandert?",
@@ -204,7 +206,9 @@
         loadQuestion();
       } else {
         localStorage.setItem("xp_unit8", score);
+        if (window.pavoSyncScore) window.pavoSyncScore("xp_unit8", score);
         localStorage.setItem("unit8_done", "true");
+        if (window.pavoSyncScore) window.pavoSyncScore("unit8_done", "true");
         document.getElementById("quizBox").classList.add("hidden");
         document.getElementById("endScreen").classList.remove("hidden");
         document.getElementById("xpScore").innerText = score;

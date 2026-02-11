@@ -76,7 +76,9 @@
     </section>
   </main>
 
-  <script>
+    <script src="./firebase.js"></script>
+  <script src="./pavo-xp-sync.js"></script>
+<script>
     const questions = [{"type": "mc", "typeLabel": "Meerkeuze", "question": "Wat maakte het wetboek van Napoleon historisch belangrijk?", "options": ["Regels werden gecodificeerd en breder toepasbaar", "Alle lokale regels verdwenen in één dag", "Het was enkel een militair handboek"], "correctIndex": 0}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke nuance klopt?", "options": ["Er was meer rechtsgelijkheid, maar niet voor iedereen in dezelfde mate", "Iedereen kreeg exact dezelfde rechten", "Het wetboek ging alleen over straffen"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Noem 1 domein dat in een burgerlijk wetboek geregeld wordt.", "accepted": ["eigendom", "erfenis", "huwelijk", "contracten", "familie"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies de beste oorzaak-gevolgzin.", "options": ["Omdat regels op papier stonden, werd rechtspraak voorspelbaarder", "Omdat Napoleon kwam, stopte alle ongelijkheid meteen", "Omdat men schreef, waren er geen rechters meer"], "correctValue": "Omdat regels op papier stonden, werd rechtspraak voorspelbaarder"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Waarom past dit in het verhaal van Vlaanderen?", "options": ["Het toont de overgang van traditionele naar moderne staatsregels", "Het is alleen een Frans verhaal zonder invloed hier", "Het gaat enkel over oorlogen"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Wie had in die tijd vaak minder juridische macht binnen het gezin?", "accepted": ["vrouwen", "de vrouw", "vrouwenrechten"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Welke historische vraag is hier het sterkst?", "options": ["Wie profiteerde van deze hervorming, en wie minder?", "Welke kleur had de kaft van het wetboek?", "Hoeveel pagina’s las Napoleon zelf?"], "correctValue": "Wie profiteerde van deze hervorming, en wie minder?"}, {"type": "open", "typeLabel": "Open vraag", "question": "Geef 2 kernwoorden die deze unit samenvatten.", "accepted": ["rechtszekerheid", "gelijkheid", "wetboek", "modernisering", "ongelijkheid"]}];
     let currentQuestion = 0;
     let score = 0;
@@ -145,6 +147,7 @@
         loadQuestion();
       } else {
         localStorage.setItem('thema9unit1', score);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema9unit1', score);
         document.getElementById('quizBox').classList.add('hidden');
         document.getElementById('reflectieBox').classList.remove('hidden');
         document.getElementById('endScreen').classList.remove('hidden');
@@ -158,6 +161,7 @@
       if (!begrip && !verdieping) return;
       const payload = JSON.stringify({ begrip, verdieping });
       localStorage.setItem('thema9unit1_reflectie', payload);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema9unit1_reflectie', payload);
       document.getElementById('reflectieFeedback').innerText = '✅ Reflectie en verdieping bewaard.';
     }
 

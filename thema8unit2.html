@@ -51,7 +51,9 @@
     </div>
   </div>
 
-  <script>
+    <script src="./firebase.js"></script>
+  <script src="./pavo-xp-sync.js"></script>
+<script>
     const questions = [{"type": "mc", "typeLabel": "Meerkeuze", "question": "In de zin 'Microsoft waarschuwt voor schaduw-AI' is de persoonsvorm...", "options": ["Microsoft", "waarschuwt", "schaduw-AI"], "correctIndex": 1}, {"type": "open", "typeLabel": "Open vraag", "question": "Wat is het onderwerp in de zin: 'De politie stelt overtredingen vast.'", "accepted": ["de politie", "politie"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies de persoonsvorm: 'Vlaanderen zet zich op de kaart.'", "options": ["Vlaanderen", "zet", "kaart"], "correctValue": "zet"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke vraag stel je om het onderwerp te vinden?", "options": ["Wie/wat + persoonsvorm?", "Waar?", "Wanneer?"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Vul aan: de persoonsvorm verandert als je de zin in ... zet.", "accepted": ["tijd", "een andere tijd", "vraagzin"]}, {"type": "drag", "typeLabel": "Selectie", "question": "In 'Werknemers gebruiken AI-tools' is het onderwerp...", "options": ["AI-tools", "Werknemers", "gebruiken"], "correctValue": "Werknemers"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke zin heeft een correcte volgorde?", "options": ["De journalist schrijft het artikel.", "Schrijft de journalist het artikel gisteren."], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Noem de persoonsvorm van: 'De leerlingen luisteren aandachtig.'", "accepted": ["luisteren"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies het onderwerp: 'In de podcast bespreken experts het nieuws.'", "options": ["experts", "podcast", "nieuws"], "correctValue": "experts"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Waarom zijn onderwerp en persoonsvorm belangrijk?", "options": ["voor duidelijke zinnen", "alleen voor mooie letters", "ze zijn niet belangrijk"], "correctIndex": 0}];
     let currentQuestion = 0;
     let score = 0;
@@ -118,6 +120,7 @@
         loadQuestion();
       } else {
         localStorage.setItem('thema8unit2', score);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema8unit2', score);
         document.getElementById('quizBox').classList.add('hidden');
         document.getElementById('endScreen').classList.remove('hidden');
         document.getElementById('xpScore').innerText = score;

@@ -94,7 +94,9 @@
       <a href="thema4unit5.html"><button type="button">→ Volgende unit</button></a>
     </div>
   </div>
-  <script>
+    <script src="./firebase.js"></script>
+  <script src="./pavo-xp-sync.js"></script>
+<script>
     const questions = [{"type": "open", "typeLabel": "Open vraag", "question": "Bereken de omtrek van een L-vorm met zijden 6, 4, 2, 2, 4, 6 cm.", "accepted": ["24", "24 cm", "24cm"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke stap doe je eerst bij oppervlakte van samengestelde figuren?", "options": ["figuur opdelen", "alle zijden optellen", "delen door 2"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies de juiste totale oppervlakte: 8×4 + 3×2.", "options": ["38 cm²", "32 cm²", "28 cm²"], "correctValue": "38 cm²"}, {"type": "open", "typeLabel": "Open vraag", "question": "Bereken oppervlakte: rechthoek 10×4 en rechthoek 5×2.", "accepted": ["50", "50 cm2", "50 cm²", "50cm2", "50cm²"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke zijde tel je NIET mee voor de omtrek?", "options": ["binnenzijde", "buitenzijde", "alle buitenranden"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies de juiste tussenstap.", "options": ["deeloppervlakken optellen", "delen door 2", "basis × hoogte"], "correctValue": "deeloppervlakken optellen"}, {"type": "open", "typeLabel": "Open vraag", "question": "Omtrek van twee rechthoeken die samen één vorm maken is de som van...", "accepted": ["alle buitenzijden", "buitenzijden"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke aanpak klopt?", "options": ["opsplitsen in bekende vormen", "formule cirkel gebruiken", "alleen hoogte nemen"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies de juiste oppervlakte: (6×3) + (4×2).", "options": ["26 cm²", "18 cm²", "30 cm²"], "correctValue": "26 cm²"}, {"type": "open", "typeLabel": "Open vraag", "question": "Bereken totale oppervlakte: 12×3 en 4×3 samen.", "accepted": ["48", "48 cm2", "48 cm²", "48cm2", "48cm²"]}];
     let currentQuestion = 0;
     let score = 0;
@@ -165,6 +167,7 @@
         loadQuestion();
       } else {
         localStorage.setItem('thema4unit4', score);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema4unit4', score);
         document.getElementById('quizBox').classList.add('hidden');
         document.getElementById('endScreen').classList.remove('hidden');
         document.getElementById('xpScore').innerText = score;

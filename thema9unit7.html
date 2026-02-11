@@ -126,7 +126,9 @@
     </section>
   </main>
 
-  <script>
+    <script src="./firebase.js"></script>
+  <script src="./pavo-xp-sync.js"></script>
+<script>
     const questions = [
       {
         type: 'open',
@@ -271,6 +273,7 @@
         loadQuestion();
       } else {
         localStorage.setItem('thema9unit7', score);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema9unit7', score);
         document.getElementById('quizBox').classList.add('hidden');
         document.getElementById('reflectieBox').classList.remove('hidden');
         document.getElementById('endScreen').classList.remove('hidden');
@@ -284,6 +287,7 @@
       if (!begrip && !verdieping) return;
       const payload = JSON.stringify({ begrip, verdieping });
       localStorage.setItem('thema9unit7_reflectie', payload);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema9unit7_reflectie', payload);
       document.getElementById('reflectieFeedback').innerText = '✅ Reflectie en verdieping bewaard.';
     }
 
