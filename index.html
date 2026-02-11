@@ -45,6 +45,49 @@
       width: min(1100px, 95%);
     }
 
+    .menu-button {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      width: 44px;
+      height: 44px;
+      border: none;
+      border-radius: 10px;
+      background: #0b4da2;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      z-index: 100;
+    }
+
+    .menu-panel {
+      position: fixed;
+      top: 62px;
+      left: 12px;
+      width: 220px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+      padding: 10px;
+      display: none;
+      z-index: 100;
+      text-align: left;
+    }
+
+    .menu-panel a {
+      display: block;
+      text-decoration: none;
+      color: #1f2937;
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: 700;
+    }
+
+    .menu-panel a:hover {
+      background: #e8f1ff;
+    }
+
     .thema-card {
       background: white;
       padding: 1.5rem;
@@ -92,6 +135,11 @@
   </style>
 </head>
 <body>
+
+  <button class="menu-button" id="menuButton" aria-label="Open menu">☰</button>
+  <nav class="menu-panel" id="menuPanel">
+    <a href="leerkracht-dashboard.html">Naar leerkrachtomgeving</a>
+  </nav>
 
   <header>
     <img src="img/pavomascotte.png" alt="PAVO mascotte" class="mascot" />
@@ -154,6 +202,22 @@
       <a href="thema9.html"><button>Start Thema</button></a>
     </div>
   </div>
+
+  <script>
+    const menuButton = document.getElementById('menuButton');
+    const menuPanel = document.getElementById('menuPanel');
+
+    menuButton.addEventListener('click', () => {
+      menuPanel.style.display = menuPanel.style.display === 'block' ? 'none' : 'block';
+    });
+
+    document.addEventListener('click', (event) => {
+      const clickedInsideMenu = menuPanel.contains(event.target) || menuButton.contains(event.target);
+      if (!clickedInsideMenu) {
+        menuPanel.style.display = 'none';
+      }
+    });
+  </script>
 
 </body>
 </html>
