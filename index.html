@@ -37,6 +37,66 @@
       color: #ffffffcc;
     }
 
+
+
+    .student-auth {
+      width: min(1100px, 95%);
+      margin: 1.2rem auto 0;
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      padding: 1rem;
+      text-align: left;
+    }
+
+    .student-auth-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: end;
+    }
+
+    .student-auth label {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-weight: 700;
+      color: #1f2937;
+    }
+
+    .student-auth input {
+      min-width: 180px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 8px 10px;
+    }
+
+    .student-auth button {
+      background: #1976d2;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.55rem 1rem;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    #studentLogoutButton {
+      display: none;
+      background: #64748b;
+    }
+
+    #studentWelcome {
+      margin: 0.4rem 0;
+      color: #0f172a;
+      font-weight: 700;
+    }
+
+    #studentAuthStatus {
+      margin: 0.4rem 0 0;
+      font-weight: 700;
+    }
+
     .container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -147,6 +207,27 @@
     <p>Kies een thema en begin je leeravontuur!</p>
   </header>
 
+
+  <section class="student-auth">
+    <h2 style="margin-top:0;color:#1976d2;">Leerling login zone</h2>
+    <p id="studentWelcome">Niet ingelogd</p>
+    <form id="studentLoginForm" class="student-auth-row">
+      <label>
+        Voornaam
+        <input id="studentVoornaam" type="text" required />
+      </label>
+      <label>
+        Klas
+        <input id="studentKlas" type="text" required />
+      </label>
+      <button type="submit">Inloggen</button>
+      <button type="button" id="studentLogoutButton">Uitloggen</button>
+      <a href="leerling-dashboard.html" style="align-self:center;font-weight:700;color:#1976d2;">Mijn voortgang</a>
+    </form>
+    <p id="studentAuthStatus"></p>
+  </section>
+
+
   <div class="container">
     <div class="thema-card">
       <h2>Thema 1: Landschappen</h2>
@@ -219,5 +300,6 @@
     });
   </script>
 
+  <script src="./student-auth.js"></script>
 </body>
 </html>
