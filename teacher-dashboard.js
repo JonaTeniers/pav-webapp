@@ -170,7 +170,7 @@
       : allScores;
 
     if (!filtered.length) {
-      tbody.innerHTML = '<tr><td colspan="7">Geen resultaten gevonden.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="6">Geen resultaten gevonden.</td></tr>';
       renderTotalScore(selectedKlas);
       return;
     }
@@ -239,14 +239,9 @@
       docs = fallbackSnapshot.docs;
     }
 
-    allScores = docs
+    allScores = snapshot.docs
       .map((doc) => ({ id: doc.id, ...doc.data() }))
-      .map(normalizeScoreItem)
-      .sort((a, b) => {
-        const aMs = a.createdAt && typeof a.createdAt.toDate === 'function' ? a.createdAt.toDate().getTime() : 0;
-        const bMs = b.createdAt && typeof b.createdAt.toDate === 'function' ? b.createdAt.toDate().getTime() : 0;
-        return bMs - aMs;
-      });
+      .map(normalizeScoreItem);
 
     populateClassFilter();
     renderTable('');

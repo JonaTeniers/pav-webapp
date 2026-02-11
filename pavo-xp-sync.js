@@ -59,13 +59,11 @@
     if (Number.isNaN(numericScore)) return;
 
     const profile = getProfile();
-    const voornaam = String(profile?.voornaam || '').trim();
-    const klas = String(profile?.klas || '').trim();
-    if (!voornaam || !klas) return;
+    if (!profile?.voornaam || !profile?.klas) return;
 
     if (!window.db || !window.firebase || !window.firebase.firestore) return;
 
-    const dedupeKey = `pavo_synced_${storageKey}_${voornaam}_${klas}`;
+    const dedupeKey = `pavo_synced_${storageKey}_${profile.voornaam}_${profile.klas}`;
     const lastSynced = Number(window.localStorage.getItem(dedupeKey));
     if (!Number.isNaN(lastSynced) && lastSynced === numericScore) return;
 
@@ -78,8 +76,8 @@
     };
 
     const payload = {
-      naam: voornaam,
-      klas,
+      naam: profile.voornaam,
+      klas: profile.klas,
       thema: inferred.thema,
       unit: inferred.unit,
       score: numericScore,
