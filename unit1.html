@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thema Landschappen – Unit 1: Wat is een landschap?</title>
+  <title>Thema Landschappen – Unit 1</title>
 
   <style>
     body {
@@ -11,46 +11,58 @@
       background: #e3f2fd;
       padding: 2rem;
     }
+
     h1 {
       text-align: center;
       color: #1565c0;
     }
+
     .question-box {
       background: white;
       padding: 2rem;
       margin: 2rem auto;
-      border-radius: 10px;
+      border-radius: 12px;
       max-width: 720px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
+
     img {
       max-width: 100%;
       border-radius: 8px;
       margin: 1rem 0;
     }
+
+    .bron {
+      font-size: 0.85rem;
+      color: #555;
+      margin-bottom: 1rem;
+    }
+
     button {
       background: #1565c0;
       color: white;
-      padding: 0.6rem 1.2rem;
+      padding: 0.6rem 1.4rem;
       border: none;
       border-radius: 6px;
       margin-top: 1rem;
       cursor: pointer;
     }
+
     .feedback {
       margin-top: 1rem;
       font-weight: bold;
       padding: 1rem;
       border-radius: 8px;
     }
+
     .success { background: #c8e6c9; color: #2e7d32; }
     .error { background: #ffcdd2; color: #c62828; }
+
     .hidden { display: none; }
-    .nav-buttons { text-align: center; margin-top: 2rem; }
-    .bron {
-      font-size: 0.85rem;
-      color: #555;
-      margin-top: 0.5rem;
+
+    .nav-buttons {
+      text-align: center;
+      margin-top: 2rem;
     }
   </style>
 </head>
@@ -60,15 +72,13 @@
 <h1>🌍 Thema Landschappen – Unit 1: Wat is een landschap?</h1>
 
 <div class="question-box" id="quizBox">
-  <h2 id="qCount">Vraag 1 van 8</h2>
+  <h2 id="qCount"></h2>
 
   <div id="questionText"></div>
 
-  <!-- FOTO PLAATS -->
-  <img id="questionImage" class="hidden" src="" alt="Landschapsfoto">
-  <div id="imageSource" class="bron hidden">
-    Bron: <!-- bv. eigen foto / Pixabay / Unsplash / auteur -->
-  </div>
+  <!-- AFBEELDING -->
+  <img id="questionImage" class="hidden" alt="Landschap">
+  <div id="imageSource" class="bron hidden"></div>
 
   <form id="answerForm"></form>
 
@@ -82,8 +92,8 @@
 </div>
 
 <div class="question-box hidden" id="endScreen">
-  <h2>🎉 Unit afgerond!</h2>
-  <p>Je verdiende <strong><span id="xpScore">0</span> XP</strong>.</p>
+  <h2>🎉 Unit voltooid!</h2>
+  <p>Je behaalde <strong><span id="xpScore">0</span> XP</strong>.</p>
   <div class="nav-buttons">
     <a href="thema-landschappen.html"><button>← Terug naar thema</button></a>
     <a href="unit2.html"><button>→ Volgende unit</button></a>
@@ -96,86 +106,50 @@
 <script>
 const questions = [
 
-  // 1. Begrip
   {
-    type: "mc",
     vraag: "Wat is een landschap?",
     image: null,
     bron: null,
     opties: [
       { tekst: "Een gebied dat je kan zien en beleven", juist: true },
       { tekst: "Een kaart van een land", juist: false },
-      { tekst: "Een stad met veel mensen", juist: false }
+      { tekst: "Een stad met alleen gebouwen", juist: false }
     ]
   },
 
-  // 2. Waarnemen
   {
-    type: "mc",
     vraag: "Welke zintuigen gebruik je om een landschap te beleven?",
     image: null,
     bron: null,
     opties: [
-      { tekst: "Zien, horen, ruiken", juist: true },
+      { tekst: "Zien, horen en ruiken", juist: true },
       { tekst: "Alleen zien", juist: false },
       { tekst: "Alleen voelen", juist: false }
     ]
   },
 
-  // 3. Beeldvraag
   {
-    type: "image",
     vraag: "Is dit een landschap?",
     image: "landschap_bos.jpg",
-    bron: "https://vroegevogels.bnnvara.nl/community/fotos/landschappen/bos/143236"
+    bron: "Bron: eigen foto",
     opties: [
-      { tekst: "Ja, dit is een landschap", juist: true },
-      { tekst: "Nee, dit is geen landschap", juist: false }
+      { tekst: "Ja", juist: true },
+      { tekst: "Nee", juist: false }
     ]
   },
 
-  // 4. Denk-vraag
   {
-    type: "mc",
     vraag: "Waarom is een stad ook een landschap?",
-    image: null,
-    bron: null,
+    image: "landschap_stad.jpg",
+    bron: "Bron: Pixabay",
     opties: [
       { tekst: "Omdat je het kan zien en erin kan leven", juist: true },
-      { tekst: "Omdat er alleen gebouwen zijn", juist: false },
-      { tekst: "Omdat er geen natuur is", juist: false }
+      { tekst: "Omdat er geen natuur is", juist: false },
+      { tekst: "Omdat het altijd druk is", juist: false }
     ]
   },
 
-  // 5. Beeldanalyse
   {
-    type: "image",
-    vraag: "Wat zie je vooral in dit landschap?",
-    image: "landschap_stad.jpg",
-    bron: "https://nl.wikipedia.org/wiki/Antwerpen_%28stad%29#/media/Bestand:OlV_toren_en_Boerentoren_Antwerpen_vanaf_Linkeroever.jpg",
-    opties: [ 
-      { tekst: "Vooral menselijke elementen", juist: true },
-      { tekst: "Alleen natuurlijke elementen", juist: false },
-      { tekst: "Helemaal niets", juist: false }
-    ]
-  },
-
-  // 6. Toepassing
-  {
-    type: "mc",
-    vraag: "Welke plaats is GEEN landschap?",
-    image: null,
-    bron: null,
-    opties: [
-      { tekst: "Een foto op je smartphone", juist: true },
-      { tekst: "Een strand", juist: false },
-      { tekst: "Een dorp", juist: false }
-    ]
-  },
-
-  // 7. Reflectie
-  {
-    type: "mc",
     vraag: "Kan één landschap tegelijk natuur en mens bevatten?",
     image: null,
     bron: null,
@@ -185,16 +159,14 @@ const questions = [
     ]
   },
 
-  // 8. Samenvatting
   {
-    type: "mc",
-    vraag: "Wat onthoud je best over een landschap?",
+    vraag: "Welke plaats is GEEN landschap?",
     image: null,
     bron: null,
     opties: [
-      { tekst: "Je kan het zien én beleven", juist: true },
-      { tekst: "Het is altijd natuur", juist: false },
-      { tekst: "Het verandert nooit", juist: false }
+      { tekst: "Een foto op je smartphone", juist: true },
+      { tekst: "Een strand", juist: false },
+      { tekst: "Een dorp", juist: false }
     ]
   }
 ];
@@ -207,6 +179,7 @@ function loadQuestion() {
 
   document.getElementById("qCount").innerText =
     `Vraag ${currentQuestion + 1} van ${questions.length}`;
+
   document.getElementById("questionText").innerText = q.vraag;
 
   const img = document.getElementById("questionImage");
@@ -215,7 +188,7 @@ function loadQuestion() {
   if (q.image) {
     img.src = q.image;
     img.classList.remove("hidden");
-    bron.innerText = q.bron || "";
+    bron.innerText = q.bron;
     bron.classList.remove("hidden");
   } else {
     img.classList.add("hidden");
@@ -281,3 +254,4 @@ window.onload = loadQuestion;
 
 </body>
 </html>
+
