@@ -38,7 +38,7 @@
     }
 
     .mascot {
-      width: 140px;
+      width: 150px;
       margin-bottom: 0.8rem;
     }
 
@@ -106,6 +106,10 @@
       font-weight: 700;
     }
 
+    .logout-btn {
+      background: #64748b;
+    }
+
     /* ---------- THEMA GRID ---------- */
     .container {
       width: min(1250px, 95%);
@@ -169,6 +173,7 @@
 
     .progress-fill {
       height: 100%;
+      width: 0%;
       background: linear-gradient(90deg, #64b5f6, #1976d2);
     }
 
@@ -212,15 +217,16 @@
 
   <!-- LEERLING -->
   <div class="login-card">
-    <h2>👤 Leerling login</h2>
-    <form class="login-row" id="studentLoginForm">
+    <h2>👤 Leerling</h2>
+    <form class="login-row">
       <label>Voornaam
-        <input id="studentVoornaam" type="text" required>
+        <input required>
       </label>
       <label>Klas
-        <input id="studentKlas" type="text" required>
+        <input required>
       </label>
       <button type="submit">Inloggen</button>
+      <button type="button" class="logout-btn" id="logoutBtn">Uitloggen</button>
       <a href="leerling-dashboard.html"
          style="align-self:center;font-weight:700;color:var(--blue);">
         Mijn voortgang
@@ -239,129 +245,113 @@
 
 </section>
 
-<!-- THEMA’S -->
+<!-- THEMA'S -->
 <div class="container">
 
+  <!-- Thema 1 -->
   <div class="thema-card">
     <div class="thema-image" style="background-image:url('img/images/thema1.jpg')"></div>
     <div class="thema-content">
       <h2>🌍 Thema 1 – Landschappen</h2>
       <p>Natuurlijke en menselijke landschappen.</p>
       <div class="progress">
-        <div class="progress-bar"><div class="progress-fill" style="width:40%"></div></div>
-        <div class="progress-label">40% afgerond</div>
+        <div class="progress-bar"><div class="progress-fill"></div></div>
+        <div class="progress-label">0% afgerond</div>
       </div>
       <a href="thema1.html"><button>Start</button></a>
     </div>
   </div>
 
+  <!-- Thema 2 -->
   <div class="thema-card">
     <div class="thema-image" style="background-image:url('img/images/thema2.jpg')"></div>
     <div class="thema-content">
       <h2>🌿 Thema 2 – Levende natuur</h2>
       <p>Organismen en ecosystemen.</p>
-      <div class="progress">
-        <div class="progress-bar"><div class="progress-fill" style="width:55%"></div></div>
-        <div class="progress-label">55% afgerond</div>
-      </div>
       <a href="thema2.html"><button>Start</button></a>
     </div>
   </div>
 
+  <!-- Thema 3 -->
   <div class="thema-card">
     <div class="thema-image" style="background-image:url('img/images/thema3.jpg')"></div>
     <div class="thema-content">
       <h2>⏳ Thema 3 – Werkwoordstijden</h2>
       <p>Tegenwoordige tijd, verleden tijd en dt-regel.</p>
-      <div class="progress">
-        <div class="progress-bar"><div class="progress-fill" style="width:20%"></div></div>
-        <div class="progress-label">20% afgerond</div>
-      </div>
       <a href="thema3.html"><button>Start</button></a>
     </div>
   </div>
 
+  <!-- Thema 4 -->
   <div class="thema-card">
     <div class="thema-image" style="background-image:url('img/images/thema4.jpg')"></div>
     <div class="thema-content">
       <h2>📐 Thema 4 – Wiskunde</h2>
       <p>Omtrek en oppervlakte.</p>
-      <div class="progress">
-        <div class="progress-bar"><div class="progress-fill" style="width:10%"></div></div>
-        <div class="progress-label">10% afgerond</div>
-      </div>
       <a href="thema4.html"><button>Start</button></a>
     </div>
   </div>
 
+  <!-- Thema 5 -->
   <div class="thema-card">
     <div class="thema-image" style="background-image:url('img/images/thema5.jpg')"></div>
     <div class="thema-content">
       <h2>📖 Thema 5 – Fictie & non-fictie</h2>
       <p>Teksten begrijpen en vergelijken.</p>
-      <div class="progress">
-        <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-        <div class="progress-label">Nog niet gestart</div>
-      </div>
       <a href="thema5.html"><button>Start</button></a>
     </div>
   </div>
 
+  <!-- Thema 6 -->
   <div class="thema-card">
     <div class="thema-image" style="background-image:url('img/images/thema6.jpg')"></div>
     <div class="thema-content">
       <h2>🎯 Thema 6 – Schatten</h2>
       <p>Schatten en afronden.</p>
-      <div class="progress">
-        <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-        <div class="progress-label">Nog niet gestart</div>
-      </div>
       <a href="thema6.html"><button>Start</button></a>
     </div>
   </div>
 
+  <!-- Thema 7 -->
   <div class="thema-card">
     <div class="thema-image" style="background-image:url('img/images/thema7.jpg')"></div>
     <div class="thema-content">
       <h2>💬 Thema 7 – Communicatie</h2>
       <p>Duidelijk spreken en schrijven.</p>
-      <div class="progress">
-        <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-        <div class="progress-label">Nog niet gestart</div>
-      </div>
       <a href="thema7.html"><button>Start</button></a>
     </div>
   </div>
 
+  <!-- Thema 8 -->
   <div class="thema-card">
     <div class="thema-image" style="background-image:url('img/images/thema8.jpg')"></div>
     <div class="thema-content">
       <h2>📰 Thema 8 – Actualiteit</h2>
       <p>Werken met nieuws.</p>
-      <div class="progress">
-        <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-        <div class="progress-label">Nog niet gestart</div>
-      </div>
       <a href="thema8.html"><button>Start</button></a>
     </div>
   </div>
 
+  <!-- Thema 9 -->
   <div class="thema-card">
     <div class="thema-image" style="background-image:url('img/images/thema9.jpg')"></div>
     <div class="thema-content">
       <h2>🏛️ Thema 9 – Geschiedenis</h2>
       <p>Het verhaal van Vlaanderen.</p>
-      <div class="progress">
-        <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-        <div class="progress-label">Nog niet gestart</div>
-      </div>
       <a href="thema9.html"><button>Start</button></a>
     </div>
   </div>
 
 </div>
 
-<script src="./student-auth.js"></script>
+<script>
+  document.getElementById('logoutBtn').addEventListener('click', () => {
+    if (!confirm('Wil je uitloggen? Alle voortgang wordt gewist.')) return;
+    localStorage.clear();
+    alert('Uitgelogd. Voortgang is gereset.');
+    location.reload();
+  });
+</script>
 
 </body>
 </html>
