@@ -210,12 +210,17 @@
 <!-- LOGIN -->
 <section class="login-grid">
 
+  <!-- LEERLING -->
   <div class="login-card">
     <h2>👤 Leerling login</h2>
-    <form class="login-row">
-      <label>Voornaam<input type="text"></label>
-      <label>Klas<input type="text"></label>
-      <button>Inloggen</button>
+    <form class="login-row" id="studentLoginForm">
+      <label>Voornaam
+        <input id="studentVoornaam" type="text" required>
+      </label>
+      <label>Klas
+        <input id="studentKlas" type="text" required>
+      </label>
+      <button type="submit">Inloggen</button>
       <a href="leerling-dashboard.html"
          style="align-self:center;font-weight:700;color:var(--blue);">
         Mijn voortgang
@@ -223,9 +228,10 @@
     </form>
   </div>
 
+  <!-- LEERKRACHT -->
   <div class="login-card">
     <h2>👩‍🏫 Leerkracht</h2>
-    <p>Bekijk voortgang, scores en rapporten per leerling.</p>
+    <p>Bekijk voortgang, resultaten en rapporten per leerling.</p>
     <a href="leerkracht-dashboard.html">
       <button>Naar leerkrachtomgeving</button>
     </a>
@@ -236,9 +242,8 @@
 <!-- THEMA’S -->
 <div class="container">
 
-  <!-- 1 -->
   <div class="thema-card">
-    <div class="thema-image" style="background-image:url('img/themes/thema1.jpg')"></div>
+    <div class="thema-image" style="background-image:url('img/images/thema1.jpg')"></div>
     <div class="thema-content">
       <h2>🌍 Thema 1 – Landschappen</h2>
       <p>Natuurlijke en menselijke landschappen.</p>
@@ -250,9 +255,8 @@
     </div>
   </div>
 
-  <!-- 2 -->
   <div class="thema-card">
-    <div class="thema-image" style="background-image:url('img/themes/thema2.jpg')"></div>
+    <div class="thema-image" style="background-image:url('img/images/thema2.jpg')"></div>
     <div class="thema-content">
       <h2>🌿 Thema 2 – Levende natuur</h2>
       <p>Organismen en ecosystemen.</p>
@@ -264,9 +268,8 @@
     </div>
   </div>
 
-  <!-- 3 -->
   <div class="thema-card">
-    <div class="thema-image" style="background-image:url('img/themes/thema3.jpg')"></div>
+    <div class="thema-image" style="background-image:url('img/images/thema3.jpg')"></div>
     <div class="thema-content">
       <h2>⏳ Thema 3 – Werkwoordstijden</h2>
       <p>Tegenwoordige tijd, verleden tijd en dt-regel.</p>
@@ -278,9 +281,8 @@
     </div>
   </div>
 
-  <!-- 4 -->
   <div class="thema-card">
-    <div class="thema-image" style="background-image:url('img/themes/thema4.jpg')"></div>
+    <div class="thema-image" style="background-image:url('img/images/thema4.jpg')"></div>
     <div class="thema-content">
       <h2>📐 Thema 4 – Wiskunde</h2>
       <p>Omtrek en oppervlakte.</p>
@@ -292,9 +294,8 @@
     </div>
   </div>
 
-  <!-- 5 -->
   <div class="thema-card">
-    <div class="thema-image" style="background-image:url('img/themes/thema5.jpg')"></div>
+    <div class="thema-image" style="background-image:url('img/images/thema5.jpg')"></div>
     <div class="thema-content">
       <h2>📖 Thema 5 – Fictie & non-fictie</h2>
       <p>Teksten begrijpen en vergelijken.</p>
@@ -306,9 +307,8 @@
     </div>
   </div>
 
-  <!-- 6 -->
   <div class="thema-card">
-    <div class="thema-image" style="background-image:url('img/themes/thema6.jpg')"></div>
+    <div class="thema-image" style="background-image:url('img/images/thema6.jpg')"></div>
     <div class="thema-content">
       <h2>🎯 Thema 6 – Schatten</h2>
       <p>Schatten en afronden.</p>
@@ -320,9 +320,8 @@
     </div>
   </div>
 
-  <!-- 7 -->
   <div class="thema-card">
-    <div class="thema-image" style="background-image:url('img/themes/thema7.jpg')"></div>
+    <div class="thema-image" style="background-image:url('img/images/thema7.jpg')"></div>
     <div class="thema-content">
       <h2>💬 Thema 7 – Communicatie</h2>
       <p>Duidelijk spreken en schrijven.</p>
@@ -334,9 +333,8 @@
     </div>
   </div>
 
-  <!-- 8 -->
   <div class="thema-card">
-    <div class="thema-image" style="background-image:url('img/themes/thema8.jpg')"></div>
+    <div class="thema-image" style="background-image:url('img/images/thema8.jpg')"></div>
     <div class="thema-content">
       <h2>📰 Thema 8 – Actualiteit</h2>
       <p>Werken met nieuws.</p>
@@ -348,9 +346,8 @@
     </div>
   </div>
 
-  <!-- 9 -->
   <div class="thema-card">
-    <div class="thema-image" style="background-image:url('img/themes/thema9.jpg')"></div>
+    <div class="thema-image" style="background-image:url('img/images/thema9.jpg')"></div>
     <div class="thema-content">
       <h2>🏛️ Thema 9 – Geschiedenis</h2>
       <p>Het verhaal van Vlaanderen.</p>
@@ -364,6 +361,7 @@
 
 </div>
 
+<script src="./student-auth.js"></script>
+
 </body>
 </html>
-
