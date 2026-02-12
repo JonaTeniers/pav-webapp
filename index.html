@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8" />
-  <title>PAVO – Leeromgeving</title>
+  <title>PAV-O Leeromgeving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <link rel="stylesheet"
@@ -27,52 +27,48 @@
       color: var(--text);
     }
 
-    /* ---------- HEADER ---------- */
+    /* HEADER */
     header {
       background: linear-gradient(135deg, #1e88e5, #64b5f6);
       color: white;
-      padding: 3.5rem 1.5rem 2.6rem;
+      padding: 3rem 1.5rem 2.5rem;
       text-align: center;
-      border-bottom-left-radius: 36px;
-      border-bottom-right-radius: 36px;
-    }
-
-    .mascot {
-      width: 170px;
-      margin-bottom: 0.8rem;
+      border-bottom-left-radius: 32px;
+      border-bottom-right-radius: 32px;
     }
 
     header h1 {
-      margin: 0.3rem 0;
-      font-size: 2.7rem;
+      margin: 0;
+      font-size: 2.8rem;
+      font-weight: 800;
     }
 
     header p {
-      margin: 0;
+      margin: 0.4rem 0;
       font-size: 1.15rem;
       opacity: 0.95;
     }
 
-    .welcome {
+    #welcome {
       margin-top: 0.6rem;
-      font-weight: 800;
-      font-size: 1.05rem;
+      font-size: 1.1rem;
+      font-weight: 700;
     }
 
-    /* ---------- LOGIN ---------- */
+    /* LOGIN */
     .login-grid {
       width: min(1200px, 95%);
-      margin: -2.8rem auto 2.8rem;
+      margin: -2.6rem auto 2.6rem;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1.6rem;
+      gap: 1.4rem;
     }
 
     .login-card {
       background: var(--panel);
       border-radius: 22px;
-      box-shadow: 0 14px 32px rgba(0,0,0,0.14);
-      padding: 1.7rem;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+      padding: 1.6rem;
     }
 
     .login-card h2 {
@@ -83,96 +79,95 @@
     .login-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 14px;
+      gap: 12px;
       align-items: end;
     }
 
-    .login-card label {
+    label {
       display: flex;
       flex-direction: column;
       gap: 4px;
       font-weight: 700;
     }
 
-    .login-card input {
+    input {
       min-width: 180px;
-      border: 2px solid #cbd5e1;
-      border-radius: 12px;
-      padding: 10px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 9px 12px;
       font-size: 1rem;
     }
 
-    .login-card button {
+    button {
       background: var(--blue);
       color: white;
       border: none;
       border-radius: 999px;
-      padding: 0.6rem 1.6rem;
+      padding: 0.55rem 1.4rem;
       cursor: pointer;
-      font-weight: 800;
+      font-weight: 700;
     }
 
-    .logout-btn {
-      background: #64748b;
+    button:hover {
+      background: var(--blue-dark);
     }
 
-    /* ---------- THEMA GRID ---------- */
+    /* THEMA GRID */
     .container {
-      width: min(1300px, 95%);
-      margin: 3rem auto 3.5rem;
+      width: min(1250px, 95%);
+      margin: 3rem auto 4rem;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-      gap: 1.8rem;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 1.5rem;
     }
 
     .thema-card {
       background: var(--panel);
-      border-radius: 26px;
+      border-radius: 22px;
       overflow: hidden;
-      box-shadow: 0 14px 32px rgba(0,0,0,0.14);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.1);
       display: flex;
       flex-direction: column;
       border: 2px solid #dbeafe;
     }
 
     .thema-image {
-      position: relative;
-      height: 190px;
+      height: 170px;
       background-size: cover;
       background-position: center;
+      position: relative;
     }
 
     .thema-title {
       position: absolute;
       bottom: 0;
       width: 100%;
-      padding: 0.9rem 1.2rem;
-      background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0));
+      padding: 0.8rem 1rem;
+      background: linear-gradient(transparent, rgba(0,0,0,0.75));
       color: white;
-      font-size: 1.35rem;
+      font-size: 1.25rem;
       font-weight: 800;
     }
 
     .thema-content {
-      padding: 1.4rem;
+      padding: 1.3rem;
       display: flex;
       flex-direction: column;
       flex-grow: 1;
     }
 
     .thema-content p {
-      margin: 0.2rem 0 0.8rem;
       color: #4b5563;
       font-size: 0.95rem;
+      margin: 0.2rem 0;
     }
 
-    /* ---------- PROGRESS ---------- */
     .progress {
-      margin-bottom: 1rem;
+      margin-top: 0.8rem;
     }
 
     .progress-bar {
-      height: 10px;
+      height: 9px;
       background: #e5e7eb;
       border-radius: 999px;
       overflow: hidden;
@@ -180,29 +175,18 @@
 
     .progress-fill {
       height: 100%;
-      width: 0%;
       background: linear-gradient(90deg, #64b5f6, #1976d2);
+      width: 0%;
     }
 
     .progress-label {
       font-size: 0.8rem;
       color: var(--muted);
-      margin-top: 0.35rem;
+      margin-top: 0.3rem;
     }
 
-    .thema-content button {
+    .thema-content a {
       margin-top: auto;
-      background: var(--blue);
-      color: white;
-      border: none;
-      padding: 0.7rem 1.8rem;
-      border-radius: 999px;
-      font-weight: 800;
-      cursor: pointer;
-    }
-
-    .thema-content button:hover {
-      background: var(--blue-dark);
     }
 
     @media (max-width: 900px) {
@@ -214,10 +198,9 @@
 <body>
 
 <header>
-  <img src="img/pavomascotte.png" alt="PAVO mascotte" class="mascot">
   <h1>PAV-O Leeromgeving</h1>
   <p>Ontdek, oefen en groei – stap voor stap</p>
-  <div class="welcome" id="welcomeText"></div>
+  <div id="welcome">Niet ingelogd</div>
 </header>
 
 <section class="login-grid">
@@ -225,15 +208,19 @@
   <!-- LEERLING -->
   <div class="login-card">
     <h2>👤 Leerling</h2>
-    <form class="login-row" id="loginForm">
+    <form class="login-row" id="studentForm">
       <label>Voornaam
-        <input id="naam" required>
+        <input id="studentName">
       </label>
       <label>Klas
-        <input id="klas" required>
+        <input id="studentClass">
       </label>
       <button type="submit">Inloggen</button>
-      <button type="button" class="logout-btn" id="logoutBtn">Uitloggen</button>
+      <button type="button" onclick="logout()">Uitloggen</button>
+      <a href="leerling-dashboard.html"
+         style="align-self:center;font-weight:700;color:var(--blue);">
+        Mijn voortgang
+      </a>
     </form>
   </div>
 
@@ -241,75 +228,72 @@
   <div class="login-card">
     <h2>👩‍🏫 Leerkracht</h2>
     <p>Bekijk voortgang en rapporten per leerling.</p>
-    <a href="leerkracht-dashboard.html">
-      <button>Naar leerkrachtomgeving</button>
-    </a>
+    <a href="leerkracht-dashboard.html"><button>Naar leerkrachtomgeving</button></a>
   </div>
 
 </section>
 
-<!-- THEMA'S -->
-<div class="container" id="themeContainer"></div>
+<div class="container" id="themes"></div>
 
 <script>
 const themes = [
-  { id: 1, title: "🌍 Thema 1 – Landschappen", img: "thema1.jpg", link: "thema1.html", desc: "Natuurlijke en menselijke landschappen." },
-  { id: 2, title: "🌿 Thema 2 – Levende natuur", img: "thema2.jpg", link: "thema2.html", desc: "Organismen en ecosystemen." },
-  { id: 3, title: "⏳ Thema 3 – Werkwoordstijden", img: "thema3.jpg", link: "thema3.html", desc: "Tegenwoordige tijd, verleden tijd en dt-regel." },
-  { id: 4, title: "📐 Thema 4 – Wiskunde", img: "thema4.jpg", link: "thema4.html", desc: "Omtrek en oppervlakte." },
-  { id: 5, title: "📖 Thema 5 – Fictie & non-fictie", img: "thema5.jpg", link: "thema5.html", desc: "Teksten begrijpen en vergelijken." },
-  { id: 6, title: "🎯 Thema 6 – Schatten", img: "thema6.jpg", link: "thema6.html", desc: "Afronden en schatten." },
-  { id: 7, title: "💬 Thema 7 – Communicatie", img: "thema7.jpg", link: "thema7.html", desc: "Duidelijk spreken en schrijven." },
-  { id: 8, title: "📰 Thema 8 – Actualiteit", img: "thema8.jpg", link: "thema8.html", desc: "Werken met nieuws." },
-  { id: 9, title: "🏛️ Thema 9 – Geschiedenis", img: "thema9.jpg", link: "thema9.html", desc: "Het verhaal van Vlaanderen." }
+  {id:1,title:"🌍 Thema 1 – Landschappen"},
+  {id:2,title:"🌿 Thema 2 – Levende natuur"},
+  {id:3,title:"⏳ Thema 3 – Werkwoordstijden"},
+  {id:4,title:"📐 Thema 4 – Wiskunde"},
+  {id:5,title:"📖 Thema 5 – Fictie & non-fictie"},
+  {id:6,title:"🎯 Thema 6 – Schatten"},
+  {id:7,title:"💬 Thema 7 – Communicatie"},
+  {id:8,title:"📰 Thema 8 – Actualiteit"},
+  {id:9,title:"🏛️ Thema 9 – Geschiedenis"},
 ];
 
-const container = document.getElementById('themeContainer');
-const welcome = document.getElementById('welcomeText');
-
 function renderThemes() {
-  container.innerHTML = '';
+  const c = document.getElementById("themes");
+  c.innerHTML = "";
   themes.forEach(t => {
-    const progress = Number(localStorage.getItem(`thema${t.id}_progress`)) || 0;
-    container.innerHTML += `
+    const p = localStorage.getItem(`thema${t.id}_progress`) || 0;
+    c.innerHTML += `
       <div class="thema-card">
-        <div class="thema-image" style="background-image:url('img/images/${t.img}')">
+        <div class="thema-image" style="background-image:url('img/images/thema${t.id}.jpg')">
           <div class="thema-title">${t.title}</div>
         </div>
         <div class="thema-content">
-          <p>${t.desc}</p>
           <div class="progress">
             <div class="progress-bar">
-              <div class="progress-fill" style="width:${progress}%"></div>
+              <div class="progress-fill" style="width:${p}%"></div>
             </div>
-            <div class="progress-label">${progress}% afgerond</div>
+            <div class="progress-label">${p}% afgerond</div>
           </div>
-          <a href="${t.link}"><button>Start</button></a>
+          <a href="thema${t.id}.html"><button>Start</button></a>
         </div>
       </div>
     `;
   });
 }
 
-function updateWelcome() {
-  const naam = localStorage.getItem('leerlingNaam');
-  const klas = localStorage.getItem('leerlingKlas');
-  welcome.textContent = naam ? `Welkom, ${naam} (${klas})` : '';
-}
-
-document.getElementById('loginForm').addEventListener('submit', e => {
+document.getElementById("studentForm").onsubmit = e => {
   e.preventDefault();
-  localStorage.setItem('leerlingNaam', naam.value);
-  localStorage.setItem('leerlingKlas', klas.value);
+  const n = studentName.value.trim();
+  const k = studentClass.value.trim();
+  if (!n || !k) return;
+  localStorage.setItem("studentName", n);
+  localStorage.setItem("studentClass", k);
   updateWelcome();
-});
+};
 
-document.getElementById('logoutBtn').addEventListener('click', () => {
-  if (!confirm('Uitloggen? Alle voortgang wordt gewist.')) return;
+function logout() {
   localStorage.clear();
   updateWelcome();
   renderThemes();
-});
+}
+
+function updateWelcome() {
+  const n = localStorage.getItem("studentName");
+  const k = localStorage.getItem("studentClass");
+  document.getElementById("welcome").textContent =
+    n ? `Welkom, ${n} (${k})` : "Niet ingelogd";
+}
 
 updateWelcome();
 renderThemes();
@@ -317,4 +301,5 @@ renderThemes();
 
 </body>
 </html>
+
 
