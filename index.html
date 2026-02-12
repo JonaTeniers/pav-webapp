@@ -79,59 +79,6 @@ body{
   cursor:pointer;
 }
 
-/* ================= LOGIN STRIP ================= */
-.login-strip{
-  width:min(1200px,95%);
-  margin:1.8rem auto;
-  background:white;
-  border-radius:20px;
-  padding:1.4rem;
-  box-shadow:0 10px 26px rgba(0,0,0,0.12);
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:1.4rem;
-}
-
-.login-card h2{
-  margin:0 0 0.6rem;
-  color:var(--blue);
-}
-
-.login-row{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  align-items:end;
-}
-
-label{
-  display:flex;
-  flex-direction:column;
-  gap:4px;
-  font-weight:700;
-}
-
-input{
-  min-width:160px;
-  border:1px solid #cbd5e1;
-  border-radius:10px;
-  padding:9px 12px;
-}
-
-button{
-  background:var(--blue);
-  color:white;
-  border:none;
-  border-radius:999px;
-  padding:0.55rem 1.4rem;
-  font-weight:700;
-  cursor:pointer;
-}
-
-button:hover{
-  background:var(--blue-dark);
-}
-
 /* ================= THEMES ================= */
 .container{
   width:min(1250px,95%);
@@ -198,6 +145,20 @@ button:hover{
   color:var(--muted);
   margin-top:0.3rem;
 }
+
+button{
+  background:var(--blue);
+  color:white;
+  border:none;
+  border-radius:999px;
+  padding:0.55rem 1.4rem;
+  font-weight:700;
+  cursor:pointer;
+}
+
+button:hover{
+  background:var(--blue-dark);
+}
 </style>
 </head>
 
@@ -205,6 +166,7 @@ button:hover{
 
 <!-- ================= TOPBAR ================= -->
 <div class="topbar">
+
   <div class="top-left">
     <img src="img/pavomascotte.png" alt="PAV-O">
     <div class="top-title">PAV-O</div>
@@ -215,40 +177,11 @@ button:hover{
   </div>
 
   <div class="top-right">
-    <div class="user-btn" onclick="scrollToLogin()">TJ</div>
+    <!-- TJ knop = LOGIN -->
+    <div class="user-btn" onclick="goLogin()">TJ</div>
   </div>
+
 </div>
-
-<!-- ================= LOGIN ================= -->
-<section class="login-strip" id="login">
-
-  <div class="login-card">
-    <h2>👤 Leerling</h2>
-    <form class="login-row" onsubmit="login(event)">
-      <label>Voornaam
-        <input id="studentName">
-      </label>
-      <label>Klas
-        <input id="studentClass">
-      </label>
-      <button type="submit">Inloggen</button>
-      <button type="button" onclick="logout()">Uitloggen</button>
-      <a href="leerling-dashboard.html"
-         style="align-self:center;font-weight:700;color:var(--blue)">
-        Mijn voortgang
-      </a>
-    </form>
-  </div>
-
-  <div class="login-card">
-    <h2>👩‍🏫 Leerkracht</h2>
-    <p>Bekijk voortgang en rapporten per leerling.</p>
-    <a href="leerkracht-dashboard.html">
-      <button>Naar leerkrachtomgeving</button>
-    </a>
-  </div>
-
-</section>
 
 <!-- ================= THEMES ================= -->
 <div class="container" id="themes"></div>
@@ -291,18 +224,8 @@ function renderThemes(){
   });
 }
 
-function login(e){
-  e.preventDefault();
-  if(!studentName.value || !studentClass.value) return;
-  localStorage.setItem("studentName",studentName.value);
-  localStorage.setItem("studentClass",studentClass.value);
-  updateWelcome();
-}
-
-function logout(){
-  localStorage.clear();
-  updateWelcome();
-  renderThemes();
+function goLogin(){
+  window.location.href = "login.html";
 }
 
 function updateWelcome(){
@@ -310,10 +233,6 @@ function updateWelcome(){
   const k = localStorage.getItem("studentClass");
   document.getElementById("welcomeText").textContent =
     n ? `Hallo, ${n} (${k}) 👋` : "Mijn startpagina";
-}
-
-function scrollToLogin(){
-  document.getElementById("login").scrollIntoView({behavior:"smooth"});
 }
 
 updateWelcome();
