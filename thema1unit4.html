@@ -22,24 +22,30 @@ h1 { text-align: center; color: #1a237e; }
   border-radius: 14px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
+
 .hidden { display: none; }
 
-.image-row {
-  display: flex;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-  margin: 1rem 0;
+.instruction {
+  background: #e8eaf6;
+  padding: 1rem;
+  border-left: 5px solid #1a237e;
+  margin-bottom: 1rem;
 }
-.image-row img {
-  max-width: 320px;
+
+.image-center img {
+  max-width: 420px;
+  width: 100%;
   border-radius: 10px;
+  display: block;
+  margin: 1rem auto;
 }
 
 .drag-area {
   display: flex;
-  gap: 1rem;
+  gap: 0.8rem;
   flex-wrap: wrap;
 }
+
 .drag-item {
   padding: 0.5rem 0.8rem;
   background: #e8eaf6;
@@ -47,10 +53,16 @@ h1 { text-align: center; color: #1a237e; }
   cursor: grab;
 }
 
+.drop-wrap {
+  display: flex;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
 .drop-zone {
+  flex: 1;
   border: 2px dashed #1a237e;
   padding: 1rem;
-  min-width: 200px;
   min-height: 160px;
   border-radius: 10px;
 }
@@ -75,16 +87,12 @@ button {
   margin-top: 1rem;
   font-weight: bold;
 }
+
 .success { color: #2e7d32; }
 .error { color: #c62828; }
 
-table { width: 100%; }
+table { width: 100%; border-collapse: collapse; }
 td { padding: 0.4rem; }
-
-.bron {
-  font-size: 0.75rem;
-  color: #555;
-}
 </style>
 </head>
 
@@ -97,7 +105,18 @@ td { padding: 0.4rem; }
 <!-- OEFENING 1 -->
 <div class="task" id="t1">
 <h2>Oefening 1 – Landschapsvormende lagen</h2>
-<p>Sleep elk element naar de juiste laag.</p>
+
+<div class="instruction">
+<p>
+Hieronder zie je verschillende elementen uit een landschap.<br>
+<strong>Sleep elk element naar de juiste laag</strong>:
+<ul>
+<li>natuurlijke laag</li>
+<li>menselijke laag</li>
+</ul>
+Elk element hoort maar op <strong>één</strong> plaats.
+</p>
+</div>
 
 <div class="drag-area">
   <div class="drag-item" draggable="true">Rivier</div>
@@ -110,7 +129,7 @@ td { padding: 0.4rem; }
   <div class="drag-item" draggable="true">Spoorlijn</div>
 </div>
 
-<div class="image-row">
+<div class="drop-wrap">
   <div>
     <h4>Natuurlijke laag</h4>
     <div class="drop-zone" id="nat"></div>
@@ -128,10 +147,17 @@ td { padding: 0.4rem; }
 <!-- OEFENING 2 -->
 <div class="task hidden" id="t2">
 <h2>Oefening 2 – Welk soort landschap?</h2>
-<p>Bekijk de afbeelding.</p>
 
-<img src="img/images/landschap_stad.jpg" alt="Stedelijk landschap">
-<div class="bron">Bron: eigen lesmateriaal</div>
+<div class="instruction">
+<p>
+Bekijk de afbeelding aandachtig.<br>
+<strong>Welk soort landschap</strong> zie je hier?
+</p>
+</div>
+
+<div class="image-center">
+  <img src="img/images/landschap_stad.jpg" alt="Stedelijk landschap">
+</div>
 
 <label><input type="radio" name="ls" value="stedelijk"> stedelijk landschap</label><br>
 <label><input type="radio" name="ls" value="landelijk"> landelijk landschap</label><br>
@@ -146,6 +172,17 @@ td { padding: 0.4rem; }
 <div class="task hidden" id="t3">
 <h2>Oefening 3 – Tabel invullen</h2>
 
+<div class="instruction">
+<p>
+Vul de tabel aan:
+<ul>
+<li>Is het element <strong>natuurlijk</strong> of <strong>menselijk</strong>?</li>
+<li>Tot welke <strong>laag</strong> hoort het?</li>
+</ul>
+Gebruik volledige woorden.
+</p>
+</div>
+
 <table>
 <tr><td>Bos</td><td><input id="e1"></td><td><input id="l1"></td></tr>
 <tr><td>Spoorlijn</td><td><input id="e2"></td><td><input id="l2"></td></tr>
@@ -159,7 +196,18 @@ td { padding: 0.4rem; }
 
 <!-- OEFENING 4 -->
 <div class="task hidden" id="t4">
-<h2>Oefening 4 – Menselijk of natuurlijk?</h2>
+<h2>Oefening 4 – Menselijke en natuurlijke elementen</h2>
+
+<div class="instruction">
+<p>
+Sleep elk element naar het juiste vak:
+<ul>
+<li><strong>natuurlijke elementen</strong></li>
+<li><strong>menselijke elementen</strong></li>
+</ul>
+Werk nauwkeurig: elk fout element kost punten.
+</p>
+</div>
 
 <div class="drag-area">
   <div class="drag-item" draggable="true">Snelweg</div>
@@ -172,7 +220,7 @@ td { padding: 0.4rem; }
   <div class="drag-item" draggable="true">Berg</div>
 </div>
 
-<div class="image-row">
+<div class="drop-wrap">
   <div>
     <h4>Natuurlijk</h4>
     <div class="drop-zone" id="nat2"></div>
@@ -189,15 +237,23 @@ td { padding: 0.4rem; }
 
 <!-- OEFENING 5 -->
 <div class="task hidden" id="t5">
-<h2>Oefening 5 – Relatie mens en natuur</h2>
+<h2>Oefening 5 – Relatie tussen mens en natuur</h2>
 
-<img src="img/images/amazonewoud.jpg" alt="Amazonewoud">
-<p>Hoe is de relatie tussen mens en natuur hier?</p>
+<div class="instruction">
+<p>
+Bekijk de afbeelding van het Amazonewoud.<br>
+<strong>Hoe is de relatie tussen mens en natuur hier vooral?</strong>
+</p>
+</div>
+
+<div class="image-center">
+  <img src="img/images/amazonewoud.jpg" alt="Amazonewoud">
+</div>
 
 <label><input type="radio" name="rel" value="positief"> positief</label><br>
 <label><input type="radio" name="rel" value="negatief"> negatief</label><br>
 
-<textarea id="uitleg5" placeholder="Leg je keuze kort uit."></textarea>
+<textarea id="uitleg5" placeholder="Leg je keuze uit in minstens één zin."></textarea>
 
 <button onclick="check5()">Controleer</button>
 <div class="feedback" id="fb5"></div>
@@ -206,6 +262,13 @@ td { padding: 0.4rem; }
 <!-- OEFENING 6 -->
 <div class="task hidden" id="t6">
 <h2>Oefening 6 – Juist of fout</h2>
+
+<div class="instruction">
+<p>
+Lees elke stelling aandachtig.<br>
+Duid aan of ze <strong>juist</strong> of <strong>fout</strong> is.
+</p>
+</div>
 
 <label><input type="checkbox" id="s1"> Een stad is ook een landschap.</label><br>
 <label><input type="checkbox" id="s2"> Een landschap bestaat alleen uit natuur.</label><br>
@@ -219,8 +282,14 @@ td { padding: 0.4rem; }
 <div class="task hidden" id="t7">
 <h2>Oefening 7 – Invuloefening</h2>
 
+<div class="instruction">
 <p>
-In een <input id="w1"> landschap zie je vooral <input id="w2">.
+Vul de juiste woorden in zodat de tekst inhoudelijk klopt.
+</p>
+</div>
+
+<p>
+In een <input id="w1"> landschap zie je vooral <input id="w2">.<br>
 In een <input id="w3"> landschap overheersen <input id="w4">.
 </p>
 
@@ -232,7 +301,17 @@ In een <input id="w3"> landschap overheersen <input id="w4">.
 <div class="task hidden" id="t8">
 <h2>Oefening 8 – Besluit</h2>
 
-<textarea id="besluit" placeholder="Beschrijf een landschap dat jij kent en welk type het is."></textarea>
+<div class="instruction">
+<p>
+Denk aan een landschap dat jij kent (je buurt, dorp of stad).
+<ul>
+<li>Welk soort landschap is het?</li>
+<li>Noem minstens <strong>twee kenmerken</strong> die dit bewijzen.</li>
+</ul>
+</p>
+</div>
+
+<textarea id="besluit" placeholder="Schrijf hier je antwoord."></textarea>
 <button onclick="finish()">Unit afronden</button>
 </div>
 
@@ -275,8 +354,8 @@ function check1(){
 /* OEF 2 */
 function check2(){
   const val = document.querySelector('input[name="ls"]:checked')?.value;
-  if(val==="stedelijk"){ xp+=2; document.getElementById("fb2").textContent="Juist!"; }
-  else document.getElementById("fb2").textContent="Niet juist.";
+  xp += val==="stedelijk" ? 2 : 1;
+  document.getElementById("fb2").textContent = "Antwoord verwerkt.";
   document.getElementById("t3").classList.remove("hidden");
 }
 
@@ -296,24 +375,22 @@ function check3(){
 function check4(){
   let total = document.querySelectorAll('#nat2 .drag-item, #mens2 .drag-item').length;
   xp += Math.min(total,3);
-  document.getElementById("fb4").textContent = "In orde.";
+  document.getElementById("fb4").textContent = "Gecontroleerd.";
   document.getElementById("t5").classList.remove("hidden");
 }
 
 /* OEF 5 */
 function check5(){
   const r = document.querySelector('input[name="rel"]:checked')?.value;
-  if(r==="negatief" && uitleg5.value.length>10) xp+=2;
-  else xp+=1;
-  document.getElementById("fb5").textContent="Ontvangen.";
+  xp += (r==="negatief" && uitleg5.value.length>15) ? 2 : 1;
+  document.getElementById("fb5").textContent = "Antwoord ontvangen.";
   document.getElementById("t6").classList.remove("hidden");
 }
 
 /* OEF 6 */
 function check6(){
-  if(s1.checked && !s2.checked && s3.checked) xp+=2;
-  else xp+=1;
-  document.getElementById("fb6").textContent="Gecontroleerd.";
+  xp += (s1.checked && !s2.checked && s3.checked) ? 2 : 1;
+  document.getElementById("fb6").textContent = "In orde.";
   document.getElementById("t7").classList.remove("hidden");
 }
 
@@ -321,17 +398,17 @@ function check6(){
 function check7(){
   let c=0;
   if(w1.value.toLowerCase().includes("landelijk")) c++;
-  if(w2.value.toLowerCase().includes("akker")) c++;
+  if(w2.value.toLowerCase().includes("akker") || w2.value.toLowerCase().includes("boerderij")) c++;
   if(w3.value.toLowerCase().includes("industrieel")) c++;
   if(w4.value.toLowerCase().includes("mens")) c++;
   xp += Math.min(c,2);
-  document.getElementById("fb7").textContent="In orde.";
+  document.getElementById("fb7").textContent = "Gecontroleerd.";
   document.getElementById("t8").classList.remove("hidden");
 }
 
 /* AFRONDEN */
 function finish(){
-  if(besluit.value.length>20) xp+=1;
+  if(besluit.value.length>30) xp+=1;
   localStorage.setItem("thema1unit4_done","true");
   localStorage.setItem("xp_thema1_unit4",xp);
   document.getElementById("xpScore").textContent = xp;
