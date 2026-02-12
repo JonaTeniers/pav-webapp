@@ -210,6 +210,11 @@ button.start{
 button.start:hover{
   background:var(--blue-dark);
 }
+
+button.start:disabled{
+  opacity:0.45;
+  cursor:not-allowed;
+}
 </style>
 </head>
 
@@ -250,36 +255,57 @@ button.start:hover{
 
 <script>
 const themes = [
-  {id:1,title:"🌍 Thema 1 – Landschappen"},
-  {id:2,title:"🌿 Thema 2 – Levende natuur"},
-  {id:3,title:"⏳ Thema 3 – Werkwoordstijden"},
-  {id:4,title:"📐 Thema 4 – Wiskunde"},
-  {id:5,title:"📖 Thema 5 – Fictie & non-fictie"},
-  {id:6,title:"🎯 Thema 6 – Schatten"},
-  {id:7,title:"💬 Thema 7 – Communicatie"},
-  {id:8,title:"📰 Thema 8 – Actualiteit"},
-  {id:9,title:"🏛️ Thema 9 – Geschiedenis"},
+  {id:1,title:"🌍 Thema 1 – Landschappen", active:true},
+  {id:2,title:"🌿 Thema 2 – Levende natuur", active:true},
+  {id:3,title:"⏳ Thema 3 – Werkwoordstijden", active:true},
+  {id:4,title:"📐 Thema 4 – Wiskunde", active:true},
+  {id:5,title:"📖 Thema 5 – Fictie & non-fictie", active:true},
+  {id:6,title:"🎯 Thema 6 – Schatten", active:true},
+  {id:7,title:"💬 Thema 7 – Communicatie", active:true},
+  {id:8,title:"📰 Thema 8 – Actualiteit", active:true},
+  {id:9,title:"🏛️ Thema 9 – Geschiedenis", active:true},
+
+  {id:10,title:"🚧 Thema 10 – Naam volgt", active:false},
+  {id:11,title:"🚧 Thema 11 – Naam volgt", active:false},
+  {id:12,title:"🚧 Thema 12 – Naam volgt", active:false},
 ];
 
 function renderThemes(){
   const c = document.getElementById("themes");
   c.innerHTML = "";
+
   themes.forEach(t=>{
     const p = localStorage.getItem(`thema${t.id}_progress`) || 0;
+    const image = t.active
+      ? `img/images/thema${t.id}.jpg`
+      : `img/images/pavobouwmascotte.png`;
+
     c.innerHTML += `
-      <div class="thema-card">
+      <div class="thema-card" style="${t.active ? "" : "opacity:0.6"}">
         <div class="thema-image"
-             style="background-image:url('img/images/thema${t.id}.jpg')">
+             style="background-image:url('${image}')">
           <div class="thema-title">${t.title}</div>
         </div>
+
         <div class="thema-content">
-          <div class="progress">
-            <div class="progress-bar">
-              <div class="progress-fill" style="width:${p}%"></div>
-            </div>
-            <div class="progress-label">${p}% afgerond</div>
-          </div>
-          <a href="thema${t.id}.html"><button class="start">Start</button></a>
+          ${
+            t.active
+            ? `
+              <div class="progress">
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width:${p}%"></div>
+                </div>
+                <div class="progress-label">${p}% afgerond</div>
+              </div>
+              <a href="thema${t.id}.html">
+                <button class="start">Start</button>
+              </a>
+            `
+            : `
+              <div class="progress-label">In voorbereiding</div>
+              <button class="start" disabled>Binnenkort</button>
+            `
+          }
         </div>
       </div>
     `;
@@ -305,7 +331,7 @@ function updateUI(){
 
   if(n){
     welcome.style.display = "block";
-    welcome.textContent = `Welkom, ${n} (${k}) 👋`;
+    welcome.textContent = `Welkom, ${n} (${k})`;
     btn.textContent = "Log uit";
   } else {
     welcome.style.display = "none";
