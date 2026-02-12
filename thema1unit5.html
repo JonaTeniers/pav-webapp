@@ -214,11 +214,37 @@
         <button onclick="finish()">Unit afronden</button>
     </div>
 
-    <div class="task hidden" id="endScreen">
-        <h2 style="text-align: center;">🎉 Goed gedaan!</h2>
-        <p style="text-align: center;">Je hebt de unit over landschapsgebruik succesvol voltooid.</p>
+<div class="task hidden" id="endScreen">
+    <h2 style="text-align: center;">🎉 Unit afgerond!</h2>
+
+    <p style="text-align: center;">
+        Je hebt de oefeningen over <strong>het gebruik van landschappen</strong> succesvol voltooid.
+    </p>
+
+    <img
+      src="img/images/pavobouwmascotte.png"
+      alt="PAVO werkt aan de volgende unit"
+      style="
+        display: block;
+        max-width: 140px;
+        margin: 1rem auto;
+      "
+    >
+
+    <p style="text-align: center; font-weight: 600;">
+        De volgende unit is PAVO nog aan het bouwen 🧱
+    </p>
+
+    <div style="text-align:center; margin-top:1.5rem;">
+        <a href="thema1.html">
+            <button>← Terug naar thema</button>
+        </a>
+        <a href="thema1unit6.html" style="margin-left: 10px;">
+            <button>→ Volgende unit</button>
+        </a>
     </div>
 </div>
+
 
 <script>
     // Drag and Drop functies
@@ -277,15 +303,20 @@
     }
 
     // Afronden
-    function finish() {
-        const tekst = document.getElementById('besluit').value;
-        if (tekst.length > 15) {
-            document.getElementById('t3').classList.add('hidden');
-            document.getElementById('endScreen').classList.remove('hidden');
-        } else {
-            alert("Vertel eerst iets meer over je eigen omgeving!");
-        }
+function finish() {
+    const tekst = document.getElementById('besluit').value;
+    if (tekst.length > 15) {
+
+        // unit afronden opslaan
+        localStorage.setItem("thema1unit5_done", "true");
+
+        document.getElementById('t3').classList.add('hidden');
+        document.getElementById('endScreen').classList.remove('hidden');
+
+    } else {
+        alert("Vertel eerst iets meer over je eigen omgeving!");
     }
+}
 </script>
 
 </body>
