@@ -55,34 +55,33 @@ body{
   color:var(--blue);
 }
 
-.top-center{
-  font-weight:700;
-  font-size:1.05rem;
-}
-
-.top-right{
-  display:flex;
-  align-items:center;
-  gap:0.8rem;
-}
-
-.user-btn{
-  width:42px;
-  height:42px;
-  border-radius:50%;
+.top-right button{
   background:var(--blue);
   color:white;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  border:none;
+  border-radius:999px;
+  padding:0.45rem 1.3rem;
   font-weight:800;
   cursor:pointer;
+}
+
+.top-right button:hover{
+  background:var(--blue-dark);
+}
+
+/* ================= WELCOME ================= */
+.welcome{
+  width:min(1250px,95%);
+  margin:2rem auto 0;
+  font-size:1.4rem;
+  font-weight:800;
+  color:var(--blue);
 }
 
 /* ================= THEMES ================= */
 .container{
   width:min(1250px,95%);
-  margin:3rem auto 4rem;
+  margin:1.2rem auto 4rem;
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
   gap:1.6rem;
@@ -146,7 +145,7 @@ body{
   margin-top:0.3rem;
 }
 
-button{
+button.start{
   background:var(--blue);
   color:white;
   border:none;
@@ -156,7 +155,7 @@ button{
   cursor:pointer;
 }
 
-button:hover{
+button.start:hover{
   background:var(--blue-dark);
 }
 </style>
@@ -172,16 +171,14 @@ button:hover{
     <div class="top-title">PAV-O</div>
   </div>
 
-  <div class="top-center" id="welcomeText">
-    Mijn startpagina
-  </div>
-
   <div class="top-right">
-    <!-- TJ knop = LOGIN -->
-    <div class="user-btn" onclick="goLogin()">TJ</div>
+    <button id="loginBtn" onclick="handleLogin()">Log in</button>
   </div>
 
 </div>
+
+<!-- ================= WELCOME ================= -->
+<div class="welcome" id="welcomeText" style="display:none"></div>
 
 <!-- ================= THEMES ================= -->
 <div class="container" id="themes"></div>
@@ -202,6 +199,20 @@ const themes = [
 function renderThemes(){
   const c = document.getElementById("themes");
   c.innerHTML = "";
+
+  // 🔹 EXTRA VAKJE: CHATTIE
+  c.innerHTML += `
+    <div class="thema-card">
+      <div class="thema-image" style="background-image:url('img/images/chattie.jpg')">
+        <div class="thema-title">🤖 Chattie</div>
+      </div>
+      <div class="thema-content">
+        <p>Stel vragen en krijg hulp.</p>
+        <a href="chattie.html"><button class="start">Open Chattie</button></a>
+      </div>
+    </div>
+  `;
+
   themes.forEach(t=>{
     const p = localStorage.getItem(`thema${t.id}_progress`) || 0;
     c.innerHTML += `
@@ -217,25 +228,42 @@ function renderThemes(){
             </div>
             <div class="progress-label">${p}% afgerond</div>
           </div>
-          <a href="thema${t.id}.html"><button>Start</button></a>
+          <a href="thema${t.id}.html"><button class="start">Start</button></a>
         </div>
       </div>
     `;
   });
 }
 
-function goLogin(){
-  window.location.href = "login.html";
+function handleLogin(){
+  const loggedIn = localStorage.getItem("studentName");
+  if(loggedIn){
+    localStorage.removeItem("studentName");
+    localStorage.removeItem("studentClass");
+    updateUI();
+  } else {
+    window.location.href = "login.html";
+  }
 }
 
-function updateWelcome(){
+function updateUI(){
   const n = localStorage.getItem("studentName");
   const k = localStorage.getItem("studentClass");
-  document.getElementById("welcomeText").textContent =
-    n ? `Hallo, ${n} (${k}) 👋` : "Mijn startpagina";
+
+  const welcome = document.getElementById("welcomeText");
+  const btn = document.getElementById("loginBtn");
+
+  if(n){
+    welcome.style.display = "block";
+    welcome.textContent = `Welkom, ${n} (${k}) 👋`;
+    btn.textContent = "Log uit";
+  } else {
+    welcome.style.display = "none";
+    btn.textContent = "Log in";
+  }
 }
 
-updateWelcome();
+updateUI();
 renderThemes();
 </script>
 
