@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="data:," />
+  <title>Thema 3.1 – Unit 2: Werkwoorden correct gebruiken</title>
+
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #e8f5e9;
+      padding: 2rem;
+      margin: 0;
+    }
+
+    h1 { text-align: center; color: #2e7d32; }
+
+    .unit-header {
+      max-width: 760px;
+      margin: 0 auto 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .unit-header .nav-left {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .unit-header a {
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .back-link { color: #33691e; }
+
+    .start-link {
+      background: #2e7d32;
+      color: white;
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+    }
+
+    .question-box {
+      background: white;
+      padding: 2rem;
+      margin: 2rem auto;
+      border-radius: 12px;
+      max-width: 760px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    button {
+      background: #2e7d32;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 6px;
+      margin-top: 1rem;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .feedback {
+      margin-top: 1rem;
+      font-weight: bold;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+
+    .success { background-color: #c8e6c9; color: #1b5e20; }
+    .error { background-color: #ffcdd2; color: #c62828; }
+
+    .nav-buttons {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .hidden { display: none; }
+
+    .helper { color: #546e7a; font-size: 0.95rem; }
+
+    .select-input,
+    .text-input {
+      padding: 0.4rem;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>⏱️ Thema 3.1 – Unit 2: Werkwoorden correct gebruiken</h1>
+
+<div class="unit-header">
+  <div class="nav-left">
+    <a class="back-link" href="thema3.html">← Thema 3</a>
+    <a class="back-link" href="thema3_1.html">← Thema 3.1</a>
+  </div>
+  <a class="start-link" href="#quizBox">Start oefenen</a>
+</div>
+
+<div class="question-box" id="quizBox">
+  <h2 id="qCount">Vraag 1 van 10</h2>
+  <p class="helper" id="qType"></p>
+  <div id="questionText"></div>
+  <form id="answerForm"></form>
+  <button type="button" onclick="checkAnswer()">Controleer</button>
+  <div class="feedback" id="feedback"></div>
+
+  <div class="nav-buttons">
+    <button id="nextBtn" class="hidden" type="button" onclick="nextQuestion()">
+      Volgende vraag →
+    </button>
+  </div>
+</div>
+
+<div class="question-box hidden" id="endScreen">
+  <h2>🎉 Unit voltooid!</h2>
+  <p>✅ Je hebt deze unit gespeeld.</p>
+  <p>Je behaalde <strong><span id="xpScore">0</span> XP</strong>.</p>
+
+  <div class="nav-buttons">
+    <a href="thema3.html"><button type="button">← Thema 3</button></a>
+    <a href="thema3_1.html"><button type="button">← Thema 3.1</button></a>
+    <a href="thema3_1_unit3.html"><button type="button">→ Volgende unit</button></a>
+  </div>
+</div>
+
+<script src="./firebase.js"></script>
+<script src="./pavo-xp-sync.js"></script>
+
+<script>
+  const questions = [
+    {
+      type: "mc",
+      typeLabel: "Meerkeuze",
+      question: "Welke vorm is juist?",
+      options: ["Ik lopen naar school.", "Ik loop naar school.", "Ik loopt naar school."],
+      correctIndex: 1
+    },
+    {
+      type: "open",
+      typeLabel: "Open vraag",
+      question: "Vul correct aan: hij ___ naar huis. (lopen)",
+      accepted: ["hij loopt", "loopt"]
+    },
+    {
+      type: "drag",
+      typeLabel: "Keuze",
+      question: "Kies de juiste vorm: wij ___ een film.",
+      options: ["kijkt", "kijken", "keek"],
+      correctValue: "kijken"
+    },
+    {
+      type: "mc",
+      typeLabel: "Meerkeuze",
+      question: "Welke zin is juist?",
+      options: ["Zij eet een appel.", "Zij eten een appel.", "Zij at een appel."],
+      correctIndex: 0
+    },
+    {
+      type: "open",
+      typeLabel: "Open vraag",
+      question: "Schrijf correct: wij maken.",
+      accepted: ["wij maken", "maken"]
+    },
+    {
+      type: "drag",
+      typeLabel: "Keuze",
+      question: "Kies het juiste werkwoord: hij ___ graag voetbal.",
+      options: ["speelt", "spelen", "speelde"],
+      correctValue: "speelt"
+    },
+    {
+      type: "mc",
+      typeLabel: "Meerkeuze",
+      question: "Welke zin bevat een fout?",
+      options: ["Ik lees een boek.", "Wij leest een boek.", "Zij loopt naar school."],
+      correctIndex: 1
+    },
+    {
+      type: "open",
+      typeLabel: "Open vraag",
+      question: "Verbeter de zin: hij lopen snel.",
+      accepted: ["hij loopt snel", "loopt snel"]
+    },
+    {
+      type: "drag",
+      typeLabel: "Keuze",
+      question: "Kies de juiste vorm: jullie ___ naar buiten.",
+      options: ["gaat", "gaan", "gingen"],
+      correctValue: "gaan"
+    },
+    {
+      type: "mc",
+      typeLabel: "Meerkeuze",
+      question: "Welke zin is volledig juist?",
+      options: ["Wij speelt samen.", "Wij speelden samen.", "Wij spelen samen."],
+      correctIndex: 2
+    }
+  ];
+
+  let currentQuestion = 0;
+  let score = 0;
+
+  function renderOptions(options) {
+    return options.map((opt, i) =>
+      `<label><input type="radio" name="answer" value="${i}"> ${opt}</label><br>`
+    ).join('');
+  }
+
+  function loadQuestion() {
+    const q = questions[currentQuestion];
+    document.getElementById('qCount').innerText =
+      `Vraag ${currentQuestion + 1} van ${questions.length}`;
+    document.getElementById('qType').innerText = q.typeLabel;
+    document.getElementById('questionText').innerText = q.question;
+
+    const form = document.getElementById('answerForm');
+    form.innerHTML = '';
+
+    if (q.type === 'mc') {
+      form.innerHTML = renderOptions(q.options);
+    } else if (q.type === 'open') {
+      form.innerHTML = `<input class="text-input" type="text" placeholder="Typ je antwoord...">`;
+    } else {
+      form.innerHTML = `<select class="select-input">
+        <option>Kies...</option>
+        ${q.options.map(o => `<option>${o}</option>`).join('')}
+      </select>`;
+    }
+
+    document.getElementById('feedback').innerText = '';
+    document.getElementById('feedback').className = 'feedback';
+    document.getElementById('nextBtn').classList.add('hidden');
+  }
+
+  function normalize(v) {
+    return v.trim().toLowerCase();
+  }
+
+  function checkAnswer() {
+    const q = questions[currentQuestion];
+    let isCorrect = false;
+
+    if (q.type === 'mc') {
+      const sel = document.querySelector('input[name="answer"]:checked');
+      if (!sel) return;
+      isCorrect = Number(sel.value) === q.correctIndex;
+    } else if (q.type === 'open') {
+      const val = document.querySelector('input')?.value;
+      if (!val) return;
+      isCorrect = q.accepted.some(a => normalize(a) === normalize(val));
+    } else {
+      const val = document.querySelector('select')?.value;
+      if (!val || val === 'Kies...') return;
+      isCorrect = normalize(val) === normalize(q.correctValue);
+    }
+
+    const fb = document.getElementById('feedback');
+    if (isCorrect) {
+      score += 3;
+      fb.innerText = '✅ Juist! +3 XP';
+      fb.classList.add('success');
+    } else {
+      fb.innerText = '❌ Fout. Geen XP.';
+      fb.classList.add('error');
+    }
+
+    document.getElementById('nextBtn').classList.remove('hidden');
+  }
+
+  function nextQuestion() {
+    currentQuestion++;
+    if (currentQuestion < questions.length) {
+      loadQuestion();
+    } else {
+      localStorage.setItem('thema3_1_unit2', score);
+      if (window.pavoSyncScore)
+        window.pavoSyncScore('thema3_1_unit2', score);
+
+      document.getElementById('quizBox').classList.add('hidden');
+      document.getElementById('endScreen').classList.remove('hidden');
+      document.getElementById('xpScore').innerText = score;
+    }
+  }
+
+  window.onload = loadQuestion;
+</script>
+
+</body>
+</html>
