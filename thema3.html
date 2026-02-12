@@ -10,14 +10,14 @@
 
   <style>
     :root {
-      color-scheme: dark;
-      --panel: rgba(23, 12, 38, 0.92);
-      --panel-border: rgba(186, 104, 200, 0.35);
-      --accent: #ba68c8;
-      --accent-2: #7b1fa2;
-      --text: #f4e9ff;
-      --muted: #cdb8dd;
-      --soft: rgba(186,104,200,0.15);
+      --bg: #f8fafc;
+      --panel: #ffffff;
+      --accent: #0f766e;
+      --accent-dark: #0b5f58;
+      --text: #1f2937;
+      --muted: #4b5563;
+      --border-soft: #dbe5ef;
+      --soft-bg: #f0fdfa;
     }
 
     * { box-sizing: border-box; }
@@ -25,40 +25,55 @@
     body {
       margin: 0;
       font-family: 'Nunito', sans-serif;
-      background: radial-gradient(circle at top, #3a1c59 0%, #190b28 55%, #0b0613 100%);
+      background: var(--bg);
       color: var(--text);
     }
 
     header {
-      padding: 2rem 1.5rem 1.2rem;
+      background: #14b8a6;
+      color: white;
+      padding: 1.8rem 1rem;
       text-align: center;
-      background: linear-gradient(90deg, rgba(58, 28, 89, 0.95), rgba(43, 17, 66, 0.95));
-      border-bottom: 1px solid var(--panel-border);
     }
 
-    header h1 { margin: 0; font-size: 2.2rem; }
-    header p { margin: 0.6rem 0 0; color: var(--muted); }
+    header h1 {
+      margin: 0;
+      font-size: 2.1rem;
+    }
+
+    header p {
+      margin: 0.6rem 0 0;
+      opacity: 0.95;
+    }
 
     main {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 2rem 1.5rem 3rem;
+      width: min(1100px, 95%);
+      margin: 1.6rem auto 2.5rem;
     }
 
     .panel {
       background: var(--panel);
-      border-radius: 18px;
-      border: 1px solid var(--panel-border);
-      box-shadow: 0 12px 30px rgba(13, 6, 22, 0.6);
-      padding: 1.6rem;
+      border-radius: 14px;
+      padding: 1.4rem;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+    }
+
+    .task {
+      margin-top: 1.4rem;
+      border-top: 1px solid var(--border-soft);
+      padding-top: 1.4rem;
+    }
+
+    .panel h2 {
+      margin-top: 0;
     }
 
     .info-box {
-      background: var(--soft);
+      background: var(--soft-bg);
       border-left: 5px solid var(--accent);
       border-radius: 12px;
       padding: 1rem 1.2rem;
-      margin-bottom: 1.4rem;
+      margin: 1.4rem 0;
       color: var(--muted);
       line-height: 1.45;
     }
@@ -67,9 +82,9 @@
     .cursus-box {
       margin: 2rem 0;
       padding: 1.4rem;
-      background: rgba(40, 20, 60, 0.85);
-      border-radius: 16px;
-      border: 1px solid rgba(186, 104, 200, 0.4);
+      background: var(--soft-bg);
+      border-radius: 14px;
+      border: 1px solid #bce7e1;
     }
 
     .cursus-buttons {
@@ -80,38 +95,44 @@
     }
 
     .cursus-btn {
-      padding: 0.55rem 1.4rem;
+      padding: 0.5rem 1.2rem;
       border-radius: 999px;
       font-weight: 700;
       text-decoration: none;
       color: white;
-      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      background: var(--accent);
     }
 
-    .cursus-btn.secondary {
-      background: #455a64;
+    .cursus-btn:hover {
+      background: var(--accent-dark);
     }
 
     /* SUBTHEMA */
     .subtheme-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.2rem;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
       margin-top: 1.2rem;
     }
 
     .subtheme-card {
-      background: rgba(26, 12, 41, 0.9);
-      border-radius: 16px;
-      border: 1px solid rgba(186, 104, 200, 0.25);
-      padding: 1.3rem;
+      background: var(--soft-bg);
+      border-radius: 14px;
+      border: 2px solid #bce7e1;
+      padding: 1.2rem;
       display: flex;
       flex-direction: column;
-      gap: 0.6rem;
     }
 
-    .subtheme-card h3 { margin: 0; }
-    .subtheme-card p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+    .subtheme-card h3 {
+      margin: 0 0 0.4rem;
+    }
+
+    .subtheme-card p {
+      margin: 0 0 0.8rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
 
     .subtheme-card a {
       margin-top: auto;
@@ -119,20 +140,32 @@
       text-decoration: none;
       font-weight: 700;
       color: white;
-      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      background: var(--accent);
       padding: 0.45rem 0.9rem;
       border-radius: 999px;
     }
 
-    .back-btn {
+    .subtheme-card a:hover {
+      background: var(--accent-dark);
+    }
+
+    .subtheme-card.combined {
+      border-style: dashed;
+    }
+
+    .btn-back {
       display: inline-block;
       margin-top: 2rem;
       text-decoration: none;
+      background: var(--accent);
       color: white;
-      font-weight: 700;
-      padding: 0.5rem 1rem;
+      padding: 0.5rem 0.9rem;
       border-radius: 999px;
-      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      font-weight: 700;
+    }
+
+    .btn-back:hover {
+      background: var(--accent-dark);
     }
   </style>
 </head>
@@ -140,88 +173,85 @@
 <body>
 
 <header>
-  <h1>⏳ Thema 3 – Werkwoordstijden</h1>
+  <h1>Thema 3 – Werkwoordstijden</h1>
   <p>Leren schrijven en vertellen in het heden en het verleden</p>
 </header>
 
 <main>
-<section class="panel">
+  <section class="panel">
 
-  <h2>Focus van dit thema</h2>
-  <p>
-    In dit thema leer je werken met <strong>werkwoordstijden</strong>.
-    Je ontdekt wanneer je spreekt over wat <strong>nu gebeurt</strong>
-    en wanneer je vertelt over wat <strong>al gebeurd is</strong>.
-  </p>
-
-  <!-- CURSUS -->
-  <section class="cursus-box">
-    <h2>📘 Cursus – Werkwoordstijden</h2>
-
+    <h2>Focus van dit thema</h2>
     <p>
-      Wil je de uitleg nog eens rustig bekijken?
-      Hier vind je de volledige cursus van dit thema.
+      In dit thema leer je werken met werkwoordstijden.
+      Je ontdekt wanneer je spreekt over wat nu gebeurt
+      en wanneer je vertelt over wat al gebeurd is.
     </p>
 
-    <div class="cursus-buttons">
-      <a class="cursus-btn"
-   href="./cursus/thema3/thema3-cursus.html">
-  📘 Cursus bekijken
-</a>
-
-      
-    </div>
-  </section>
-
-  <div class="info-box">
-    <strong>🧭 Kapstok</strong><br>
-    Stel jezelf altijd deze vraag:
-    <ul>
-      <li>Gebeurt het <strong>nu</strong>? → tegenwoordige tijd</li>
-      <li>Is het <strong>al gebeurd</strong>? → verleden tijd</li>
-    </ul>
-  </div>
-
-  <h2>📚 Subthema’s</h2>
-
-  <div class="subtheme-grid">
-    <div class="subtheme-card">
-      <h3>📗 Thema 3.1 – Tegenwoordige tijd</h3>
-      <p>Je leert hoe je zinnen maakt over wat nu gebeurt.</p>
-      <a href="thema3_1.html">Start</a>
-    </div>
-
-    <div class="subtheme-card">
-      <h3>📕 Thema 3.2 – Verleden tijd</h3>
-      <p>Je leert vertellen over wat vroeger gebeurde.</p>
-      <a href="thema3_2.html">Start</a>
-    </div>
-  </div>
-
-  <h2 style="margin-top:2.5rem;">🔁 Alles samen oefenen</h2>
-
-  <div class="info-box">
-    Wil je eerst nog apart oefenen?
-    Ga dan terug naar de subthema’s hierboven.<br><br>
-    Klaar om alles samen te oefenen?
-    Start dan hieronder.
-  </div>
-
-  <div class="subtheme-grid">
-    <div class="subtheme-card"
-         style="border:2px dashed rgba(186, 104, 200, 0.6);">
-      <h3>🔁 Werkwoordstijden – Alles samen</h3>
+    <section class="cursus-box">
+      <h2>Cursus – Werkwoordstijden</h2>
       <p>
-        Oefen tegenwoordige tijd, verleden tijd en de dt-regel
-        door elkaar.
+        Wil je de uitleg nog eens rustig bekijken?
+        Hier vind je de volledige cursus van dit thema.
       </p>
-      <a href="thema3_all_unit1.html">Start gecombineerde oefening</a>
+
+      <div class="cursus-buttons">
+        <a class="cursus-btn"
+           href="./cursus/thema3/thema3-cursus.html">
+          Cursus bekijken
+        </a>
+      </div>
+    </section>
+
+    <div class="info-box">
+      <strong>Kapstok</strong><br>
+      Stel jezelf altijd deze vraag:
+      <ul>
+        <li>Gebeurt het nu? Dan gebruik je de tegenwoordige tijd.</li>
+        <li>Is het al gebeurd? Dan gebruik je de verleden tijd.</li>
+      </ul>
     </div>
-  </div>
 
-  <a href="index.html" class="back-btn">← Terug naar thema-overzicht</a>
+    <h2>Subthema’s</h2>
 
-</section>
+    <div class="subtheme-grid">
+      <div class="subtheme-card">
+        <h3>Thema 3.1 – Tegenwoordige tijd</h3>
+        <p>Je leert hoe je zinnen maakt over wat nu gebeurt.</p>
+        <a href="thema3_1.html">Start</a>
+      </div>
+
+      <div class="subtheme-card">
+        <h3>Thema 3.2 – Verleden tijd</h3>
+        <p>Je leert vertellen over wat vroeger gebeurde.</p>
+        <a href="thema3_2.html">Start</a>
+      </div>
+    </div>
+
+    <div class="task">
+      <h2>Alles samen oefenen</h2>
+
+      <div class="info-box">
+        Wil je eerst nog apart oefenen?
+        Ga dan terug naar de subthema’s hierboven.
+        Klaar om alles samen te oefenen?
+        Start dan hieronder.
+      </div>
+
+      <div class="subtheme-grid">
+        <div class="subtheme-card combined">
+          <h3>Werkwoordstijden – Alles samen</h3>
+          <p>
+            Oefen tegenwoordige tijd, verleden tijd
+            en de dt-regel door elkaar.
+          </p>
+          <a href="thema3_all_unit1.html">Start gecombineerde oefening</a>
+        </div>
+      </div>
+    </div>
+
+    <a href="index.html" class="btn-back">Terug naar thema-overzicht</a>
+
+  </section>
 </main>
 
 </body>
