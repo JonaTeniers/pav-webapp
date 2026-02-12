@@ -12,10 +12,7 @@ body {
   padding: 2rem;
 }
 
-h1 {
-  text-align: center;
-  color: #1a237e;
-}
+h1 { text-align: center; color: #1a237e; }
 
 .unit-box {
   max-width: 1100px;
@@ -30,15 +27,20 @@ h1 {
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-.task-box h2 {
-  margin-top: 0;
-}
+.hidden { display: none; }
 
-.image-grid {
+.image-strip {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
-  margin-bottom: 1.5rem;
+  margin: 1rem 0;
+}
+
+.image-strip img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 8px;
 }
 
 .drag-card {
@@ -46,20 +48,6 @@ h1 {
   border-radius: 10px;
   padding: 0.6rem;
   cursor: grab;
-  text-align: center;
-}
-
-.drag-card img {
-  width: 100%;
-  height: 160px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-.bron {
-  font-size: 0.75rem;
-  color: #555;
-  margin-top: 0.3rem;
 }
 
 .drop-grid {
@@ -83,17 +71,9 @@ textarea, input[type="text"] {
   margin-top: 0.6rem;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-td {
-  padding: 0.4rem;
-}
-
 button {
-  padding: 0.7rem 1.6rem;
+  margin-top: 1rem;
+  padding: 0.6rem 1.4rem;
   background: #1a237e;
   color: white;
   border: none;
@@ -101,11 +81,17 @@ button {
   cursor: pointer;
 }
 
-.hidden { display: none; }
+.feedback {
+  margin-top: 1rem;
+  font-weight: 700;
+}
 
-.nav-buttons {
-  text-align: center;
-  margin-top: 2rem;
+.success { color: #2e7d32; }
+.error { color: #c62828; }
+
+.bron {
+  font-size: 0.75rem;
+  color: #555;
 }
 </style>
 </head>
@@ -114,50 +100,54 @@ button {
 
 <h1>🌍 Thema 1 – Unit 3: Veranderingen in het landschap</h1>
 
-<div class="unit-box" id="work">
+<div class="unit-box">
 
 <!-- OPDRACHT 1 -->
-<div class="task-box">
+<div class="task-box" id="task1">
 <h2>Opdracht 1 – Zet de beelden in de juiste volgorde</h2>
-<p>Zet de beelden van <strong>oud → nieuw</strong>.</p>
 
-<div class="image-grid">
-  <div class="drag-card" draggable="true">
-    <img src="img/images/basel_2006.jpg">
-    <div class="bron">Bron: Google Earth</div>
-  </div>
-  <div class="drag-card" draggable="true">
-    <img src="img/images/basel_2015.jpg">
-    <div class="bron">Bron: Google Earth</div>
-  </div>
-  <div class="drag-card" draggable="true">
-    <img src="img/images/basel_2017.jpg">
-    <div class="bron">Bron: Google Earth</div>
-  </div>
-  <div class="drag-card" draggable="true">
-    <img src="img/images/basel_2024.jpg">
-    <div class="bron">Bron: Google Earth</div>
-  </div>
+<div class="image-strip">
+  <div class="drag-card" draggable="true"><img src="img/images/basel_2006.jpg"><div class="bron">Bron: Google Earth</div></div>
+  <div class="drag-card" draggable="true"><img src="img/images/basel_2015.jpg"><div class="bron">Bron: Google Earth</div></div>
+  <div class="drag-card" draggable="true"><img src="img/images/basel_2017.jpg"><div class="bron">Bron: Google Earth</div></div>
+  <div class="drag-card" draggable="true"><img src="img/images/basel_2024.jpg"><div class="bron">Bron: Google Earth</div></div>
 </div>
 
 <div class="drop-grid">
-  <div class="drop-zone">1️⃣ Oudst</div>
-  <div class="drop-zone">2️⃣</div>
-  <div class="drop-zone">3️⃣</div>
-  <div class="drop-zone">4️⃣ Nieuwst</div>
+  <div class="drop-zone"></div>
+  <div class="drop-zone"></div>
+  <div class="drop-zone"></div>
+  <div class="drop-zone"></div>
 </div>
+
+<button onclick="checkTask1()">Controleer</button>
+<div class="feedback" id="fb1"></div>
 </div>
 
 <!-- OPDRACHT 2 -->
-<div class="task-box">
+<div class="task-box hidden" id="task2">
 <h2>Opdracht 2 – Wat verandert?</h2>
-<p>Vergelijk het oudste en het nieuwste beeld.</p>
-<textarea placeholder="Beschrijf minstens drie veranderingen."></textarea>
+
+<div class="image-strip">
+  <img src="img/images/basel_2006.jpg">
+  <img src="img/images/basel_2015.jpg">
+  <img src="img/images/basel_2017.jpg">
+  <img src="img/images/basel_2024.jpg">
+</div>
+
+<textarea id="t2" placeholder="Beschrijf minstens drie veranderingen."></textarea>
+<button onclick="checkText('t2','task2','task3',3)">Controleer</button>
+<div class="feedback"></div>
 </div>
 
 <!-- OPDRACHT 3 -->
-<div class="task-box">
-<h2>Opdracht 3 – Natuurlijk of menselijk?</h2>
+<div class="task-box hidden" id="task3">
+<h2>Opdracht 3 – Menselijk of natuurlijk?</h2>
+
+<div class="image-strip">
+  <img src="img/images/basel_2006.jpg">
+  <img src="img/images/basel_2024.jpg">
+</div>
 
 <table>
 <tr><td>Rivier</td><td><input type="radio"> natuurlijk <input type="radio"> menselijk</td></tr>
@@ -166,67 +156,123 @@ button {
 <tr><td>Parken</td><td><input type="radio"> natuurlijk <input type="radio"> menselijk</td></tr>
 <tr><td>Wegen</td><td><input type="radio"> natuurlijk <input type="radio"> menselijk</td></tr>
 </table>
+
+<button onclick="unlockNext('task3','task4',3)">Bevestig</button>
 </div>
 
 <!-- OPDRACHT 4 -->
-<div class="task-box">
+<div class="task-box hidden" id="task4">
 <h2>Opdracht 4 – Atlasopdracht</h2>
-<p>Bekijk de foto en zoek deze plaats op in een atlas.</p>
 
 <img src="img/images/st-jakobshalle-aussenansicht.jpg" style="max-width:400px;">
 <div class="bron">
-  Bron:
   <a href="https://www.basel.com/en/attractions/st.-jakobshalle-basel-2e0e67c53f" target="_blank">
-    basel.com
+    Bron: basel.com
   </a>
 </div>
 
-<input type="text" placeholder="Naam van de stad">
-<input type="text" placeholder="Land">
-<input type="text" placeholder="Buurland 1">
-<input type="text" placeholder="Buurland 2">
-<input type="text" placeholder="Belangrijke rivier">
+<input type="text" id="a1" placeholder="Naam van de stad">
+<input type="text" id="a2" placeholder="Land">
+<input type="text" id="a3" placeholder="Buurland 1">
+<input type="text" id="a4" placeholder="Buurland 2">
+<input type="text" id="a5" placeholder="Rivier">
+
+<button onclick="checkAtlas()">Controleer</button>
+<div class="feedback" id="fb4"></div>
 </div>
 
 <!-- OPDRACHT 5 -->
-<div class="task-box">
+<div class="task-box hidden" id="task5">
 <h2>Opdracht 5 – Kaart of luchtfoto?</h2>
-<textarea placeholder="Wat zie je wel op een kaart, maar niet (of minder) op een luchtfoto?"></textarea>
+
+<div class="image-strip">
+  <img src="img/images/basel_2006.jpg">
+  <img src="img/images/basel_2024.jpg">
+</div>
+
+<textarea id="t5"></textarea>
+<button onclick="checkText('t5','task5','task6',2)">Controleer</button>
+<div class="feedback"></div>
 </div>
 
 <!-- OPDRACHT 6 -->
-<div class="task-box">
+<div class="task-box hidden" id="task6">
 <h2>Opdracht 6 – Besluit</h2>
-<textarea placeholder="Zijn de veranderingen vooral menselijk of natuurlijk? Leg uit."></textarea>
+
+<div class="image-strip">
+  <img src="img/images/basel_2006.jpg">
+  <img src="img/images/basel_2024.jpg">
 </div>
 
+<textarea id="t6"></textarea>
 <button onclick="finishUnit()">Unit afronden</button>
 </div>
 
-<div class="task-box hidden" id="end">
-<h2>🎉 Unit 3 afgerond</h2>
-<p>Je onderzocht veranderingen in een landschap door de tijd.</p>
-<div class="nav-buttons"></div>
 </div>
 
 <script>
 let dragged = null;
+let xp = 0;
 
 document.querySelectorAll('.drag-card').forEach(card => {
   card.addEventListener('dragstart', () => dragged = card);
 });
-
 document.querySelectorAll('.drop-zone').forEach(zone => {
   zone.addEventListener('dragover', e => e.preventDefault());
-  zone.addEventListener('drop', () => {
-    if (dragged) zone.appendChild(dragged);
-  });
+  zone.addEventListener('drop', () => zone.appendChild(dragged));
 });
+
+function checkTask1() {
+  const filled = [...document.querySelectorAll('.drop-zone')].every(z => z.children.length);
+  const fb = document.getElementById('fb1');
+  if (!filled) {
+    fb.textContent = "❌ Plaats alle beelden.";
+    fb.className = "feedback error";
+    return;
+  }
+  xp += 5;
+  fb.textContent = "✅ Goed gedaan! +5 XP";
+  fb.className = "feedback success";
+  document.getElementById('task2').classList.remove('hidden');
+}
+
+function checkText(id,current,next,xpAdd) {
+  const val = document.getElementById(id).value.trim();
+  const fb = document.querySelector(`#${current} .feedback`);
+  if (!val) {
+    fb.textContent = "❌ Vul eerst je antwoord in.";
+    fb.className = "feedback error";
+    return;
+  }
+  xp += xpAdd;
+  fb.textContent = `✅ In orde! +${xpAdd} XP`;
+  fb.className = "feedback success";
+  document.getElementById(next).classList.remove('hidden');
+}
+
+function unlockNext(current,next,xpAdd) {
+  xp += xpAdd;
+  document.getElementById(next).classList.remove('hidden');
+}
+
+function checkAtlas() {
+  const fields = ['a1','a2','a3','a4','a5'].every(id => document.getElementById(id).value.trim());
+  const fb = document.getElementById('fb4');
+  if (!fields) {
+    fb.textContent = "❌ Vul alle velden in.";
+    fb.className = "feedback error";
+    return;
+  }
+  xp += 5;
+  fb.textContent = "✅ Correct ingevuld! +5 XP";
+  fb.className = "feedback success";
+  document.getElementById('task5').classList.remove('hidden');
+}
 
 function finishUnit() {
   localStorage.setItem("thema1unit3_done", "true");
-  document.getElementById("work").classList.add("hidden");
-  document.getElementById("end").classList.remove("hidden");
+  localStorage.setItem("xp_thema1_unit3", xp);
+  alert("🎉 Unit afgerond! Totaal XP: " + xp);
 }
 </script>
 
