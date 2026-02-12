@@ -37,8 +37,6 @@
       color: #ffffffcc;
     }
 
-
-
     .student-auth {
       width: min(1100px, 95%);
       margin: 1.2rem auto 0;
@@ -49,54 +47,6 @@
       text-align: left;
     }
 
-    .student-auth-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: end;
-    }
-
-    .student-auth label {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      font-weight: 700;
-      color: #1f2937;
-    }
-
-    .student-auth input {
-      min-width: 180px;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      padding: 8px 10px;
-    }
-
-    .student-auth button {
-      background: #1976d2;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      padding: 0.55rem 1rem;
-      cursor: pointer;
-      font-weight: 700;
-    }
-
-    #studentLogoutButton {
-      display: none;
-      background: #64748b;
-    }
-
-    #studentWelcome {
-      margin: 0.4rem 0;
-      color: #0f172a;
-      font-weight: 700;
-    }
-
-    #studentAuthStatus {
-      margin: 0.4rem 0 0;
-      font-weight: 700;
-    }
-
     .container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -105,64 +55,15 @@
       width: min(1100px, 95%);
     }
 
-    .menu-button {
-      position: fixed;
-      top: 12px;
-      left: 12px;
-      width: 44px;
-      height: 44px;
-      border: none;
-      border-radius: 10px;
-      background: #0b4da2;
-      color: white;
-      font-size: 24px;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-      z-index: 100;
-    }
-
-    .menu-panel {
-      position: fixed;
-      top: 62px;
-      left: 12px;
-      width: 220px;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
-      padding: 10px;
-      display: none;
-      z-index: 100;
-      text-align: left;
-    }
-
-    .menu-panel a {
-      display: block;
-      text-decoration: none;
-      color: #1f2937;
-      padding: 10px;
-      border-radius: 8px;
-      font-weight: 700;
-    }
-
-    .menu-panel a:hover {
-      background: #e8f1ff;
-    }
-
     .thema-card {
       background: white;
       padding: 1.5rem;
-      margin: 0.25rem;
       border-radius: 16px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      transition: transform 0.2s;
-      text-align: left;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-    }
-
-    .thema-card:hover {
-      transform: scale(1.02);
+      text-align: left;
     }
 
     .thema-card h2 {
@@ -186,120 +87,79 @@
       border-radius: 8px;
       font-size: 1rem;
       cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .thema-card button:hover {
-      background: #1565c0;
     }
   </style>
 </head>
 <body>
 
-  <button class="menu-button" id="menuButton" aria-label="Open menu">☰</button>
-  <nav class="menu-panel" id="menuPanel">
-    <a href="leerkracht-dashboard.html">Naar leerkrachtomgeving</a>
-  </nav>
+<header>
+  <img src="img/pavomascotte.png" alt="PAVO mascotte" class="mascot" />
+  <h1>PAV-O Leeromgeving</h1>
+  <p>Kies een thema en begin je leeravontuur!</p>
+</header>
 
-  <header>
-    <img src="img/pavomascotte.png" alt="PAVO mascotte" class="mascot" />
-    <h1>PAV-O Leeromgeving</h1>
-    <p>Kies een thema en begin je leeravontuur!</p>
-  </header>
+<div class="container">
 
-
-  <section class="student-auth">
-    <h2 style="margin-top:0;color:#1976d2;">Leerling login zone</h2>
-    <p id="studentWelcome">Niet ingelogd</p>
-    <form id="studentLoginForm" class="student-auth-row">
-      <label>
-        Voornaam
-        <input id="studentVoornaam" type="text" required />
-      </label>
-      <label>
-        Klas
-        <input id="studentKlas" type="text" required />
-      </label>
-      <button type="submit">Inloggen</button>
-      <button type="button" id="studentLogoutButton">Uitloggen</button>
-      <a href="leerling-dashboard.html" style="align-self:center;font-weight:700;color:#1976d2;">Mijn voortgang</a>
-    </form>
-    <p id="studentAuthStatus"></p>
-  </section>
-
-
-  <div class="container">
-    <div class="thema-card">
-      <h2>Thema 1: Landschappen</h2>
-      <p>Ontdek natuurlijke, menselijke elementen en hun gebruik.</p>
-      <a href="thema1.html"><button>Start Thema</button></a>
-    </div>
-
-    <div class="thema-card">
-      <h2>Thema 2: Levende Natuur</h2>
-      <p>Leer hoe organismen en ecosystemen met elkaar verbonden zijn.</p>
-      <a href="thema2.html"><button>Start Thema</button></a>
-    </div>
-
-    <div class="thema-card">
-      <h2>Thema 3: Verleden Tijd</h2>
-      <p>Oefen met de verleden tijd, werkwoorden en zinsbouw.</p>
-      <a href="thema3.html"><button>Start Thema</button></a>
-    </div>
-
-    <div class="thema-card">
-      <h2>Thema 4: Wiskunde</h2>
-      <p>Omtrek en oppervlakte oefenen met gevarieerde opdrachten.</p>
-      <a href="thema4.html"><button>Start Thema</button></a>
-    </div>
-
-    <div class="thema-card">
-      <h2>Thema 5: Fictie en non-fictie</h2>
-      <p>Leer teksten onderscheiden op basis van doel, inhoud en stijl.</p>
-      <a href="thema5.html"><button>Start Thema</button></a>
-    </div>
-
-    <div class="thema-card">
-      <h2>Thema 6: Schatten</h2>
-      <p>Schat uitkomsten met afronden en controleer daarna exact.</p>
-      <a href="thema6.html"><button>Start Thema</button></a>
-    </div>
-
-    <div class="thema-card">
-      <h2>Thema 7: Communiceren in het Nederlands</h2>
-      <p>Werk met het communicatiemodel en schrijf duidelijke berichten.</p>
-      <a href="thema7.html"><button>Start Thema</button></a>
-    </div>
-
-    <div class="thema-card">
-      <h2>Thema 8: Actualiteit</h2>
-      <p>Werk met nieuwsartikels aan taal, vorm, lezen en luisteren.</p>
-      <a href="thema8.html"><button>Start Thema</button></a>
-    </div>
-
-    <div class="thema-card">
-      <h2>Thema 9: Geschiedenis</h2>
-      <p>Begrijp stap voor stap het verhaal van Vlaanderen met de Canon.</p>
-      <a href="thema9.html"><button>Start Thema</button></a>
-    </div>
+  <div class="thema-card">
+    <h2>Thema 1: Landschappen</h2>
+    <p>Ontdek natuurlijke, menselijke elementen en hun gebruik.</p>
+    <a href="thema1.html"><button>Start Thema</button></a>
   </div>
 
-  <script>
-    const menuButton = document.getElementById('menuButton');
-    const menuPanel = document.getElementById('menuPanel');
+  <div class="thema-card">
+    <h2>Thema 2: Levende Natuur</h2>
+    <p>Leer hoe organismen en ecosystemen met elkaar verbonden zijn.</p>
+    <a href="thema2.html"><button>Start Thema</button></a>
+  </div>
 
-    menuButton.addEventListener('click', () => {
-      menuPanel.style.display = menuPanel.style.display === 'block' ? 'none' : 'block';
-    });
+  <!-- 🔴 AANGEPAST THEMA 3 -->
+  <div class="thema-card">
+    <h2>Thema 3: Werkwoordstijden</h2>
+    <p>
+      Leer werken met de tegenwoordige en verleden tijd
+      en bouw correcte zinnen en teksten.
+    </p>
+    <a href="thema3.html"><button>Start Thema</button></a>
+  </div>
 
-    document.addEventListener('click', (event) => {
-      const clickedInsideMenu = menuPanel.contains(event.target) || menuButton.contains(event.target);
-      if (!clickedInsideMenu) {
-        menuPanel.style.display = 'none';
-      }
-    });
-  </script>
+  <div class="thema-card">
+    <h2>Thema 4: Wiskunde</h2>
+    <p>Omtrek en oppervlakte oefenen met gevarieerde opdrachten.</p>
+    <a href="thema4.html"><button>Start Thema</button></a>
+  </div>
 
-  <script src="./student-auth.js"></script>
+  <div class="thema-card">
+    <h2>Thema 5: Fictie en non-fictie</h2>
+    <p>Leer teksten onderscheiden op basis van doel, inhoud en stijl.</p>
+    <a href="thema5.html"><button>Start Thema</button></a>
+  </div>
+
+  <div class="thema-card">
+    <h2>Thema 6: Schatten</h2>
+    <p>Schat uitkomsten met afronden en controleer daarna exact.</p>
+    <a href="thema6.html"><button>Start Thema</button></a>
+  </div>
+
+  <div class="thema-card">
+    <h2>Thema 7: Communiceren in het Nederlands</h2>
+    <p>Werk met het communicatiemodel en schrijf duidelijke berichten.</p>
+    <a href="thema7.html"><button>Start Thema</button></a>
+  </div>
+
+  <div class="thema-card">
+    <h2>Thema 8: Actualiteit</h2>
+    <p>Werk met nieuwsartikels aan taal, vorm, lezen en luisteren.</p>
+    <a href="thema8.html"><button>Start Thema</button></a>
+  </div>
+
+  <div class="thema-card">
+    <h2>Thema 9: Geschiedenis</h2>
+    <p>Begrijp stap voor stap het verhaal van Vlaanderen met de Canon.</p>
+    <a href="thema9.html"><button>Start Thema</button></a>
+  </div>
+
+</div>
+
+<script src="./student-auth.js"></script>
 </body>
 </html>
