@@ -61,7 +61,6 @@
       font-size: 1.25rem;
       margin: 1.8rem 0 1rem;
       display: flex;
-      gap: 0.6rem;
       align-items: center;
     }
 
@@ -97,7 +96,11 @@
       padding: 1rem;
     }
 
-    .status { font-size: 0.85rem; font-weight: 700; }
+    .status {
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
     .status.ready { color: #d9efff; }
     .status.locked { color: #9ec3df; }
 
@@ -139,7 +142,7 @@
 <body>
 
 <header>
-  <h1>📘 Thema 1 – Landschappen</h1>
+  <h1>Thema 1 – Landschappen</h1>
   <p>Ontdek hoe natuur en mens samen een landschap vormen</p>
 </header>
 
@@ -148,21 +151,21 @@
 <section class="panel">
 
   <div class="score-card">
-    <h3>🎯 Totaalscore Thema 1</h3>
-    <p id="themeTotalScore">💡 0 / 360 XP</p>
+    <h3>Totaalscore thema 1</h3>
+    <p id="themeTotalScore">0 / 360 XP</p>
   </div>
 
   <h2>Focus van dit thema</h2>
   <p>
-    In dit thema leer je wat een <strong>landschap</strong> is en hoe
-    <strong>natuurlijke en menselijke elementen</strong> samen een gebied vormen.
-    Je leert kijken, benoemen en verklaren hoe landschappen gebruikt en veranderd worden.
+    In dit thema leer je wat een landschap is en hoe natuurlijke en menselijke
+    elementen samen een gebied vormen. Je leert landschappen observeren,
+    beschrijven en verklaren.
   </p>
 
   <div class="info-box">
-    <strong>🧭 Kapstok van het thema</strong>
+    <strong>Kapstok van het thema</strong>
     <ul>
-      <li>Welke natuurlijke elementen zie je?</li>
+      <li>Welke natuurlijke elementen zijn aanwezig?</li>
       <li>Welke menselijke elementen zijn toegevoegd?</li>
       <li>Hoe gebruikt de mens dit landschap?</li>
     </ul>
@@ -171,14 +174,14 @@
   <div class="info-box">
     <strong>Wat oefen je?</strong>
     <ul>
-      <li>Landschappen beschrijven met juiste begrippen</li>
+      <li>Landschappen beschrijven met correcte begrippen</li>
       <li>Natuurlijke en menselijke elementen onderscheiden</li>
       <li>Verklaren hoe landschappen veranderen</li>
       <li>Informatie toepassen op kaarten en foto’s</li>
     </ul>
   </div>
 
-  <h2 class="panel-title">📚 Onderdelen</h2>
+  <h2 class="panel-title">Onderdelen</h2>
 
   <div class="unit-grid">
     <div class="unit-card">
@@ -188,25 +191,25 @@
       <a href="thema1unit1.html"><button>Start</button></a>
     </div>
 
-    <div class="unit-card"><h4>Deel 2</h4><p class="status locked">🔒 Vergrendeld</p><p>Landschapselementen</p><button disabled>Start</button></div>
-    <div class="unit-card"><h4>Deel 3</h4><p class="status locked">🔒 Vergrendeld</p><p>Natuurlijk vs menselijk</p><button disabled>Start</button></div>
-    <div class="unit-card"><h4>Deel 4</h4><p class="status locked">🔒 Vergrendeld</p><p>Soorten landschappen</p><button disabled>Start</button></div>
-    <div class="unit-card"><h4>Deel 5</h4><p class="status locked">🔒 Vergrendeld</p><p>Gebruik</p><button disabled>Start</button></div>
-    <div class="unit-card"><h4>Deel 6</h4><p class="status locked">🔒 Vergrendeld</p><p>Veranderingen</p><button disabled>Start</button></div>
-    <div class="unit-card"><h4>Deel 7</h4><p class="status locked">🔒 Vergrendeld</p><p>Invloed mens</p><button disabled>Start</button></div>
-    <div class="unit-card"><h4>Deel 8</h4><p class="status locked">🔒 Vergrendeld</p><p>Invloed natuur</p><button disabled>Start</button></div>
-    <div class="unit-card"><h4>Deel 9</h4><p class="status locked">🔒 Vergrendeld</p><p>Grenzen</p><button disabled>Start</button></div>
-    <div class="unit-card"><h4>Deel 10</h4><p class="status locked">🔒 Vergrendeld</p><p>Regio’s</p><button disabled>Start</button></div>
-    <div class="unit-card"><h4>Deel 11</h4><p class="status locked">🔒 Vergrendeld</p><p>Toepassen</p><button disabled>Start</button></div>
-    <div class="unit-card"><h4>Deel 12</h4><p class="status locked">🔒 Vergrendeld</p><p>Herhaling</p><button disabled>Start</button></div>
+    <div class="unit-card"><h4>Deel 2</h4><p class="status locked">Vergrendeld</p><p>Landschapselementen</p><button disabled>Start</button></div>
+    <div class="unit-card"><h4>Deel 3</h4><p class="status locked">Vergrendeld</p><p>Natuurlijk en menselijk</p><button disabled>Start</button></div>
+    <div class="unit-card"><h4>Deel 4</h4><p class="status locked">Vergrendeld</p><p>Soorten landschappen</p><button disabled>Start</button></div>
+    <div class="unit-card"><h4>Deel 5</h4><p class="status locked">Vergrendeld</p><p>Gebruik van landschappen</p><button disabled>Start</button></div>
+    <div class="unit-card"><h4>Deel 6</h4><p class="status locked">Vergrendeld</p><p>Veranderingen</p><button disabled>Start</button></div>
+    <div class="unit-card"><h4>Deel 7</h4><p class="status locked">Vergrendeld</p><p>Invloed van de mens</p><button disabled>Start</button></div>
+    <div class="unit-card"><h4>Deel 8</h4><p class="status locked">Vergrendeld</p><p>Invloed van de natuur</p><button disabled>Start</button></div>
+    <div class="unit-card"><h4>Deel 9</h4><p class="status locked">Vergrendeld</p><p>Grenzen</p><button disabled>Start</button></div>
+    <div class="unit-card"><h4>Deel 10</h4><p class="status locked">Vergrendeld</p><p>Regio’s</p><button disabled>Start</button></div>
+    <div class="unit-card"><h4>Deel 11</h4><p class="status locked">Vergrendeld</p><p>Toepassen</p><button disabled>Start</button></div>
+    <div class="unit-card"><h4>Deel 12</h4><p class="status locked">Vergrendeld</p><p>Herhaling</p><button disabled>Start</button></div>
   </div>
 
-  <a href="index.html" class="back-btn">← Terug naar thema-overzicht</a>
+  <a href="index.html" class="back-btn">Terug naar thema-overzicht</a>
 
 </section>
 
 <aside class="panel">
-  <h2 class="panel-title">🤖 Chattie</h2>
+  <h2 class="panel-title">Chattie</h2>
   <iframe class="chat-embed" src="chattie.html"></iframe>
 </aside>
 
