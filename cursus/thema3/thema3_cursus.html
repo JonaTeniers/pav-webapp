@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Cursus – Thema 3: Werkwoordstijden</title>
+  <title>Thema 3 – Cursus Werkwoordstijden</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet"
@@ -19,46 +19,76 @@
     header {
       background: linear-gradient(135deg, #1976d2, #64b5f6);
       color: white;
-      padding: 2rem 1rem;
+      padding: 2.2rem 1rem;
       text-align: center;
     }
 
     main {
-      max-width: 900px;
-      margin: 2rem auto;
-      padding: 0 1rem 3rem;
+      max-width: 950px;
+      margin: 2rem auto 3rem;
+      padding: 0 1rem;
     }
 
     .block {
       background: white;
       border-radius: 14px;
-      padding: 1.4rem;
-      margin-bottom: 1.5rem;
+      padding: 1.6rem;
+      margin-bottom: 1.8rem;
       box-shadow: 0 6px 18px rgba(0,0,0,0.08);
     }
 
-    h2 { color: #1976d2; }
-
-    ul { padding-left: 1.2rem; }
-
-    .btns {
-      text-align: center;
-      margin-top: 2rem;
+    h2 {
+      color: #1976d2;
+      margin-top: 0;
     }
 
-    .btn {
+    ul {
+      padding-left: 1.3rem;
+      line-height: 1.5;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+    }
+
+    th, td {
+      border: 1px solid #e5e7eb;
+      padding: 0.6rem;
+    }
+
+    th {
+      background: #e3f2fd;
+      font-weight: 800;
+    }
+
+    .exercise {
+      background: #eef5ff;
+      border-left: 6px solid #1976d2;
+      padding: 1.2rem;
+      border-radius: 12px;
+      margin-top: 1rem;
+    }
+
+    .exercise ol {
+      padding-left: 1.4rem;
+    }
+
+    .exercise li {
+      margin-bottom: 0.5rem;
+    }
+
+    .back {
       display: inline-block;
-      margin: 0.3rem;
-      padding: 0.6rem 1.4rem;
+      margin-top: 2rem;
       background: #1976d2;
       color: white;
-      text-decoration: none;
+      padding: 0.6rem 1.4rem;
       border-radius: 999px;
+      text-decoration: none;
       font-weight: 700;
-    }
-
-    .btn.secondary {
-      background: #455a64;
     }
   </style>
 </head>
@@ -67,40 +97,163 @@
 
 <header>
   <h1>📘 Thema 3 – Werkwoordstijden</h1>
-  <p>Theorie en oefeningen</p>
+  <p>Cursus – theorie en opdrachten</p>
 </header>
 
 <main>
 
+  <!-- DOELEN -->
   <div class="block">
-    <h2>🎯 Wat leer je?</h2>
+    <h2>🎯 Doelen van dit thema</h2>
     <ul>
-      <li>Tegenwoordige tijd</li>
-      <li>Verleden tijd</li>
-      <li>Voltooid deelwoord</li>
-      <li>dt-regel</li>
+      <li>Je herkent de belangrijkste werkwoordstijden.</li>
+      <li>Je gebruikt werkwoordstijden juist in het dagelijks leven en op het werk.</li>
+      <li>Je maakt korte zinnen en teksten.</li>
     </ul>
   </div>
 
+  <!-- THEORIE -->
   <div class="block">
-    <h2>⏳ Werkwoordstijden</h2>
+    <h2>⏳ Wat zijn werkwoordstijden?</h2>
     <p>
-      Werkwoorden veranderen afhankelijk van wanneer iets gebeurt:
-      nu, vroeger of later.
+      Werkwoorden komen in verschillende tijden voor.
+      We maken een onderscheid tussen:
+    </p>
+    <ul>
+      <li>tegenwoordige tijd</li>
+      <li>verleden tijd</li>
+      <li>toekomende tijd</li>
+    </ul>
+    <p>
+      Daarnaast onderscheiden we <strong>onvoltooide</strong> en
+      <strong>voltooide</strong> tijden.
+      In totaal zijn er <strong>acht werkwoordstijden</strong>.
     </p>
   </div>
 
+  <!-- TABEL -->
   <div class="block">
-    <h2>✏️ Oefening</h2>
-    <p>Schrijf een zin met het werkwoord <strong>lopen</strong>.</p>
+    <h2>📊 Overzicht werkwoordstijden</h2>
+
+    <table>
+      <tr>
+        <th>Werkwoordtijd</th>
+        <th>Afkorting</th>
+        <th>Actief</th>
+        <th>Passief</th>
+      </tr>
+      <tr>
+        <td>Onvoltooid tegenwoordige tijd</td>
+        <td>OTT</td>
+        <td>Ik negeer</td>
+        <td>Ik word genegeerd</td>
+      </tr>
+      <tr>
+        <td>Onvoltooid verleden tijd</td>
+        <td>OVT</td>
+        <td>Ik negeerde</td>
+        <td>Ik werd genegeerd</td>
+      </tr>
+      <tr>
+        <td>Onvoltooid tegenwoordige toekomende tijd</td>
+        <td>OTToekT</td>
+        <td>Ik zal negeren</td>
+        <td>Ik zal genegeerd worden</td>
+      </tr>
+      <tr>
+        <td>Onvoltooid verleden toekomende tijd</td>
+        <td>OVToekT</td>
+        <td>Ik zou negeren</td>
+        <td>Ik zou genegeerd worden</td>
+      </tr>
+      <tr>
+        <td>Voltooid tegenwoordige tijd</td>
+        <td>VTT</td>
+        <td>Ik heb genegeerd</td>
+        <td>Ik ben genegeerd</td>
+      </tr>
+      <tr>
+        <td>Voltooid verleden tijd</td>
+        <td>VVT</td>
+        <td>Ik had genegeerd</td>
+        <td>Ik was genegeerd</td>
+      </tr>
+    </table>
   </div>
 
-  <div class="btns">
-    <a class="btn secondary" href="../../thema3.html">← Terug naar thema</a>
-    <a class="btn" href="thema3_cursus.pdf" target="_blank">
-      📄 Open PDF-cursus
-    </a>
+  <!-- ACTIEF PASSIEF -->
+  <div class="block">
+    <h2>🔄 Actief en passief</h2>
+
+    <p><strong>Actieve zin (doe-zin)</strong></p>
+    <p>Iemand <strong>doet</strong> iets.</p>
+    <p><em>Voorbeeld: De medewerker geeft het antwoord.</em></p>
+
+    <p><strong>Passieve zin (gebeurt-zin)</strong></p>
+    <p>Iets <strong>gebeurt</strong> met iemand.</p>
+    <p><em>Voorbeeld: Het antwoord wordt gegeven door de medewerker.</em></p>
   </div>
+
+  <!-- OPDRACHT 1 -->
+  <div class="block">
+    <h2>✏️ Opdracht 1</h2>
+    <div class="exercise">
+      <p>Zet het werkwoord tussen haakjes in de juiste tijd.</p>
+      <ol>
+        <li>Vandaag ______ ik op tijd. (werken)</li>
+        <li>Gisteren ______ ik ziek. (zijn)</li>
+        <li>Ik ______ mijn huiswerk al ______. (maken)</li>
+        <li>Morgen ______ wij naar school ______. (gaan)</li>
+        <li>Vorige week ______ hij te laat. (komen)</li>
+        <li>Ik ______ geholpen ______ door de leerkracht. (worden)</li>
+        <li>Volgende week ______ ik op stage ______. (beginnen)</li>
+        <li>Ik ______ mijn gsm niet in de les. (gebruiken)</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- OPDRACHT 2 -->
+  <div class="block">
+    <h2>✏️ Opdracht 2 – Actief of passief</h2>
+    <div class="exercise">
+      <ol>
+        <li>Ik word genegeerd.</li>
+        <li>Ik negeerde mijn werk.</li>
+        <li>Ik ben geholpen door de leerkracht.</li>
+        <li>Ik heb geen idee wat ik moet doen.</li>
+        <li>Waarom is een nieuwe gsm zo duur?</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- OPDRACHT 3 -->
+  <div class="block">
+    <h2>✏️ Opdracht 3 – Kies de juiste vorm</h2>
+    <div class="exercise">
+      <ol>
+        <li>Gisteren (negeer / negeerde / heb genegeerd) ik mijn wekker.</li>
+        <li>Morgen (zal negeren / negeerde / negeer) ik mijn gsm op het werk.</li>
+        <li>Ik (word / werd / ben) geholpen door mijn collega.</li>
+        <li>Vandaag (negeer / negeerde / zal negeren) ik mijn gsm in de les.</li>
+        <li>Vorige week (werk / werkte / heb gewerkt) ik op stage.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- OPDRACHT 4 -->
+  <div class="block">
+    <h2>✏️ Opdracht 4 – Onderwerp bepalen</h2>
+    <div class="exercise">
+      <p>Bepaal het onderwerp van de zin.</p>
+      <ol>
+        <li>De stalen achtbaan Kingda Ka bevindt zich in het attractiepark.</li>
+        <li>Avonturiers moeten afzakken naar New Jersey.</li>
+        <li>Wie van hoogtes houdt, vindt de achtbaan geweldig.</li>
+      </ol>
+    </div>
+  </div>
+
+  <a href="../../thema3.html" class="back">← Terug naar thema 3</a>
 
 </main>
 
