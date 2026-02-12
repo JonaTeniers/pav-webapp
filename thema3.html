@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" href="data:," />
   <title>Thema 3 – Werkwoordstijden</title>
 
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
 
   <style>
     :root {
@@ -63,6 +63,36 @@
       line-height: 1.45;
     }
 
+    /* CURSUS */
+    .cursus-box {
+      margin: 2rem 0;
+      padding: 1.4rem;
+      background: rgba(40, 20, 60, 0.85);
+      border-radius: 16px;
+      border: 1px solid rgba(186, 104, 200, 0.4);
+    }
+
+    .cursus-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+
+    .cursus-btn {
+      padding: 0.55rem 1.4rem;
+      border-radius: 999px;
+      font-weight: 700;
+      text-decoration: none;
+      color: white;
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+    }
+
+    .cursus-btn.secondary {
+      background: #455a64;
+    }
+
+    /* SUBTHEMA */
     .subtheme-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -96,7 +126,7 @@
 
     .back-btn {
       display: inline-block;
-      margin-top: 1.8rem;
+      margin-top: 2rem;
       text-decoration: none;
       color: white;
       font-weight: 700;
@@ -124,30 +154,33 @@
     en wanneer je vertelt over wat <strong>al gebeurd is</strong>.
   </p>
 
-  <section class="panel">
-  <h2>📘 Cursus – Werkwoordstijden</h2>
+  <!-- CURSUS -->
+  <section class="cursus-box">
+    <h2>📘 Cursus – Werkwoordstijden</h2>
 
-  <p>
-    Hier vind je de volledige uitleg van dit thema.
-    Je kan de cursus online bekijken of downloaden
-    om thuis te herhalen.
-  </p>
+    <p>
+      Wil je de uitleg nog eens rustig bekijken?
+      Hier vind je de volledige cursus van dit thema.
+    </p>
 
-  <div class="cursus-links">
-    <a href="cursus/thema3/thema3_cursus.pdf" target="_blank">
-      📄 Cursus bekijken (PDF)
-    </a>
+    <div class="cursus-buttons">
+      <a class="cursus-btn"
+         href="cursus/thema3/thema3_cursus.html">
+        📘 Cursus bekijken
+      </a>
 
-    <a href="cursus/thema3/thema3_cursus.pdf" download>
-      ⬇️ Cursus downloaden
-    </a>
+      <a class="cursus-btn secondary"
+         href="cursus/thema3/thema3_cursus.pdf"
+         download>
+        ⬇️ Cursus downloaden
+      </a>
 
-    <a href="cursus/thema3/thema3_extra.html">
-      ✏️ Extra oefeningen
-    </a>
-  </div>
-</section>
-
+      <a class="cursus-btn secondary"
+         href="cursus/thema3/thema3_extra.html">
+        ✏️ Extra oefeningen
+      </a>
+    </div>
+  </section>
 
   <div class="info-box">
     <strong>🧭 Kapstok</strong><br>
@@ -174,21 +207,18 @@
     </div>
   </div>
 
-  <!-- NIEUW BLOK -->
   <h2 style="margin-top:2.5rem;">🔁 Alles samen oefenen</h2>
 
   <div class="info-box">
-    <strong>Even checken 👀</strong><br>
     Wil je eerst nog apart oefenen?
     Ga dan terug naar de subthema’s hierboven.<br><br>
-    Ben je klaar om alles samen te oefenen?
-    Dan kan je hieronder starten.
+    Klaar om alles samen te oefenen?
+    Start dan hieronder.
   </div>
 
   <div class="subtheme-grid">
     <div class="subtheme-card"
-         style="border:2px dashed rgba(186, 104, 200, 0.6);
-                background: rgba(40, 20, 60, 0.85);">
+         style="border:2px dashed rgba(186, 104, 200, 0.6);">
       <h3>🔁 Werkwoordstijden – Alles samen</h3>
       <p>
         Oefen tegenwoordige tijd, verleden tijd en de dt-regel
