@@ -4,29 +4,48 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Thema 5 – Fictie en non-fictie</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
+
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
+
   <style>
     :root {
-      --bg: #f3f8e7;
+      --bg: #f8fafc;
       --panel: #ffffff;
-      --accent: #8eb93b;
-      --accent-dark: #6f9627;
-      --text: #213021;
-      --muted: #5e6f55;
+      --accent: #0f766e;
+      --accent-dark: #0b5f58;
+      --text: #1f2937;
+      --muted: #4b5563;
+      --border-soft: #dbe5ef;
+      --soft-bg: #f0fdfa;
     }
+
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       font-family: 'Nunito', sans-serif;
       background: var(--bg);
       color: var(--text);
     }
+
     header {
-      background: #a4c93d;
-      color: #fff;
+      background: #14b8a6;
+      color: white;
       padding: 1.8rem 1rem;
       text-align: center;
     }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.1rem;
+    }
+
+    header p {
+      margin: 0.6rem 0 0;
+      opacity: 0.95;
+    }
+
     main {
       width: min(1100px, 95%);
       margin: 1.5rem auto 2rem;
@@ -34,59 +53,77 @@
       grid-template-columns: 2fr 1fr;
       gap: 1rem;
     }
+
     .panel {
       background: var(--panel);
       border-radius: 14px;
       padding: 1.2rem;
       box-shadow: 0 6px 16px rgba(0,0,0,0.08);
     }
+
     h2 { margin-top: 0; }
+
     .columns {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1rem;
     }
+
     .type-card {
-      border: 2px solid #d6e8b2;
+      border: 2px solid #bce7e1;
       border-radius: 12px;
       padding: 1rem;
-      background: #f9fdea;
+      background: var(--soft-bg);
     }
-    ul { margin: 0.4rem 0 0; padding-left: 1.2rem; }
+
+    .type-card h3 {
+      margin-top: 0;
+    }
+
+    ul, ol {
+      margin: 0.4rem 0 0;
+      padding-left: 1.2rem;
+    }
+
     .task {
-      border-top: 1px solid #dfead0;
-      margin-top: 1rem;
-      padding-top: 1rem;
+      border-top: 1px solid var(--border-soft);
+      margin-top: 1.2rem;
+      padding-top: 1.2rem;
     }
+
     .unit-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
       gap: 0.8rem;
       margin-top: 0.8rem;
     }
+
     .unit-card {
-      border: 2px solid #d6e8b2;
+      border: 2px solid #bce7e1;
       border-radius: 12px;
       padding: 0.9rem;
-      background: #f9fdea;
+      background: var(--soft-bg);
+      display: flex;
+      flex-direction: column;
     }
+
     .unit-card h4 {
       margin: 0 0 0.35rem;
     }
+
     .unit-card p {
-      margin: 0 0 0.65rem;
+      margin: 0 0 0.5rem;
       color: var(--muted);
       font-size: 0.95rem;
     }
+
     .unit-card .status {
       font-size: 0.82rem;
       font-weight: 700;
-      color: #5b7d23;
-      margin-bottom: 0.7rem;
+      color: var(--accent-dark);
+      margin-bottom: 0.6rem;
     }
-    .unit-card a {
-      text-decoration: none;
-    }
+
     .unit-card button {
       width: 100%;
       border: none;
@@ -97,122 +134,158 @@
       background: var(--accent);
       cursor: pointer;
     }
+
     .unit-card button:hover {
       background: var(--accent-dark);
     }
+
+    .unit-card button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
     .chat-embed {
       width: 100%;
       min-height: 520px;
       border: none;
       border-radius: 12px;
-      background: #f7fbec;
+      background: #f3f7ff;
     }
+
     .btn {
       display: inline-block;
       text-decoration: none;
-      margin-top: 0.8rem;
+      margin-top: 1rem;
       background: var(--accent);
       color: white;
       padding: 0.5rem 0.9rem;
       border-radius: 999px;
       font-weight: 700;
     }
-    .btn:hover { background: var(--accent-dark); }
+
+    .btn:hover {
+      background: var(--accent-dark);
+    }
+
     @media (max-width: 900px) {
       main { grid-template-columns: 1fr; }
       .columns { grid-template-columns: 1fr; }
     }
   </style>
 </head>
+
 <body>
-  <header>
-    <h1>📗 Thema 5 – Fictie en non-fictie</h1>
-    <p>Herken of een tekst fantasie of feiten gebruikt, en wat het doel is van de schrijver.</p>
-  </header>
 
-  <main data-theme-id="5">
-    <section class="panel">
-      <h2>Uitleg</h2>
-      <div class="columns">
-        <article class="type-card">
-          <h3>Fictie</h3>
-          <ul>
-            <li>Verzonnen of gebaseerd op fantasie.</li>
-            <li>Doel: amuseren, ontroeren, iets laten beleven.</li>
-            <li>Voorbeelden: verhaal, roman, gedicht, film.</li>
-          </ul>
-        </article>
-        <article class="type-card">
-          <h3>Non-fictie</h3>
-          <ul>
-            <li>Gaat over feiten, informatie of meningen.</li>
-            <li>Doel: informeren, uitleggen of overtuigen.</li>
-            <li>Voorbeelden: artikel, handleiding, nieuwsbericht.</li>
-          </ul>
-        </article>
-      </div>
+<header>
+  <h1>Thema 5 – Fictie en non-fictie</h1>
+  <p>
+    Herkennen of een tekst fantasie of feiten gebruikt
+    en wat het doel is van de schrijver.
+  </p>
+</header>
 
-      <div class="task">
-        <h3>Oefening</h3>
-        <p>Bepaal voor elke tekst:</p>
-        <ol>
-          <li>Is het echt gebeurd (feiten) of verzonnen (fantasie)?</li>
-          <li>Wat is het doel van de schrijver?</li>
-          <li>Is het fictie of non-fictie?</li>
-        </ol>
-      </div>
+<main data-theme-id="5">
 
-      <div class="task">
-        <h3>📚 Units</h3>
-        <div class="unit-grid">
-          <div class="unit-card" data-unit="1">
-            <h4>Unit 1</h4>
-            <p>Fictie of non-fictie herkennen.</p>
-            <p class="status">Beschikbaar</p>
-            <a href="thema5unit1.html"><button>Start</button></a>
-          </div>
-          <div class="unit-card" data-unit="2">
-            <h4>Unit 2</h4>
-            <p>Doel van de schrijver bepalen.</p>
-            <p class="status">Beschikbaar</p>
-            <a href="thema5unit2.html"><button>Start</button></a>
-          </div>
-          <div class="unit-card" data-unit="3">
-            <h4>Unit 3</h4>
-            <p>Tekstsoorten vergelijken en uitleggen.</p>
-            <p class="status">Beschikbaar</p>
-            <a href="thema5unit3.html"><button>Start</button></a>
-          </div>
-          <div class="unit-card" data-unit="4" data-development="true">
-            <h4>Unit 4 <span style="font-size:0.8rem;color:#f59e0b;">🆕 Nieuw</span></h4>
-            <p>Nieuws: fictie of feit</p>
-            <p class="status">🆕 In ontwikkeling</p>
-            <button disabled>Binnenkort</button>
-          </div>
-          <div class="unit-card" data-unit="5" data-development="true">
-            <h4>Unit 5 <span style="font-size:0.8rem;color:#f59e0b;">🆕 Nieuw</span></h4>
-            <p>Bronnen checken en vergelijken</p>
-            <p class="status">🆕 In ontwikkeling</p>
-            <button disabled>Binnenkort</button>
-          </div>
-          <div class="unit-card" data-unit="6" data-development="true">
-            <h4>Unit 6 <span style="font-size:0.8rem;color:#f59e0b;">🆕 Nieuw</span></h4>
-            <p>Korte nieuwsanalyse schrijven</p>
-            <p class="status">🆕 In ontwikkeling</p>
-            <button disabled>Binnenkort</button>
-          </div>
+  <section class="panel">
+
+    <h2>Uitleg</h2>
+
+    <div class="columns">
+      <article class="type-card">
+        <h3>Fictie</h3>
+        <ul>
+          <li>Verzonnen of gebaseerd op fantasie</li>
+          <li>Doel: amuseren, ontroeren of iets laten beleven</li>
+          <li>Voorbeelden: verhaal, roman, gedicht, film</li>
+        </ul>
+      </article>
+
+      <article class="type-card">
+        <h3>Non-fictie</h3>
+        <ul>
+          <li>Gaat over feiten, informatie of meningen</li>
+          <li>Doel: informeren, uitleggen of overtuigen</li>
+          <li>Voorbeelden: artikel, handleiding, nieuwsbericht</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="task">
+      <h3>Oefening</h3>
+      <p>Bepaal voor elke tekst:</p>
+      <ol>
+        <li>Is het echt gebeurd of verzonnen?</li>
+        <li>Wat is het doel van de schrijver?</li>
+        <li>Is het fictie of non-fictie?</li>
+      </ol>
+    </div>
+
+    <div class="task">
+      <h3>Units</h3>
+
+      <div class="unit-grid">
+        <div class="unit-card">
+          <h4>Unit 1</h4>
+          <p>Fictie of non-fictie herkennen</p>
+          <p class="status">Beschikbaar</p>
+          <a href="thema5unit1.html"><button>Start</button></a>
+        </div>
+
+        <div class="unit-card">
+          <h4>Unit 2</h4>
+          <p>Doel van de schrijver bepalen</p>
+          <p class="status">Beschikbaar</p>
+          <a href="thema5unit2.html"><button>Start</button></a>
+        </div>
+
+        <div class="unit-card">
+          <h4>Unit 3</h4>
+          <p>Tekstsoorten vergelijken en uitleggen</p>
+          <p class="status">Beschikbaar</p>
+          <a href="thema5unit3.html"><button>Start</button></a>
+        </div>
+
+        <div class="unit-card">
+          <h4>Unit 4</h4>
+          <p>Nieuws: fictie of feit</p>
+          <p class="status">In ontwikkeling</p>
+          <button disabled>Binnenkort</button>
+        </div>
+
+        <div class="unit-card">
+          <h4>Unit 5</h4>
+          <p>Bronnen checken en vergelijken</p>
+          <p class="status">In ontwikkeling</p>
+          <button disabled>Binnenkort</button>
+        </div>
+
+        <div class="unit-card">
+          <h4>Unit 6</h4>
+          <p>Korte nieuwsanalyse schrijven</p>
+          <p class="status">In ontwikkeling</p>
+          <button disabled>Binnenkort</button>
         </div>
       </div>
+    </div>
 
-      <a class="btn" href="index.html">← Terug naar overzicht</a>
-    </section>
+    <a class="btn" href="index.html">Terug naar overzicht</a>
 
-    <aside class="panel">
-      <h2>🤖 Chattie</h2>
-      <p style="color: var(--muted);">Vraag hulp bij voorbeelden of bij het herkennen van tekstsoorten.</p>
-      <iframe class="chat-embed" title="Chattie" src="chattie.html?thema=Thema%205%20Fictie%20en%20non-fictie"></iframe>
-    </aside>
-  </main>
-  <script src="./pavo-theme-progress.js"></script>
+  </section>
+
+  <aside class="panel">
+    <h2>Chattie</h2>
+    <p style="color: var(--muted);">
+      Vraag hulp bij voorbeelden of bij het herkennen van tekstsoorten.
+    </p>
+    <iframe
+      class="chat-embed"
+      title="Chattie"
+      src="chattie.html?thema=Thema%205%20Fictie%20en%20non-fictie">
+    </iframe>
+  </aside>
+
+</main>
+
+<script src="./pavo-theme-progress.js"></script>
 </body>
 </html>
