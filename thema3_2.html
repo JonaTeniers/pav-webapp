@@ -3,73 +3,100 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" href="data:," />
   <title>Thema 3.2 – Verleden tijd</title>
 
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
 
   <style>
     :root {
-      color-scheme: dark;
-      --panel: rgba(23, 12, 38, 0.92);
-      --panel-border: rgba(186, 104, 200, 0.35);
-      --accent: #ba68c8;
-      --accent-2: #7b1fa2;
-      --text: #f4e9ff;
-      --muted: #cdb8dd;
-      --soft: rgba(186,104,200,0.15);
+      --bg: #f8fafc;
+      --panel: #ffffff;
+      --accent: #0f766e;
+      --accent-dark: #0b5f58;
+      --text: #1f2937;
+      --muted: #4b5563;
+      --border-soft: #dbe5ef;
+      --soft-bg: #f0fdfa;
     }
+
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
       font-family: 'Nunito', sans-serif;
-      background: radial-gradient(circle at top, #3a1c59 0%, #190b28 55%, #0b0613 100%);
+      background: var(--bg);
       color: var(--text);
     }
 
     header {
+      background: #14b8a6;
+      color: white;
+      padding: 1.8rem 1rem;
       text-align: center;
-      padding: 2rem 1rem 1.2rem;
-      background: linear-gradient(90deg, rgba(58,28,89,0.95), rgba(43,17,66,0.95));
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    header p {
+      margin: 0.6rem 0 0;
+      opacity: 0.95;
     }
 
     main {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 2rem 1.5rem 3rem;
+      width: min(1100px, 95%);
+      margin: 1.6rem auto 2.5rem;
     }
 
     .panel {
       background: var(--panel);
-      border-radius: 18px;
-      border: 1px solid var(--panel-border);
-      padding: 1.6rem;
+      border-radius: 14px;
+      padding: 1.4rem;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
     }
 
     .info-box {
-      background: var(--soft);
+      background: var(--soft-bg);
       border-left: 5px solid var(--accent);
       border-radius: 12px;
       padding: 1rem 1.2rem;
-      margin-bottom: 1.4rem;
+      margin: 1.4rem 0;
       color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .info-box ul {
+      margin: 0.6rem 0 0;
+      padding-left: 1.2rem;
     }
 
     .unit-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.2rem;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
       margin-top: 1.2rem;
     }
 
     .unit-card {
-      background: rgba(26, 12, 41, 0.9);
-      border-radius: 16px;
-      border: 1px solid rgba(186,104,200,0.25);
-      padding: 1.3rem;
+      background: var(--soft-bg);
+      border-radius: 12px;
+      border: 2px solid #bce7e1;
+      padding: 1.2rem;
       display: flex;
       flex-direction: column;
-      gap: 0.6rem;
+    }
+
+    .unit-card h3 {
+      margin: 0 0 0.4rem;
+    }
+
+    .unit-card p {
+      margin: 0 0 0.8rem;
+      color: var(--muted);
+      font-size: 0.95rem;
     }
 
     .unit-card a {
@@ -77,21 +104,29 @@
       text-decoration: none;
       font-weight: 700;
       color: white;
-      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      background: var(--accent);
       padding: 0.45rem 0.9rem;
       border-radius: 999px;
       width: fit-content;
     }
 
-    .back-btn {
+    .unit-card a:hover {
+      background: var(--accent-dark);
+    }
+
+    .btn-back {
       display: inline-block;
       margin-top: 1.8rem;
       text-decoration: none;
+      background: var(--accent);
       color: white;
-      font-weight: 700;
-      padding: 0.5rem 1rem;
+      padding: 0.5rem 0.9rem;
       border-radius: 999px;
-      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      font-weight: 700;
+    }
+
+    .btn-back:hover {
+      background: var(--accent-dark);
     }
   </style>
 </head>
@@ -99,7 +134,7 @@
 <body>
 
 <header>
-  <h1>📕 Thema 3.2 – Verleden tijd</h1>
+  <h1>Thema 3.2 – Verleden tijd</h1>
   <p>Vertellen over wat al gebeurd is</p>
 </header>
 
@@ -108,21 +143,21 @@
 
   <h2>Focus van dit subthema</h2>
   <p>
-    In dit subthema leer je vertellen over wat <strong>vroeger gebeurde</strong>.
-    Je oefent met herkennen, gebruiken en toepassen van de
-    <strong>verleden tijd</strong>.
+    In dit subthema leer je vertellen over wat vroeger gebeurde.
+    Je oefent met herkennen, gebruiken en toepassen van
+    de verleden tijd.
   </p>
 
   <div class="info-box">
-    <strong>🧭 Kapstok</strong>
+    <strong>Kapstok</strong>
     <ul>
-      <li>Het gebeurde <strong>vroeger</strong></li>
-      <li>Er zijn vaak <strong>signaalwoorden</strong></li>
-      <li>Je hoort <em>liep, maakte, was</em></li>
+      <li>De handeling gebeurde vroeger</li>
+      <li>Er zijn vaak signaalwoorden</li>
+      <li>Werkwoorden staan in de verleden tijd</li>
     </ul>
   </div>
 
-  <h2>📚 Units</h2>
+  <h2>Units</h2>
 
   <div class="unit-grid">
     <div class="unit-card">
@@ -133,7 +168,7 @@
 
     <div class="unit-card">
       <h3>Unit 2</h3>
-      <p>OVT en VVT gebruiken</p>
+      <p>Onvoltooid en voltooid verleden tijd gebruiken</p>
       <a href="thema3_2_unit2.html">Start</a>
     </div>
 
@@ -144,7 +179,7 @@
     </div>
   </div>
 
-  <a href="thema3.html" class="back-btn">← Terug naar Thema 3</a>
+  <a href="thema3.html" class="btn-back">Terug naar Thema 3</a>
 
 </section>
 </main>
