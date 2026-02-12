@@ -1,129 +1,92 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8" />
-  <title>PAV-O – Eindtermen & Doelen per Thema</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>PAV-O – Doelen per thema (Leerkracht)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
-    :root{
-      --blue:#1976d2;
-      --blue-dark:#1565c0;
-      --bg:#f4f7fb;
-      --panel:#ffffff;
-      --text:#1f2937;
-      --muted:#6b7280;
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f2f6fb;
+      color: #1f2937;
     }
 
-    *{ box-sizing:border-box }
-
-    body{
-      margin:0;
-      font-family:'Nunito',sans-serif;
-      background:var(--bg);
-      color:var(--text);
+    header {
+      background: #0b4da2;
+      color: white;
+      padding: 1.6rem;
     }
 
-    header{
-      background:linear-gradient(135deg,#1e88e5,#64b5f6);
-      color:white;
-      padding:2.6rem 1.6rem 2.2rem;
-      text-align:center;
-      border-bottom-left-radius:32px;
-      border-bottom-right-radius:32px;
+    header h1 {
+      margin: 0 0 0.5rem;
     }
 
-    header h1{
-      margin:0;
-      font-size:2.4rem;
-      font-weight:800;
+    main {
+      max-width: 1200px;
+      margin: 2rem auto 4rem;
+      padding: 0 1rem;
     }
 
-    header p{
-      margin:0.6rem auto 0;
-      max-width:900px;
-      font-size:1.05rem;
-      line-height:1.5;
-      opacity:0.95;
+    .intro {
+      background: white;
+      border-radius: 12px;
+      padding: 1.4rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+      line-height: 1.5;
     }
 
-    main{
-      max-width:1200px;
-      margin:2.8rem auto 4rem;
-      padding:0 1.4rem;
+    h2 {
+      margin-top: 3rem;
+      color: #0b4da2;
     }
 
-    .info-box{
-      background:var(--panel);
-      border-radius:16px;
-      padding:1.4rem 1.6rem;
-      box-shadow:0 6px 16px rgba(0,0,0,0.08);
-      margin-bottom:2.2rem;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+      margin-top: 1rem;
     }
 
-    .info-box h2{
-      margin-top:0;
-      color:var(--blue);
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #e5e7eb;
+      vertical-align: top;
     }
 
-    table{
-      width:100%;
-      border-collapse:collapse;
-      background:var(--panel);
-      border-radius:18px;
-      overflow:hidden;
-      box-shadow:0 8px 20px rgba(0,0,0,0.08);
+    th {
+      background: #0b4da2;
+      color: white;
+      font-size: 0.9rem;
     }
 
-    th, td{
-      padding:14px;
-      border-bottom:1px solid #e5e7eb;
-      vertical-align:top;
+    td[contenteditable="true"] {
+      background: #f9fafb;
     }
 
-    th{
-      background:var(--blue);
-      color:white;
-      font-size:1rem;
-      text-align:left;
+    .unit-col {
+      width: 90px;
+      font-weight: bold;
+      white-space: nowrap;
     }
 
-    tr:last-child td{
-      border-bottom:none;
+    .desc-col {
+      width: 220px;
     }
 
-    .thema-col{
-      width:22%;
-      font-weight:800;
-      color:var(--blue-dark);
+    .goal-col {
+      width: 35%;
     }
 
-    textarea{
-      width:100%;
-      min-height:90px;
-      resize:vertical;
-      padding:10px;
-      border-radius:10px;
-      border:1px solid #cbd5e1;
-      font-family:'Nunito',sans-serif;
-      font-size:0.95rem;
-    }
-
-    .back-btn{
-      display:inline-block;
-      margin-top:2rem;
-      text-decoration:none;
-      font-weight:800;
-      color:white;
-      background:var(--blue);
-      padding:0.6rem 1.6rem;
-      border-radius:999px;
-    }
-
-    .back-btn:hover{
-      background:var(--blue-dark);
+    .note {
+      font-size: 0.85rem;
+      color: #6b7280;
+      margin-top: 0.6rem;
     }
   </style>
 </head>
@@ -131,95 +94,843 @@
 <body>
 
 <header>
-  <h1>PAV-O – Eindtermen & Doelen per Thema</h1>
-  <p>
-    Overzicht van de eindtermen basisgeletterdheid en thematische doelstellingen<br>
-    <strong>Na modernisering – geldig vanaf 1 september 2024</strong>
-  </p>
+  <h1>PAV-O – Doelen per thema</h1>
+  <p>Leerkrachtzone – inspectiegericht overzicht</p>
 </header>
 
 <main>
 
-  <!-- VISIETEKST -->
-  <section class="info-box">
-    <h2>Visie & kader</h2>
-    <p>
-      De PAV-O leeromgeving ondersteunt de realisatie van de eindtermen
-      basisgeletterdheid (versie 2.1) door taal-, reken- en digitale vaardigheden
-      geïntegreerd aan te bieden binnen betekenisvolle en functionele leercontexten.
-    </p>
-    <p>
-      Leerlingen lezen, schrijven, spreken en interageren doelgericht in thematische
-      leerinhouden die aansluiten bij hun leefwereld en toekomstige maatschappelijke
-      en arbeidsmarktgerichte situaties. Daarbij maken zij functioneel en verantwoord
-      gebruik van ICT ter ondersteuning van hun leerproces, het inoefenen van
-      vaardigheden en het opvolgen van hun voortgang.
-    </p>
+  <section class="intro">
+    <strong>Na modernisering (geldig vanaf 1 september 2024)</strong><br><br>
+
+    De PAV-O leeromgeving ondersteunt de realisatie van de eindtermen
+    basisgeletterdheid (versie 2.1) door taal-, reken- en digitale vaardigheden
+    geïntegreerd aan te bieden binnen betekenisvolle en functionele leercontexten.<br><br>
+
+    Leerlingen lezen, schrijven, spreken en interageren doelgericht in thematische
+    leerinhouden die aansluiten bij hun leefwereld en toekomstige maatschappelijke
+    en arbeidsmarktgerichte situaties. Daarbij maken zij functioneel en verantwoord
+    gebruik van ICT ter ondersteuning van hun leerproces, het inoefenen van vaardigheden
+    en het opvolgen van hun voortgang.
   </section>
 
-  <!-- TABEL -->
-  <table>
-    <thead>
-      <tr>
-        <th>Thema</th>
-        <th>Eindtermen / doelen (basisgeletterdheid)</th>
-      </tr>
-    </thead>
-    <tbody>
+  <!-- ================= THEMA TEMPLATE ================= -->
+  <!-- KOPIEER DIT BLOK VOOR ELK THEMA -->
 
-      <tr>
-        <td class="thema-col">Thema 1 – Landschappen</td>
-        <td><textarea placeholder="Bijv. BG01.01 – BG02.01 – BG05.01 ..."></textarea></td>
-      </tr>
+ <h2>Thema 1 – Landschappen</h2>
 
-      <tr>
-        <td class="thema-col">Thema 2 – Levende natuur</td>
-        <td><textarea></textarea></td>
-      </tr>
+<table>
+  <thead>
+    <tr>
+      <th>Unit / Deel</th>
+      <th>Inhoud / Opdracht</th>
+      <th>Eindterm Eerste Graad (EG)</th>
+      <th>Eindterm Tweede Graad (TG)</th>
+      <th>Waarom deze match?</th>
+    </tr>
+  </thead>
+  <tbody>
 
-      <tr>
-        <td class="thema-col">Thema 3 – Werkwoordstijden</td>
-        <td><textarea></textarea></td>
-      </tr>
+    <tr>
+      <td>Deel 1</td>
+      <td>Wat is een landschap?</td>
+      <td>06.27 (EG) – De leerlingen passen een wetenschappelijke methode toe om vragen te beantwoorden.</td>
+      <td>06.14 (TG) – De leerlingen ontwerpen een oplossing voor een probleem door wetenschappen, technologie of wiskunde geïntegreerd aan te wenden.</td>
+      <td>Leerlingen observeren hun omgeving, formuleren eerste onderzoeksvragen en verkennen het begrip landschap via waarneming.</td>
+    </tr>
 
-      <tr>
-        <td class="thema-col">Thema 4 – Wiskunde</td>
-        <td><textarea></textarea></td>
-      </tr>
+    <tr>
+      <td>Deel 2</td>
+      <td>Landschapselementen herkennen</td>
+      <td>06.16 (EG) – De leerlingen illustreren voor een biotoop de onderlinge relaties tussen verschillende organismen en de rol van biotische en abiotische factoren.</td>
+      <td>06.06 (TG) – De leerlingen lossen vanuit betekenisvolle contexten problemen op door wiskundige concepten en vaardigheden in te zetten.</td>
+      <td>Het benoemen en ordenen van landschapselementen vormt de basis voor inzicht in natuurlijke samenhangen.</td>
+    </tr>
 
-      <tr>
-        <td class="thema-col">Thema 5 – Fictie & non-fictie</td>
-        <td><textarea></textarea></td>
-      </tr>
+    <tr>
+      <td>Deel 3</td>
+      <td>Natuurlijk en menselijk landschap</td>
+      <td>06.16 (EG) – De leerlingen illustreren voor een biotoop de onderlinge relaties tussen verschillende organismen en de rol van biotische en abiotische factoren.</td>
+      <td>06.09 (TG) – De leerlingen brengen informatie uit product- of materiaallabels in verband met bewust gebruik op vlak van gezondheid en leefmilieu.</td>
+      <td>Leerlingen onderscheiden natuurlijke factoren van menselijke invloeden en linken dit aan milieubewust handelen.</td>
+    </tr>
 
-      <tr>
-        <td class="thema-col">Thema 6 – Schatten</td>
-        <td><textarea></textarea></td>
-      </tr>
+    <tr>
+      <td>Deel 4</td>
+      <td>Soorten landschappen</td>
+      <td>06.05 (EG) – De leerlingen stellen vlakke meetkundige objecten grafisch voor in betekenisvolle contexten.</td>
+      <td>06.03 (TG) – De leerlingen leggen het verband tussen een 3D-situatie en 2D-voorstellingen ervan in betekenisvolle contexten.</td>
+      <td>Het herkennen van landschapstypes gebeurt aan de hand van kaarten, foto’s en schema’s.</td>
+    </tr>
 
-      <tr>
-        <td class="thema-col">Thema 7 – Communicatie</td>
-        <td><textarea></textarea></td>
-      </tr>
+    <tr>
+      <td>Deel 5</td>
+      <td>Gebruik van landschappen</td>
+      <td>06.24 (EG) – De leerlingen werken op een veilige en duurzame manier met materialen, organismen, stoffen en technische systemen.</td>
+      <td>06.10 (TG) – De leerlingen werken op een veilige en duurzame manier met chemische stoffen.</td>
+      <td>De relatie tussen mens en landschap wordt bekeken vanuit duurzaamheid en verantwoord gebruik.</td>
+    </tr>
 
-      <tr>
-        <td class="thema-col">Thema 8 – Actualiteit</td>
-        <td><textarea></textarea></td>
-      </tr>
+    <tr>
+      <td>Deel 6</td>
+      <td>Veranderingen in het landschap</td>
+      <td>06.10 (EG) – De leerlingen voeren een beschrijvend statistisch onderzoek uit met niet-gegroepeerde gegevens.</td>
+      <td>06.04 (TG) – De leerlingen interpreteren grafieken, tabellen en diagrammen in betekenisvolle contexten.</td>
+      <td>Leerlingen analyseren veranderingen doorheen de tijd via grafieken en gegevens.</td>
+    </tr>
 
-      <tr>
-        <td class="thema-col">Thema 9 – Geschiedenis</td>
-        <td><textarea></textarea></td>
-      </tr>
+    <tr>
+      <td>Deel 7</td>
+      <td>Invloed van de mens</td>
+      <td>06.24 (EG) – De leerlingen werken op een veilige en duurzame manier met materialen en grondstoffen.</td>
+      <td>06.09 (TG) – De leerlingen brengen informatie uit product- of materiaallabels in verband met bewust gebruik op vlak van leefmilieu.</td>
+      <td>Menselijk handelen wordt kritisch bekeken in functie van milieu-impact.</td>
+    </tr>
 
-    </tbody>
-  </table>
+    <tr>
+      <td>Deel 8</td>
+      <td>Invloed van de natuur</td>
+      <td>06.16 (EG) – De leerlingen illustreren voor een biotoop de onderlinge relaties tussen organismen en factoren.</td>
+      <td>06.12 (TG) – De leerlingen verklaren fenomenen uit het dagelijkse leven aan de hand van natuurkundige principes.</td>
+      <td>Natuurlijke processen zoals water, reliëf en klimaat worden verklaard.</td>
+    </tr>
 
-  <a href="leerkracht-dashboard.html" class="back-btn">
-    ← Terug naar leerkrachtomgeving
-  </a>
+    <tr>
+      <td>Deel 9</td>
+      <td>Grenzen en afstanden</td>
+      <td>06.02 (EG) – De leerlingen voeren eenvoudige berekeningen uit met functioneel gebruik van ICT.</td>
+      <td>06.01 (TG) – De leerlingen voeren met functioneel gebruik van ICT berekeningen uit.</td>
+      <td>Leerlingen meten en berekenen afstanden en oppervlaktes met digitale hulpmiddelen.</td>
+    </tr>
+
+    <tr>
+      <td>Deel 10</td>
+      <td>Regio’s en indeling</td>
+      <td>06.11 (EG) – De leerlingen lossen problemen op door wiskundige concepten en vaardigheden in te zetten.</td>
+      <td>06.06 (TG) – De leerlingen lossen vanuit betekenisvolle contexten problemen op door wiskundige concepten in te zetten.</td>
+      <td>Het indelen van regio’s gebeurt via schaal, kaartgebruik en probleemoplossend denken.</td>
+    </tr>
+
+    <tr>
+      <td>Deel 11</td>
+      <td>Toepassen in context</td>
+      <td>06.27 (EG) – De leerlingen passen een wetenschappelijke methode toe.</td>
+      <td>06.12 (TG) – De leerlingen verklaren fenomenen uit het dagelijkse leven.</td>
+      <td>Leerlingen passen hun kennis toe op concrete situaties in hun leefomgeving.</td>
+    </tr>
+
+    <tr>
+      <td>Deel 12</td>
+      <td>Herhaling en synthese</td>
+      <td>Alle bovenstaande EG-doelen</td>
+      <td>Alle bovenstaande TG-doelen</td>
+      <td>Synthese van kennis, vaardigheden en inzichten binnen één samenhangend thema.</td>
+    </tr>
+
+    <tr>
+      <td>Unit 3</td>
+      <td>Functioneel gebruik van ICT</td>
+      <td>06.01 (EG) – Functioneel gebruik van ICT bij berekeningen.</td>
+      <td>06.01 (TG) – Functioneel gebruik van ICT bij berekeningen.</td>
+      <td>Digitale vaardigheden worden geïntegreerd via interactieve oefeningen en navigatie.</td>
+    </tr>
+
+  </tbody>
+</table>
+
+  <h2>Thema 2 – Levende natuur</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Unit</th>
+      <th>Inhoud / Opdracht</th>
+      <th>Eindterm Eerste Graad (EG)</th>
+      <th>Eindterm Tweede Graad (TG)</th>
+      <th>Waarom deze match?</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr>
+      <td>Unit 1</td>
+      <td>Wat is levende natuur?</td>
+      <td>
+        06.27 (EG) – De leerlingen passen een wetenschappelijke methode toe om vragen te beantwoorden.
+      </td>
+      <td>
+        06.14 (TG) – De leerlingen ontwerpen een oplossing voor een probleem door wetenschappen, technologie of wiskunde geïntegreerd aan te wenden.
+      </td>
+      <td>
+        Leerlingen stellen criteria op om leven te definiëren (zoals groei, ademhaling en voortplanting) en leren systematisch waarnemen en onderzoeken.
+      </td>
+    </tr>
+
+    <tr>
+      <td>Unit 2</td>
+      <td>Organismen en hun kenmerken</td>
+      <td>
+        06.14 (EG) – De leerlingen illustreren voortplantingswijzen van planten en dieren.
+      </td>
+      <td>
+        06.07 (TG) – De leerlingen leggen de positieve en negatieve rol uit van virussen, bacteriën en schimmels in de natuur en in toepassingen voor de mens.
+      </td>
+      <td>
+        De focus ligt op levenskenmerken zoals groei en voortplanting en het herkennen van organismen binnen hun biologische context.
+      </td>
+    </tr>
+
+    <tr>
+      <td>Unit 3</td>
+      <td>Planten en dieren vergelijken</td>
+      <td>
+        06.12 (EG) – De leerlingen illustreren het belang van fotosynthese.
+      </td>
+      <td>
+        06.11 (TG) – De leerlingen gebruiken de concepten rendement, vermogen en warmte om energieomzettingen in systemen te beschrijven.
+      </td>
+      <td>
+        Leerlingen vergelijken planten en dieren op basis van voedingswijzen en energieopname, met fotosynthese als essentieel onderscheid.
+      </td>
+    </tr>
+
+    <tr>
+      <td>Unit 4</td>
+      <td>Levensgemeenschappen</td>
+      <td>
+        06.16 (EG) – De leerlingen illustreren voor een biotoop de onderlinge relaties tussen verschillende organismen en de rol van biotische en abiotische factoren.
+      </td>
+      <td>
+        06.06 (TG) – De leerlingen lossen vanuit betekenisvolle contexten problemen op door wiskundige concepten en vaardigheden in te zetten.
+      </td>
+      <td>
+        Relaties tussen organismen (zoals voedselketens en symbiose) worden onderzocht binnen hun omgeving en toegepast op realistische situaties.
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+
+  <h2>Thema 3 – Werkwoordstijden</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Unit</th>
+      <th>Inhoud / Opdracht</th>
+      <th>Eindterm Eerste Graad (EG)</th>
+      <th>Eindterm Tweede Graad (TG)</th>
+      <th>Waarom deze match?</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr>
+      <td>Unit 1</td>
+      <td>Tegenwoordige tijd gebruiken</td>
+      <td>
+        BG02.02 (EG) – De leerling spreekt en schrijft doelgericht in eenvoudige communicatieve situaties.
+      </td>
+      <td>
+        02.05 (TG) – De leerlingen spreken en schrijven doelgericht.
+      </td>
+      <td>
+        Leerlingen formuleren correcte zinnen in de tegenwoordige tijd in herkenbare en functionele contexten.
+      </td>
+    </tr>
+
+    <tr>
+      <td>Unit 2</td>
+      <td>Verleden tijd herkennen en toepassen</td>
+      <td>
+        BG02.01 (EG) – De leerling haalt bij het lezen en luisteren doelgericht het onderwerp en relevante informatie uit niet-fictionele teksten.
+      </td>
+      <td>
+        02.01 (TG) – De leerlingen bepalen het onderwerp, de hoofdgedachte en de hoofdpunten bij het doelgericht lezen en beluisteren van teksten.
+      </td>
+      <td>
+        Door teksten in heden en verleden te vergelijken leren leerlingen tijdsverwijzingen herkennen en begrijpen.
+      </td>
+    </tr>
+
+    <tr>
+      <td>Unit 3</td>
+      <td>Werkwoordspelling (dt-regel)</td>
+      <td>
+        BG02.02 (EG) – De leerling spreekt en schrijft doelgericht in eenvoudige communicatieve situaties.
+      </td>
+      <td>
+        02.10 (TG) – De leerlingen passen inzicht in het taalsysteem toe ter ondersteuning van hun communicatieve handelingen.
+      </td>
+      <td>
+        Leerlingen leren correcte werkwoordsvormen toepassen via inzicht in stam, uitgang en zinsstructuur.
+      </td>
+    </tr>
+
+    <tr>
+      <td>Unit 4</td>
+      <td>Schrijven van zinnen en korte teksten</td>
+      <td>
+        BG02.03 (EG) – De leerling neemt doelgericht deel aan eenvoudige mondelinge en schriftelijke interactie.
+      </td>
+      <td>
+        02.07 (TG) – De leerlingen nemen doelgericht deel aan mondelinge en schriftelijke interactie.
+      </td>
+      <td>
+        Leerlingen passen werkwoordstijden toe in betekenisvolle schrijf- en spreekopdrachten.
+      </td>
+    </tr>
+
+    <tr>
+      <td>Unit 5</td>
+      <td>Gecombineerde oefening: heden, verleden en dt</td>
+      <td>
+        BG02.02 (EG) – De leerling spreekt en schrijft doelgericht in eenvoudige communicatieve situaties.
+      </td>
+      <td>
+        02.08 (TG) – De leerlingen zetten doelgericht strategieën in ter ondersteuning van informatieverwerking en communicatieve handelingen.
+      </td>
+      <td>
+        Leerlingen leren strategieën toepassen om correcte werkwoordsvormen te kiezen in complexe situaties.
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+
+  <h2>Thema 4 – Wiskunde: Omtrek en Oppervlakte</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Unit</th>
+      <th>Inhoud / Focus</th>
+      <th>Eindterm Eerste Graad (EG)</th>
+      <th>Eindterm Tweede Graad (TG)</th>
+      <th>Waarom deze match?</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr>
+      <td>Unit 1 &amp; 7</td>
+      <td>Omtrek: basisfiguren en polygonen</td>
+      <td>
+        06.01 (EG) – De leerlingen gebruiken wiskundige concepten, eigenschappen en algoritmen om problemen op te lossen.
+      </td>
+      <td>
+        06.01 (TG) – De leerlingen gebruiken wiskundige concepten, eigenschappen en algoritmen om problemen op te lossen.
+      </td>
+      <td>
+        Leerlingen berekenen de omtrek van verschillende figuren en passen hierbij vaste rekenstrategieën toe in functionele contexten.
+      </td>
+    </tr>
+
+    <tr>
+      <td>Unit 2 &amp; 8</td>
+      <td>Oppervlakte: basisfiguren en roosters</td>
+      <td>
+        06.03 (EG) – De leerlingen leggen het verband tussen een 3D-situatie en een 2D-voorstelling.
+      </td>
+      <td>
+        06.03 (TG) – De leerlingen interpreteren en gebruiken verschillende soorten voorstellingen van wiskundige objecten.
+      </td>
+      <td>
+        Door roosters en tekeningen te gebruiken leren leerlingen oppervlakten visualiseren en berekenen.
+      </td>
+    </tr>
+
+    <tr>
+      <td>Unit 3 &amp; 5</td>
+      <td>Figuren: driehoeken en cirkels</td>
+      <td>
+        06.01 (EG) – De leerlingen gebruiken wiskundige concepten, eigenschappen en algoritmen om problemen op te lossen.
+      </td>
+      <td>
+        06.01 (TG) – De leerlingen gebruiken wiskundige concepten, eigenschappen en algoritmen om problemen op te lossen.
+      </td>
+      <td>
+        Leerlingen passen formules en eigenschappen toe om omtrek en oppervlakte van specifieke figuren te bepalen.
+      </td>
+    </tr>
+
+    <tr>
+      <td>Unit 4</td>
+      <td>Samengestelde figuren: opsplitsen en optellen</td>
+      <td>
+        06.06 (EG) – De leerlingen lossen problemen op door informatie te zoeken, te selecteren en te verwerken.
+      </td>
+      <td>
+        06.06 (TG) – De leerlingen lossen problemen op door informatie te zoeken, te selecteren en te verwerken.
+      </td>
+      <td>
+        Complexe figuren worden opgesplitst in eenvoudige delen om berekeningen systematisch uit te voeren.
+      </td>
+    </tr>
+
+    <tr>
+      <td>Unit 6 &amp; 10</td>
+      <td>Contextopgaven en evaluatie</td>
+      <td>
+        06.06 (EG) – De leerlingen lossen problemen op door informatie te zoeken, te selecteren en te verwerken.
+      </td>
+      <td>
+        06.06 (TG) – De leerlingen lossen problemen op door informatie te zoeken, te selecteren en te verwerken.
+      </td>
+      <td>
+        Leerlingen passen hun wiskundige kennis toe in realistische situaties en toetsen hun inzicht via evaluatie-opdrachten.
+      </td>
+    </tr>
+
+    <tr>
+      <td>Unit 9</td>
+      <td>Rekenstrategieën: vermenigvuldigen</td>
+      <td>
+        06.02 (EG) – De leerlingen voeren berekeningen uit met verschillende soorten getallen in diverse contexten.
+      </td>
+      <td>
+        06.02 (TG) – De leerlingen voeren berekeningen uit met verschillende soorten getallen en grootheden.
+      </td>
+      <td>
+        Efficiënte vermenigvuldigstrategieën ondersteunen het correct berekenen van omtrek en oppervlakte.
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+
+  <h2>Thema 5 – Fictie en non-fictie</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Unit</th>
+      <th>Inhoud / Focus</th>
+      <th>Eindterm Eerste Graad (EG)</th>
+      <th>Eindterm Tweede Graad (TG)</th>
+      <th>Waarom deze match?</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr>
+      <td>Unit 1 &amp; 3</td>
+      <td>Tekstsoorten: fictie en non-fictie onderscheiden</td>
+      <td>
+        02.01 (EG) – De leerlingen bepalen het onderwerp, de hoofdgedachte en de hoofdpunten bij het doelgericht lezen en beluisteren van teksten.
+      </td>
+      <td>
+        02.01 (TG) – De leerlingen bepalen het onderwerp, de hoofdgedachte en de hoofdpunten bij het doelgericht lezen en beluisteren van teksten.
+      </td>
+      <td>
+        Door verschillende teksten te vergelijken leren leerlingen het verschil herkennen tussen verzonnen en feitelijke teksten.
+      </td>
+    </tr>
+
+    <tr>
+      <td>Unit 2</td>
+      <td>Schrijversdoel: informeren, amuseren of overtuigen</td>
+      <td>
+        02.07 (EG) – De leerlingen zetten doelgericht strategieën in ter ondersteuning van informatieverwerking en communicatieve handelingen.
+      </td>
+      <td>
+        02.11 (TG) – De leerlingen passen inzicht in taalgebruik toe ter ondersteuning van hun communicatieve handelingen.
+      </td>
+      <td>
+        Leerlingen leren het doel van een tekst herkennen en koppelen dit aan taalgebruik en structuur.
+      </td>
+    </tr>
+
+    <tr>
+      <td>Unit 4 &amp; 5</td>
+      <td>Mediawijsheid: nieuws, feiten en bronnenonderzoek</td>
+      <td>
+        02.02 (EG) – De leerlingen beoordelen doelgericht aangereikte informatie op betrouwbaarheid en bruikbaarheid bij het lezen en luisteren.
+      </td>
+      <td>
+        02.02 (TG) – De leerlingen beoordelen doelgericht informatie op betrouwbaarheid, correctheid en bruikbaarheid bij het lezen en luisteren.
+      </td>
+      <td>
+        Leerlingen leren kritisch omgaan met nieuwsberichten en informatiebronnen in een digitale context.
+      </td>
+    </tr>
+
+    <tr>
+      <td>Unit 6</td>
+      <td>Tekstproductie: kritische analyse of kort verslag</td>
+      <td>
+        02.04 (EG) – De leerlingen spreken en schrijven doelgericht in eenvoudige communicatieve situaties.
+      </td>
+      <td>
+        02.05 (TG) – De leerlingen spreken en schrijven doelgericht.
+      </td>
+      <td>
+        Leerlingen passen hun lees- en denkvaardigheden toe door zelf teksten te schrijven met een duidelijk doel en structuur.
+      </td>
+    </tr>
+
+    <tr>
+      <td>Algemeen</td>
+      <td>Literaire vorming: romans, sprookjes en gedichten</td>
+      <td>
+        02.12 (EG) – De leerlingen verwoorden de eigen beleving en interpretatie van literaire teksten.
+      </td>
+      <td>
+        02.13 (TG) – De leerlingen verwoorden de eigen beleving en interpretatie van literaire teksten.
+      </td>
+      <td>
+        Literaire teksten stimuleren taalgevoel, verbeelding en reflectie over inhoud en vorm.
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+
+  <h2>Thema 6 – Schatten</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Unit</th>
+      <th>Inhoud / Focus</th>
+      <th>Eindterm Eerste Graad (EG)</th>
+      <th>Eindterm Tweede Graad (TG)</th>
+      <th>Waarom deze match?</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr>
+      <td>Unit 1</td>
+      <td>Afronden: getallen herleiden naar handige eenheden</td>
+      <td>
+        06.02 (EG) – De leerlingen voeren berekeningen uit met verschillende soorten getallen in diverse contexten.
+      </td>
+      <td>
+        06.02 (TG) – De leerlingen voeren berekeningen uit met verschillende soorten getallen en grootheden.
+      </td>
+      <td>
+        Door af te ronden leren leerlingen efficiënt rekenen en voorbereidende stappen zetten om resultaten snel te benaderen.
+      </td>
+    </tr>
+
+    <tr>
+      <td>Unit 2</td>
+      <td>Schatten bij optellen en aftrekken</td>
+      <td>
+        06.01 (EG) – De leerlingen gebruiken wiskundige concepten, eigenschappen en algoritmen om problemen op te lossen.
+      </td>
+      <td>
+        06.01 (TG) – De leerlingen gebruiken wiskundige concepten, eigenschappen en algoritmen om problemen op te lossen.
+      </td>
+      <td>
+        Leerlingen leren vooraf inschatten wat een redelijke uitkomst is bij sommen en verschillen in realistische situaties.
+      </td>
+    </tr>
+
+    <tr>
+      <td>Unit 3</td>
+      <td>Schatten bij vermenigvuldigen en delen</td>
+      <td>
+        06.01 (EG) – De leerlingen gebruiken wiskundige concepten, eigenschappen en algoritmen om problemen op te lossen.
+      </td>
+      <td>
+        06.01 (TG) – De leerlingen gebruiken wiskundige concepten, eigenschappen en algoritmen om problemen op te lossen.
+      </td>
+      <td>
+        Door producten en quotiënten te schatten ontwikkelen leerlingen inzicht in grootteordes en controle van berekeningen.
+      </td>
+    </tr>
+
+    <tr>
+      <td>Algemeen</td>
+      <td>Controle en logica: inschatten of een resultaat aannemelijk is</td>
+      <td>
+        06.07 (EG) – De leerlingen reflecteren op het proces en het resultaat van het oplossen van problemen.
+      </td>
+      <td>
+        06.07 (TG) – De leerlingen reflecteren op het proces en het resultaat van het oplossen van problemen.
+      </td>
+      <td>
+        Leerlingen leren kritisch nadenken over hun berekeningen en nagaan of een resultaat logisch en realistisch is.
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+
+  <h2>Thema 7 – Communicatie</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Unit</th>
+      <th>Inhoud / Focus</th>
+      <th>Eindterm Eerste Graad (EG)</th>
+      <th>Eindterm Tweede Graad (TG)</th>
+      <th>Waarom deze match?</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr>
+      <td>Unit 1</td>
+      <td>Communicatiemodel: zender, ontvanger, kanaal en doel</td>
+      <td>
+        02.01 (EG) – De leerlingen bepalen het onderwerp, de hoofdgedachte en de hoofdpunten bij het doelgericht lezen en beluisteren van teksten.
+      </td>
+      <td>
+        02.11 (TG) – De leerlingen passen inzicht in taalgebruik toe ter ondersteuning van hun communicatieve handelingen.
+      </td>
+      <td>
+        Leerlingen analyseren communicatiesituaties door de verschillende onderdelen van het communicatiemodel te herkennen en te benoemen.
+      </td>
+    </tr>
+
+    <tr>
+      <td>Unit 2</td>
+      <td>Formeel en beleefd taalgebruik: register en etiquette</td>
+      <td>
+        02.07 (EG) – De leerlingen zetten doelgericht strategieën in ter ondersteuning van informatieverwerking en communicatieve handelingen.
+      </td>
+      <td>
+        02.11 (TG) – De leerlingen passen inzicht in taalgebruik toe ter ondersteuning van hun communicatieve handelingen.
+      </td>
+      <td>
+        Leerlingen leren hun taalgebruik aanpassen aan de situatie, het publiek en het communicatieve doel.
+      </td>
+    </tr>
+
+    <tr>
+      <td>Unit 3</td>
+      <td>Duidelijkheid en revisie: teksten herschrijven</td>
+      <td>
+        02.04 (EG) – De leerlingen spreken en schrijven doelgericht in eenvoudige communicatieve situaties.
+      </td>
+      <td>
+        02.05 (TG) – De leerlingen spreken en schrijven doelgericht.
+      </td>
+      <td>
+        Door teksten te verbeteren en te herschrijven leren leerlingen hun boodschap duidelijker en effectiever formuleren.
+      </td>
+    </tr>
+
+    <tr>
+      <td>Algemeen</td>
+      <td>Strategie: juiste kanaal en juiste toon kiezen</td>
+      <td>
+        02.07 (EG) – De leerlingen zetten doelgericht strategieën in ter ondersteuning van informatieverwerking en communicatieve handelingen.
+      </td>
+      <td>
+        02.08 (TG) – De leerlingen zetten doelgericht strategieën in ter ondersteuning van informatieverwerking en communicatieve handelingen.
+      </td>
+      <td>
+        Leerlingen leren bewuste keuzes maken in hoe en via welk kanaal ze communiceren in verschillende situaties.
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+
+  <h2>Thema 8 – Actualiteit</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Unit</th>
+      <th>Inhoud / Focus</th>
+      <th>Eindterm Eerste Graad (EG)</th>
+      <th>Eindterm Tweede Graad (TG)</th>
+      <th>Waarom deze match?</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr>
+      <td>Unit 1 & 5</td>
+      <td>Lezen en samenvatten van nieuwsartikels</td>
+      <td>
+        02.01 (EG) – De leerlingen bepalen het onderwerp, de hoofdgedachte en de hoofdpunten bij het doelgericht lezen en beluisteren van teksten.
+      </td>
+      <td>
+        02.01 (TG) – De leerlingen bepalen het onderwerp, de hoofdgedachte en de hoofdpunten bij het doelgericht lezen en beluisteren van teksten.
+      </td>
+      <td>
+        Leerlingen leren informatie uit actuele nieuwsberichten selecteren en samenvatten door hoofd- en bijzaken te onderscheiden.
+      </td>
+    </tr>
+
+    <tr>
+      <td>Unit 2</td>
+      <td>Taal en vorm: onderwerp en persoonsvorm herkennen</td>
+      <td>
+        02.09 (EG) – De leerlingen passen inzicht in het taalsysteem toe ter ondersteuning van hun communicatieve handelingen.
+      </td>
+      <td>
+        02.10 (TG) – De leerlingen passen inzicht in het taalsysteem toe ter ondersteuning van hun communicatieve handelingen.
+      </td>
+      <td>
+        Door zinsdelen te analyseren binnen actuele teksten versterken leerlingen hun grammaticaal inzicht en taalbewustzijn.
+      </td>
+    </tr>
+
+    <tr>
+      <td>Unit 3</td>
+      <td>Luisteren: kernwoorden noteren bij podcasts en nieuwsfragmenten</td>
+      <td>
+        02.07 (EG) – De leerlingen zetten doelgericht strategieën in ter ondersteuning van informatieverwerking en communicatieve handelingen.
+      </td>
+      <td>
+        02.08 (TG) – De leerlingen zetten doelgericht strategieën in ter ondersteuning van informatieverwerking en communicatieve handelingen.
+      </td>
+      <td>
+        Leerlingen oefenen luisterstrategieën zoals kernwoorden noteren en structureren van informatie uit mondelinge bronnen.
+      </td>
+    </tr>
+
+    <tr>
+      <td>Unit 4</td>
+      <td>Factcheck: broncontrole en betrouwbaarheid</td>
+      <td>
+        02.02 (EG) – De leerlingen beoordelen doelgericht aangereikte informatie op betrouwbaarheid en bruikbaarheid bij het lezen en luisteren.
+      </td>
+      <td>
+        02.02 (TG) – De leerlingen beoordelen doelgericht informatie op betrouwbaarheid, correctheid en bruikbaarheid bij het lezen en luisteren.
+      </td>
+      <td>
+        Leerlingen leren kritisch omgaan met nieuws door bronnen te controleren en feiten van meningen te onderscheiden.
+      </td>
+    </tr>
+
+    <tr>
+      <td>Unit 6</td>
+      <td>Debat: spreken en argumenteren over actualiteit</td>
+      <td>
+        02.05 (EG) – De leerlingen nemen deel aan een gesprek of discussie.
+      </td>
+      <td>
+        02.06 (TG) – De leerlingen nemen deel aan een gesprek, overleg of discussie.
+      </td>
+      <td>
+        Door te debatteren over actuele thema’s leren leerlingen hun mening formuleren, onderbouwen en respectvol reageren.
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+
+  <h2>Thema 9 – Geschiedenis</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Unit</th>
+      <th>Onderwerp</th>
+      <th>Eindterm Eerste Graad (EG)</th>
+      <th>Eindterm Tweede Graad (TG)</th>
+      <th>Waarom deze match?</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr>
+      <td>Start / Tijdlijn</td>
+      <td>Periodisering</td>
+      <td>
+        08.01 (EG) – De leerlingen situeren historische elementen uit hun leefwereld en historische fenomenen in tijd en ruimte op een gegeven tijdlijn met de courante historische periodes en op een kaart.
+      </td>
+      <td>
+        08.01 (TG) – De leerlingen situeren historische fenomenen in tijd en ruimte op een gegeven tijdlijn met de courante historische periodes en op een kaart.
+      </td>
+      <td>
+        Leerlingen leren historische periodes herkennen en gebeurtenissen correct plaatsen in tijd en ruimte.
+      </td>
+    </tr>
+
+    <tr>
+      <td>Unit 1 & 2</td>
+      <td>Napoleon en de grondwet</td>
+      <td>
+        08.03 (EG) – De leerlingen leggen aan de hand van voorbeelden gelijkenissen en verschillen uit tussen heden en verleden.
+      </td>
+      <td>
+        08.03 (TG) – De leerlingen lichten betekenissen toe van historische fenomenen.
+      </td>
+      <td>
+        De invloed van Napoleontische wetten wordt vergeleken met hedendaagse democratische principes.
+      </td>
+    </tr>
+
+    <tr>
+      <td>Unit 3 & 6</td>
+      <td>Trein en euro</td>
+      <td>
+        08.03 (EG) – De leerlingen leggen aan de hand van voorbeelden gelijkenissen en verschillen uit tussen heden en verleden.
+      </td>
+      <td>
+        08.03 (TG) – De leerlingen lichten betekenissen toe van historische fenomenen.
+      </td>
+      <td>
+        Leerlingen vergelijken mobiliteit en betaalmiddelen vroeger en nu en duiden hun maatschappelijke betekenis.
+      </td>
+    </tr>
+
+    <tr>
+      <td>Unit 4 & 7</td>
+      <td>Sociale strijd en revoluties</td>
+      <td>
+        08.02 (EG) – De leerlingen vergelijken aangereikte bronnen over eenzelfde historisch fenomeen met aandacht voor de maker(s) van de bronnen.
+      </td>
+      <td>
+        08.02 (TG) – De leerlingen vergelijken bronnen over eenzelfde historisch fenomeen met aandacht voor betrouwbaarheid.
+      </td>
+      <td>
+        Leerlingen analyseren historische bronnen over sociale strijd en leren kritisch omgaan met informatie.
+      </td>
+    </tr>
+
+    <tr>
+      <td>Unit 5</td>
+      <td>Dossinkazerne en Holocaust</td>
+      <td>
+        08.03 (EG) – De leerlingen leggen aan de hand van voorbeelden gelijkenissen en verschillen uit tussen heden en verleden.
+      </td>
+      <td>
+        08.04 + 08.02 (TG) – De leerlingen leggen verbanden uit tussen historische fenomenen en vergelijken bronnen met aandacht voor betrouwbaarheid.
+      </td>
+      <td>
+        Via een lokaal voorbeeld leren leerlingen de betekenis van de Holocaust begrijpen en kritisch omgaan met getuigenissen.
+      </td>
+    </tr>
+
+    <tr>
+      <td>Unit 8</td>
+      <td>Belgische Revolutie</td>
+      <td>
+        08.01 (EG) – De leerlingen situeren historische elementen uit hun leefwereld en historische fenomenen in tijd en ruimte.
+      </td>
+      <td>
+        08.04 (TG) – De leerlingen leggen verbanden uit tussen oorzaken en gevolgen van historische fenomenen.
+      </td>
+      <td>
+        Leerlingen koppelen maatschappelijke oorzaken aan politieke veranderingen en onafhankelijkheid.
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+
+ 
+
+  <!-- HERHAAL DIT PATROON VOOR THEMA 3 t.e.m. THEMA 9 -->
+
+  <p class="note">
+    ℹ️ Tip voor inspectie: plak de doelen letterlijk over uit onderwijsdoelen.be
+    en vermeld steeds correct EG/TG + doelnummer.
+  </p>
 
 </main>
 
 </body>
 </html>
+
