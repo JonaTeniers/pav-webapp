@@ -33,8 +33,7 @@
             margin-bottom: 2rem;
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            border-top: 5px solid var(--primary);
-            transition: transform 0.3s ease;
+            border-top: 6px solid var(--primary);
         }
 
         .hidden { display: none; }
@@ -44,232 +43,247 @@
             padding: 1rem;
             border-radius: 8px;
             margin-bottom: 1.5rem;
-            font-style: italic;
+            font-weight: 500;
         }
 
         /* Drag and Drop Styling */
-        .drag-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 1rem;
-        }
-
         .drag-area {
-            background: #fafafa;
+            background: #f9f9f9;
             border: 2px solid #ddd;
-            padding: 10px;
+            padding: 15px;
             border-radius: 10px;
-            min-height: 50px;
+            min-height: 60px;
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
+            margin-bottom: 20px;
         }
 
         .drag-item {
-            padding: 8px 15px;
+            padding: 8px 16px;
             background: var(--primary);
             color: white;
             border-radius: 20px;
             cursor: grab;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             user-select: none;
+        }
+
+        .drop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
         }
 
         .drop-box {
             background: white;
-            border: 2px dashed var(--primary);
+            border: 2px dashed #999;
             border-radius: 10px;
             padding: 10px;
-            min-height: 80px;
+            min-height: 100px;
+            transition: all 0.2s;
+        }
+
+        .drop-box h4 { margin: 0 0 10px 0; text-align: center; color: #555; }
+        .drop-box.hover { border-color: var(--primary); background: #f0f2ff; }
+
+        /* Foto sectie */
+        .image-center img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            display: block;
+            margin: 1rem auto;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Checkbox styling */
+        .choice-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .choice-card {
+            background: #f1f3f9;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
             transition: background 0.2s;
         }
 
-        .drop-box.hover { background: #e0e4ff; }
+        .choice-card:hover { background: #e2e6f0; }
 
-        /* Form elementen */
-        table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
-        td, th { padding: 12px; border-bottom: 1px solid #eee; text-align: left; }
-        
-        textarea, input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            box-sizing: border-box;
-        }
-
+        /* Buttons & Feedback */
         button {
             background: var(--primary);
             color: white;
             border: none;
-            padding: 12px 25px;
-            border-radius: 25px;
+            padding: 12px 24px;
+            border-radius: 30px;
             cursor: pointer;
             font-weight: bold;
             font-size: 1rem;
-            margin-top: 15px;
         }
 
-        button:hover { opacity: 0.9; }
-
-        .feedback-msg {
+        .feedback {
             margin-top: 15px;
-            padding: 10px;
-            border-radius: 6px;
+            padding: 12px;
+            border-radius: 8px;
             font-weight: bold;
             display: none;
         }
 
-        .correct { background: #e8f5e9; color: var(--success); display: block; }
-        .incorrect { background: #ffebee; color: var(--error); display: block; }
+        .success { display: block; background: #e8f5e9; color: var(--success); }
+        .error { display: block; background: #ffebee; color: var(--error); }
 
-        img { max-width: 100%; border-radius: 10px; margin: 1rem 0; }
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            resize: vertical;
+            font-family: inherit;
+        }
     </style>
 </head>
 <body>
 
 <div class="unit">
-    <h1>🌍 Hoe gebruiken wij ons landschap?</h1>
+    <h1>🌍 Thema 1 – Unit 5: Gebruik van landschappen</h1>
 
     <div class="task" id="t1">
-        <h2>Stap 1: Landschapstypes</h2>
+        <h2>Opdracht 1: Functies indelen</h2>
         <div class="instruction">
-            Sleep de functies naar het juiste type landschap. Waar zie je dit het meest?
+            Waar komen deze activiteiten het meest voor? Sleep de termen naar het juiste landschapstype.
         </div>
 
-        <div class="drag-area" id="main-drag" ondrop="drop(event)" ondragover="allowDrop(event)">
-            <div class="drag-item" draggable="true" id="d1" ondragstart="drag(event)">Landbouw</div>
-            <div class="drag-item" draggable="true" id="d2" ondragstart="drag(event)">Wonen</div>
-            <div class="drag-item" draggable="true" id="d3" ondragstart="drag(event)">Industrie</div>
-            <div class="drag-item" draggable="true" id="d4" ondragstart="drag(event)">Natuurbehoud</div>
-            <div class="drag-item" draggable="true" id="d5" ondragstart="drag(event)">Winkels</div>
+        <div class="drag-area" id="origin" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="drag-item" draggable="true" id="d1" ondragstart="drag(event)">landbouw</div>
+            <div class="drag-item" draggable="true" id="d2" ondragstart="drag(event)">wonen</div>
+            <div class="drag-item" draggable="true" id="d3" ondragstart="drag(event)">industrie</div>
+            <div class="drag-item" draggable="true" id="d4" ondragstart="drag(event)">recreatie</div>
+            <div class="drag-item" draggable="true" id="d5" ondragstart="drag(event)">natuurbehoud</div>
+            <div class="drag-item" draggable="true" id="d6" ondragstart="drag(event)">transport</div>
         </div>
 
-        <div class="drag-container">
-            <div>
-                <h4>🚜 Landelijk</h4>
-                <div class="drop-box" id="box-landelijk" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-            </div>
-            <div>
-                <h4>🏙️ Stedelijk</h4>
-                <div class="drop-box" id="box-stedelijk" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-            </div>
-            <div>
-                <h4>🏭 Industrieel</h4>
-                <div class="drop-box" id="box-industrie" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-            </div>
+        <div class="drop-grid">
+            <div class="drop-box" id="box-landelijk" ondrop="drop(event)" ondragover="allowDrop(event)"><h4>🚜 Landelijk</h4></div>
+            <div class="drop-box" id="box-stedelijk" ondrop="drop(event)" ondragover="allowDrop(event)"><h4>🏙️ Stedelijk</h4></div>
+            <div class="drop-box" id="box-industrieel" ondrop="drop(event)" ondragover="allowDrop(event)"><h4>🏭 Industrieel</h4></div>
+            <div class="drop-box" id="box-natuurlijk" ondrop="drop(event)" ondragover="allowDrop(event)"><h4>🌳 Natuurlijk</h4></div>
         </div>
 
-        <button onclick="checkStep1()">Controleer antwoorden</button>
-        <div id="fb1" class="feedback-msg"></div>
+        <button onclick="check1()">Controleer antwoorden</button>
+        <div id="fb1" class="feedback"></div>
     </div>
 
     <div class="task hidden" id="t2">
-        <h2>Stap 2: Meervoudig gebruik</h2>
+        <h2>Opdracht 2: Meervoudig gebruik</h2>
         <div class="instruction">
-            Vaak heeft één plek meerdere functies. Kijk naar Park Spoor Noord in Antwerpen. Welke <strong>drie</strong> functies zie je hier gecombineerd?
-        </div>
-        
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Park_Spoor_Noord_-_bovenaanzicht.jpg/800px-Park_Spoor_Noord_-_bovenaanzicht.jpg" alt="Park Spoor Noord">
-        
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-            <label><input type="checkbox" class="q2" value="recreatie"> Recreatie (spelen/sporten)</label>
-            <label><input type="checkbox" class="q2" value="natuur"> Natuur (groen in de stad)</label>
-            <label><input type="checkbox" class="q2" value="transport"> Transport (fietspaden)</label>
-            <label><input type="checkbox" class="q2" value="landbouw"> Landbouw (koeien)</label>
+            Soms heeft één plek meerdere functies. Kijk naar Park Spoor Noord. 
+            Welke <strong>drie</strong> functies zie je hier gecombineerd?
         </div>
 
-        <button onclick="checkStep2()">Volgende opdracht</button>
-        <div id="fb2" class="feedback-msg"></div>
+        <div class="image-center">
+            <img src="img/images/Park_Spoor_Noord_-_bovenaanzicht.jpg" alt="Park Spoor Noord">
+        </div>
+
+        <div class="choice-grid">
+            <label class="choice-card"><input type="checkbox" class="q2" value="recreatie"> 🏃 <b>Recreatie</b> (sport/spel)</label>
+            <label class="choice-card"><input type="checkbox" class="q2" value="natuur"> 🌳 <b>Natuur</b> (groen/bomen)</label>
+            <label class="choice-card"><input type="checkbox" class="q2" value="transport"> 🚲 <b>Transport</b> (fietspaden)</label>
+            <label class="choice-card"><input type="checkbox" class="q2" value="landbouw"> 🚜 <b>Landbouw</b> (akkers)</label>
+        </div>
+
+        <button onclick="check2()">Volgende stap</button>
+        <div id="fb2" class="feedback"></div>
     </div>
 
     <div class="task hidden" id="t3">
-        <h2>Stap 3: Gevolgen voor de omgeving</h2>
+        <h2>Opdracht 3: Jouw omgeving</h2>
         <div class="instruction">
-            Elke vorm van gebruik heeft een effect. Denk na over de gevolgen:
+            Hoe wordt het landschap in jouw eigen buurt gebruikt? Noem minstens twee vormen van gebruik.
         </div>
-
-        <table>
-            <tr>
-                <th>Vorm van gebruik</th>
-                <th>Positief gevolg (Voordeel)</th>
-                <th>Negatief gevolg (Nadeel)</th>
-            </tr>
-            <tr>
-                <td><strong>Toerisme</strong></td>
-                <td><input type="text" id="t-pos" placeholder="Bv. Jobs"></td>
-                <td><input type="text" id="t-neg" placeholder="Bv. Drukte"></td>
-            </tr>
-        </table>
-
-        <button onclick="checkStep3()">Afronden</button>
-        <div id="fb3" class="feedback-msg"></div>
+        <textarea id="besluit" rows="4" placeholder="Bijvoorbeeld: In mijn buurt wordt de ruimte gebruikt om te wonen, maar er zijn ook veel winkels en een park..."></textarea>
+        
+        <button onclick="finish()">Unit afronden</button>
     </div>
 
     <div class="task hidden" id="endScreen">
         <h2 style="text-align: center;">🎉 Goed gedaan!</h2>
-        <p style="text-align: center;">Je hebt de unit over landschapsgebruik voltooid. Je begrijpt nu dat we schaarse ruimte slim moeten verdelen.</p>
+        <p style="text-align: center;">Je hebt de unit over landschapsgebruik succesvol voltooid.</p>
     </div>
 </div>
 
 <script>
     // Drag and Drop functies
-    function allowDrop(ev) { ev.preventDefault(); ev.target.classList.add('hover'); }
-    function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
+    function allowDrop(ev) {
+        ev.preventDefault();
+        if (ev.target.classList.contains('drop-box')) {
+            ev.target.classList.add('hover');
+        }
+    }
+    
+    function drag(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
+    }
+
     function drop(ev) {
         ev.preventDefault();
-        ev.target.classList.remove('hover');
         var data = ev.dataTransfer.getData("text");
-        var target = ev.target;
-        
-        // Zorg dat we in een box droppen en niet bovenop een ander item
-        if (target.classList.contains('drop-box') || target.id === 'main-drag') {
+        var target = ev.target.closest('.drop-box, .drag-area');
+        if (target) {
+            target.classList.remove('hover');
             target.appendChild(document.getElementById(data));
         }
     }
 
-    // Controle Stap 1
-    function checkStep1() {
-        let score = 0;
-        const landbouw = document.getElementById('d1').parentElement.id === 'box-landelijk';
-        const wonen = document.getElementById('d2').parentElement.id === 'box-stedelijk';
-        const industrie = document.getElementById('d3').parentElement.id === 'box-industrie';
-        
-        if(landbouw && wonen && industrie) {
-            document.getElementById('fb1').innerHTML = "Uitstekend! Je hebt de hoofdfuncties juist geplaatst.";
-            document.getElementById('fb1').className = "feedback-msg correct";
+    // Controle Opdracht 1
+    function check1() {
+        const fb = document.getElementById('fb1');
+        // We checken of de belangrijkste items in het juiste vak zitten
+        const landbouwOk = document.getElementById('d1').parentElement.id === 'box-landelijk';
+        const wonenOk = document.getElementById('d2').parentElement.id === 'box-stedelijk';
+        const industrieOk = document.getElementById('d3').parentElement.id === 'box-industrieel';
+
+        if (landbouwOk && wonenOk && industrieOk) {
+            fb.textContent = "Helemaal juist! Je herkent de functies van de verschillende landschappen.";
+            fb.className = "feedback success";
             document.getElementById('t2').classList.remove('hidden');
         } else {
-            document.getElementById('fb1').innerHTML = "Nog niet helemaal. Tip: Landbouw hoort bij het landelijk gebied.";
-            document.getElementById('fb1').className = "feedback-msg incorrect";
+            fb.textContent = "Nog niet alles staat op de juiste plek. Denk aan landbouw (tractor) en industrie (fabriek).";
+            fb.className = "feedback error";
         }
     }
 
-    // Controle Stap 2
-    function checkStep2() {
+    // Controle Opdracht 2
+    function check2() {
         const selected = Array.from(document.querySelectorAll('.q2:checked')).map(cb => cb.value);
-        if(selected.includes('recreatie') && selected.includes('natuur') && !selected.includes('landbouw')) {
-            document.getElementById('fb2').innerHTML = "Correct! Park Spoor Noord combineert groen, beweging en fietspaden.";
-            document.getElementById('fb2').className = "feedback-msg correct";
+        const fb = document.getElementById('fb2');
+
+        if (selected.includes('recreatie') && selected.includes('natuur') && !selected.includes('landbouw')) {
+            fb.textContent = "Correct! Je ziet dat mensen hier sporten en wandelen in een groene omgeving.";
+            fb.className = "feedback success";
             document.getElementById('t3').classList.remove('hidden');
         } else {
-            document.getElementById('fb2').innerHTML = "Kijk nog eens goed naar de foto. Zie je daar echt koeien (landbouw)?";
-            document.getElementById('fb2').className = "feedback-msg incorrect";
+            fb.textContent = "Kijk nog eens goed naar de foto. Zie je daar echt akkers voor landbouw?";
+            fb.className = "feedback error";
         }
     }
 
-    // Controle Stap 3
-    function checkStep3() {
-        const p = document.getElementById('t-pos').value;
-        const n = document.getElementById('t-neg').value;
-        
-        if(p.length > 3 && n.length > 3) {
+    // Afronden
+    function finish() {
+        const tekst = document.getElementById('besluit').value;
+        if (tekst.length > 15) {
             document.getElementById('t3').classList.add('hidden');
             document.getElementById('endScreen').classList.remove('hidden');
         } else {
-            document.getElementById('fb3').innerHTML = "Vul voor beide vakjes een kort antwoord in.";
-            document.getElementById('fb3').className = "feedback-msg incorrect";
+            alert("Vertel eerst iets meer over je eigen omgeving!");
         }
     }
 </script>
