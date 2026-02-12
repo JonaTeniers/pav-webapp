@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="data:," />
-  <title>Thema 3 – Verleden Tijd</title>
+  <title>Thema 3 – Werkwoordstijden</title>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
 
@@ -30,7 +30,7 @@
     }
 
     header {
-      padding: 2rem 1.5rem 1rem;
+      padding: 2rem 1.5rem 1.2rem;
       text-align: center;
       background: linear-gradient(90deg, rgba(58, 28, 89, 0.95), rgba(43, 17, 66, 0.95));
       border-bottom: 1px solid var(--panel-border);
@@ -40,12 +40,9 @@
     header p { margin: 0.6rem 0 0; color: var(--muted); }
 
     main {
-      max-width: 1200px;
+      max-width: 1100px;
       margin: 0 auto;
       padding: 2rem 1.5rem 3rem;
-      display: grid;
-      grid-template-columns: 2.2fr 1fr;
-      gap: 1.5rem;
     }
 
     .panel {
@@ -53,231 +50,117 @@
       border-radius: 18px;
       border: 1px solid var(--panel-border);
       box-shadow: 0 12px 30px rgba(13, 6, 22, 0.6);
-      padding: 1.5rem;
+      padding: 1.6rem;
     }
 
-    .panel-title {
-      font-size: 1.2rem;
-      margin: 1.8rem 0 1rem;
-      display: flex;
-      gap: 0.6rem;
-      align-items: center;
-    }
-
-    /* SCORE */
-    .score-card {
-      text-align: center;
-      padding: 1rem;
-      border-radius: 14px;
-      background: linear-gradient(135deg, rgba(186, 104, 200, 0.2), rgba(123, 31, 162, 0.15));
-      border: 1px solid rgba(186, 104, 200, 0.35);
-      margin-bottom: 1.5rem;
-    }
-
-    /* INFO KADERS */
     .info-box {
       background: var(--soft);
       border-left: 5px solid var(--accent);
       border-radius: 12px;
       padding: 1rem 1.2rem;
-      margin-bottom: 1.2rem;
-    }
-
-    .info-box h3 {
-      margin: 0 0 0.4rem;
-      font-size: 1.05rem;
-    }
-
-    .info-box p,
-    .info-box ul {
-      margin: 0;
+      margin-bottom: 1.4rem;
       color: var(--muted);
       line-height: 1.45;
-      font-size: 0.95rem;
     }
 
-    .info-box ul {
-      margin-top: 0.4rem;
-      padding-left: 1.2rem;
-    }
-
-    /* UNITS */
-    .unit-grid {
+    .subtheme-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.2rem;
+      margin-top: 1.2rem;
     }
 
-    .unit-card {
+    .subtheme-card {
       background: rgba(26, 12, 41, 0.9);
-      border-radius: 14px;
-      border: 1px solid rgba(186, 104, 200, 0.2);
-      padding: 1rem;
+      border-radius: 16px;
+      border: 1px solid rgba(186, 104, 200, 0.25);
+      padding: 1.3rem;
       display: flex;
       flex-direction: column;
       gap: 0.6rem;
     }
 
-    .unit-card h4 { margin: 0; }
+    .subtheme-card h3 { margin: 0; }
+    .subtheme-card p { margin: 0; color: var(--muted); font-size: 0.95rem; }
 
-    .unit-card p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-
-    .status {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: #ce93d8;
-    }
-
-    .unit-card button {
+    .subtheme-card a {
       margin-top: auto;
-      background: linear-gradient(120deg, var(--accent), var(--accent-2));
-      border: none;
+      align-self: flex-start;
+      text-decoration: none;
+      font-weight: 700;
       color: white;
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
       padding: 0.45rem 0.9rem;
       border-radius: 999px;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 1.8rem;
+      text-decoration: none;
+      color: white;
       font-weight: 700;
-      cursor: pointer;
-    }
-
-    .unit-card button:disabled {
-      opacity: 0.45;
-      cursor: not-allowed;
-    }
-
-    .chat-embed {
-      width: 100%;
-      height: 520px;
-      border: none;
-      border-radius: 14px;
-      background: rgba(24, 10, 36, 0.9);
-    }
-
-    @media (max-width: 900px) {
-      main { grid-template-columns: 1fr; }
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
     }
   </style>
 </head>
 
 <body>
+
 <header>
-  <h1>⏳ Thema 3 – Verleden Tijd</h1>
-  <p>Werkwoorden oefenen, zinnen bouwen en verhalen vertellen</p>
+  <h1>⏳ Thema 3 – Werkwoordstijden</h1>
+  <p>Leren schrijven en vertellen in het heden en het verleden</p>
 </header>
 
-<main data-theme-id="3">
-  <section class="panel">
+<main>
+<section class="panel">
 
-    <!-- SCORE -->
-    <div class="score-card">
-      <h3>🎯 Totaalscore Thema 3</h3>
-      <p id="themeTotalScore">💡 0 / 90 XP</p>
-      <p>Begin bij unit 1 om te starten.</p>
-    </div>
+  <h2>Focus van dit thema</h2>
+  <p>
+    In dit thema leer je werken met <strong>werkwoordstijden</strong>.
+    Je ontdekt wanneer je spreekt over wat <strong>nu gebeurt</strong>
+    en wanneer je vertelt over wat <strong>al gebeurd is</strong>.
+  </p>
 
-    <!-- THEORIE -->
-    <h2 class="panel-title">🕰️ Wat is de verleden tijd?</h2>
+  <div class="info-box">
+    <strong>🧭 Kapstok</strong><br>
+    Stel jezelf altijd deze vraag:
+    <ul>
+      <li>Gebeurt het <strong>nu</strong>? → tegenwoordige tijd</li>
+      <li>Is het <strong>al gebeurd</strong>? → verleden tijd</li>
+    </ul>
+  </div>
 
-    <div class="info-box">
+  <h2>📚 Subthema’s</h2>
+
+  <div class="subtheme-grid">
+
+    <div class="subtheme-card">
+      <h3>📗 Thema 3.1 – Tegenwoordige tijd</h3>
       <p>
-        De <strong>verleden tijd</strong> gebruik je om te vertellen over dingen
-        die <strong>al gebeurd zijn</strong>.  
-        Bijvoorbeeld: <em>Ik speelde buiten</em> of <em>Wij maakten huiswerk</em>.
+        Je leert hoe je zinnen maakt over wat <strong>nu gebeurt</strong>.
+        Je oefent met werkwoorden, zinnen en korte teksten.
       </p>
+      <a href="thema3_1.html">Start</a>
     </div>
 
-    <div class="info-box">
-      <h3>Onvoltooid verleden tijd (OVT)</h3>
+    <div class="subtheme-card">
+      <h3>📕 Thema 3.2 – Verleden tijd</h3>
       <p>
-        De OVT gebruik je wanneer je vertelt wat er vroeger gebeurde,
-        zonder te zeggen dat het helemaal afgerond is.
+        Je leert vertellen over wat <strong>vroeger gebeurde</strong>.
+        Je oefent met OVT, VVT en signaalwoorden.
       </p>
-      <ul>
-        <li>ik <strong>liep</strong></li>
-        <li>wij <strong>maakten</strong></li>
-        <li>hij <strong>was</strong></li>
-      </ul>
+      <a href="thema3_2.html">Start</a>
     </div>
 
-    <div class="info-box">
-      <h3>Voltooid verleden tijd (VVT)</h3>
-      <p>
-        De VVT gebruik je wanneer je duidelijk maakt dat iets
-        <strong>afgelopen is</strong>.
-      </p>
-      <ul>
-        <li>ik <strong>heb gelopen</strong></li>
-        <li>wij <strong>hebben gemaakt</strong></li>
-        <li>zij <strong>was gegaan</strong></li>
-      </ul>
-    </div>
+  </div>
 
-    <div class="info-box">
-      <h3>Signaalwoorden</h3>
-      <p>Woorden die vaak bij de verleden tijd horen:</p>
-      <ul>
-        <li>gisteren</li>
-        <li>vroeger</li>
-        <li>vorige week</li>
-        <li>toen</li>
-        <li>een tijd geleden</li>
-      </ul>
-    </div>
+  <a href="index.html" class="back-btn">← Terug naar thema-overzicht</a>
 
-    <!-- UNITS -->
-    <h2 class="panel-title">📚 Units</h2>
-
-    <div class="unit-grid">
-      <div class="unit-card">
-        <h4>Unit 1</h4>
-        <p>De verleden tijd herkennen</p>
-        <p class="status">Beschikbaar</p>
-        <a href="thema3unit1.html"><button>Start</button></a>
-      </div>
-
-      <div class="unit-card">
-        <h4>Unit 2</h4>
-        <p>Werkwoorden in de verleden tijd</p>
-        <p class="status">Beschikbaar</p>
-        <a href="thema3unit2.html"><button>Start</button></a>
-      </div>
-
-      <div class="unit-card">
-        <h4>Unit 3</h4>
-        <p>Zinnen en korte verhalen maken</p>
-        <p class="status">Beschikbaar</p>
-        <a href="thema3unit3.html"><button>Start</button></a>
-      </div>
-
-      <div class="unit-card">
-        <h4>Unit 4 🆕</h4>
-        <p>Lezen in de verleden tijd</p>
-        <p class="status">In ontwikkeling</p>
-        <button disabled>Binnenkort</button>
-      </div>
-
-      <div class="unit-card">
-        <h4>Unit 5 🆕</h4>
-        <p>Schrijven in de verleden tijd</p>
-        <p class="status">In ontwikkeling</p>
-        <button disabled>Binnenkort</button>
-      </div>
-    </div>
-
-  </section>
-
-  <!-- CHAT -->
-  <aside class="panel">
-    <h2 class="panel-title">🤖 Chattie</h2>
-    <iframe class="chat-embed"
-      src="chattie.html?thema=Thema%203%20Verleden%20Tijd"
-      title="Chattie"></iframe>
-  </aside>
+</section>
 </main>
 
-<script src="./pavo-xp-sync.js"></script>
 </body>
 </html>
