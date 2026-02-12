@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Leerkracht Dashboard - PAV-O</title>
+
   <style>
     body {
       margin: 0;
@@ -12,7 +13,6 @@
       color: #1f2937;
     }
 
-    /* Hamburgerknop linksboven om snel tussen omgevingen te navigeren. */
     .menu-button {
       position: fixed;
       top: 12px;
@@ -26,6 +26,7 @@
       font-size: 24px;
       cursor: pointer;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      z-index: 200;
     }
 
     .menu-panel {
@@ -38,7 +39,7 @@
       box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
       padding: 10px;
       display: none;
-      z-index: 100;
+      z-index: 200;
     }
 
     .menu-panel a {
@@ -47,6 +48,7 @@
       color: #1f2937;
       padding: 10px;
       border-radius: 8px;
+      font-weight: bold;
     }
 
     .menu-panel a:hover {
@@ -55,7 +57,7 @@
 
     .wrapper {
       max-width: 1100px;
-      margin: 70px auto 24px;
+      margin: 70px auto 32px;
       padding: 0 16px;
     }
 
@@ -64,12 +66,13 @@
       color: #0b4da2;
     }
 
-    .auth-card {
+    .auth-card,
+    .tool-card {
       background: white;
       border-radius: 12px;
       padding: 14px;
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
 
     .auth-row {
@@ -96,12 +99,15 @@
     }
 
     .btn {
-      padding: 9px 12px;
+      padding: 9px 14px;
       border-radius: 8px;
       border: none;
       background: #0b4da2;
       color: white;
       cursor: pointer;
+      font-weight: bold;
+      text-decoration: none;
+      display: inline-block;
     }
 
     .btn-secondary {
@@ -134,9 +140,7 @@
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
     }
 
-    th,
-    td {
-      text-align: left;
+    th, td {
       padding: 10px;
       border-bottom: 1px solid #e5e7eb;
     }
@@ -145,113 +149,112 @@
       background: #0b4da2;
       color: white;
     }
-
-    tr:last-child td {
-      border-bottom: none;
-    }
   </style>
 </head>
+
 <body>
-  <!-- Drie-streepjesknop linksboven: hiermee open je het navigatiemenu. -->
-  <button class="menu-button" id="menuButton" aria-label="Open menu">☰</button>
 
-  <!-- Simpel menu met o.a. de leerkrachtomgeving. -->
-  <nav class="menu-panel" id="menuPanel">
-    <a href="index.html">Naar leerlingomgeving</a>
-    <a href="leerkracht-dashboard.html">Naar leerkrachtomgeving</a>
-  </nav>
+<button class="menu-button" id="menuButton">☰</button>
 
-  <main class="wrapper">
-    <h1>Leerkracht Dashboard</h1>
+<nav class="menu-panel" id="menuPanel">
+  <a href="index.html">Leerlingomgeving</a>
+  <a href="leerkracht-dashboard.html">Leerkracht dashboard</a>
+</nav>
 
-    <!-- Loginblok specifiek voor leerkrachtaccounts. -->
-    <section class="auth-card" id="authCard">
-      <p>Log in als <strong>leerkracht</strong> om de scores te bekijken.</p>
-      <form id="teacherLoginForm" class="auth-row">
-        <label>
-          E-mail
-          <input type="email" id="teacherEmail" required />
-        </label>
-        <label>
-          Wachtwoord
-          <input type="password" id="teacherPassword" required />
-        </label>
-        <button class="btn" type="submit">Inloggen</button>
-        <button class="btn btn-secondary" id="teacherLogoutButton" type="button">Uitloggen</button>
-      </form>
+<main class="wrapper">
+  <h1>Leerkracht Dashboard</h1>
+
+  <!-- LOGIN -->
+  <section class="auth-card" id="authCard">
+    <p>Log in als <strong>leerkracht</strong>.</p>
+    <form id="teacherLoginForm" class="auth-row">
+      <label>E-mail
+        <input type="email" id="teacherEmail" required />
+      </label>
+      <label>Wachtwoord
+        <input type="password" id="teacherPassword" required />
+      </label>
+      <button class="btn" type="submit">Inloggen</button>
+      <button class="btn btn-secondary" id="teacherLogoutButton" type="button">Uitloggen</button>
+    </form>
+  </section>
+
+  <p id="status">Dashboard start op...</p>
+
+  <!-- DASHBOARD -->
+  <section class="dashboard-panel" id="dashboardPanel">
+
+    <!-- NIEUW: LEERKRACHT TOOLS -->
+    <section class="tool-card">
+      <h2>📘 Leerkracht tools</h2>
+      <p>Beheer pedagogische en administratieve onderdelen van PAV-O.</p>
+
+      <a href="leerkracht-doelen.html" class="btn">
+        📋 Eindtermen & doelen per thema
+      </a>
     </section>
 
-    <p id="status">Dashboard start op...</p>
+    <p>Overzicht van scores (Firestore <strong>scores</strong>).</p>
 
-    <!-- Dashboard (alleen zichtbaar als ingelogde gebruiker een leerkracht is). -->
-    <section class="dashboard-panel" id="dashboardPanel">
-      <p>Overzicht van alle opgeslagen scores uit Firestore collectie <strong>scores</strong>.</p>
+    <div class="controls">
+      <label for="klasFilter"><strong>Filter op klas:</strong></label>
+      <select id="klasFilter">
+        <option value="">Alle klassen</option>
+      </select>
 
-      <p id="teacherTotals"><strong>Totaal klas:</strong> - XP</p>
+      <button class="btn" id="refreshButton" type="button">Vernieuwen</button>
+      <button class="btn btn-secondary" id="backfillButton" type="button">Herstel thema/unit</button>
+    </div>
 
-      <div class="controls">
-        <label for="klasFilter"><strong>Filter op klas:</strong></label>
-        <select id="klasFilter">
-          <option value="">Alle klassen</option>
-        </select>
+    <table>
+      <thead>
+        <tr>
+          <th>Naam</th>
+          <th>Klas</th>
+          <th>Thema</th>
+          <th>Unit</th>
+          <th>Score</th>
+          <th>Datum</th>
+          <th>Bron</th>
+        </tr>
+      </thead>
+      <tbody id="scoresTableBody">
+        <tr><td colspan="7">Geen gegevens geladen.</td></tr>
+      </tbody>
+    </table>
 
-        <button class="btn" id="refreshButton" type="button">Vernieuwen</button>
-        <button class="btn btn-secondary" id="backfillButton" type="button">Herstel thema/unit</button>
-      </div>
+  </section>
+</main>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Naam</th>
-            <th>Klas</th>
-            <th>Thema</th>
-            <th>Unit</th>
-            <th>Score</th>
-            <th>Datum</th>
-            <th>Bron</th>
-          </tr>
-        </thead>
-        <tbody id="scoresTableBody">
-          <tr>
-            <td colspan="7">Nog geen gegevens geladen.</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-  </main>
+<script>
+  window.TEACHER_EMAILS = [
+    "jona@pavo.be",
+    "kaat@pavo.be"
+  ];
+</script>
 
-  <!-- Optioneel: zet hier je whitelist van leerkrachtaccounts. -->
-  <script>
-    window.TEACHER_EMAILS = [
-      "jona@pavo.be",
-      "kaat@pavo.be"
-    ];
-  </script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+<script src="./firebase.js"></script>
+<script src="./teacher-dashboard.js"></script>
 
-  <!-- Firebase SDK's via CDN (statisch ingeladen zoals gevraagd). -->
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-  <script src="./firebase.js"></script>
+<script>
+  const menuButton = document.getElementById('menuButton');
+  const menuPanel = document.getElementById('menuPanel');
 
-  <!-- Dashboardlogica: login + ophalen, filteren en tonen van scores. -->
-  <script src="./teacher-dashboard.js"></script>
+  menuButton.onclick = () => {
+    menuPanel.style.display =
+      menuPanel.style.display === 'block' ? 'none' : 'block';
+  };
 
-  <script>
-    // Eenvoudige JS voor open/dicht-klikken van het menu.
-    const menuButton = document.getElementById('menuButton');
-    const menuPanel = document.getElementById('menuPanel');
+  document.addEventListener('click', e => {
+    if (!menuPanel.contains(e.target) && !menuButton.contains(e.target)) {
+      menuPanel.style.display = 'none';
+    }
+  });
+</script>
 
-    menuButton.addEventListener('click', () => {
-      menuPanel.style.display = menuPanel.style.display === 'block' ? 'none' : 'block';
-    });
-
-    document.addEventListener('click', (event) => {
-      const clickedInsideMenu = menuPanel.contains(event.target) || menuButton.contains(event.target);
-      if (!clickedInsideMenu) {
-        menuPanel.style.display = 'none';
-      }
-    });
-  </script>
 </body>
 </html>
+
