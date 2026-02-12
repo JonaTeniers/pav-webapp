@@ -4,11 +4,13 @@
   <meta charset="UTF-8" />
   <title>PAVO – Keuze van Thema</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
+
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
+
   <style>
     body {
       margin: 0;
-      padding: 0;
       font-family: 'Nunito', sans-serif;
       background: #e3f2fd;
       text-align: center;
@@ -23,20 +25,54 @@
 
     .mascot {
       width: 80px;
-      height: auto;
       margin-bottom: 0.5rem;
     }
 
-    h1 {
-      margin: 0.2rem;
-      font-size: 2.2rem;
+    h1 { margin: 0.2rem; font-size: 2.2rem; }
+    p { font-size: 1.1rem; color: #ffffffcc; }
+
+    /* ---------- MENU LEERKRACHT ---------- */
+    .menu-button {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      width: 44px;
+      height: 44px;
+      border: none;
+      border-radius: 10px;
+      background: #0b4da2;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 100;
     }
 
-    p {
-      font-size: 1.1rem;
-      color: #ffffffcc;
+    .menu-panel {
+      position: fixed;
+      top: 62px;
+      left: 12px;
+      width: 240px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+      padding: 10px;
+      display: none;
+      text-align: left;
+      z-index: 100;
     }
 
+    .menu-panel a {
+      display: block;
+      text-decoration: none;
+      color: #1f2937;
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: 700;
+    }
+
+    .menu-panel a:hover { background: #e8f1ff; }
+
+    /* ---------- LEERLING LOGIN ---------- */
     .student-auth {
       width: min(1100px, 95%);
       margin: 1.2rem auto 0;
@@ -47,6 +83,50 @@
       text-align: left;
     }
 
+    .student-auth-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: end;
+    }
+
+    .student-auth label {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-weight: 700;
+      color: #1f2937;
+    }
+
+    .student-auth input {
+      min-width: 180px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 8px 10px;
+    }
+
+    .student-auth button {
+      background: #1976d2;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.55rem 1rem;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    #studentLogoutButton {
+      display: none;
+      background: #64748b;
+    }
+
+    #studentWelcome {
+      margin: 0.4rem 0;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    /* ---------- THEMA KAARTEN ---------- */
     .container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -64,7 +144,10 @@
       flex-direction: column;
       justify-content: space-between;
       text-align: left;
+      transition: transform 0.2s;
     }
+
+    .thema-card:hover { transform: scale(1.02); }
 
     .thema-card h2 {
       color: #1976d2;
@@ -74,8 +157,8 @@
 
     .thema-card p {
       color: #444;
-      font-size: 1rem;
       margin: 0.3rem 0;
+      font-size: 1rem;
     }
 
     .thema-card button {
@@ -88,9 +171,18 @@
       font-size: 1rem;
       cursor: pointer;
     }
+
+    .thema-card button:hover { background: #1565c0; }
   </style>
 </head>
+
 <body>
+
+<!-- LEERKRACHT MENU -->
+<button class="menu-button" id="menuButton" aria-label="Open menu">☰</button>
+<nav class="menu-panel" id="menuPanel">
+  <a href="leerkracht-dashboard.html">Naar leerkrachtomgeving</a>
+</nav>
 
 <header>
   <img src="img/pavomascotte.png" alt="PAVO mascotte" class="mascot" />
@@ -98,6 +190,33 @@
   <p>Kies een thema en begin je leeravontuur!</p>
 </header>
 
+<!-- LEERLING LOGIN -->
+<section class="student-auth">
+  <h2 style="margin-top:0;color:#1976d2;">Leerling login zone</h2>
+  <p id="studentWelcome">Niet ingelogd</p>
+
+  <form id="studentLoginForm" class="student-auth-row">
+    <label>
+      Voornaam
+      <input id="studentVoornaam" type="text" required />
+    </label>
+
+    <label>
+      Klas
+      <input id="studentKlas" type="text" required />
+    </label>
+
+    <button type="submit">Inloggen</button>
+    <button type="button" id="studentLogoutButton">Uitloggen</button>
+
+    <a href="leerling-dashboard.html"
+       style="align-self:center;font-weight:700;color:#1976d2;">
+      Mijn voortgang
+    </a>
+  </form>
+</section>
+
+<!-- THEMA KEUZE -->
 <div class="container">
 
   <div class="thema-card">
@@ -112,7 +231,6 @@
     <a href="thema2.html"><button>Start Thema</button></a>
   </div>
 
-  <!-- 🔴 AANGEPAST THEMA 3 -->
   <div class="thema-card">
     <h2>Thema 3: Werkwoordstijden</h2>
     <p>
@@ -160,6 +278,24 @@
 
 </div>
 
+<script>
+  const menuButton = document.getElementById('menuButton');
+  const menuPanel = document.getElementById('menuPanel');
+
+  menuButton.addEventListener('click', () => {
+    menuPanel.style.display =
+      menuPanel.style.display === 'block' ? 'none' : 'block';
+  });
+
+  document.addEventListener('click', (event) => {
+    if (!menuPanel.contains(event.target) &&
+        !menuButton.contains(event.target)) {
+      menuPanel.style.display = 'none';
+    }
+  });
+</script>
+
 <script src="./student-auth.js"></script>
+
 </body>
 </html>
