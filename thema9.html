@@ -4,241 +4,360 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Thema 9 – Geschiedenis</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
+
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
+
   <style>
     :root {
-      --bg: #f8f7ff;
+      --bg: #f8fafc;
       --panel: #ffffff;
-      --accent: #6d28d9;
-      --accent-dark: #5b21b6;
+      --accent: #0f766e;
+      --accent-dark: #0b5f58;
       --text: #1f2937;
       --muted: #4b5563;
+      --soft-bg: #f0fdfa;
+      --border-soft: #dbe5ef;
     }
+
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       font-family: 'Nunito', sans-serif;
       background: var(--bg);
       color: var(--text);
     }
+
     header {
-      background: #7c3aed;
+      background: #14b8a6;
       color: white;
       padding: 1.8rem 1rem;
       text-align: center;
     }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.1rem;
+    }
+
+    header p {
+      margin: 0.6rem 0 0;
+      opacity: 0.95;
+    }
+
     main {
       width: min(1100px, 95%);
-      margin: 1.5rem auto 2rem;
+      margin: 1.6rem auto 2.5rem;
       display: grid;
       grid-template-columns: 2fr 1fr;
-      gap: 1rem;
+      gap: 1.2rem;
     }
+
     .panel {
       background: var(--panel);
       border-radius: 14px;
-      padding: 1.2rem;
+      padding: 1.3rem;
       box-shadow: 0 6px 16px rgba(0,0,0,0.08);
     }
+
+    h2 { margin-top: 0; }
+
+    /* INFOBLOKKEN */
     .task {
-      margin-top: 1rem;
-      border-top: 1px solid #e5e7eb;
-      padding-top: 1rem;
+      margin-top: 1.2rem;
+      border-top: 1px solid var(--border-soft);
+      padding-top: 1.2rem;
     }
-    .task ul { margin: 0.4rem 0; padding-left: 1.2rem; }
-    .article-list { display: grid; grid-template-columns: 1fr; gap: 0.7rem; margin-top: 0.8rem; }
+
+    .task ul {
+      margin: 0.4rem 0;
+      padding-left: 1.2rem;
+    }
+
+    /* ARTIKELS */
+    .article-list {
+      display: grid;
+      gap: 0.7rem;
+      margin-top: 0.8rem;
+    }
+
     .article-card {
-      border: 1px solid #ddd6fe;
+      background: var(--soft-bg);
+      border: 1px solid #bce7e1;
       border-radius: 10px;
       padding: 0.8rem;
-      background: #f5f3ff;
     }
-    .article-card a { color: #5b21b6; font-weight: 700; text-decoration: none; }
-    .article-card a:hover { text-decoration: underline; }
-    .unit-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      gap: 0.8rem;
-      margin-top: 0.8rem;
-    }
-    .unit-card {
-      border: 2px solid #ddd6fe;
-      border-radius: 12px;
-      padding: 0.9rem;
-      background: #faf5ff;
-    }
-    .unit-card h4 { margin: 0 0 0.35rem; }
-    .unit-card p { margin: 0 0 0.65rem; color: var(--muted); font-size: 0.95rem; }
-    .unit-card .status { font-size: 0.82rem; font-weight: 700; color: #5b21b6; margin-bottom: 0.7rem; }
-    .unit-card button {
-      width: 100%; border: none; border-radius: 8px; padding: 0.5rem 0.7rem;
-      font-weight: 700; color: #fff; background: var(--accent); cursor: pointer;
-    }
-    .unit-card button:hover { background: var(--accent-dark); }
-    .chat-embed { width: 100%; min-height: 520px; border: none; border-radius: 12px; background: #f3f7ff; }
-    .btn {
-      display: inline-block; text-decoration: none; margin-top: 0.8rem;
-      background: var(--accent); color: white; padding: 0.5rem 0.9rem;
-      border-radius: 999px; font-weight: 700;
-    }
-    .btn:hover { background: var(--accent-dark); }
 
-    .timeline-intro { margin-top: 1rem; }
+    .article-card a {
+      color: var(--accent-dark);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .article-card a:hover {
+      text-decoration: underline;
+    }
+
+    /* TIJDLIJN */
     .timeline-figure {
       margin-top: 0.8rem;
-      border: 1px solid #e9d5ff;
+      border: 1px solid #bce7e1;
       border-radius: 12px;
-      overflow: hidden;
-      background: #fff;
-      padding: 0.7rem;
+      padding: 0.8rem;
+      background: var(--soft-bg);
     }
+
     .timeline-visual {
       display: grid;
-      gap: 0.4rem;
+      gap: 0.5rem;
+      font-size: 0.9rem;
     }
+
     .timeline-row {
       display: grid;
       grid-template-columns: 120px 1fr 110px;
-      gap: 0.5rem;
+      gap: 0.6rem;
       align-items: center;
-      font-size: 0.9rem;
     }
+
     .timeline-row .period {
-      background: #ede9fe;
-      border: 1px solid #c4b5fd;
+      background: #e6fffa;
+      border: 1px solid #99f6e4;
       border-radius: 8px;
-      padding: 0.35rem 0.45rem;
+      padding: 0.35rem;
       text-align: center;
       font-weight: 700;
-      color: #4c1d95;
+      color: var(--accent-dark);
     }
+
     .timeline-row .start,
     .timeline-row .end {
-      color: #4b5563;
       font-weight: 700;
+      color: var(--muted);
       text-align: center;
     }
+
     .timeline-figure figcaption {
       margin-top: 0.5rem;
-      color: #4b5563;
+      color: var(--muted);
       font-size: 0.88rem;
     }
 
+    /* PERSOON */
     .timeline-person {
-      margin-top: 0.85rem;
+      margin-top: 0.9rem;
       background: #f8fafc;
       border: 1px solid #e2e8f0;
       border-radius: 10px;
-      padding: 0.75rem;
+      padding: 0.8rem;
       display: grid;
       grid-template-columns: 180px 1fr;
-      gap: 0.75rem;
-      align-items: start;
+      gap: 0.8rem;
     }
+
     .timeline-person img {
       width: 100%;
       border-radius: 8px;
-      display: block;
       object-fit: cover;
     }
-    .timeline-person p { margin: 0 0 0.45rem; color: var(--muted); }
-    .timeline-person figcaption { font-size: 0.85rem; color: #6b7280; }
+
+    .timeline-person p {
+      margin: 0 0 0.4rem;
+      color: var(--muted);
+    }
+
+    .timeline-person figcaption {
+      font-size: 0.85rem;
+      color: #6b7280;
+    }
+
+    /* UNITS */
+    .unit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 0.9rem;
+      margin-top: 0.8rem;
+    }
+
+    .unit-card {
+      background: var(--soft-bg);
+      border: 2px solid #bce7e1;
+      border-radius: 12px;
+      padding: 0.9rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .unit-card h4 {
+      margin: 0 0 0.35rem;
+    }
+
+    .unit-card p {
+      margin: 0 0 0.6rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .status {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--accent-dark);
+      margin-bottom: 0.6rem;
+    }
+
+    .unit-card button {
+      margin-top: auto;
+      width: 100%;
+      border: none;
+      border-radius: 8px;
+      padding: 0.45rem 0.7rem;
+      font-weight: 700;
+      color: white;
+      background: var(--accent);
+      cursor: pointer;
+    }
+
+    .unit-card button:hover {
+      background: var(--accent-dark);
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      margin-top: 1rem;
+      background: var(--accent);
+      color: white;
+      padding: 0.5rem 0.9rem;
+      border-radius: 999px;
+      font-weight: 700;
+    }
+
+    .btn:hover {
+      background: var(--accent-dark);
+    }
+
+    /* CHAT */
+    .chat-embed {
+      width: 100%;
+      min-height: 520px;
+      border: none;
+      border-radius: 12px;
+      background: #f3f7ff;
+    }
+
     @media (max-width: 900px) {
       main { grid-template-columns: 1fr; }
       .timeline-person { grid-template-columns: 1fr; }
-      .timeline-person img { max-width: 260px; }
       .timeline-row { grid-template-columns: 1fr; }
-      .timeline-row .start, .timeline-row .end { text-align: left; }
+      .timeline-row .start,
+      .timeline-row .end { text-align: left; }
     }
   </style>
 </head>
+
 <body>
-  <header>
-    <h1>🏛️ Thema 9 – Geschiedenis</h1>
-    <p>Van Napoleon tot de euro: stap voor stap mee in het verhaal van Vlaanderen.</p>
-  </header>
 
-  <main data-theme-id="9">
-    <section class="panel">
-      <h2>Focus van dit thema</h2>
-      <p>Je werkt met de <strong>Canon van Vlaanderen</strong> en koppelt elke unit aan een episode uit <strong>Het verhaal van Vlaanderen</strong>. Zo begrijp je niet alleen feiten, maar ook het grotere verhaal.</p>
+<header>
+  <h1>Thema 9 – Geschiedenis</h1>
+  <p>
+    Van Napoleon tot de euro:
+    stap voor stap mee in het verhaal van Vlaanderen.
+  </p>
+</header>
 
-      <div class="task timeline-intro">
-        <h3>🕰️ Tijdlijn als kapstok</h3>
-        <p>Gebruik deze tijdlijn eerst als overzicht: zo plaats je elke unit sneller in de juiste periode. Lees daarna de korte achtergrondbron.</p>
-        <p><a href="https://nl.wikipedia.org/wiki/Periodisering_van_de_geschiedenis" target="_blank" rel="noopener noreferrer">🔗 Achtergrondbron: periodisering van de geschiedenis (Wikipedia)</a></p>
-        <figure class="timeline-figure">
-          <div class="timeline-visual" aria-label="Tijdsbalk met duidelijke start- en eindmomenten per periode">
-            <div class="timeline-row"><span class="start">tot ±3500 v.C.</span><span class="period">Prehistorie</span><span class="end">±3500 v.C.</span></div>
-            <div class="timeline-row"><span class="start">±3500 v.C.</span><span class="period">Oude Nabije Oosten</span><span class="end">±800 v.C.</span></div>
-            <div class="timeline-row"><span class="start">±800 v.C.</span><span class="period">Klassieke Oudheid</span><span class="end">±500</span></div>
-            <div class="timeline-row"><span class="start">±500</span><span class="period">Middeleeuwen</span><span class="end">±1450</span></div>
-            <div class="timeline-row"><span class="start">±1450</span><span class="period">Vroegmoderne Tijd</span><span class="end">±1750</span></div>
-            <div class="timeline-row"><span class="start">±1750</span><span class="period">Moderne Tijd</span><span class="end">±1945</span></div>
-            <div class="timeline-row"><span class="start">±1945</span><span class="period">Hedendaagse Tijd</span><span class="end">nu</span></div>
-          </div>
-          <figcaption>Deze tijdsbalk gebruikt duidelijke begin- en eindpunten zodat elke periode eenduidig afgebakend is.</figcaption>
-        </figure>
-        <figure class="timeline-person">
-          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/King_William_I_of_the_Netherlands.jpg" alt="Portret van Willem I der Nederlanden" loading="lazy">
-          <figcaption>
-            <p><strong>Sleutelfiguur bij de tijdsbalk:</strong> Willem I (vanaf 1815) helpt om de overgang naar de Belgische Revolutie van 1830 te begrijpen.</p>
-            Bron afbeelding: Wikimedia Commons (via Wikipedia), <a href="https://nl.wikipedia.org/wiki/Willem_I_der_Nederlanden" target="_blank" rel="noopener noreferrer">Willem I der Nederlanden</a>.
-          </figcaption>
-        </figure>
+<main data-theme-id="9">
+
+<section class="panel">
+
+  <h2>Focus van dit thema</h2>
+  <p>
+    Je werkt met de Canon van Vlaanderen
+    en koppelt elke unit aan een episode uit
+    Het verhaal van Vlaanderen.
+    Zo begrijp je niet alleen feiten,
+    maar ook het grotere historische kader.
+  </p>
+
+  <div class="task">
+    <h3>Tijdlijn als kapstok</h3>
+    <p>
+      Gebruik deze tijdlijn als overzicht
+      om elke unit in de juiste periode te plaatsen.
+    </p>
+
+    <figure class="timeline-figure">
+      <div class="timeline-visual">
+        <div class="timeline-row"><span class="start">tot circa 3500 v.C.</span><span class="period">Prehistorie</span><span class="end">circa 3500 v.C.</span></div>
+        <div class="timeline-row"><span class="start">circa 3500 v.C.</span><span class="period">Oude Nabije Oosten</span><span class="end">circa 800 v.C.</span></div>
+        <div class="timeline-row"><span class="start">circa 800 v.C.</span><span class="period">Klassieke Oudheid</span><span class="end">circa 500</span></div>
+        <div class="timeline-row"><span class="start">circa 500</span><span class="period">Middeleeuwen</span><span class="end">circa 1450</span></div>
+        <div class="timeline-row"><span class="start">circa 1450</span><span class="period">Vroegmoderne Tijd</span><span class="end">circa 1750</span></div>
+        <div class="timeline-row"><span class="start">circa 1750</span><span class="period">Moderne Tijd</span><span class="end">circa 1945</span></div>
+        <div class="timeline-row"><span class="start">circa 1945</span><span class="period">Hedendaagse Tijd</span><span class="end">nu</span></div>
       </div>
+      <figcaption>
+        Deze tijdsbalk gebruikt duidelijke begin- en eindpunten
+        zodat elke periode eenduidig afgebakend is.
+      </figcaption>
+    </figure>
+  </div>
 
+  <div class="task">
+    <h3>Wat oefen je?</h3>
+    <ul>
+      <li>Historische teksten lezen en samenvatten</li>
+      <li>Oorzaken en gevolgen in eenvoudige taal uitleggen</li>
+      <li>Eigen mening formuleren bij historische gebeurtenissen</li>
+      <li>Verbanden leggen tussen verschillende periodes</li>
+    </ul>
+  </div>
 
-      <div class="task">
-        <h3>Wat oefen je?</h3>
-        <ul>
-          <li>Historische teksten lezen en de kern eruit halen.</li>
-          <li>Oorzaken en gevolgen uitleggen in eenvoudige taal.</li>
-          <li>Je eigen gevoel en mening noteren bij historische gebeurtenissen.</li>
-          <li>Na elke unit aantonen dat je het verhaal écht begrijpt.</li>
-          <li>Verbanden leggen via verdiepingsvragen (oorzaak-gevolg, continuïteit en nuance).</li>
-        </ul>
-      </div>
+  <div class="task">
+    <h3>Bronnen voor de lessen</h3>
+    <div class="article-list">
+      <div class="article-card"><strong>Startbron</strong><br><a href="https://nl.wikipedia.org/wiki/Periodisering_van_de_geschiedenis" target="_blank">Periodisering van de geschiedenis</a></div>
+      <div class="article-card"><strong>Unit 1</strong><br><a href="https://www.canonvanvlaanderen.be/events/het-wetboek-van-napoleon/" target="_blank">Het wetboek van Napoleon</a></div>
+      <div class="article-card"><strong>Unit 2</strong><br><a href="https://www.canonvanvlaanderen.be/events/een-liberale-grondwet/" target="_blank">Een liberale grondwet</a></div>
+      <div class="article-card"><strong>Unit 3</strong><br><a href="https://www.canonvanvlaanderen.be/events/de-eerste-treinrit/" target="_blank">De eerste treinrit</a></div>
+      <div class="article-card"><strong>Unit 4</strong><br><a href="https://www.canonvanvlaanderen.be/events/emilie-claeys/" target="_blank">Emilie Claeys</a></div>
+      <div class="article-card"><strong>Unit 5</strong><br><a href="https://www.canonvanvlaanderen.be/events/de-dossinkazerne/" target="_blank">De Dossinkazerne</a></div>
+      <div class="article-card"><strong>Unit 6</strong><br><a href="https://www.canonvanvlaanderen.be/events/de-euro/" target="_blank">De euro</a></div>
+    </div>
+  </div>
 
-      <div class="task">
-        <h3>Bronnen voor de lessen</h3>
-        <div class="article-list">
-          <div class="article-card"><strong>Startbron</strong><br><a href="https://nl.wikipedia.org/wiki/Periodisering_van_de_geschiedenis" target="_blank" rel="noopener noreferrer">Periodisering van de geschiedenis</a></div>
-          <div class="article-card"><strong>Unit 1</strong><br><a href="https://www.canonvanvlaanderen.be/events/het-wetboek-van-napoleon/" target="_blank" rel="noopener noreferrer">Het wetboek van Napoleon</a></div>
-          <div class="article-card"><strong>Unit 2</strong><br><a href="https://www.canonvanvlaanderen.be/events/een-liberale-grondwet/" target="_blank" rel="noopener noreferrer">Een liberale grondwet</a></div>
-          <div class="article-card"><strong>Unit 3</strong><br><a href="https://www.canonvanvlaanderen.be/events/de-eerste-treinrit/" target="_blank" rel="noopener noreferrer">De eerste treinrit</a></div>
-          <div class="article-card"><strong>Unit 4</strong><br><a href="https://www.canonvanvlaanderen.be/events/emilie-claeys/" target="_blank" rel="noopener noreferrer">Emilie Claeys</a></div>
-          <div class="article-card"><strong>Unit 5</strong><br><a href="https://www.canonvanvlaanderen.be/events/de-dossinkazerne/" target="_blank" rel="noopener noreferrer">De Dossinkazerne</a></div>
-          <div class="article-card"><strong>Unit 6</strong><br><a href="https://www.canonvanvlaanderen.be/events/de-euro/" target="_blank" rel="noopener noreferrer">De euro</a></div>
-          <div class="article-card"><strong>Unit 7</strong><br><a href="https://nl.wikipedia.org/wiki/Brabantse_Omwenteling" target="_blank" rel="noopener noreferrer">Brabantse Omwenteling</a> · <a href="https://historiek.net/de-boerenkrijg/8675/" target="_blank" rel="noopener noreferrer">Boerenkrijg</a> · <a href="https://encyclopedievlaamsebeweging.be/nl/boerenkrijg" target="_blank" rel="noopener noreferrer">EVB</a> · <a href="https://web.archive.org/web/20110206124041/http://genk.com/034/vanheusden.htm" target="_blank" rel="noopener noreferrer">Genk/Kempen</a></div>
-          <div class="article-card"><strong>Unit 8</strong><br><a href="https://nl.wikipedia.org/wiki/Belgische_Revolutie" target="_blank" rel="noopener noreferrer">Belgische Revolutie</a></div>
-          <div class="article-card"><strong>Reeks</strong><br><a href="https://www.vrt.be/vrtmax/a-z/het-verhaal-van-vlaanderen/" target="_blank" rel="noopener noreferrer">VRT MAX: Het verhaal van Vlaanderen</a></div>
-        </div>
-      </div>
+  <div class="task">
+    <h3>Units</h3>
+    <div class="unit-grid">
+      <div class="unit-card"><h4>Unit 1</h4><p>Napoleon en gelijke regels voor iedereen</p><p class="status">Beschikbaar</p><a href="thema9unit1.html"><button>Start</button></a></div>
+      <div class="unit-card"><h4>Unit 2</h4><p>Vrijheden en grondrechten in België</p><p class="status">Beschikbaar</p><a href="thema9unit2.html"><button>Start</button></a></div>
+      <div class="unit-card"><h4>Unit 3</h4><p>De eerste treinrit en modernisering</p><p class="status">Beschikbaar</p><a href="thema9unit3.html"><button>Start</button></a></div>
+      <div class="unit-card"><h4>Unit 4</h4><p>Emilie Claeys en sociale rechten</p><p class="status">Beschikbaar</p><a href="thema9unit4.html"><button>Start</button></a></div>
+      <div class="unit-card"><h4>Unit 5</h4><p>Dossinkazerne: herinneren en begrijpen</p><p class="status">Beschikbaar</p><a href="thema9unit5.html"><button>Start</button></a></div>
+      <div class="unit-card"><h4>Unit 6</h4><p>De euro en Europa vandaag</p><p class="status">Beschikbaar</p><a href="thema9unit6.html"><button>Start</button></a></div>
+      <div class="unit-card"><h4>Unit 7</h4><p>Brabantse Omwenteling en Boerenkrijg</p><p class="status">Beschikbaar</p><a href="thema9unit7.html"><button>Start</button></a></div>
+      <div class="unit-card"><h4>Unit 8</h4><p>Belgische Revolutie: oorzaken en gevolgen</p><p class="status">Beschikbaar</p><a href="thema9unit8.html"><button>Start</button></a></div>
+    </div>
+  </div>
 
-      <div class="task">
-        <h3>📚 Units</h3>
-        <div class="unit-grid">
-          <div class="unit-card" data-unit="1"><h4>Unit 1</h4><p>Napoleon en gelijke regels voor iedereen.</p><p class="status">Beschikbaar</p><a href="thema9unit1.html"><button>Start</button></a></div>
-          <div class="unit-card" data-unit="2"><h4>Unit 2</h4><p>Vrijheden en grondrechten in België.</p><p class="status">Beschikbaar</p><a href="thema9unit2.html"><button>Start</button></a></div>
-          <div class="unit-card" data-unit="3"><h4>Unit 3</h4><p>De eerste treinrit en modernisering.</p><p class="status">Beschikbaar</p><a href="thema9unit3.html"><button>Start</button></a></div>
-          <div class="unit-card" data-unit="4"><h4>Unit 4</h4><p>Emilie Claeys en sociale rechten.</p><p class="status">Beschikbaar</p><a href="thema9unit4.html"><button>Start</button></a></div>
-          <div class="unit-card" data-unit="5"><h4>Unit 5</h4><p>Dossinkazerne: herinneren en begrijpen.</p><p class="status">Beschikbaar</p><a href="thema9unit5.html"><button>Start</button></a></div>
-          <div class="unit-card" data-unit="6"><h4>Unit 6</h4><p>De euro en Europa vandaag.</p><p class="status">Beschikbaar</p><a href="thema9unit6.html"><button>Start</button></a></div>
-          <div class="unit-card" data-unit="7"><h4>Unit 7</h4><p>Brabantse Omwenteling en Boerenkrijg: wat is gelijk en wat verschilt?</p><p class="status">Nieuw</p><a href="thema9unit7.html"><button>Start</button></a></div>
-          <div class="unit-card" data-unit="8"><h4>Unit 8</h4><p>Belgische Revolutie: oorzaken, sleutelmomenten en gevolgen.</p><p class="status">Nieuw</p><a href="thema9unit8.html"><button>Start</button></a></div>
-        </div>
-      </div>
+  <a class="btn" href="index.html">Terug naar overzicht</a>
 
-      <a class="btn" href="index.html">← Terug naar overzicht</a>
-    </section>
+</section>
 
-    <aside class="panel">
-      <h2>🤖 Chattie</h2>
-      <p style="color: var(--muted);">Vraag hulp bij begrippen zoals grondwet, industrialisatie, Holocaust en euro.</p>
-      <iframe class="chat-embed" title="Chattie" src="chattie.html?thema=Thema%209%20Geschiedenis"></iframe>
-    </aside>
-  </main>
-  <script src="./pavo-theme-progress.js"></script>
+<aside class="panel">
+  <h2>Chattie</h2>
+  <p style="color: var(--muted);">
+    Vraag hulp bij begrippen zoals grondwet,
+    industrialisatie en euro.
+  </p>
+  <iframe class="chat-embed"
+    src="chattie.html?thema=Thema%209%20Geschiedenis">
+  </iframe>
+</aside>
+
+</main>
+
+<script src="./pavo-theme-progress.js"></script>
 </body>
 </html>
+
