@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="data:," />
+  <title>Thema 3.1 – Unit 3: Toepassen in zinnen</title>
+
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #e8f5e9;
+      padding: 2rem;
+      margin: 0;
+    }
+
+    h1 { text-align: center; color: #2e7d32; }
+
+    .unit-header {
+      max-width: 760px;
+      margin: 0 auto 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .unit-header .nav-left {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .unit-header a {
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .back-link { color: #33691e; }
+
+    .start-link {
+      background: #2e7d32;
+      color: white;
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+    }
+
+    .question-box {
+      background: white;
+      padding: 2rem;
+      margin: 2rem auto;
+      border-radius: 12px;
+      max-width: 760px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 90px;
+      font-size: 1rem;
+      padding: 0.6rem;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+    }
+
+    button {
+      background: #2e7d32;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 6px;
+      margin-top: 1rem;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .feedback {
+      margin-top: 1rem;
+      font-weight: bold;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+
+    .success { background-color: #c8e6c9; color: #1b5e20; }
+    .error { background-color: #ffcdd2; color: #c62828; }
+
+    .nav-buttons {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .hidden { display: none; }
+
+    .helper {
+      color: #546e7a;
+      font-size: 0.95rem;
+      margin-bottom: 0.4rem;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>✍️ Thema 3.1 – Unit 3: Toepassen in zinnen</h1>
+
+<div class="unit-header">
+  <div class="nav-left">
+    <a class="back-link" href="thema3.html">← Thema 3</a>
+    <a class="back-link" href="thema3_1.html">← Thema 3.1</a>
+  </div>
+  <a class="start-link" href="#quizBox">Start oefenen</a>
+</div>
+
+<div class="question-box" id="quizBox">
+  <h2 id="qCount">Opdracht 1 van 6</h2>
+  <p class="helper" id="qType"></p>
+  <div id="questionText"></div>
+  <form id="answerForm"></form>
+
+  <button type="button" onclick="checkAnswer()">Controleer</button>
+  <div class="feedback" id="feedback"></div>
+
+  <div class="nav-buttons">
+    <button id="nextBtn" class="hidden" type="button" onclick="nextQuestion()">
+      Volgende →
+    </button>
+  </div>
+</div>
+
+<div class="question-box hidden" id="endScreen">
+  <h2>🎉 Unit voltooid!</h2>
+  <p>✅ Je hebt deze unit afgerond.</p>
+  <p>Je behaalde <strong><span id="xpScore">0</span> XP</strong>.</p>
+
+  <div class="nav-buttons">
+    <a href="thema3.html"><button type="button">← Thema 3</button></a>
+    <a href="thema3_1.html"><button type="button">← Thema 3.1</button></a>
+    <a href="thema3_2.html"><button type="button">→ Naar Verleden tijd</button></a>
+  </div>
+</div>
+
+<script src="./firebase.js"></script>
+<script src="./pavo-xp-sync.js"></script>
+
+<script>
+  const questions = [
+    {
+      type: "write",
+      typeLabel: "Schrijfopdracht",
+      question: "Schrijf een zin in de tegenwoordige tijd met het werkwoord ‘lopen’.",
+      keywords: ["loop", "loopt", "lopen"]
+    },
+    {
+      type: "write",
+      typeLabel: "Schrijfopdracht",
+      question: "Schrijf een zin over wat je nu aan het doen bent.",
+      keywords: []
+    },
+    {
+      type: "write",
+      typeLabel: "Schrijfopdracht",
+      question: "Schrijf een zin met ‘wij’ in de tegenwoordige tijd.",
+      keywords: ["wij"]
+    },
+    {
+      type: "write",
+      typeLabel: "Schrijfopdracht",
+      question: "Verbeter deze zin: hij lopen snel.",
+      keywords: ["loopt"]
+    },
+    {
+      type: "write",
+      typeLabel: "Schrijfopdracht",
+      question: "Schrijf een zin met ‘zij’ in de tegenwoordige tijd.",
+      keywords: ["zij"]
+    },
+    {
+      type: "write",
+      typeLabel: "Schrijfopdracht",
+      question: "Schrijf een korte zin (minstens 5 woorden) over wat er nu gebeurt in de klas.",
+      keywords: []
+    }
+  ];
+
+  let currentQuestion = 0;
+  let score = 0;
+
+  function loadQuestion() {
+    const q = questions[currentQuestion];
+    document.getElementById('qCount').innerText =
+      `Opdracht ${currentQuestion + 1} van ${questions.length}`;
+    document.getElementById('qType').innerText = q.typeLabel;
+    document.getElementById('questionText').innerText = q.question;
+
+    document.getElementById('answerForm').innerHTML =
+      `<textarea placeholder="Schrijf hier je zin..."></textarea>`;
+
+    document.getElementById('feedback').innerText = '';
+    document.getElementById('feedback').className = 'feedback';
+    document.getElementById('nextBtn').classList.add('hidden');
+  }
+
+  function checkAnswer() {
+    const q = questions[currentQuestion];
+    const input = document.querySelector('textarea');
+    if (!input || !input.value.trim()) return;
+
+    let isCorrect = true;
+
+    if (q.keywords.length > 0) {
+      const text = input.value.toLowerCase();
+      isCorrect = q.keywords.some(k => text.includes(k));
+    }
+
+    const fb = document.getElementById('feedback');
+    if (isCorrect) {
+      score += 5;
+      fb.innerText = '✅ Goed geprobeerd! +5 XP';
+      fb.classList.add('success');
+    } else {
+      fb.innerText = '⚠️ Kijk nog eens naar je werkwoord.';
+      fb.classList.add('error');
+    }
+
+    document.getElementById('nextBtn').classList.remove('hidden');
+  }
+
+  function nextQuestion() {
+    currentQuestion++;
+    if (currentQuestion < questions.length) {
+      loadQuestion();
+    } else {
+      localStorage.setItem('thema3_1_unit3', score);
+      if (window.pavoSyncScore)
+        window.pavoSyncScore('thema3_1_unit3', score);
+
+      document.getElementById('quizBox').classList.add('hidden');
+      document.getElementById('endScreen').classList.remove('hidden');
+      document.getElementById('xpScore').innerText = score;
+    }
+  }
+
+  window.onload = loadQuestion;
+</script>
+
+</body>
+</html>
