@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thema 3 – Werkwoordstijden (mix)</title>
+
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #ede7f6;
+      padding: 2rem;
+      margin: 0;
+    }
+
+    h1 { text-align: center; color: #4527a0; }
+
+    .unit-header {
+      max-width: 900px;
+      margin: 0 auto 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .unit-header a {
+      text-decoration: none;
+      font-weight: 700;
+      color: #4527a0;
+    }
+
+    .start-link {
+      background: #4527a0;
+      color: white;
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+    }
+
+    .hint-bar {
+      max-width: 900px;
+      margin: 0 auto 1.5rem;
+      background: #d1c4e9;
+      border-left: 6px solid #4527a0;
+      padding: 1rem 1.2rem;
+      border-radius: 12px;
+      color: #311b92;
+    }
+
+    .question-box {
+      background: white;
+      padding: 2rem;
+      margin: 2rem auto;
+      border-radius: 16px;
+      max-width: 900px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 140px;
+      padding: 0.7rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+    }
+
+    button {
+      background: #4527a0;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      margin-top: 1rem;
+      font-size: 1rem;
+    }
+
+    .feedback {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 10px;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .success { background: #dcedc8; color: #33691e; }
+    .error { background: #ffcdd2; color: #b71c1c; }
+
+    .helper {
+      font-size: 0.95rem;
+      color: #5e35b1;
+      margin-bottom: 0.6rem;
+    }
+
+    .hidden { display: none; }
+
+    .nav-buttons {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>✍️ Thema 3 – Werkwoordstijden (alles samen)</h1>
+
+<div class="unit-header">
+  <a href="thema3.html">← Thema 3</a>
+  <a href="#quizBox" class="start-link">Start oefenen</a>
+</div>
+
+<div class="hint-bar">
+  💡 <strong>Tip:</strong>  
+  Vind je het moeilijk? Je mag altijd terug naar:
+  <ul>
+    <li><a href="thema3_1.html">Thema 3.1 – Tegenwoordige tijd</a></li>
+    <li><a href="thema3_2.html">Thema 3.2 – Verleden tijd</a></li>
+  </ul>
+</div>
+
+<div class="question-box" id="quizBox">
+  <h2 id="qCount">Opdracht 1 van 5</h2>
+  <p class="helper" id="qType"></p>
+  <div id="questionText"></div>
+
+  <form id="answerForm">
+    <textarea placeholder="Je mag uitgebreid schrijven. Let vooral op het werkwoord."></textarea>
+  </form>
+
+  <button onclick="checkAnswer()">Controleer</button>
+  <div class="feedback" id="feedback"></div>
+
+  <div class="nav-buttons">
+    <button id="nextBtn" class="hidden" onclick="nextQuestion()">Volgende →</button>
+  </div>
+</div>
+
+<div class="question-box hidden" id="endScreen">
+  <h2>🎉 Goed gewerkt!</h2>
+  <p>Je oefende tegenwoordige tijd, verleden tijd en de dt-regel door elkaar.</p>
+  <p>Je behaalde <strong><span id="xpScore">0</span> XP</strong>.</p>
+
+  <div class="nav-buttons">
+    <a href="thema3.html"><button>← Terug naar thema</button></a>
+    <a href="thema3_1.html"><button>↺ Tegenwoordige tijd</button></a>
+    <a href="thema3_2.html"><button>↺ Verleden tijd</button></a>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    label: "Tegenwoordige tijd",
+    question: "Schrijf een zin met het werkwoord ‘lopen’. Je mag meerdere zinnen schrijven.",
+    check: t => t.includes("loop") || t.includes("loopt") || t.includes("lopen"),
+    error: "Je tekst is duidelijk, maar het werkwoord ‘lopen’ ontbreekt of is fout vervoegd.",
+    example: "Ik loop elke dag naar school.",
+    explain: "‘Lopen’ staat hier in de tegenwoordige tijd."
+  },
+  {
+    label: "Onvoltooid verleden tijd (OVT)",
+    question: "Schrijf een zin in de verleden tijd met ‘spelen’.",
+    check: t => t.includes("speelde") || t.includes("speelden"),
+    error: "De verleden tijd van ‘spelen’ ontbreekt of is niet juist.",
+    example: "Wij speelden gisteren buiten.",
+    explain: "OVT vertelt wat vroeger gebeurde."
+  },
+  {
+    label: "Voltooid verleden tijd (VVT)",
+    question: "Schrijf een zin in de voltooid verleden tijd met ‘maken’.",
+    check: t => t.includes("heb") && t.includes("gemaakt") || t.includes("hebben") && t.includes("gemaakt"),
+    error: "Let op: VVT = hulpwerkwoord + voltooid deelwoord.",
+    example: "Ik heb mijn huiswerk gemaakt.",
+    explain: "‘Heb gemaakt’ is voltooid verleden tijd."
+  },
+  {
+    label: "DT-regel",
+    question: "Verbeter deze zin: hij word boos als hij verliest.",
+    check: t => t.includes("wordt"),
+    error: "Let op de dt-regel bij ‘hij’.",
+    example: "Hij wordt boos als hij verliest.",
+    explain: "Stam + t bij hij/zij."
+  },
+  {
+    label: "Mixopdracht",
+    question: "Schrijf een korte tekst (minstens 3 zinnen) waarin zowel tegenwoordige als verleden tijd voorkomt.",
+    check: t => t.split(".").length >= 3,
+    error: "Schrijf minstens 3 zinnen en let op je tijden.",
+    example: "Vandaag werk ik in de klas. Gisteren werkte ik thuis. Nu maak ik mijn taak af.",
+    explain: "Let erop dat je werkwoorden passen bij het tijdstip."
+  }
+];
+
+let current = 0;
+let score = 0;
+
+function loadQuestion() {
+  const q = questions[current];
+  document.getElementById("qCount").innerText =
+    `Opdracht ${current + 1} van ${questions.length}`;
+  document.getElementById("qType").innerText = q.label;
+  document.getElementById("questionText").innerText = q.question;
+  document.querySelector("textarea").value = "";
+  document.getElementById("feedback").innerText = "";
+  document.getElementById("feedback").className = "feedback";
+  document.getElementById("nextBtn").classList.add("hidden");
+}
+
+function checkAnswer() {
+  const q = questions[current];
+  const text = document.querySelector("textarea").value.toLowerCase().trim();
+  if (!text) return;
+
+  const ok = q.check(text);
+  const fb = document.getElementById("feedback");
+
+  if (ok) {
+    score += 5;
+    fb.className = "feedback success";
+    fb.innerHTML = `✅ Goed gedaan!<br>${q.explain}`;
+  } else {
+    fb.className = "feedback error";
+    fb.innerHTML = `
+      ❌ ${q.error}<br><br>
+      ✏️ <strong>Voorbeeld:</strong> ${q.example}<br>
+      💡 ${q.explain}
+    `;
+  }
+
+  document.getElementById("nextBtn").classList.remove("hidden");
+}
+
+function nextQuestion() {
+  current++;
+  if (current < questions.length) {
+    loadQuestion();
+  } else {
+    localStorage.setItem("thema3_mix_unit1", score);
+    document.getElementById("quizBox").classList.add("hidden");
+    document.getElementById("endScreen").classList.remove("hidden");
+    document.getElementById("xpScore").innerText = score;
+  }
+}
+
+window.onload = loadQuestion;
+</script>
+
+</body>
+</html>
