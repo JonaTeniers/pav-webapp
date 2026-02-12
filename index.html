@@ -72,16 +72,69 @@ body{
 /* ================= WELCOME ================= */
 .welcome{
   width:min(1250px,95%);
-  margin:2rem auto 0;
+  margin:2rem auto 0.6rem;
   font-size:1.4rem;
   font-weight:800;
   color:var(--blue);
 }
 
+/* ================= CHATTIE ================= */
+.chattie-wrap{
+  width:min(1250px,95%);
+  margin:0 auto 2rem;
+}
+
+.chattie-card{
+  background:linear-gradient(135deg,#e3f2fd,#ffffff);
+  border-radius:22px;
+  padding:1.4rem 1.6rem;
+  box-shadow:0 10px 24px rgba(0,0,0,0.08);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1.2rem;
+}
+
+.chattie-left{
+  display:flex;
+  align-items:center;
+  gap:1rem;
+}
+
+.chattie-icon{
+  font-size:2.2rem;
+}
+
+.chattie-text h2{
+  margin:0;
+  font-size:1.3rem;
+  color:var(--blue);
+}
+
+.chattie-text p{
+  margin:0.2rem 0 0;
+  color:var(--muted);
+  font-size:0.95rem;
+}
+
+.chattie-card a button{
+  background:var(--blue);
+  color:white;
+  border:none;
+  border-radius:999px;
+  padding:0.55rem 1.6rem;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.chattie-card a button:hover{
+  background:var(--blue-dark);
+}
+
 /* ================= THEMES ================= */
 .container{
   width:min(1250px,95%);
-  margin:1.2rem auto 4rem;
+  margin:0 auto 4rem;
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
   gap:1.6rem;
@@ -136,7 +189,6 @@ body{
 .progress-fill{
   height:100%;
   background:linear-gradient(90deg,#64b5f6,#1976d2);
-  width:0%;
 }
 
 .progress-label{
@@ -165,20 +217,33 @@ button.start:hover{
 
 <!-- ================= TOPBAR ================= -->
 <div class="topbar">
-
   <div class="top-left">
     <img src="img/pavomascotte.png" alt="PAV-O">
     <div class="top-title">PAV-O</div>
   </div>
-
   <div class="top-right">
     <button id="loginBtn" onclick="handleLogin()">Log in</button>
   </div>
-
 </div>
 
 <!-- ================= WELCOME ================= -->
 <div class="welcome" id="welcomeText" style="display:none"></div>
+
+<!-- ================= CHATTIE ================= -->
+<div class="chattie-wrap">
+  <div class="chattie-card">
+    <div class="chattie-left">
+      <div class="chattie-icon">🤖</div>
+      <div class="chattie-text">
+        <h2>Chattie</h2>
+        <p>Stel vragen, krijg uitleg en hulp bij je oefeningen.</p>
+      </div>
+    </div>
+    <a href="chattie.html">
+      <button>Open Chattie</button>
+    </a>
+  </div>
+</div>
 
 <!-- ================= THEMES ================= -->
 <div class="container" id="themes"></div>
@@ -199,20 +264,6 @@ const themes = [
 function renderThemes(){
   const c = document.getElementById("themes");
   c.innerHTML = "";
-
-  // 🔹 EXTRA VAKJE: CHATTIE
-  c.innerHTML += `
-    <div class="thema-card">
-      <div class="thema-image" style="background-image:url('img/images/chattie.jpg')">
-        <div class="thema-title">🤖 Chattie</div>
-      </div>
-      <div class="thema-content">
-        <p>Stel vragen en krijg hulp.</p>
-        <a href="chattie.html"><button class="start">Open Chattie</button></a>
-      </div>
-    </div>
-  `;
-
   themes.forEach(t=>{
     const p = localStorage.getItem(`thema${t.id}_progress`) || 0;
     c.innerHTML += `
@@ -249,7 +300,6 @@ function handleLogin(){
 function updateUI(){
   const n = localStorage.getItem("studentName");
   const k = localStorage.getItem("studentClass");
-
   const welcome = document.getElementById("welcomeText");
   const btn = document.getElementById("loginBtn");
 
