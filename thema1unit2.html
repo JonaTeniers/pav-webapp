@@ -1,250 +1,196 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thema Landschappen – Unit 2</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Thema 1 – Unit 2: Landschapselementen</title>
 
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #e3f2fd;
-      padding: 2rem;
-    }
+<style>
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #e3f2fd;
+  padding: 2rem;
+}
+h1 { text-align: center; color: #1565c0; }
 
-    h1 {
-      text-align: center;
-      color: #1565c0;
-    }
+.question-box {
+  background: white;
+  padding: 2rem;
+  margin: 2rem auto;
+  border-radius: 12px;
+  max-width: 900px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
 
-    .question-box {
-      background: white;
-      padding: 2rem;
-      margin: 2rem auto;
-      border-radius: 12px;
-      max-width: 720px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
+img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin: 1rem 0;
+}
 
-    img {
-      max-width: 100%;
-      border-radius: 8px;
-      margin: 1rem 0;
-    }
+.task {
+  margin-top: 2rem;
+}
 
-    .bron {
-      font-size: 0.85rem;
-      color: #555;
-      margin-bottom: 1rem;
-    }
+.drag-container {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
 
-    button {
-      background: #1565c0;
-      color: white;
-      padding: 0.6rem 1.4rem;
-      border: none;
-      border-radius: 6px;
-      margin-top: 1rem;
-      cursor: pointer;
-    }
+.drag-items {
+  background: #f5f9ff;
+  padding: 1rem;
+  border-radius: 10px;
+  min-width: 260px;
+}
 
-    .feedback {
-      margin-top: 1rem;
-      font-weight: bold;
-      padding: 1rem;
-      border-radius: 8px;
-    }
+.drag-item {
+  background: #bbdefb;
+  padding: 0.5rem;
+  margin: 0.4rem 0;
+  border-radius: 6px;
+  cursor: grab;
+  font-weight: 600;
+}
 
-    .success { background: #c8e6c9; color: #2e7d32; }
-    .error { background: #ffcdd2; color: #c62828; }
+.drop-zone {
+  min-width: 260px;
+  min-height: 220px;
+  padding: 1rem;
+  border: 2px dashed #1565c0;
+  border-radius: 10px;
+  font-weight: 700;
+  background: #e3f2fd;
+}
 
-    .hidden { display: none; }
+.correct { background: #c8e6c9 !important; }
+.wrong { background: #ffcdd2 !important; }
 
-    .nav-buttons {
-      text-align: center;
-      margin-top: 2rem;
-    }
-  </style>
+input[type="text"] {
+  padding: 0.4rem;
+  margin: 0.3rem 0;
+  width: 100%;
+}
+
+textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 0.6rem;
+}
+
+button {
+  background: #1565c0;
+  color: white;
+  padding: 0.6rem 1.4rem;
+  border: none;
+  border-radius: 6px;
+  margin-top: 2rem;
+  cursor: pointer;
+}
+
+.hidden { display: none; }
+.nav-buttons { text-align: center; margin-top: 2rem; }
+</style>
 </head>
 
 <body>
 
-<h1>🌍 Thema Landschappen – Unit 2: Landschapselementen</h1>
+<h1>🌍 Thema 1 – Unit 2: Landschapselementen</h1>
 
-<div class="question-box" id="quizBox">
-  <h2 id="qCount"></h2>
+<div class="question-box" id="workBox">
 
-  <div id="questionText"></div>
+<!-- OPDRACHT 1 -->
+<div class="task">
+<h2>Opdracht 1 – Sorteer de landschapselementen</h2>
+<p>Sleep elk element naar de juiste kolom.</p>
 
-  <img id="questionImage" class="hidden" alt="Landschapselement">
-  <div id="imageSource" class="bron hidden"></div>
-
-  <form id="answerForm"></form>
-
-  <button onclick="checkAnswer()">Controleer</button>
-
-  <div class="feedback" id="feedback"></div>
-
-  <div class="nav-buttons">
-    <button id="nextBtn" class="hidden" onclick="nextQuestion()">Volgende →</button>
+<div class="drag-container">
+  <div class="drag-items">
+    <div class="drag-item" draggable="true" data-type="natuur">Boom</div>
+    <div class="drag-item" draggable="true" data-type="natuur">Rivier</div>
+    <div class="drag-item" draggable="true" data-type="natuur">Berg</div>
+    <div class="drag-item" draggable="true" data-type="natuur">Zee</div>
+    <div class="drag-item" draggable="true" data-type="mens">Huis</div>
+    <div class="drag-item" draggable="true" data-type="mens">Weg</div>
+    <div class="drag-item" draggable="true" data-type="mens">Fabriek</div>
+    <div class="drag-item" draggable="true" data-type="mens">Spoorweg</div>
   </div>
+
+  <div class="drop-zone" data-accept="natuur">🌿 Natuurlijke landschapselementen</div>
+  <div class="drop-zone" data-accept="mens">🏠 Menselijke landschapselementen</div>
+</div>
+</div>
+
+<!-- OPDRACHT 2 -->
+<div class="task">
+<h2>Opdracht 2 – Benoem de landschapselementen</h2>
+<p>Bekijk de foto en noteer minstens <strong>vier</strong> landschapselementen.</p>
+
+<img src="img/images/landschap_bos.jpg" alt="Boslandschap">
+
+<input type="text" placeholder="Landschapselement 1">
+<input type="text" placeholder="Landschapselement 2">
+<input type="text" placeholder="Landschapselement 3">
+<input type="text" placeholder="Landschapselement 4">
+</div>
+
+<!-- OPDRACHT 3 -->
+<div class="task">
+<h2>Opdracht 3 – Mens of natuur?</h2>
+<p>Duid aan of het landschapselement natuurlijk of menselijk is.</p>
+
+<table>
+<tr><td>Bos</td><td><input type="radio" name="bos"> natuur <input type="radio" name="bos"> mens</td></tr>
+<tr><td>Brug</td><td><input type="radio" name="brug"> natuur <input type="radio" name="brug"> mens</td></tr>
+<tr><td>Akker</td><td><input type="radio" name="akker"> natuur <input type="radio" name="akker"> mens</td></tr>
+<tr><td>Meer</td><td><input type="radio" name="meer"> natuur <input type="radio" name="meer"> mens</td></tr>
+<tr><td>Snelweg</td><td><input type="radio" name="snelweg"> natuur <input type="radio" name="snelweg"> mens</td></tr>
+</table>
+</div>
+
+<!-- OPDRACHT 4 -->
+<div class="task">
+<h2>Opdracht 4 – Denk- en verwoordvraag</h2>
+<p>Waarom zijn mensen zelf <strong>geen</strong> landschapselementen?</p>
+
+<textarea placeholder="Schrijf hier je antwoord..."></textarea>
+</div>
+
+<button onclick="finishUnit()">Unit afronden</button>
+
 </div>
 
 <div class="question-box hidden" id="endScreen">
-  <h2>🎉 Unit 2 voltooid!</h2>
-  <p>Je behaalde <strong><span id="xpScore">0</span> XP</strong>.</p>
+  <h2>🎉 Unit 2 afgerond</h2>
+  <p>Je hebt actief gewerkt met landschapselementen.</p>
   <div class="nav-buttons"></div>
 </div>
 
-<script src="./firebase.js"></script>
-<script src="./pavo-xp-sync.js"></script>
-
 <script>
-const questions = [
+let draggedItem = null;
 
-  {
-    vraag: "Wat noemen we landschapselementen?",
-    image: null,
-    bron: null,
-    opties: [
-      { tekst: "Onderdelen van het landschap die je kan zien", juist: true },
-      { tekst: "Alleen dieren in de natuur", juist: false },
-      { tekst: "Alleen dingen die je kan verplaatsen", juist: false }
-    ]
-  },
+document.querySelectorAll('.drag-item').forEach(item => {
+  item.addEventListener('dragstart', () => draggedItem = item);
+});
 
-  {
-    vraag: "Welke van deze is een landschapselement?",
-    image: null,
-    bron: null,
-    opties: [
-      { tekst: "Een rivier", juist: true },
-      { tekst: "Een fiets", juist: false },
-      { tekst: "Een bal", juist: false }
-    ]
-  },
-
-  {
-    vraag: "Welke landschapselementen zie je hier?",
-    image: "img/images/landschap_bos.jpg",
-    bron: "https://vroegevogels.bnnvara.nl",
-    opties: [
-      { tekst: "Bomen en paden", juist: true },
-      { tekst: "Auto’s en verkeerslichten", juist: false },
-      { tekst: "Alleen mensen", juist: false }
-    ]
-  },
-
-  {
-    vraag: "Is een gebouw een landschapselement?",
-    image: "img/images/landschap_stad.jpg",
-    bron: "https://nl.wikipedia.org",
-    opties: [
-      { tekst: "Ja", juist: true },
-      { tekst: "Nee", juist: false }
-    ]
-  },
-
-  {
-    vraag: "Waarom zijn mensen GEEN landschapselement?",
-    image: null,
-    bron: null,
-    opties: [
-      { tekst: "Omdat ze verplaatsbaar zijn", juist: true },
-      { tekst: "Omdat ze altijd in steden wonen", juist: false },
-      { tekst: "Omdat ze geen deel zijn van het landschap", juist: false }
-    ]
-  },
-
-  {
-    vraag: "Wat is GEEN landschapselement?",
-    image: null,
-    bron: null,
-    opties: [
-      { tekst: "Een fiets", juist: true },
-      { tekst: "Een berg", juist: false },
-      { tekst: "Een rivier", juist: false }
-    ]
-  }
-];
-
-let currentQuestion = 0;
-let score = 0;
-
-function loadQuestion() {
-  const q = questions[currentQuestion];
-
-  document.getElementById("qCount").innerText =
-    `Vraag ${currentQuestion + 1} van ${questions.length}`;
-
-  document.getElementById("questionText").innerText = q.vraag;
-
-  const img = document.getElementById("questionImage");
-  const bron = document.getElementById("imageSource");
-
-  if (q.image) {
-    img.src = q.image;
-    img.classList.remove("hidden");
-    bron.innerHTML = `<a href="${q.bron}" target="_blank">📷 Bron bekijken</a>`;
-    bron.classList.remove("hidden");
-  } else {
-    img.classList.add("hidden");
-    bron.classList.add("hidden");
-  }
-
-  const form = document.getElementById("answerForm");
-  form.innerHTML = "";
-
-  q.opties.forEach(opt => {
-    const label = document.createElement("label");
-    label.innerHTML = `
-      <input type="radio" name="answer" value="${opt.juist ? 'correct' : 'fout'}">
-      ${opt.tekst}
-    `;
-    form.appendChild(label);
-    form.appendChild(document.createElement("br"));
-  });
-
-  document.getElementById("feedback").innerText = "";
-  document.getElementById("feedback").className = "feedback";
-  document.getElementById("nextBtn").classList.add("hidden");
-}
-
-function checkAnswer() {
-  const selected = document.querySelector('input[name="answer"]:checked');
-  if (!selected) return;
-
-  const feedback = document.getElementById("feedback");
-
-  if (selected.value === "correct") {
-    score += 3;
-    feedback.innerText = "✅ Juist! +3 XP";
-    feedback.classList.add("success");
-  } else {
-    feedback.innerText = "❌ Fout. Geen XP.";
-    feedback.classList.add("error");
-  }
-
-  document.getElementById("nextBtn").classList.remove("hidden");
-}
-
-function nextQuestion() {
-  currentQuestion++;
-  if (currentQuestion < questions.length) {
-    loadQuestion();
-  } else {
-    localStorage.setItem("xp_landschappen_unit2", score);
-    if (window.pavoSyncScore) {
-      window.pavoSyncScore("xp_landschappen_unit2", score);
-      window.pavoSyncScore("landschappen_unit2_done", "true");
+document.querySelectorAll('.drop-zone').forEach(zone => {
+  zone.addEventListener('dragover', e => e.preventDefault());
+  zone.addEventListener('drop', () => {
+    if (!draggedItem) return;
+    if (draggedItem.dataset.type === zone.dataset.accept) {
+      zone.appendChild(draggedItem);
+      draggedItem.classList.add('correct');
+    } else {
+      draggedItem.classList.add('wrong');
     }
-    document.getElementById("quizBox").classList.add("hidden");
-    document.getElementById("endScreen").classList.remove("hidden");
-    document.getElementById("xpScore").innerText = score;
-  }
-}
+  });
+});
 
-window.onload = loadQuestion;
+function finishUnit() {
+  document.getElementById('workBox').classList.add('hidden');
+  document.getElementById('endScreen').classList.remove('hidden');
+}
 </script>
 
 <script src="./unit-navigation.js"></script>
