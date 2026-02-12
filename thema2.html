@@ -27,7 +27,6 @@
       color: var(--text);
     }
 
-    /* ---------- HEADER ---------- */
     header {
       background: linear-gradient(135deg, #2e7d32, #66bb6a);
       color: white;
@@ -35,17 +34,9 @@
       text-align: center;
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 2.2rem;
-    }
+    header h1 { margin: 0; font-size: 2.2rem; }
+    header p { margin: 0.6rem 0 0; opacity: 0.95; }
 
-    header p {
-      margin: 0.6rem 0 0;
-      opacity: 0.95;
-    }
-
-    /* ---------- LAYOUT ---------- */
     main {
       width: min(1200px, 95%);
       margin: 1.8rem auto 2.5rem;
@@ -61,7 +52,7 @@
       box-shadow: 0 10px 22px rgba(0,0,0,0.08);
     }
 
-    /* ---------- HERO NATUUR ---------- */
+    /* ---------- HERO ---------- */
     .hero-nature {
       display: grid;
       grid-template-columns: 1.2fr 1fr;
@@ -82,16 +73,8 @@
       padding: 1.2rem 1.3rem;
     }
 
-    .hero-text h2 {
-      margin: 0 0 0.6rem;
-      font-size: 1.4rem;
-    }
-
-    .hero-text p {
-      margin: 0 0 0.8rem;
-      color: var(--muted);
-      line-height: 1.45;
-    }
+    .hero-text h2 { margin: 0 0 0.6rem; }
+    .hero-text p { margin: 0 0 0.8rem; color: var(--muted); }
 
     .source-link {
       font-size: 0.9rem;
@@ -100,8 +83,15 @@
       text-decoration: none;
     }
 
-    .source-link:hover {
-      text-decoration: underline;
+    .source-link:hover { text-decoration: underline; }
+
+    /* ---------- INFO ---------- */
+    .info-box {
+      background: var(--accent-soft);
+      border-left: 5px solid var(--accent);
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1.2rem;
     }
 
     /* ---------- SCORE ---------- */
@@ -112,15 +102,8 @@
       margin-bottom: 1.4rem;
     }
 
-    .score-card h3 {
-      margin: 0 0 0.4rem;
-    }
-
     /* ---------- UNITS ---------- */
-    .panel-title {
-      font-size: 1.25rem;
-      margin-bottom: 0.8rem;
-    }
+    .panel-title { font-size: 1.25rem; margin-bottom: 0.8rem; }
 
     .unit-grid {
       display: grid;
@@ -138,21 +121,7 @@
       gap: 0.5rem;
     }
 
-    .unit-card h4 {
-      margin: 0;
-    }
-
-    .unit-card p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    .status {
-      font-size: 0.85rem;
-      font-weight: 700;
-    }
-
+    .status { font-size: 0.85rem; font-weight: 700; }
     .status.ready { color: #1b5e20; }
     .status.locked { color: #9e9e9e; }
 
@@ -167,13 +136,20 @@
       cursor: pointer;
     }
 
-    .unit-card button:hover {
-      background: var(--accent-dark);
-    }
-
     .unit-card button:disabled {
       opacity: 0.45;
       cursor: not-allowed;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 1.6rem;
+      text-decoration: none;
+      font-weight: 700;
+      color: white;
+      background: var(--accent);
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
     }
 
     /* ---------- CHAT ---------- */
@@ -182,101 +158,98 @@
       min-height: 520px;
       border: none;
       border-radius: 14px;
-      background: #f3f7ff;
     }
 
-    /* ---------- RESPONSIVE ---------- */
     @media (max-width: 900px) {
       main { grid-template-columns: 1fr; }
-
-      .hero-nature {
-        grid-template-columns: 1fr;
-      }
+      .hero-nature { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 
 <body>
-  <header>
-    <h1>🌿 Thema 2 – Levende Natuur</h1>
-    <p>Ontdek organismen, ecosystemen en hun samenhang</p>
-  </header>
 
-  <main data-theme-id="2">
-    <section class="panel">
+<header>
+  <h1>🌿 Thema 2 – Levende Natuur</h1>
+  <p>Ontdek organismen, ecosystemen en hun samenhang</p>
+</header>
 
-      <!-- HERO NATUUR -->
-      <div class="hero-nature">
-        <img src="img/images/amazonewoud.jpg"
-             alt="Luchtfoto van het Amazonewoud met kronkelende rivieren">
-        <div class="hero-text">
-          <h2>🌳 Het Amazonewoud</h2>
-          <p>
-            Het Amazonewoud is een van de grootste regenwouden ter wereld en wordt
-            ook wel de <strong>longen van de aarde</strong> genoemd.
-            Door fotosynthese produceren bomen en planten zuurstof en spelen ze
-            een belangrijke rol in het klimaat.
-          </p>
-          <a class="source-link"
-             href="https://www.mo.be/analyse/wie-mag-beslissen-over-amazonewoud-maan-oceaan"
-             target="_blank" rel="noopener noreferrer">
-            🔗 Bron: MO*
-          </a>
-        </div>
-      </div>
+<main data-theme-id="2">
+<section class="panel">
 
-      <!-- SCORE -->
-      <div class="score-card">
-        <h3>🎯 Totaalscore Thema 2</h3>
-        <p id="themeTotalScore">💡 0 / 240 XP</p>
-        <p>Start met unit 1 om te beginnen.</p>
-      </div>
+  <!-- HERO -->
+  <div class="hero-nature">
+    <img src="img/images/amazonewoud.jpg" alt="Luchtfoto van het Amazonewoud">
+    <div class="hero-text">
+      <h2>🌳 Het Amazonewoud</h2>
+      <p>
+        Het Amazonewoud is een van de grootste regenwouden ter wereld en wordt
+        vaak de <strong>longen van de aarde</strong> genoemd.
+        Planten en bomen spelen een belangrijke rol in ecosystemen en klimaat.
+      </p>
+      <a class="source-link"
+         href="https://www.mo.be/analyse/wie-mag-beslissen-over-amazonewoud-maan-oceaan"
+         target="_blank" rel="noopener noreferrer">🔗 Bron: MO*</a>
+    </div>
+  </div>
 
-      <!-- UNITS -->
-      <h2 class="panel-title">🌱 Units</h2>
-      <div class="unit-grid">
-        <div class="unit-card">
-          <h4>Unit 1</h4>
-          <p>Wat is levende natuur?</p>
-          <p class="status ready">Beschikbaar</p>
-          <a href="thema2unit1.html"><button>Start</button></a>
-        </div>
+  <h2>Focus van dit thema</h2>
+  <p>
+    In dit thema leer je wat <strong>levende natuur</strong> is.
+    Je ontdekt hoe <strong>organismen</strong> samenleven in
+    <strong>ecosystemen</strong> en hoe alles met elkaar verbonden is.
+  </p>
 
-        <div class="unit-card">
-          <h4>Unit 2</h4>
-          <p>Organismen en hun kenmerken</p>
-          <p class="status locked">🔒 Vergrendeld</p>
-          <button disabled>Start</button>
-        </div>
+  <div class="info-box">
+    <strong>🧭 Kapstok van het thema</strong>
+    <ul>
+      <li>Wat is levend en wat niet?</li>
+      <li>Welke organismen leven samen?</li>
+      <li>Hoe beïnvloeden ze elkaar?</li>
+    </ul>
+  </div>
 
-        <div class="unit-card">
-          <h4>Unit 3</h4>
-          <p>Planten en dieren vergelijken</p>
-          <p class="status locked">🔒 Vergrendeld</p>
-          <button disabled>Start</button>
-        </div>
+  <div class="info-box">
+    <strong>Wat oefen je?</strong>
+    <ul>
+      <li>Organismen herkennen en benoemen</li>
+      <li>Verschillen en gelijkenissen uitleggen</li>
+      <li>Ecosystemen begrijpen</li>
+      <li>Verbanden leggen in de natuur</li>
+    </ul>
+  </div>
 
-        <div class="unit-card">
-          <h4>Unit 4</h4>
-          <p>Levensgemeenschappen</p>
-          <p class="status locked">🔒 Vergrendeld</p>
-          <button disabled>Start</button>
-        </div>
-      </div>
+  <div class="score-card">
+    <h3>🎯 Totaalscore Thema 2</h3>
+    <p id="themeTotalScore">💡 0 / 240 XP</p>
+    <p>Start met unit 1 om te beginnen.</p>
+  </div>
 
-    </section>
+  <h2 class="panel-title">🌱 Units</h2>
+  <div class="unit-grid">
+    <div class="unit-card">
+      <h4>Unit 1</h4>
+      <p>Wat is levende natuur?</p>
+      <p class="status ready">Beschikbaar</p>
+      <a href="thema2unit1.html"><button>Start</button></a>
+    </div>
 
-    <!-- CHAT -->
-    <aside class="panel">
-      <h2 class="panel-title">🤖 Chattie</h2>
-      <iframe
-        class="chat-embed"
-        title="Chattie"
-        src="chattie.html?thema=Thema%202%20Levende%20Natuur">
-      </iframe>
-    </aside>
-  </main>
+    <div class="unit-card"><h4>Unit 2</h4><p>Organismen en hun kenmerken</p><p class="status locked">🔒 Vergrendeld</p><button disabled>Start</button></div>
+    <div class="unit-card"><h4>Unit 3</h4><p>Planten en dieren vergelijken</p><p class="status locked">🔒 Vergrendeld</p><button disabled>Start</button></div>
+    <div class="unit-card"><h4>Unit 4</h4><p>Levensgemeenschappen</p><p class="status locked">🔒 Vergrendeld</p><button disabled>Start</button></div>
+  </div>
 
-  <script src="./pavo-xp-sync.js"></script>
+  <a href="index.html" class="back-btn">← Terug naar thema-overzicht</a>
+
+</section>
+
+<aside class="panel">
+  <h2 class="panel-title">🤖 Chattie</h2>
+  <iframe class="chat-embed"
+    src="chattie.html?thema=Thema%202%20Levende%20Natuur"></iframe>
+</aside>
+</main>
+
+<script src="./pavo-xp-sync.js"></script>
 </body>
 </html>
