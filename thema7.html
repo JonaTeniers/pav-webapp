@@ -4,106 +4,161 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Thema 7 – Communiceren in het Nederlands</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
+
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
+
   <style>
     :root {
-      --bg: #f7f8fb;
+      --bg: #f8fafc;
       --panel: #ffffff;
-      --accent: #2d74d8;
-      --accent-dark: #1f58a8;
-      --text: #182236;
-      --muted: #4f5d79;
+      --accent: #0f766e;
+      --accent-dark: #0b5f58;
+      --text: #1f2937;
+      --muted: #4b5563;
+      --soft-bg: #f0fdfa;
+      --border-soft: #dbe5ef;
     }
+
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       font-family: 'Nunito', sans-serif;
       background: var(--bg);
       color: var(--text);
     }
+
     header {
-      background: #3f8bf5;
+      background: #14b8a6;
       color: white;
       padding: 1.8rem 1rem;
       text-align: center;
     }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.1rem;
+    }
+
+    header p {
+      margin: 0.6rem 0 0;
+      opacity: 0.95;
+    }
+
     main {
       width: min(1100px, 95%);
-      margin: 1.5rem auto 2rem;
+      margin: 1.6rem auto 2.5rem;
       display: grid;
       grid-template-columns: 2fr 1fr;
-      gap: 1rem;
+      gap: 1.2rem;
     }
+
     .panel {
       background: var(--panel);
       border-radius: 14px;
-      padding: 1.2rem;
+      padding: 1.3rem;
       box-shadow: 0 6px 16px rgba(0,0,0,0.08);
     }
+
     h2 { margin-top: 0; }
+
+    /* COMMUNICATIEMODEL */
     .model {
       display: grid;
       grid-template-columns: repeat(3, minmax(120px, 1fr));
-      gap: 0.6rem;
-      margin-top: 0.8rem;
+      gap: 0.7rem;
+      margin-top: 0.9rem;
     }
+
     .model div {
-      background: #eef4ff;
-      border: 1px solid #d6e5ff;
+      background: var(--soft-bg);
+      border: 1px solid #bce7e1;
       border-radius: 10px;
-      padding: 0.7rem;
+      padding: 0.8rem;
       text-align: center;
       font-weight: 700;
+      color: var(--accent-dark);
     }
-    .task {
-      margin-top: 1rem;
-      border-top: 1px solid #e3ebfa;
-      padding-top: 1rem;
-    }
-    .task ul { margin: 0.4rem 0; padding-left: 1.2rem; }
 
+    /* INFOBLOKKEN */
+    .task {
+      margin-top: 1.2rem;
+      border-top: 1px solid var(--border-soft);
+      padding-top: 1.2rem;
+    }
+
+    .task ul {
+      margin: 0.4rem 0;
+      padding-left: 1.2rem;
+    }
+
+    /* UNITS */
     .unit-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      gap: 0.8rem;
-      margin-top: 0.8rem;
+      gap: 0.9rem;
+      margin-top: 0.9rem;
     }
+
     .unit-card {
-      border: 2px solid #d6e5ff;
+      background: var(--soft-bg);
+      border: 2px solid #bce7e1;
       border-radius: 12px;
       padding: 0.9rem;
-      background: #eef4ff;
+      display: flex;
+      flex-direction: column;
     }
+
     .unit-card h4 {
-      margin: 0 0 0.35rem;
+      margin: 0 0 0.3rem;
     }
+
     .unit-card p {
-      margin: 0 0 0.65rem;
+      margin: 0 0 0.6rem;
       color: var(--muted);
       font-size: 0.95rem;
     }
-    .unit-card .status {
+
+    .status {
       font-size: 0.82rem;
       font-weight: 700;
-      color: #2f61b7;
-      margin-bottom: 0.7rem;
+      color: var(--accent-dark);
+      margin-bottom: 0.6rem;
     }
-    .unit-card a {
-      text-decoration: none;
-    }
+
     .unit-card button {
+      margin-top: auto;
       width: 100%;
       border: none;
       border-radius: 8px;
-      padding: 0.5rem 0.7rem;
+      padding: 0.45rem 0.7rem;
       font-weight: 700;
-      color: #fff;
+      color: white;
       background: var(--accent);
       cursor: pointer;
     }
+
     .unit-card button:hover {
       background: var(--accent-dark);
     }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      margin-top: 1rem;
+      background: var(--accent);
+      color: white;
+      padding: 0.5rem 0.9rem;
+      border-radius: 999px;
+      font-weight: 700;
+    }
+
+    .btn:hover {
+      background: var(--accent-dark);
+    }
+
+    /* CHAT */
     .chat-embed {
       width: 100%;
       min-height: 520px;
@@ -111,90 +166,108 @@
       border-radius: 12px;
       background: #f3f7ff;
     }
-    .btn {
-      display: inline-block;
-      text-decoration: none;
-      margin-top: 0.8rem;
-      background: var(--accent);
-      color: white;
-      padding: 0.5rem 0.9rem;
-      border-radius: 999px;
-      font-weight: 700;
-    }
-    .btn:hover { background: var(--accent-dark); }
+
     @media (max-width: 900px) {
       main { grid-template-columns: 1fr; }
       .model { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
+
 <body>
-  <header>
-    <h1>💬 Thema 7 – Communiceren in het Nederlands</h1>
-    <p>Analyseer berichten en schrijf duidelijke, beleefde e-mails met het communicatiemodel.</p>
-  </header>
 
-  <main data-theme-id="7">
-    <section class="panel">
-      <h2>Communicatiemodel</h2>
-      <p>Gebruik altijd deze onderdelen wanneer je een bericht beoordeelt of schrijft:</p>
-      <div class="model">
-        <div>Zender</div>
-        <div>Boodschap</div>
-        <div>Ontvanger</div>
-        <div>Doel</div>
-        <div>Kanaal</div>
-        <div>Feedback</div>
+<header>
+  <h1>Thema 7 – Communiceren in het Nederlands</h1>
+  <p>
+    Analyseer berichten en schrijf duidelijke,
+    beleefde e-mails met het communicatiemodel.
+  </p>
+</header>
+
+<main data-theme-id="7">
+
+<section class="panel">
+
+  <h2>Communicatiemodel</h2>
+  <p>
+    Gebruik deze onderdelen wanneer je een bericht
+    beoordeelt of zelf schrijft.
+  </p>
+
+  <div class="model">
+    <div>Zender</div>
+    <div>Boodschap</div>
+    <div>Ontvanger</div>
+    <div>Doel</div>
+    <div>Kanaal</div>
+    <div>Feedback</div>
+  </div>
+
+  <div class="task">
+    <h3>Wat oefen je?</h3>
+    <ul>
+      <li>Formeel en beleefd schrijven in het Nederlands</li>
+      <li>Het onderwerp van een e-mail duidelijk formuleren</li>
+      <li>Verschil herkennen tussen informele en formele toon</li>
+      <li>Berichten verbeteren voor meer duidelijkheid</li>
+    </ul>
+  </div>
+
+  <div class="task">
+    <h3>Voorbeeldopdracht</h3>
+    <p>
+      Herschrijf een kort bericht aan je leerkracht.
+      Zorg voor een duidelijk onderwerp,
+      een correcte aanhef,
+      een heldere vraag
+      en een beleefde afsluiting.
+    </p>
+  </div>
+
+  <div class="task">
+    <h3>Units</h3>
+
+    <div class="unit-grid">
+      <div class="unit-card">
+        <h4>Unit 1</h4>
+        <p>Onderdelen van het communicatiemodel herkennen</p>
+        <p class="status">Beschikbaar</p>
+        <a href="thema7unit1.html"><button>Start</button></a>
       </div>
 
-      <div class="task">
-        <h3>Wat oefen je?</h3>
-        <ul>
-          <li>Formeel en beleefd schrijven in het Nederlands.</li>
-          <li>Het onderwerp van een e-mail duidelijk formuleren.</li>
-          <li>Het verschil herkennen tussen een informele en formele toon.</li>
-          <li>Berichten verbeteren zodat de lezer je sneller begrijpt.</li>
-        </ul>
+      <div class="unit-card">
+        <h4>Unit 2</h4>
+        <p>Formeel en beleefd formuleren</p>
+        <p class="status">Beschikbaar</p>
+        <a href="thema7unit2.html"><button>Start</button></a>
       </div>
 
-      <div class="task">
-        <h3>Voorbeeldopdracht</h3>
-        <p>Herschrijf een kort bericht aan je leerkracht. Zorg voor een duidelijk onderwerp, een correcte aanhef, een heldere vraag en een beleefde afsluiting.</p>
+      <div class="unit-card">
+        <h4>Unit 3</h4>
+        <p>Berichten verbeteren voor duidelijkheid</p>
+        <p class="status">Beschikbaar</p>
+        <a href="thema7unit3.html"><button>Start</button></a>
       </div>
+    </div>
+  </div>
 
-      <div class="task">
-        <h3>📚 Units</h3>
-        <div class="unit-grid">
-          <div class="unit-card" data-unit="1">
-            <h4>Unit 1</h4>
-            <p>Onderdelen van het communicatiemodel herkennen.</p>
-            <p class="status">Beschikbaar</p>
-            <a href="thema7unit1.html"><button>Start</button></a>
-          </div>
-          <div class="unit-card" data-unit="2">
-            <h4>Unit 2</h4>
-            <p>Formeel en beleefd formuleren.</p>
-            <p class="status">Beschikbaar</p>
-            <a href="thema7unit2.html"><button>Start</button></a>
-          </div>
-          <div class="unit-card" data-unit="3">
-            <h4>Unit 3</h4>
-            <p>Berichten verbeteren voor duidelijkheid.</p>
-            <p class="status">Beschikbaar</p>
-            <a href="thema7unit3.html"><button>Start</button></a>
-          </div>
-        </div>
-      </div>
+  <a class="btn" href="index.html">Terug naar overzicht</a>
 
-      <a class="btn" href="index.html">← Terug naar overzicht</a>
-    </section>
+</section>
 
-    <aside class="panel">
-      <h2>🤖 Chattie</h2>
-      <p style="color: var(--muted);">Chattie helpt je in het Nederlands bij e-mails en communicatieoefeningen.</p>
-      <iframe class="chat-embed" title="Chattie" src="chattie.html?thema=Thema%207%20Communiceren%20in%20het%20Nederlands"></iframe>
-    </aside>
-  </main>
-  <script src="./pavo-theme-progress.js"></script>
+<aside class="panel">
+  <h2>Chattie</h2>
+  <p style="color: var(--muted);">
+    Chattie helpt je bij e-mails en communicatieoefeningen.
+  </p>
+  <iframe class="chat-embed"
+    src="chattie.html?thema=Thema%207%20Communiceren%20in%20het%20Nederlands">
+  </iframe>
+</aside>
+
+</main>
+
+<script src="./pavo-theme-progress.js"></script>
 </body>
 </html>
+
