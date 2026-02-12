@@ -18,75 +18,90 @@ h1 {
 }
 
 .unit-box {
-  background: white;
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 2rem auto;
+}
+
+.task-box {
+  background: white;
   padding: 2rem;
-  border-radius: 12px;
+  margin-bottom: 2.5rem;
+  border-radius: 14px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-.task {
-  margin-top: 3rem;
+.task-box h2 {
+  margin-top: 0;
 }
 
-img {
-  max-width: 100%;
-  border-radius: 8px;
-  margin: 0.5rem 0;
-}
-
-.drag-container {
-  display: flex;
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
-  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
 }
 
-.drag-item {
-  background: #c5cae9;
-  padding: 0.5rem;
-  border-radius: 6px;
-  cursor: grab;
-  margin-bottom: 0.5rem;
-}
-
-.drop-zone {
-  flex: 1;
-  min-height: 140px;
-  border: 2px dashed #1a237e;
+.drag-card {
+  background: #e8eaf6;
   border-radius: 10px;
-  padding: 0.8rem;
+  padding: 0.6rem;
+  cursor: grab;
+  text-align: center;
 }
 
-input[type="text"], textarea {
+.drag-card img {
   width: 100%;
-  padding: 0.5rem;
-  margin: 0.4rem 0;
-}
-
-button {
-  margin-top: 2rem;
-  padding: 0.6rem 1.4rem;
-  background: #1a237e;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
 }
 
 .bron {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: #555;
+  margin-top: 0.3rem;
 }
 
-.bron a {
-  color: #1a237e;
-  text-decoration: none;
+.drop-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
 }
 
-.hidden {
-  display: none;
+.drop-zone {
+  min-height: 140px;
+  border: 2px dashed #1a237e;
+  border-radius: 10px;
+  padding: 0.5rem;
+  text-align: center;
+  font-weight: 700;
 }
+
+textarea, input[type="text"] {
+  width: 100%;
+  padding: 0.6rem;
+  margin-top: 0.6rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td {
+  padding: 0.4rem;
+}
+
+button {
+  padding: 0.7rem 1.6rem;
+  background: #1a237e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.hidden { display: none; }
 
 .nav-buttons {
   text-align: center;
@@ -102,54 +117,51 @@ button {
 <div class="unit-box" id="work">
 
 <!-- OPDRACHT 1 -->
-<div class="task">
+<div class="task-box">
 <h2>Opdracht 1 – Zet de beelden in de juiste volgorde</h2>
-<p>Bekijk de vier beelden zorgvuldig. Zet ze van <strong>oud → nieuw</strong>.</p>
+<p>Zet de beelden van <strong>oud → nieuw</strong>.</p>
 
-<div class="drag-container">
-  <div>
-    <div class="drag-item" draggable="true">
-      <img src="img/images/basel_2006.jpg" alt="Luchtfoto">
-      <div class="bron">Bron: Google Earth</div>
-    </div>
-
-    <div class="drag-item" draggable="true">
-      <img src="img/images/basel_2015.jpg" alt="Luchtfoto">
-      <div class="bron">Bron: Google Earth</div>
-    </div>
-
-    <div class="drag-item" draggable="true">
-      <img src="img/images/basel_2017.jpg" alt="Luchtfoto">
-      <div class="bron">Bron: Google Earth</div>
-    </div>
-
-    <div class="drag-item" draggable="true">
-      <img src="img/images/basel_2024.jpg" alt="Luchtfoto">
-      <div class="bron">Bron: Google Earth</div>
-    </div>
+<div class="image-grid">
+  <div class="drag-card" draggable="true">
+    <img src="img/images/basel_2006.jpg">
+    <div class="bron">Bron: Google Earth</div>
   </div>
+  <div class="drag-card" draggable="true">
+    <img src="img/images/basel_2015.jpg">
+    <div class="bron">Bron: Google Earth</div>
+  </div>
+  <div class="drag-card" draggable="true">
+    <img src="img/images/basel_2017.jpg">
+    <div class="bron">Bron: Google Earth</div>
+  </div>
+  <div class="drag-card" draggable="true">
+    <img src="img/images/basel_2024.jpg">
+    <div class="bron">Bron: Google Earth</div>
+  </div>
+</div>
 
-  <div class="drop-zone">Oudst</div>
-  <div class="drop-zone"></div>
-  <div class="drop-zone"></div>
-  <div class="drop-zone">Nieuwst</div>
+<div class="drop-grid">
+  <div class="drop-zone">1️⃣ Oudst</div>
+  <div class="drop-zone">2️⃣</div>
+  <div class="drop-zone">3️⃣</div>
+  <div class="drop-zone">4️⃣ Nieuwst</div>
 </div>
 </div>
 
 <!-- OPDRACHT 2 -->
-<div class="task">
+<div class="task-box">
 <h2>Opdracht 2 – Wat verandert?</h2>
 <p>Vergelijk het oudste en het nieuwste beeld.</p>
-<textarea placeholder="Beschrijf minstens drie veranderingen die je ziet. Denk aan gebouwen, wegen, sportterreinen of groen."></textarea>
+<textarea placeholder="Beschrijf minstens drie veranderingen."></textarea>
 </div>
 
 <!-- OPDRACHT 3 -->
-<div class="task">
+<div class="task-box">
 <h2>Opdracht 3 – Natuurlijk of menselijk?</h2>
 
 <table>
 <tr><td>Rivier</td><td><input type="radio"> natuurlijk <input type="radio"> menselijk</td></tr>
-<tr><td>Sporthal / stadion</td><td><input type="radio"> natuurlijk <input type="radio"> menselijk</td></tr>
+<tr><td>Sporthal</td><td><input type="radio"> natuurlijk <input type="radio"> menselijk</td></tr>
 <tr><td>Spoorlijnen</td><td><input type="radio"> natuurlijk <input type="radio"> menselijk</td></tr>
 <tr><td>Parken</td><td><input type="radio"> natuurlijk <input type="radio"> menselijk</td></tr>
 <tr><td>Wegen</td><td><input type="radio"> natuurlijk <input type="radio"> menselijk</td></tr>
@@ -157,11 +169,11 @@ button {
 </div>
 
 <!-- OPDRACHT 4 -->
-<div class="task">
+<div class="task-box">
 <h2>Opdracht 4 – Atlasopdracht</h2>
 <p>Bekijk de foto en zoek deze plaats op in een atlas.</p>
 
-<img src="img/images/st-jakobshalle-aussenansicht.jpg" alt="Sporthal">
+<img src="img/images/st-jakobshalle-aussenansicht.jpg" style="max-width:400px;">
 <div class="bron">
   Bron:
   <a href="https://www.basel.com/en/attractions/st.-jakobshalle-basel-2e0e67c53f" target="_blank">
@@ -177,33 +189,31 @@ button {
 </div>
 
 <!-- OPDRACHT 5 -->
-<div class="task">
+<div class="task-box">
 <h2>Opdracht 5 – Kaart of luchtfoto?</h2>
-<p>Wat kan je op een <strong>kaart</strong> beter zien dan op een luchtfoto?</p>
-<textarea></textarea>
+<textarea placeholder="Wat zie je wel op een kaart, maar niet (of minder) op een luchtfoto?"></textarea>
 </div>
 
 <!-- OPDRACHT 6 -->
-<div class="task">
+<div class="task-box">
 <h2>Opdracht 6 – Besluit</h2>
-<p>Zijn de veranderingen in dit landschap vooral het gevolg van <strong>menselijke</strong> of <strong>natuurlijke</strong> processen? Leg uit.</p>
-<textarea></textarea>
+<textarea placeholder="Zijn de veranderingen vooral menselijk of natuurlijk? Leg uit."></textarea>
 </div>
 
 <button onclick="finishUnit()">Unit afronden</button>
 </div>
 
-<div class="unit-box hidden" id="end">
+<div class="task-box hidden" id="end">
 <h2>🎉 Unit 3 afgerond</h2>
-<p>Je onderzocht hoe een landschap door de tijd verandert.</p>
+<p>Je onderzocht veranderingen in een landschap door de tijd.</p>
 <div class="nav-buttons"></div>
 </div>
 
 <script>
 let dragged = null;
 
-document.querySelectorAll('.drag-item').forEach(item => {
-  item.addEventListener('dragstart', () => dragged = item);
+document.querySelectorAll('.drag-card').forEach(card => {
+  card.addEventListener('dragstart', () => dragged = card);
 });
 
 document.querySelectorAll('.drop-zone').forEach(zone => {
