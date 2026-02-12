@@ -105,7 +105,7 @@
     buildingMessage.style.marginTop = '1rem';
 
     const buildingImage = document.createElement('img');
-    buildingImage.src = 'img/pavobouwmascotte.png';
+    buildingImage.src = 'img/images/pavobouwmascotte.png';
     buildingImage.alt = 'PAVO mascotte werkt aan de volgende unit';
     buildingImage.style.maxWidth = '120px';
     buildingImage.style.display = 'block';
