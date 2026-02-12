@@ -1,41 +1,21 @@
 (function () {
-  function getThemeFromPage() {
-    const headingText = document.querySelector('h1')?.textContent || document.title || '';
-    const themeMatch = headingText.match(/thema\s*(\d+)/i);
-    return themeMatch ? Number(themeMatch[1]) : null;
-  }
 
   function parseUnitContext() {
     const filename = window.location.pathname.split('/').pop() || '';
 
-    const themedMatch = filename.match(/^thema(\d+)unit(\d+)\.html$/i);
-    if (themedMatch) {
-      const themeNumber = Number(themedMatch[1]);
-      const unitNumber = Number(themedMatch[2]);
-      return {
-        themeNumber,
-        unitNumber,
-        themeFile: `thema${themeNumber}.html`,
-        nextCandidates: [`thema${themeNumber}unit${unitNumber + 1}.html`]
-      };
-    }
+    // VERPLICHT formaat: themaXunitY.html
+    const match = filename.match(/^thema(\d+)unit(\d+)\.html$/i);
+    if (!match) return null;
 
-    const unitMatch = filename.match(/^unit(\d+)\.html$/i);
-    if (unitMatch) {
-      const unitNumber = Number(unitMatch[1]);
-      const themeNumber = getThemeFromPage();
-      return {
-        themeNumber,
-        unitNumber,
-        themeFile: themeNumber ? `thema${themeNumber}.html` : 'index.html',
-        nextCandidates: [
-          ...(themeNumber ? [`thema${themeNumber}unit${unitNumber + 1}.html`] : []),
-          `unit${unitNumber + 1}.html`
-        ]
-      };
-    }
+    const themeNumber = Number(match[1]);
+    const unitNumber = Number(match[2]);
 
-    return null;
+    return {
+      themeNumber,
+      unitNumber,
+      themeFile: `thema${themeNumber}.html`,
+      nextUnitFile: `thema${themeNumber}unit${unitNumber + 1}.html`
+    };
   }
 
   function createButtonLink(href, label) {
@@ -53,16 +33,8 @@
   async function pageExists(url) {
     try {
       const response = await fetch(url, { method: 'HEAD' });
-      if (response.ok) return true;
-      if (response.status !== 405) return false;
-    } catch (error) {
-      // Ga verder met GET-fallback.
-    }
-
-    try {
-      const response = await fetch(url, { method: 'GET' });
       return response.ok;
-    } catch (error) {
+    } catch {
       return false;
     }
   }
@@ -75,51 +47,47 @@
     const context = parseUnitContext();
     if (!context) return;
 
-    const existingLinks = [...navContainer.querySelectorAll('a[href]')].map((link) => link.getAttribute('href'));
-    const existingThemeLink = existingLinks.find((href) => /^thema\d+\.html$/i.test(href || ''));
-    const existingNextLink = existingLinks.find((href) => /unit\d+\.html$/i.test(href || ''));
-
-    const themeFile = existingThemeLink || context.themeFile;
-    const themeNumberMatch = String(themeFile).match(/thema(\d+)\.html/i);
-    const themeNumber = themeNumberMatch ? Number(themeNumberMatch[1]) : context.themeNumber;
-
-    const nextCandidates = [...new Set([
-      ...(existingNextLink ? [existingNextLink] : []),
-      ...(context.nextCandidates || [])
-    ])];
-
     navContainer.innerHTML = '';
-    navContainer.appendChild(createButtonLink(themeFile, `← Terug naar Thema ${themeNumber ?? ''}`.trim()));
 
-    for (const nextFile of nextCandidates) {
-      const hasNextUnit = await pageExists(nextFile);
-      if (hasNextUnit) {
-        navContainer.appendChild(createButtonLink(nextFile, '→ Volgende unit'));
-        return;
-      }
+    // TERUG NAAR THEMA
+    navContainer.appendChild(
+      createButtonLink(
+        context.themeFile,
+        `← Terug naar Thema ${context.themeNumber}`
+      )
+    );
+
+    // VOLGENDE UNIT (alleen als bestand bestaat)
+    const hasNext = await pageExists(context.nextUnitFile);
+
+    if (hasNext) {
+      navContainer.appendChild(
+        createButtonLink(context.nextUnitFile, '→ Volgende unit')
+      );
+    } else {
+      // IN AANBOUW
+      const buildingMessage = document.createElement('p');
+      buildingMessage.textContent = 'Deze unit is PAVO nog aan het bouwen.';
+      buildingMessage.style.fontWeight = '700';
+      buildingMessage.style.marginTop = '1rem';
+      buildingMessage.style.textAlign = 'center';
+
+      const buildingImage = document.createElement('img');
+      buildingImage.src = 'img/images/pavobouwmascotte.png';
+      buildingImage.alt = 'PAVO mascotte werkt aan de volgende unit';
+      buildingImage.style.maxWidth = '120px';
+      buildingImage.style.display = 'block';
+      buildingImage.style.margin = '0.5rem auto 0';
+
+      navContainer.appendChild(buildingMessage);
+      navContainer.appendChild(buildingImage);
     }
-
-    const buildingMessage = document.createElement('p');
-    buildingMessage.textContent = 'Deze unit is PAVO nog aan het bouwen.';
-    buildingMessage.style.fontWeight = '700';
-    buildingMessage.style.marginTop = '1rem';
-
-    const buildingImage = document.createElement('img');
-    buildingImage.src = 'img/images/pavobouwmascotte.png';
-    buildingImage.alt = 'PAVO mascotte werkt aan de volgende unit';
-    buildingImage.style.maxWidth = '120px';
-    buildingImage.style.display = 'block';
-    buildingImage.style.margin = '0.5rem auto 0';
-
-    navContainer.appendChild(buildingMessage);
-    navContainer.appendChild(buildingImage);
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      setupUnitNavigation().catch(console.error);
-    });
+    document.addEventListener('DOMContentLoaded', setupUnitNavigation);
   } else {
-    setupUnitNavigation().catch(console.error);
+    setupUnitNavigation();
   }
+
 })();
