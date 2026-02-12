@@ -178,31 +178,53 @@ Bron: basel.com
 <!-- OPDRACHT 5 -->
 <div class="task hidden" id="task5">
 <h2>Opdracht 5 – Kaart en luchtfoto vergelijken</h2>
+<p>
+Vergelijk de <strong>kaart</strong> met de <strong>luchtfoto</strong>.
+Wat kan je <strong>beter of alleen</strong> zien op de kaart,
+en wat is moeilijker te zien op de luchtfoto?
+</p>
 
 <div class="image-strip">
-  <img src="img/images/kaartBASEL.png">
-  <img src="img/images/basel_2024.jpg">
+  <img src="img/images/kaartBASEL.png" alt="Kaart van het gebied">
+  <img src="img/images/basel_2024.jpg" alt="Luchtfoto van het gebied">
 </div>
 
-<textarea id="t5"></textarea>
+<textarea id="t5" placeholder="Schrijf minstens twee verschillen."></textarea>
 <button onclick="checkText('t5','task5','task6',2)">Controleer</button>
 <div class="feedback"></div>
 </div>
 
+
 <!-- OPDRACHT 6 -->
 <div class="task hidden" id="task6">
 <h2>Opdracht 6 – Besluit</h2>
+<p>
+Kijk opnieuw naar het oudste en het meest recente beeld.
+Zijn de veranderingen in dit landschap vooral het gevolg van
+<strong>menselijke ingrepen</strong> of van <strong>natuurlijke processen</strong>?
+Leg je antwoord uit.
+</p>
 
 <div class="image-strip">
-  <img src="img/images/basel_2006.jpg">
-  <img src="img/images/basel_2024.jpg">
+  <img src="img/images/basel_2006.jpg" alt="Oudere situatie">
+  <img src="img/images/basel_2024.jpg" alt="Recente situatie">
 </div>
 
-<textarea id="t6"></textarea>
+<textarea id="t6" placeholder="Geef een beargumenteerd besluit."></textarea>
 <button onclick="finish()">Unit afronden</button>
 </div>
 
+<!-- EINDSCHERM -->
+<div class="task hidden" id="endScreen">
+  <h2>🎉 Unit voltooid!</h2>
+  <p>Je hebt deze unit afgerond.</p>
+  <p><strong>Behaalde XP:</strong> <span id="xpScore">0</span></p>
+
+  <div class="nav-buttons" style="text-align:center; margin-top:2rem;">
+    <!-- unit-navigation.js vult dit automatisch aan -->
+  </div>
 </div>
+
 
 <script>
 let dragged = null;
@@ -277,7 +299,15 @@ function unlock(cur,next,pts) {
 function finish() {
   localStorage.setItem("thema1unit3_done","true");
   localStorage.setItem("xp_thema1_unit3",xp);
-  alert("Unit afgerond – Totaal XP: " + xp);
+
+  document.getElementById("xpScore").textContent = xp;
+
+  // verberg laatste opdracht
+  document.getElementById("task6").classList.add("hidden");
+
+  // toon eindscherm
+  document.getElementById("endScreen").classList.remove("hidden");
+
 }
 </script>
 
