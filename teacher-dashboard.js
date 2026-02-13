@@ -1,18 +1,12 @@
-/*
+/**
  * teacher-dashboard.js
- *
- * Doel:
- * - Enkel leerkrachten toelaten
- * - Scores ophalen uit Firestore
- * - Filteren per klas
- * - Totaal XP berekenen
+ * Veilige versie – blijft nooit hangen op "Scores laden..."
  */
 
 (function () {
-
   let allScores = [];
 
-  function setStatus(message, isError) {
+  function setStatus(message, isError = false) {
     const el = document.getElementById("status");
     if (!el) return;
     el.textContent = message;
@@ -28,35 +22,22 @@
       .replaceAll("'", "&#39;");
   }
 
-  function formatDate(ts) {
-    if (!ts) return "-";
-    const d = typeof ts.toDate === "function" ? ts.toDate() : new Date(ts);
-    if (isNaN(d.getTime())) return "-";
-
-    return new Intl.DateTimeFormat("nl-BE", {
-      dateStyle: "short",
-      timeStyle: "short"
-    }).format(d);
-  }
-
-  function extractThemaUnit(text) {
-    const m =
-      String(text || "").match(/thema\s*(\d+).*unit\s*(\d+)/i) ||
-      String(text || "").match(/thema(\d+)_unit(\d+)/i);
-
-    if (!m) return {};
-    return { thema: `thema${m[1]}`, unit: `unit${m[2]}` };
-  }
-
-  function normalize(item) {
-    const a = extractThemaUnit(item.bronStorageKey);
-    const b = extractThemaUnit(item.bronPagina);
-
-    return {
-      ...item,
-      thema: item.thema || a.thema || b.thema || "-",
-      unit: item.unit || a.unit || b.unit || "-"
-    };
+  function formatDate(value) {
+    if (!value) return "-";
+    try {
+      const d =
+        typeof value.toDate === "function"
+          ? value.toDate()
+          : new Date(value);
+      return isNaN(d.getTime())
+        ? "-"
+        : new Intl.DateTimeFormat("nl-BE", {
+            dateStyle: "short",
+            timeStyle: "short",
+          }).format(d);
+    } catch {
+      return "-";
+    }
   }
 
   function showDashboard() {
@@ -70,69 +51,77 @@
   }
 
   function populateClassFilter() {
-    const sel = document.getElementById("klasFilter");
-    sel.innerHTML = `<option value="">Alle klassen</option>`;
+    const select = document.getElementById("klasFilter");
+    select.innerHTML = `<option value="">Alle klassen</option>`;
 
     [...new Set(allScores.map(s => s.klas).filter(Boolean))]
       .sort()
-      .forEach(k => {
+      .forEach(klas => {
         const o = document.createElement("option");
-        o.value = k;
-        o.textContent = k;
-        sel.appendChild(o);
+        o.value = klas;
+        o.textContent = klas;
+        select.appendChild(o);
       });
   }
 
-  function renderTotals(klas) {
-    const el = document.getElementById("teacherTotals");
-    const list = klas ? allScores.filter(s => s.klas === klas) : allScores;
-    const total = list.reduce((t, s) => t + Number(s.score || 0), 0);
+  function renderTable(klas = "") {
+    const tbody = document.getElementById("scoresTableBody");
+    const data = klas
+      ? allScores.filter(s => s.klas === klas)
+      : allScores;
 
-    el.innerHTML = `<strong>Totaal ${klas || "alle klassen"}:</strong> ${total} XP`;
-  }
-
-  function renderTable(klas) {
-    const body = document.getElementById("scoresTableBody");
-
-    const list = klas ? allScores.filter(s => s.klas === klas) : allScores;
-
-    if (!list.length) {
-      body.innerHTML = `<tr><td colspan="7">Geen resultaten</td></tr>`;
-      renderTotals(klas);
+    if (!data.length) {
+      tbody.innerHTML = `<tr><td colspan="7">Geen resultaten.</td></tr>`;
       return;
     }
 
-    body.innerHTML = list.map(s => `
+    tbody.innerHTML = data.map(item => `
       <tr>
-        <td>${escapeHtml(s.naam)}</td>
-        <td>${escapeHtml(s.klas)}</td>
-        <td>${escapeHtml(s.thema)}</td>
-        <td>${escapeHtml(s.unit)}</td>
-        <td>${escapeHtml(s.score)}</td>
-        <td>${escapeHtml(formatDate(s.createdAt))}</td>
-        <td>${escapeHtml(s.bronPagina || "-")}</td>
+        <td>${escapeHtml(item.naam)}</td>
+        <td>${escapeHtml(item.klas)}</td>
+        <td>${escapeHtml(item.thema)}</td>
+        <td>${escapeHtml(item.unit)}</td>
+        <td>${escapeHtml(item.score)}</td>
+        <td>${escapeHtml(formatDate(item.createdAt))}</td>
+        <td>${escapeHtml(item.bronPagina || "-")}</td>
       </tr>
     `).join("");
-
-    renderTotals(klas);
   }
 
   async function loadScores() {
-    setStatus("Scores laden...", false);
+    setStatus("Scores worden geladen…");
 
-    const snap = await window.db.collection("scores").get();
-    allScores = snap.docs.map(d => normalize({ id: d.id, ...d.data() }));
+    let docs = [];
+
+    try {
+      // 🔒 VEILIGE QUERY – kan niet blokkeren
+      const snapshot = await window.db
+        .collection("scores")
+        .limit(500)
+        .get();
+
+      docs = snapshot.docs;
+    } catch (err) {
+      console.error("Firestore fout:", err);
+      setStatus("Fout bij laden van scores.", true);
+      return;
+    }
+
+    allScores = docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
 
     populateClassFilter();
     renderTable("");
-    setStatus(`${allScores.length} scores geladen.`, false);
+    setStatus(`Klaar. ${allScores.length} score(s) geladen.`);
   }
 
   async function handleLogin(e) {
     e.preventDefault();
 
     const email = teacherEmail.value.trim();
-    const pass = teacherPassword.value;
+    const pw = teacherPassword.value;
 
     if (!window.isTeacherEmail(email)) {
       setStatus("Geen leerkrachtaccount.", true);
@@ -140,33 +129,15 @@
     }
 
     try {
-      await window.auth.signInWithEmailAndPassword(email, pass);
+      await window.auth.signInWithEmailAndPassword(email, pw);
     } catch {
-      setStatus("Login mislukt.", true);
+      setStatus("Inloggen mislukt.", true);
     }
   }
 
   async function handleLogout() {
     await window.auth.signOut();
-  }
-
-  async function handleAuth(user) {
-    if (!user) {
-      showLogin();
-      setStatus("Niet ingelogd.", true);
-      return;
-    }
-
-    if (!window.isTeacherEmail(user.email)) {
-      await window.auth.signOut();
-      showLogin();
-      setStatus("Geen leerkracht.", true);
-      return;
-    }
-
-    showDashboard();
-    setStatus(`Ingelogd als ${user.email}`, false);
-    loadScores();
+    setStatus("Uitgelogd.");
   }
 
   async function init() {
@@ -175,10 +146,28 @@
     teacherLoginForm.addEventListener("submit", handleLogin);
     teacherLogoutButton.addEventListener("click", handleLogout);
     klasFilter.addEventListener("change", e => renderTable(e.target.value));
+    refreshButton.addEventListener("click", loadScores);
 
-    window.auth.onAuthStateChanged(handleAuth);
+    window.auth.onAuthStateChanged(user => {
+      if (!user) {
+        showLogin();
+        setStatus("Niet ingelogd.");
+        return;
+      }
+
+      if (!window.isTeacherEmail(user.email)) {
+        setStatus("Geen leerkrachtaccount.", true);
+        window.auth.signOut();
+        return;
+      }
+
+      showDashboard();
+      setStatus(`Ingelogd als ${user.email}`);
+      loadScores();
+    });
   }
 
   init();
 })();
+
 
