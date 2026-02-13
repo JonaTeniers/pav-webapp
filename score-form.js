@@ -2,46 +2,59 @@
  * score-form.js
  *
  * Doel:
- * - Leerling moet eerst "inloggen" via voornaam + klas (localStorage profiel)
- * - Gegevens opslaan in Firestore collectie `scores`
- * - Thema/unit + timestamp meegeven zodat leerling en leerkracht opvolging hebben
+ * - Leerling moet eerst "inloggen" via voornaam + klas (startpagina)
+ * - Score + metadata opslaan in Firestore collectie `scores`
+ * - Thema, unit en timestamp correct registreren
  */
 
 (function () {
-  const PROFILE_KEY = 'pavo_leerling_profiel';
 
-  function setStatus(tekst, isError) {
+  /* ===============================
+     STATUS MELDING
+  =============================== */
+  function setStatus(tekst, isError = false) {
     const statusEl = document.getElementById('status');
     if (!statusEl) return;
 
     statusEl.textContent = tekst;
-    statusEl.style.color = isError ? '#b00020' : '#006400';
+    statusEl.style.color = isError ? '#b00020' : '#166534';
   }
 
+  /* ===============================
+     LEERLING PROFIEL (UNIFORM)
+     -> zelfde als index.html
+  =============================== */
   function getStudentProfile() {
-    try {
-      const raw = window.localStorage.getItem(PROFILE_KEY);
-      return raw ? JSON.parse(raw) : null;
-    } catch (error) {
-      console.error('Kon leerlingprofiel niet lezen:', error);
-      return null;
-    }
+    const voornaam = localStorage.getItem("studentName");
+    const klas = localStorage.getItem("studentClass");
+
+    if (!voornaam || !klas) return null;
+    return { voornaam, klas };
   }
 
+  /* ===============================
+     UNIEKE SESSIE-ID
+  =============================== */
   function getSessionId() {
-    const storageKey = 'pavo_leerling_sessie_id';
-    const existing = window.localStorage.getItem(storageKey);
-    if (existing) return existing;
+    const key = 'pavo_leerling_sessie_id';
+    let id = localStorage.getItem(key);
 
-    const newId = `sessie_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
-    window.localStorage.setItem(storageKey, newId);
-    return newId;
+    if (!id) {
+      id = `sessie_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+      localStorage.setItem(key, id);
+    }
+    return id;
   }
 
+  /* ===============================
+     THEMA & UNIT AUTOMATISCH
+     (uit URL)
+  =============================== */
   function inferThemaUnitFromPage() {
-    const page = window.location.pathname;
-    const themaMatch = page.match(/thema\d+/i);
-    const unitMatch = page.match(/unit\d+/i);
+    const path = window.location.pathname.toLowerCase();
+
+    const themaMatch = path.match(/thema\d+/);
+    const unitMatch = path.match(/unit\d+/);
 
     return {
       thema: themaMatch ? themaMatch[0] : null,
@@ -49,69 +62,83 @@
     };
   }
 
+  /* ===============================
+     SCORE OPSLAAN
+  =============================== */
   async function handleScoreSubmit(event) {
     event.preventDefault();
 
-    // Eerst controleren of leerlingprofiel bestaat (verplicht voor starten/opslaan).
     const profile = getStudentProfile();
-    if (!profile?.voornaam || !profile?.klas) {
-      setStatus('Log eerst in op de startpagina met voornaam + klas.', true);
+    if (!profile) {
+      setStatus(
+        'Niet ingelogd. Ga eerst naar de startpagina en log in met voornaam en klas.',
+        true
+      );
       return;
     }
 
-    // Optionele velden uit pagina lezen indien aanwezig.
-    const themaValue = document.getElementById('thema')?.value?.trim();
-    const unitValue = document.getElementById('unit')?.value?.trim();
-    const scoreRaw = document.getElementById('score')?.value;
-    const scoreNumber = Number(scoreRaw);
+    const scoreInput = document.getElementById('score');
+    const scoreValue = scoreInput ? Number(scoreInput.value) : null;
+
+    if (scoreInput && Number.isNaN(scoreValue)) {
+      setStatus('Score is geen geldig getal.', true);
+      return;
+    }
 
     const inferred = inferThemaUnitFromPage();
 
     const scoreData = {
       naam: profile.voornaam,
       klas: profile.klas,
-      thema: themaValue || inferred.thema || null,
-      unit: unitValue || inferred.unit || null,
-      ...(scoreRaw !== undefined && scoreRaw !== '' && !Number.isNaN(scoreNumber) ? { score: scoreNumber } : {}),
+      thema: inferred.thema,
+      unit: inferred.unit,
+      ...(scoreValue !== null ? { score: scoreValue } : {}),
       bronPagina: window.location.pathname,
       sessieId: getSessionId(),
-      leerlingAuthType: 'naam-klas-loginzone',
+      leerlingAuthType: 'naam-klas',
       createdAt: window.firebase.firestore.FieldValue.serverTimestamp()
     };
 
     try {
       await window.db.collection('scores').add(scoreData);
-      setStatus('Resultaat opgeslagen.', false);
+      setStatus('✅ Resultaat succesvol opgeslagen.', false);
       event.target.reset();
     } catch (error) {
-      console.error('Opslaan fout:', error);
-      setStatus('Opslaan mislukt. Probeer opnieuw.', true);
+      console.error('Opslaan mislukt:', error);
+      setStatus('❌ Opslaan mislukt. Probeer opnieuw.', true);
     }
   }
 
+  /* ===============================
+     INITIALISATIE
+  =============================== */
   async function initScoreForm() {
     try {
       await window.firebaseReady;
 
-      const scoreForm = document.getElementById('scoreForm');
-      if (!scoreForm) {
-        console.warn('#scoreForm niet gevonden.');
+      const form = document.getElementById('scoreForm');
+      if (!form) {
+        console.warn('scoreForm niet gevonden op deze pagina.');
         return;
       }
 
-      scoreForm.addEventListener('submit', handleScoreSubmit);
+      form.addEventListener('submit', handleScoreSubmit);
 
       const profile = getStudentProfile();
-      if (!profile?.voornaam || !profile?.klas) {
-        setStatus('Niet ingelogd. Ga eerst naar de startpagina en log in met voornaam + klas.', true);
-      } else {
+      if (profile) {
         setStatus(`Ingelogd als ${profile.voornaam} (${profile.klas}).`, false);
+      } else {
+        setStatus(
+          'Niet ingelogd. Ga eerst naar de startpagina.',
+          true
+        );
       }
     } catch (error) {
-      console.error('Init fout score-form:', error);
-      setStatus('Kon score-module niet initialiseren.', true);
+      console.error('Initialisatie fout:', error);
+      setStatus('Score-module kon niet worden gestart.', true);
     }
   }
 
   initScoreForm();
+
 })();
