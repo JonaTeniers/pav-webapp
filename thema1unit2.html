@@ -28,9 +28,7 @@ img {
   margin: 1rem 0;
 }
 
-.task {
-  margin-top: 2rem;
-}
+.task { margin-top: 2rem; }
 
 .drag-container {
   display: flex;
@@ -138,7 +136,6 @@ button {
 <!-- OPDRACHT 3 -->
 <div class="task">
 <h2>Opdracht 3 – Mens of natuur?</h2>
-<p>Duid aan of het landschapselement natuurlijk of menselijk is.</p>
 
 <table>
 <tr><td>Bos</td><td><input type="radio" name="bos"> natuur <input type="radio" name="bos"> mens</td></tr>
@@ -153,7 +150,6 @@ button {
 <div class="task">
 <h2>Opdracht 4 – Denk- en verwoordvraag</h2>
 <p>Waarom zijn mensen zelf <strong>geen</strong> landschapselementen?</p>
-
 <textarea placeholder="Schrijf hier je antwoord..."></textarea>
 </div>
 
@@ -190,10 +186,27 @@ document.querySelectorAll('.drop-zone').forEach(zone => {
 function finishUnit() {
   document.getElementById('workBox').classList.add('hidden');
   document.getElementById('endScreen').classList.remove('hidden');
+
+  if (typeof awardXP === "function") {
+    awardXP(10);
+  }
 }
 </script>
 
+<!-- 🔥 Firebase CDN -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+<!-- 🔥 Jouw Firebase config -->
+<script src="./firebase.js"></script>
+
+<!-- 🔥 XP synchronisatie -->
+<script src="./pavo-xp-sync.js"></script>
+
+<!-- 🔥 Unit navigatie -->
 <script src="./unit-navigation.js"></script>
 
 </body>
 </html>
+
