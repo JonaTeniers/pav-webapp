@@ -1,120 +1,53 @@
 (function () {
-  const PROFILE_KEY = 'pavo_leerling_profiel';
 
   function getProfile() {
-    try {
-      const raw = window.localStorage.getItem(PROFILE_KEY);
-      return raw ? JSON.parse(raw) : null;
-    } catch (error) {
-      console.error('Kon profiel niet lezen:', error);
-      return null;
-    }
+    const naam = localStorage.getItem("studentName");
+    const klas = localStorage.getItem("studentClass");
+
+    if (!naam || !klas) return null;
+
+    return { naam, klas };
   }
 
-  function inferFromPath() {
-    const path = window.location.pathname || '';
-    const themaUnitMatch = path.match(/thema(\d+)unit(\d+)/i);
-    if (themaUnitMatch) {
-      return {
-        thema: `thema${themaUnitMatch[1]}`,
-        unit: `unit${themaUnitMatch[2]}`
-      };
-    }
+  function inferThemaUnit(key) {
+    const match = key.match(/(thema\d+)unit(\d+)/i);
+    if (!match) return { thema: null, unit: null };
 
-    const unitOnlyMatch = path.match(/unit(\d+)/i);
-    if (unitOnlyMatch) {
-      return {
-        thema: null,
-        unit: `unit${unitOnlyMatch[1]}`
-      };
-    }
-
-    return { thema: null, unit: null };
+    return {
+      thema: match[1],
+      unit: "unit" + match[2]
+    };
   }
 
-  function inferFromStorageKey(storageKey) {
-    const key = String(storageKey || '');
+  window.pavoSyncScore = async function (key, score) {
 
-    const compactMatch = key.match(/thema(\d+)unit(\d+)/i);
-    if (compactMatch) {
-      return {
-        thema: `thema${compactMatch[1]}`,
-        unit: `unit${compactMatch[2]}`
-      };
-    }
-
-    const underscoredMatch = key.match(/thema(\d+)_unit(\d+)/i);
-    if (underscoredMatch) {
-      return {
-        thema: `thema${underscoredMatch[1]}`,
-        unit: `unit${underscoredMatch[2]}`
-      };
-    }
-
-    return { thema: null, unit: null };
-  }
-
-  async function syncScore(storageKey, score) {
-    const numericScore = Number(score);
-    if (Number.isNaN(numericScore)) return;
+    await window.firebaseReady;
 
     const profile = getProfile();
-    if (!profile?.voornaam || !profile?.klas) return;
+    if (!profile) {
+      console.warn("Geen leerlingprofiel gevonden.");
+      return;
+    }
 
-    if (!window.db || !window.firebase || !window.firebase.firestore) return;
+    const inferred = inferThemaUnit(key);
 
-    const dedupeKey = `pavo_synced_${storageKey}_${profile.voornaam}_${profile.klas}`;
-    const lastSynced = Number(window.localStorage.getItem(dedupeKey));
-    if (!Number.isNaN(lastSynced) && lastSynced === numericScore) return;
-
-    const inferredFromKey = inferFromStorageKey(storageKey);
-    const inferredFromPath = inferFromPath();
-
-    const inferred = {
-      thema: inferredFromKey.thema || inferredFromPath.thema,
-      unit: inferredFromKey.unit || inferredFromPath.unit
-    };
-
-    const payload = {
-      naam: profile.voornaam,
+    const data = {
+      naam: profile.naam,
       klas: profile.klas,
       thema: inferred.thema,
       unit: inferred.unit,
-      score: numericScore,
+      score: score,
       bronPagina: window.location.pathname,
-      bronStorageKey: storageKey,
-      leerlingAuthType: 'naam-klas-loginzone',
-      createdAt: window.firebase.firestore.FieldValue.serverTimestamp()
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
     };
 
     try {
-      await window.db.collection('scores').add(payload);
-      window.localStorage.setItem(dedupeKey, String(numericScore));
-    } catch (error) {
-      console.error('Kon XP-score niet synchroniseren:', error);
+      await window.db.collection("scores").add(data);
+      console.log("Score opgeslagen in Firestore:", data);
+    } catch (err) {
+      console.error("Firestore write error:", err);
     }
-  }
+  };
 
-  function renderThemeTotal() {
-    const card = document.getElementById('themeTotalScore');
-    if (!card) return;
-
-    const themeId = Number(card.dataset.themeId);
-    if (!themeId) return;
-
-    let total = 0;
-    for (let i = 0; i < window.localStorage.length; i += 1) {
-      const key = window.localStorage.key(i) || '';
-      if (!key.startsWith(`thema${themeId}unit`) && !key.startsWith(`xp_thema${themeId}_unit`)) {
-        continue;
-      }
-      const value = Number(window.localStorage.getItem(key));
-      if (!Number.isNaN(value)) total += value;
-    }
-
-    card.textContent = `💡 ${total} XP`;
-  }
-
-  window.pavoSyncScore = syncScore;
-  window.addEventListener('DOMContentLoaded', renderThemeTotal);
 })();
+
