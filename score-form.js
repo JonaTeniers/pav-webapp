@@ -65,49 +65,47 @@
   /* ===============================
      SCORE OPSLAAN
   =============================== */
-  async function handleScoreSubmit(event) {
-    event.preventDefault();
+async function handleScoreSubmit(event) {
+  event.preventDefault();
 
-    const profile = getStudentProfile();
-    if (!profile) {
-      setStatus(
-        'Niet ingelogd. Ga eerst naar de startpagina en log in met voornaam en klas.',
-        true
-      );
-      return;
-    }
+  const profile = getStudentProfile();
+  if (!profile) {
+    setStatus('Niet ingelogd. Ga eerst naar de startpagina.', true);
+    return;
+  }
 
-    const scoreInput = document.getElementById('score');
-    const scoreValue = scoreInput ? Number(scoreInput.value) : null;
+  const scoreInput = document.getElementById('score');
+  const scoreValue = scoreInput ? Number(scoreInput.value) : null;
 
-    if (scoreInput && Number.isNaN(scoreValue)) {
-      setStatus('Score is geen geldig getal.', true);
-      return;
-    }
+  if (scoreInput && Number.isNaN(scoreValue)) {
+    setStatus('Score is geen geldig getal.', true);
+    return;
+  }
 
-    const inferred = inferThemaUnitFromPage();
+  const inferred = inferThemaUnitFromPage();
 
-    const scoreData = {
+  try {
+    await window.db.collection('scores').add({
       naam: profile.voornaam,
       klas: profile.klas,
       thema: inferred.thema,
       unit: inferred.unit,
-      ...(scoreValue !== null ? { score: scoreValue } : {}),
+      score: scoreValue ?? null,
       bronPagina: window.location.pathname,
       sessieId: getSessionId(),
       leerlingAuthType: 'naam-klas',
-      createdAt: window.firebase.firestore.FieldValue.serverTimestamp()
-    };
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
 
-    try {
-      await window.db.collection('scores').add(scoreData);
-      setStatus('✅ Resultaat succesvol opgeslagen.', false);
-      event.target.reset();
-    } catch (error) {
-      console.error('Opslaan mislukt:', error);
-      setStatus('❌ Opslaan mislukt. Probeer opnieuw.', true);
-    }
+    setStatus('✅ Resultaat succesvol opgeslagen.', false);
+    event.target.reset();
+
+  } catch (error) {
+    console.error('FIRESTORE ERROR:', error);
+    setStatus('❌ Opslaan mislukt. Kijk in console (F12).', true);
   }
+}
+
 
   /* ===============================
      INITIALISATIE
