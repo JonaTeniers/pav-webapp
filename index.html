@@ -25,9 +25,7 @@ body {
     color: var(--text);
 }
 
-.wrapper {
-    display: flex;
-}
+.wrapper { display: flex; }
 
 /* ===== SIDEBAR ===== */
 .sidebar {
@@ -41,20 +39,9 @@ body {
     padding: 2rem 1.5rem;
 }
 
-.sidebar-header {
-    text-align: center;
-    margin-bottom: 3rem;
-}
-
-.sidebar-header img {
-    width: 70px;
-}
-
-.sidebar-header h1 {
-    margin: 0.5rem 0 0 0;
-    color: var(--blue);
-    font-size: 1.5rem;
-}
+.sidebar-header { text-align: center; margin-bottom: 3rem; }
+.sidebar-header img { width: 70px; }
+.sidebar-header h1 { margin: 0.5rem 0 0 0; color: var(--blue); font-size: 1.5rem; }
 
 .nav-item {
     display: block;
@@ -67,32 +54,14 @@ body {
     transition: background 0.15s ease;
 }
 
-.nav-item:hover {
-    background: var(--blue-soft);
-    color: var(--blue);
-}
-
-.nav-item.active {
-    background: var(--blue);
-    color: white;
-}
+.nav-item:hover { background: var(--blue-soft); color: var(--blue); }
+.nav-item.active { background: var(--blue); color: white; }
 
 /* ===== MAIN ===== */
-.main-content {
-    margin-left: 260px;
-    padding: 3rem 3.5rem;
-}
+.main-content { margin-left: 260px; padding: 3rem 3.5rem; }
 
-.welcome-section h2 {
-    margin: 0;
-    font-size: 2.3rem;
-    color: var(--blue);
-}
-
-.welcome-section p {
-    margin-top: 8px;
-    color: var(--muted);
-}
+.welcome-section h2 { margin: 0; font-size: 2.3rem; color: var(--blue); }
+.welcome-section p { margin-top: 8px; color: var(--muted); }
 
 /* ===== GRID ===== */
 .theme-grid {
@@ -141,9 +110,7 @@ body {
     margin: 0;
 }
 
-.thema-bottom {
-    padding: 1rem;
-}
+.thema-bottom { padding: 1rem; }
 
 .progress-bar {
     height: 5px;
@@ -153,22 +120,10 @@ body {
     margin-bottom: 0.6rem;
 }
 
-.progress-fill {
-    height: 100%;
-    background: var(--blue);
-}
+.progress-fill { height: 100%; background: var(--blue); }
+.progress-text { font-size: 0.8rem; color: var(--muted); }
 
-.progress-text {
-    font-size: 0.8rem;
-    color: var(--muted);
-}
-
-/* Locked */
-.locked {
-    pointer-events: none;
-    opacity: 0.7;
-    filter: grayscale(0.4);
-}
+.locked { pointer-events: none; opacity: 0.7; filter: grayscale(0.4); }
 
 /* ===== FOOTER ===== */
 .footer {
@@ -181,15 +136,8 @@ body {
     background: white;
 }
 
-.footer a {
-    color: var(--blue);
-    text-decoration: none;
-    font-weight: 700;
-}
-
-.footer a:hover {
-    text-decoration: underline;
-}
+.footer a { color: var(--blue); text-decoration: none; font-weight: 700; }
+.footer a:hover { text-decoration: underline; }
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1200px) {
@@ -225,126 +173,9 @@ body {
         <p>Kies een thema en start met leren.</p>
     </div>
 
-    <div class="theme-grid">
+    <div class="theme-grid" id="themeGrid">
 
-        <!-- Actieve thema’s -->
-        <a href="thema1.html" class="thema-card">
-            <div class="thema-image" style="background-image:url('img/images/thema1.jpg')">
-                <div class="thema-overlay"><h4 class="thema-title">Thema 1 – Landschappen</h4></div>
-            </div>
-            <div class="thema-bottom">
-                <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-                <div class="progress-text">0% voltooid</div>
-            </div>
-        </a>
-
-        <a href="thema2.html" class="thema-card">
-            <div class="thema-image" style="background-image:url('img/images/thema2.jpg')">
-                <div class="thema-overlay"><h4 class="thema-title">Thema 2 – Levende natuur</h4></div>
-            </div>
-            <div class="thema-bottom">
-                <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-                <div class="progress-text">0% voltooid</div>
-            </div>
-        </a>
-
-        <a href="thema3.html" class="thema-card">
-            <div class="thema-image" style="background-image:url('img/images/thema3.jpg')">
-                <div class="thema-overlay"><h4 class="thema-title">Thema 3 – Werkwoordstijden</h4></div>
-            </div>
-            <div class="thema-bottom">
-                <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-                <div class="progress-text">0% voltooid</div>
-            </div>
-        </a>
-
-        <a href="thema4.html" class="thema-card">
-            <div class="thema-image" style="background-image:url('img/images/thema4.jpg')">
-                <div class="thema-overlay"><h4 class="thema-title">Thema 4 – Wiskunde</h4></div>
-            </div>
-            <div class="thema-bottom">
-                <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-                <div class="progress-text">0% voltooid</div>
-            </div>
-        </a>
-
-        <a href="thema5.html" class="thema-card">
-            <div class="thema-image" style="background-image:url('img/images/thema5.jpg')">
-                <div class="thema-overlay"><h4 class="thema-title">Thema 5 – Fictie & non-fictie</h4></div>
-            </div>
-            <div class="thema-bottom">
-                <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-                <div class="progress-text">0% voltooid</div>
-            </div>
-        </a>
-
-        <a href="thema6.html" class="thema-card">
-            <div class="thema-image" style="background-image:url('img/images/thema6.jpg')">
-                <div class="thema-overlay"><h4 class="thema-title">Thema 6 – Schatten</h4></div>
-            </div>
-            <div class="thema-bottom">
-                <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-                <div class="progress-text">0% voltooid</div>
-            </div>
-        </a>
-
-        <a href="thema7.html" class="thema-card">
-            <div class="thema-image" style="background-image:url('img/images/thema7.jpg')">
-                <div class="thema-overlay"><h4 class="thema-title">Thema 7 – Communicatie</h4></div>
-            </div>
-            <div class="thema-bottom">
-                <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-                <div class="progress-text">0% voltooid</div>
-            </div>
-        </a>
-
-        <a href="thema8.html" class="thema-card">
-            <div class="thema-image" style="background-image:url('img/images/thema8.jpg')">
-                <div class="thema-overlay"><h4 class="thema-title">Thema 8 – Actualiteit</h4></div>
-            </div>
-            <div class="thema-bottom">
-                <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-                <div class="progress-text">0% voltooid</div>
-            </div>
-        </a>
-
-        <a href="thema9.html" class="thema-card">
-            <div class="thema-image" style="background-image:url('img/images/thema9.jpg')">
-                <div class="thema-overlay"><h4 class="thema-title">Thema 9 – Geschiedenis</h4></div>
-            </div>
-            <div class="thema-bottom">
-                <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-                <div class="progress-text">0% voltooid</div>
-            </div>
-        </a>
-
-        <!-- In aanbouw -->
-        <div class="thema-card locked">
-            <div class="thema-image" style="background-image:url('img/images/pavobouwmascotte.png')">
-                <div class="thema-overlay"><h4 class="thema-title">Thema 10 – In ontwikkeling</h4></div>
-            </div>
-            <div class="thema-bottom">
-                <div class="progress-text">Binnenkort beschikbaar</div>
-            </div>
-        </div>
-
-        <div class="thema-card locked">
-            <div class="thema-image" style="background-image:url('img/images/pavobouwmascotte.png')">
-                <div class="thema-overlay"><h4 class="thema-title">Thema 11 – In ontwikkeling</h4></div>
-            </div>
-            <div class="thema-bottom">
-                <div class="progress-text">Binnenkort beschikbaar</div>
-            </div>
-        </div>
-
-        <div class="thema-card locked">
-            <div class="thema-image" style="background-image:url('img/images/pavobouwmascotte.png')">
-                <div class="thema-overlay"><h4 class="thema-title">Thema 12 – In ontwikkeling</h4></div>
-            </div>
-            <div class="thema-bottom">
-                <div class="progress-text">Binnenkort beschikbaar</div>
-            </div>
-        </div>
+        <!-- JE BESTAANDE HARDCODED THEMA’S BLIJVEN HIER STAAN -->
 
     </div>
 </div>
@@ -355,6 +186,59 @@ body {
     &copy; 2026 PAV-O |
     <a href="voorwaarden.html">Gebruikersvoorwaarden & Privacy</a>
 </footer>
+
+<!-- FIREBASE -->
+<script src="./firebase.js"></script>
+
+<script>
+async function loadExtraThemes(){
+
+    await window.firebaseReady;
+
+    const grid = document.getElementById("themeGrid");
+
+    try{
+
+        const snapshot = await window.db
+            .collection("themes")
+            .where("active","==",true)
+            .get();
+
+        snapshot.forEach(doc => {
+
+            const t = doc.data();
+            const themeId = doc.id;
+
+            if(document.body.innerHTML.includes(t.title)) return;
+
+            const card = document.createElement("a");
+            card.className = "thema-card";
+            card.href = `thema.html?id=${themeId}`;
+
+            card.innerHTML = `
+                <div class="thema-image" style="background:${t.color};">
+                    <div class="thema-overlay">
+                        <h4 class="thema-title">${t.title}</h4>
+                    </div>
+                </div>
+                <div class="thema-bottom">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width:0%"></div>
+                    </div>
+                    <div class="progress-text">Nieuw thema</div>
+                </div>
+            `;
+
+            grid.appendChild(card);
+        });
+
+    }catch(error){
+        console.error("Fout bij laden extra thema's:", error);
+    }
+}
+
+window.addEventListener("load", loadExtraThemes);
+</script>
 
 </body>
 </html>
