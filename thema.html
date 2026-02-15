@@ -1,258 +1,256 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Thema</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thema | PAV-O</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --accent:#0f766e;
-  --accent-dark:#0b5f58;
-  --bg:#f8fafc;
-  --panel:#ffffff;
-  --text:#1f2937;
-  --muted:#6b7280;
-}
-
-*{box-sizing:border-box;}
-
 body{
-  margin:0;
-  font-family:'Nunito',sans-serif;
-  background:var(--bg);
-  color:var(--text);
+margin:0;
+font-family:'Nunito',sans-serif;
+background:#f1f5f9;
+color:#1e293b;
 }
 
-header{
-  background:var(--accent);
-  color:white;
-  padding:2rem 1rem;
-  text-align:center;
+.container{
+max-width:1200px;
+margin:auto;
+padding:40px 20px;
 }
 
-main{
-  width:min(1100px,95%);
-  margin:2rem auto;
-  display:grid;
-  grid-template-columns:2fr 1fr;
-  gap:1.5rem;
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:30px;
 }
 
-.panel{
-  background:var(--panel);
-  border-radius:16px;
-  padding:1.5rem;
-  box-shadow:0 6px 16px rgba(0,0,0,0.08);
+.back-btn{
+background:#1f6fd6;
+color:white;
+padding:8px 16px;
+border-radius:8px;
+text-decoration:none;
+font-weight:700;
 }
 
-.section{
-  margin-bottom:1.5rem;
+.xp-box{
+background:white;
+padding:10px 18px;
+border-radius:10px;
+box-shadow:0 4px 12px rgba(0,0,0,0.05);
+font-weight:700;
+}
+
+.header{
+background:white;
+padding:30px;
+border-radius:16px;
+margin-bottom:30px;
+box-shadow:0 4px 12px rgba(0,0,0,0.05);
+}
+
+.header h1{
+margin:0 0 10px 0;
+}
+
+.header p{
+margin:6px 0;
+color:#475569;
 }
 
 .units-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:1rem;
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+gap:20px;
 }
 
 .unit-card{
-  background:#f0fdfa;
-  border:2px solid #bce7e1;
-  border-radius:12px;
-  padding:1rem;
+background:white;
+padding:20px;
+border-radius:14px;
+box-shadow:0 4px 12px rgba(0,0,0,0.05);
+cursor:pointer;
+transition:0.2s;
 }
 
-.unit-card h4{
-  margin:0 0 .5rem;
+.unit-card:hover{
+transform:translateY(-4px);
 }
 
-.unit-card button{
-  width:100%;
-  border:none;
-  padding:.6rem;
-  border-radius:8px;
-  background:var(--accent);
-  color:white;
-  font-weight:700;
-  cursor:pointer;
+.unit-card.locked{
+opacity:0.5;
+pointer-events:none;
 }
 
-.unit-card button:hover{
-  background:var(--accent-dark);
+.progress-bar{
+height:6px;
+background:#e2e8f0;
+border-radius:6px;
+overflow:hidden;
+margin-top:10px;
 }
 
-.chat-embed{
-  width:100%;
-  min-height:520px;
-  border:none;
-  border-radius:14px;
-  background:#f3f7ff;
+.progress-fill{
+height:100%;
+background:#1f6fd6;
+width:0%;
 }
 
-.info-tabs{
-  display:flex;
-  gap:1rem;
-  margin-bottom:1rem;
+.finished{
+text-align:center;
+margin-top:40px;
 }
 
-.info-tab{
-  cursor:pointer;
-  font-weight:700;
-  color:var(--accent);
-}
-
-.hidden{
-  display:none;
-}
-
-.info-image{
-  width:100%;
-  border-radius:12px;
-}
-
-@media(max-width:900px){
-  main{grid-template-columns:1fr;}
+.finished img{
+max-width:200px;
 }
 </style>
 </head>
-
 <body>
 
-<header>
-  <h1 id="themeTitle">Thema laden...</h1>
-  <p id="themeDesc"></p>
-</header>
+<div class="container">
 
-<main>
+<div class="topbar">
+<a href="index.html" class="back-btn">Terug naar dashboard</a>
+<div class="xp-box">
+XP: <span id="xpScore">0</span>
+</div>
+</div>
 
-<!-- LINKERKANT -->
-<section class="panel">
+<div class="header">
+<h1 id="themeTitle">Laden...</h1>
+<p id="themeFocus"></p>
+<p id="themeSkills"></p>
+</div>
 
-  <!-- FLEXIBELE INFO -->
-  <div class="section">
-    <div class="info-tabs">
-      <div class="info-tab" onclick="showTab('focus')">Focus</div>
-      <div class="info-tab" onclick="showTab('sources')">Bronnen</div>
-      <div class="info-tab" onclick="showTab('image')">Afbeelding</div>
-    </div>
+<div class="units-grid" id="unitsGrid"></div>
 
-    <div id="tab-focus">
-      <p id="focusContent">Focus wordt geladen...</p>
-    </div>
+<div class="finished" id="finishedBox" style="display:none;">
+<img src="img/images/pavobouwmascotte.png">
+<p>Je hebt alle onderdelen voltooid.</p>
+</div>
 
-    <div id="tab-sources" class="hidden">
-      <div id="sourcesList"></div>
-    </div>
-
-    <div id="tab-image" class="hidden">
-      <img id="themeImage" class="info-image"/>
-    </div>
-  </div>
-
-  <!-- UNITS -->
-  <div class="section">
-    <h3>📚 Units</h3>
-    <div class="units-grid" id="unitsContainer"></div>
-  </div>
-
-</section>
-
-<!-- RECHTERKANT -->
-<aside class="panel">
-  <h2>🤖 Chattie</h2>
-  <iframe id="chattieFrame" class="chat-embed"></iframe>
-</aside>
-
-</main>
+</div>
 
 <script src="./firebase.js"></script>
 
 <script>
-
 const params = new URLSearchParams(window.location.search);
 const themeId = params.get("id");
 
-async function loadTheme(){
+let currentUser;
+let themeData;
+let studentProgress = {};
 
-  await window.firebaseReady;
+async function init(){
 
-  const doc = await window.db.collection("themes").doc(themeId).get();
+await window.firebaseReady;
 
-  if(!doc.exists){
-    document.body.innerHTML = "<h2>Thema niet gevonden</h2>";
-    return;
-  }
-
-  const data = doc.data();
-
-  document.getElementById("themeTitle").innerText = data.title;
-  document.getElementById("themeDesc").innerText = data.description;
-  document.getElementById("focusContent").innerText = data.description;
-
-  document.documentElement.style.setProperty('--accent', data.color);
-  document.documentElement.style.setProperty('--accent-dark', shadeColor(data.color,-15));
-
-  // Units
-  const container = document.getElementById("unitsContainer");
-  container.innerHTML="";
-
-  data.units?.forEach((unit,i)=>{
-    container.innerHTML += `
-      <div class="unit-card">
-        <h4>Unit ${i+1}</h4>
-        <p>${unit}</p>
-        <button onclick="openUnit(${i+1})">Start</button>
-      </div>
-    `;
-  });
-
-  // Afbeelding
-  if(data.image){
-    document.getElementById("themeImage").src = data.image;
-  }
-
-  // Bronnen
-  if(data.sources){
-    const list = document.getElementById("sourcesList");
-    data.sources.forEach(src=>{
-      list.innerHTML += `<p><a href="${src}" target="_blank">${src}</a></p>`;
-    });
-  }
-
-  // Chattie koppelen
-  document.getElementById("chattieFrame").src =
-    "chattie.html?thema=" + encodeURIComponent(data.title);
-
+window.auth.onAuthStateChanged(async user=>{
+if(!user){
+window.location.href="login.html";
+return;
 }
 
-function openUnit(unitNr){
-  window.location.href = "unit.html?theme=" + themeId + "&unit=" + unitNr;
+currentUser = user;
+
+const themeDoc = await window.db.collection("themes").doc(themeId).get();
+if(!themeDoc.exists) return;
+
+themeData = themeDoc.data();
+
+document.getElementById("themeTitle").innerText = themeData.title;
+document.getElementById("themeFocus").innerText = "Focus: " + (themeData.focus || "");
+document.getElementById("themeSkills").innerText = "Wat oefen je: " + (themeData.skills || "");
+
+const progressDoc = await window.db
+.collection("users")
+.doc(user.uid)
+.collection("progress")
+.doc(themeId)
+.get();
+
+if(progressDoc.exists){
+studentProgress = progressDoc.data();
 }
 
-function showTab(tab){
-  document.querySelectorAll("[id^='tab-']").forEach(el=>el.classList.add("hidden"));
-  document.getElementById("tab-"+tab).classList.remove("hidden");
+renderUnits();
+calculateXP();
+});
 }
 
-function shadeColor(color, percent) {
-  let f=parseInt(color.slice(1),16),
-  t=percent<0?0:255,
-  p=percent<0?percent*-1:percent,
-  R=f>>16,
-  G=f>>8&0x00FF,
-  B=f&0x0000FF;
-  return "#"+(0x1000000+
-  (Math.round((t-R)*p/100)+R)*0x10000+
-  (Math.round((t-G)*p/100)+G)*0x100+
-  (Math.round((t-B)*p/100)+B))
-  .toString(16).slice(1);
+function renderUnits(){
+
+const grid = document.getElementById("unitsGrid");
+grid.innerHTML = "";
+
+let completedUnits = 0;
+
+themeData.units.forEach((unit,index)=>{
+
+const isCompleted = studentProgress[unit.id];
+if(isCompleted) completedUnits++;
+
+const locked = index > completedUnits;
+
+const div = document.createElement("div");
+div.className = "unit-card" + (locked ? " locked" : "");
+
+div.innerHTML = `
+<h3>${unit.title}</h3>
+<p>${unit.description || ""}</p>
+<p>${unit.xp || 10} XP</p>
+`;
+
+div.onclick = ()=>{
+openUnit(unit,index);
+};
+
+grid.appendChild(div);
+
+});
+
+if(completedUnits === themeData.units.length){
+document.getElementById("finishedBox").style.display="block";
+}
 }
 
-loadTheme();
+async function openUnit(unit,index){
 
+alert("Hier komt de unit pagina.");
+
+await window.db
+.collection("users")
+.doc(currentUser.uid)
+.collection("progress")
+.doc(themeId)
+.set({
+[unit.id]: true
+},{merge:true});
+
+studentProgress[unit.id] = true;
+
+renderUnits();
+calculateXP();
+}
+
+function calculateXP(){
+
+let total = 0;
+
+themeData.units.forEach(unit=>{
+if(studentProgress[unit.id]){
+total += unit.xp || 10;
+}
+});
+
+document.getElementById("xpScore").innerText = total;
+}
+
+init();
 </script>
 
 </body>
