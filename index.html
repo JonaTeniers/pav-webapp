@@ -25,7 +25,14 @@
             background: var(--bg);
             color: var(--text);
             display: flex;
+            flex-direction: column; /* Veranderd om footer onderaan te krijgen */
             min-height: 100vh;
+        }
+
+        /* Container voor Sidebar + Main */
+        .wrapper {
+            display: flex;
+            flex: 1;
         }
 
         /* ================= SIDEBAR ================= */
@@ -90,27 +97,12 @@
             color: var(--blue);
         }
 
-        .sidebar-footer {
-            padding: 1.5rem;
-            border-top: 1px solid #eee;
-        }
-
-        .btn-teacher {
-            width: 100%;
-            background: #f3f4f6;
-            color: #4b5563;
-            border: 2px dashed #d1d5db;
-            padding: 0.75rem;
-            border-radius: 12px;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
         /* ================= MAIN CONTENT ================= */
         .main-content {
             margin-left: 280px;
             flex-grow: 1;
             padding: 2.5rem;
+            padding-bottom: 5rem; /* Ruimte voor de footer */
         }
 
         .welcome-section {
@@ -124,10 +116,10 @@
             margin: 0;
         }
 
-        /* ================= THEMA GRID (4 per rij) ================= */
+        /* ================= THEMA GRID ================= */
         .theme-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 4 kolommen */
+            grid-template-columns: repeat(4, 1fr);
             gap: 1.5rem;
         }
 
@@ -207,50 +199,73 @@
 
         button.start:hover { background: var(--blue-dark); }
         
-        /* In aanbouw styling */
         .thema-card.locked { opacity: 0.7; filter: grayscale(0.5); }
         .thema-card.locked button { background: #d1d5db; cursor: not-allowed; }
+
+        /* ================= FOOTER ================= */
+        .footer {
+            margin-left: 280px;
+            background: var(--white);
+            padding: 1.5rem;
+            text-align: center;
+            border-top: 1px solid #eef2f7;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .footer a {
+            color: var(--blue);
+            text-decoration: none;
+            font-weight: 800;
+            margin-left: 10px;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
 
         /* Responsive */
         @media (max-width: 1400px) { .theme-grid { grid-template-columns: repeat(3, 1fr); } }
         @media (max-width: 1000px) { .theme-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 600px) { 
             .sidebar { width: 70px; }
-            .sidebar h1, .nav-item span, .sidebar-footer { display: none; }
-            .main-content { margin-left: 70px; }
+            .sidebar h1, .nav-item span { display: none; }
+            .main-content, .footer { margin-left: 70px; }
             .theme-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <div class="sidebar">
-        <div class="sidebar-header">
-            <img src="img/pavomascotte.png" alt="Pavo">
-            <h1>PAV-O</h1>
-        </div>
-
-        <nav class="nav-links">
-            <a href="index.html" class="nav-item active">🏠 <span>Dashboard</span></a>
-            <a href="portfolio.html" class="nav-item">📝 <span>Mijn Portfolio</span></a>
-            <a href="chattie.html" class="nav-item">🤖 <span>Chattie AI</span></a>
-            <button class="nav-item" id="loginBtnNav" onclick="handleLogin()">🔑 <span>Inloggen</span></button>
-        </nav>
-
-        <div class="sidebar-footer">
-            <button class="btn-teacher" onclick="window.location.href='teacher.html'">👨‍🏫 Leerkrachten</button>
-        </div>
-    </div>
-
-    <div class="main-content">
-        <div class="welcome-section">
-            <h2 id="welcomeText">Welkom bij PAV-O</h2>
-            <p id="subWelcome" style="color: var(--muted); margin-top: 5px;">Kies een thema en start met leren.</p>
-        </div>
-
-        <div class="theme-grid" id="grid">
+    <div class="wrapper">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <img src="img/pavomascotte.png" alt="Pavo">
+                <h1>PAV-O</h1>
             </div>
+
+            <nav class="nav-links">
+                <a href="index.html" class="nav-item active">🏠 <span>Dashboard</span></a>
+                <a href="portfolio.html" class="nav-item">📝 <span>Mijn Portfolio</span></a>
+                <a href="chattie.html" class="nav-item">🤖 <span>Chattie AI</span></a>
+                <button class="nav-item" id="loginBtnNav" onclick="handleLogin()">🔑 <span>Inloggen</span></button>
+            </nav>
+        </div>
+
+        <div class="main-content">
+            <div class="welcome-section">
+                <h2 id="welcomeText">Welkom bij PAV-O</h2>
+                <p id="subWelcome" style="color: var(--muted); margin-top: 5px;">Kies een thema en start met leren.</p>
+            </div>
+
+            <div class="theme-grid" id="grid"></div>
+        </div>
     </div>
+
+    <footer class="footer">
+        <span>&copy; 2026 PAV-O | Alle rechten voorbehouden.</span>
+        <a href="voorwaarden.html">Gebruikersvoorwaarden & Privacy</a>
+    </footer>
 
     <script>
         const themes = [
