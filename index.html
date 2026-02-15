@@ -27,7 +27,6 @@ body {
 
 .wrapper { display: flex; }
 
-/* ===== SIDEBAR ===== */
 .sidebar {
     width: 260px;
     background: white;
@@ -41,7 +40,12 @@ body {
 
 .sidebar-header { text-align: center; margin-bottom: 3rem; }
 .sidebar-header img { width: 70px; }
-.sidebar-header h1 { margin: 0.5rem 0 0 0; color: var(--blue); font-size: 1.5rem; }
+
+.sidebar-header h1 {
+    margin: 0.5rem 0 0 0;
+    color: var(--blue);
+    font-size: 1.5rem;
+}
 
 .nav-item {
     display: block;
@@ -51,19 +55,24 @@ body {
     font-weight: 700;
     text-decoration: none;
     color: var(--text);
-    transition: background 0.15s ease;
 }
 
 .nav-item:hover { background: var(--blue-soft); color: var(--blue); }
 .nav-item.active { background: var(--blue); color: white; }
 
-/* ===== MAIN ===== */
-.main-content { margin-left: 260px; padding: 3rem 3.5rem; }
+.main-content {
+    margin-left: 260px;
+    padding: 3rem 3.5rem;
+}
 
-.welcome-section h2 { margin: 0; font-size: 2.3rem; color: var(--blue); }
+.welcome-section h2 {
+    margin: 0;
+    font-size: 2.3rem;
+    color: var(--blue);
+}
+
 .welcome-section p { margin-top: 8px; color: var(--muted); }
 
-/* ===== GRID ===== */
 .theme-grid {
     margin-top: 3rem;
     display: grid;
@@ -71,7 +80,6 @@ body {
     gap: 2rem;
 }
 
-/* ===== CARD ===== */
 .thema-card {
     display: block;
     border-radius: 12px;
@@ -121,11 +129,12 @@ body {
 }
 
 .progress-fill { height: 100%; background: var(--blue); }
-.progress-text { font-size: 0.8rem; color: var(--muted); }
 
-.locked { pointer-events: none; opacity: 0.7; filter: grayscale(0.4); }
+.progress-text {
+    font-size: 0.8rem;
+    color: var(--muted);
+}
 
-/* ===== FOOTER ===== */
 .footer {
     margin-left: 260px;
     padding: 1.2rem;
@@ -136,10 +145,8 @@ body {
     background: white;
 }
 
-.footer a { color: var(--blue); text-decoration: none; font-weight: 700; }
-.footer a:hover { text-decoration: underline; }
+.footer a { color: var(--blue); font-weight: 700; text-decoration: none; }
 
-/* ===== RESPONSIVE ===== */
 @media (max-width: 1200px) {
     .theme-grid { grid-template-columns: repeat(2, 1fr); }
 }
@@ -157,7 +164,7 @@ body {
 
 <div class="sidebar">
     <div class="sidebar-header">
-        <img src="img/pavomascotte.png" alt="Pavo">
+        <img src="img/pavomascotte.png">
         <h1>PAV-O</h1>
     </div>
 
@@ -175,7 +182,40 @@ body {
 
     <div class="theme-grid" id="themeGrid">
 
-        <!-- JE BESTAANDE HARDCODED THEMA’S BLIJVEN HIER STAAN -->
+        <!-- ===== 9 VASTE THEMA'S ===== -->
+
+        <script>
+        const fixedThemes = [
+            {id:1,title:"Thema 1 – Landschappen"},
+            {id:2,title:"Thema 2 – Levende natuur"},
+            {id:3,title:"Thema 3 – Werkwoordstijden"},
+            {id:4,title:"Thema 4 – Wiskunde"},
+            {id:5,title:"Thema 5 – Fictie & non-fictie"},
+            {id:6,title:"Thema 6 – Schatten"},
+            {id:7,title:"Thema 7 – Communicatie"},
+            {id:8,title:"Thema 8 – Actualiteit"},
+            {id:9,title:"Thema 9 – Geschiedenis"}
+        ];
+
+        const grid = document.currentScript.parentElement;
+
+        fixedThemes.forEach(t=>{
+            grid.innerHTML += `
+            <a href="thema${t.id}.html" class="thema-card">
+                <div class="thema-image" style="background-image:url('img/images/thema${t.id}.jpg')">
+                    <div class="thema-overlay">
+                        <h4 class="thema-title">${t.title}</h4>
+                    </div>
+                </div>
+                <div class="thema-bottom">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width:0%"></div>
+                    </div>
+                    <div class="progress-text">0% voltooid</div>
+                </div>
+            </a>`;
+        });
+        </script>
 
     </div>
 </div>
@@ -187,7 +227,6 @@ body {
     <a href="voorwaarden.html">Gebruikersvoorwaarden & Privacy</a>
 </footer>
 
-<!-- FIREBASE -->
 <script src="./firebase.js"></script>
 
 <script>
@@ -197,44 +236,36 @@ async function loadExtraThemes(){
 
     const grid = document.getElementById("themeGrid");
 
-    try{
+    const snapshot = await window.db
+        .collection("themes")
+        .where("active","==",true)
+        .get();
 
-        const snapshot = await window.db
-            .collection("themes")
-            .where("active","==",true)
-            .get();
+    snapshot.forEach(doc => {
 
-        snapshot.forEach(doc => {
+        const t = doc.data();
+        const themeId = doc.id;
 
-            const t = doc.data();
-            const themeId = doc.id;
+        const card = document.createElement("a");
+        card.className = "thema-card";
+        card.href = `thema.html?id=${themeId}`;
 
-            if(document.body.innerHTML.includes(t.title)) return;
-
-            const card = document.createElement("a");
-            card.className = "thema-card";
-            card.href = `thema.html?id=${themeId}`;
-
-            card.innerHTML = `
-                <div class="thema-image" style="background:${t.color};">
-                    <div class="thema-overlay">
-                        <h4 class="thema-title">${t.title}</h4>
-                    </div>
+        card.innerHTML = `
+            <div class="thema-image" style="background:${t.color};">
+                <div class="thema-overlay">
+                    <h4 class="thema-title">${t.title}</h4>
                 </div>
-                <div class="thema-bottom">
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width:0%"></div>
-                    </div>
-                    <div class="progress-text">Nieuw thema</div>
+            </div>
+            <div class="thema-bottom">
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width:0%"></div>
                 </div>
-            `;
+                <div class="progress-text">Nieuw thema</div>
+            </div>
+        `;
 
-            grid.appendChild(card);
-        });
-
-    }catch(error){
-        console.error("Fout bij laden extra thema's:", error);
-    }
+        grid.appendChild(card);
+    });
 }
 
 window.addEventListener("load", loadExtraThemes);
