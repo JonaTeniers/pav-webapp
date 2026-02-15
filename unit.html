@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PAV-O | Unit</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --accent: #0b4da2;
+    --accent-dark: #083a7a;
+    --bg: #f8fafc;
+    --panel: #ffffff;
+    --text: #1f2937;
+    --muted: #4b5563;
+}
+
+body {
+    margin: 0;
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+header {
+    background: var(--accent);
+    color: white;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+main {
+    width: min(900px, 95%);
+    margin: 2rem auto;
+}
+
+.panel {
+    background: var(--panel);
+    padding: 1.5rem;
+    border-radius: 14px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+    margin-bottom: 1.5rem;
+}
+
+.question {
+    margin-bottom: 1.5rem;
+}
+
+.question h4 {
+    margin-bottom: 0.6rem;
+}
+
+textarea, input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-family: inherit;
+}
+
+button {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 0.7rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+button:hover {
+    background: var(--accent-dark);
+}
+
+.result {
+    font-weight: 800;
+    font-size: 1.2rem;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1 id="unitTitle">Unit laden...</h1>
+</header>
+
+<main>
+    <form id="unitForm">
+        <div id="questionsContainer"></div>
+        <button type="submit">Indienen</button>
+    </form>
+
+    <div id="resultContainer"></div>
+</main>
+
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+<script src="./firebase.js"></script>
+
+<script>
+
+const params = new URLSearchParams(window.location.search);
+const themeId = params.get("theme");
+const unitId = params.get("unit");
+
+if(!themeId || !unitId) {
+    document.body.innerHTML = "Ongeldige URL.";
+}
+
+const db = firebase.firestore();
+
+async function loadUnit() {
+
+    const themeDoc = await db.collection("themes").doc(themeId).get();
+    const unitDoc = await db.collection("themes")
+        .doc(themeId)
+        .collection("units")
+        .doc(unitId)
+        .get();
+
+    const theme = themeDoc.data();
+    const unit = unitDoc.data();
+
+    if(theme.accentColor) {
+        document.documentElement.style.setProperty("--accent", theme.accentColor);
+    }
+
+    document.getElementById("unitTitle").innerText = unit.title;
+
+    const snapshot = await db.collection("themes")
+        .doc(themeId)
+        .collection("units")
+        .doc(unitId)
+        .collection("questions")
+        .get();
+
+    const container = document.getElementById("questionsContainer");
+    container.innerHTML = "";
+
+    snapshot.forEach((doc, index) => {
+        const q = doc.data();
+
+        let html = `<div class="panel question">
+            <h4>Vraag ${index+1}</h4>
+            <p>${q.question}</p>`;
+
+        if(q.type === "Meerkeuze (1)") {
+            q.options.forEach(opt => {
+                html += `<label>
+                    <input type="radio" name="q${index}" value="${opt}">
+                    ${opt}
+                </label><br>`;
+            });
+        }
+
+        else if(q.type === "Meerkeuze (meerdere)") {
+            q.options.forEach(opt => {
+                html += `<label>
+                    <input type="checkbox" name="q${index}" value="${opt}">
+                    ${opt}
+                </label><br>`;
+            });
+        }
+
+        else if(q.type === "Juist/Onjuist") {
+            html += `
+                <label><input type="radio" name="q${index}" value="Juist"> Juist</label><br>
+                <label><input type="radio" name="q${index}" value="Onjuist"> Onjuist</label>
+            `;
+        }
+
+        else if(q.type === "Open vraag") {
+            html += `<textarea name="q${index}" rows="4"></textarea>`;
+        }
+
+        else if(q.type === "Numeriek") {
+            html += `<input type="number" name="q${index}">`;
+        }
+
+        if(q.requireExplanation) {
+            html += `<br><br><strong>Waarom kies je dit antwoord?</strong>
+                     <textarea name="exp${index}" rows="3" required></textarea>`;
+        }
+
+        html += `</div>`;
+        container.innerHTML += html;
+    });
+}
+
+document.getElementById("unitForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const snapshot = await db.collection("themes")
+        .doc(themeId)
+        .collection("units")
+        .doc(unitId)
+        .collection("questions")
+        .get();
+
+    let score = 0;
+    let total = 0;
+
+    snapshot.forEach((doc, index) => {
+        const q = doc.data();
+        total += q.points;
+
+        const formData = new FormData(document.getElementById("unitForm"));
+        const answer = formData.getAll(`q${index}`);
+
+        if(q.type === "Meerkeuze (1)" && answer[0] === q.correctAnswer) {
+            score += q.points;
+        }
+
+        else if(q.type === "Meerkeuze (meerdere)") {
+            if(JSON.stringify(answer.sort()) === JSON.stringify(q.correctAnswer.sort())) {
+                score += q.points;
+            }
+        }
+
+        else if(q.type === "Juist/Onjuist" && answer[0] === q.correctAnswer) {
+            score += q.points;
+        }
+
+        else if(q.type === "Numeriek" && parseFloat(answer[0]) === q.correctAnswer) {
+            score += q.points;
+        }
+
+        else if(q.type === "Open vraag") {
+            score += 0; // manueel nazicht
+        }
+    });
+
+    const percentage = Math.round((score/total)*100);
+
+    await db.collection("scores").add({
+        naam: localStorage.getItem("studentName") || "Onbekend",
+        klas: localStorage.getItem("studentClass") || "-",
+        thema: themeId,
+        unit: unitId,
+        score: percentage,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    document.getElementById("resultContainer").innerHTML =
+        `<div class="panel result">Score: ${percentage}%</div>`;
+});
+
+loadUnit();
+
+</script>
+
+</body>
+</html>
