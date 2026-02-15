@@ -1,203 +1,247 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thema 6 – Schatten</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
-  <style>
-    :root {
-      --bg: #f1f5e9;
-      --panel: #ffffff;
-      --accent: #7aa132;
-      --accent-dark: #5f8324;
-      --text: #1f2a1a;
-      --muted: #4e5f47;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: 'Nunito', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-    }
-    header {
-      background: #87b43b;
-      color: white;
-      padding: 1.8rem 1rem;
-      text-align: center;
-    }
-    main {
-      width: min(1100px, 95%);
-      margin: 1.5rem auto 2rem;
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 1rem;
-    }
-    .panel {
-      background: var(--panel);
-      border-radius: 14px;
-      padding: 1.2rem;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
-    }
-    h2 { margin-top: 0; }
-    .steps {
-      display: grid;
-      gap: 0.75rem;
-      margin: 1rem 0;
-    }
-    .step {
-      border-left: 5px solid #a4c85f;
-      background: #f7fbe8;
-      border-radius: 10px;
-      padding: 0.8rem;
-    }
-    .exercise {
-      margin-top: 1rem;
-      border-top: 1px solid #dce8c5;
-      padding-top: 1rem;
-    }
-    .unit-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      gap: 0.8rem;
-      margin-top: 0.8rem;
-    }
-    .unit-card {
-      border: 2px solid #dce8c5;
-      border-radius: 12px;
-      padding: 0.9rem;
-      background: #f7fbe8;
-    }
-    .unit-card h4 {
-      margin: 0 0 0.35rem;
-    }
-    .unit-card p {
-      margin: 0 0 0.65rem;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-    .unit-card .status {
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: #557c1d;
-      margin-bottom: 0.7rem;
-    }
-    .unit-card a {
-      text-decoration: none;
-    }
-    .unit-card button {
-      width: 100%;
-      border: none;
-      border-radius: 8px;
-      padding: 0.5rem 0.7rem;
-      font-weight: 700;
-      color: #fff;
-      background: var(--accent);
-      cursor: pointer;
-    }
-    .unit-card button:hover {
-      background: var(--accent-dark);
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 0.6rem;
-      font-size: 0.95rem;
-    }
-    th, td {
-      border: 1px solid #dce8c5;
-      padding: 0.45rem;
-      text-align: left;
-    }
-    th { background: #f4f9e2; }
-    .chat-embed {
-      width: 100%;
-      min-height: 520px;
-      border: none;
-      border-radius: 12px;
-      background: #f7fbec;
-    }
-    .btn {
-      display: inline-block;
-      text-decoration: none;
-      margin-top: 0.8rem;
-      background: var(--accent);
-      color: white;
-      padding: 0.5rem 0.9rem;
-      border-radius: 999px;
-      font-weight: 700;
-    }
-    .btn:hover { background: var(--accent-dark); }
-    @media (max-width: 900px) {
-      main { grid-template-columns: 1fr; }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Thema 6 – Schatten</title>
+
+<link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
+
+<style>
+:root{
+  color-scheme: dark;
+  --panel: rgba(28, 36, 22, 0.92);
+  --panel-border: rgba(164, 200, 95, 0.35);
+  --accent: #a4c85f;
+  --accent-2: #7aa132;
+  --text: #f3f8ea;
+  --muted: #c8d6b5;
+  --soft: rgba(164,200,95,0.15);
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:'Nunito',sans-serif;
+  background:radial-gradient(circle at top,#3f4f2b 0%,#1e2616 55%,#0e120b 100%);
+  color:var(--text);
+}
+
+header{
+  padding:2rem 1rem 1.2rem;
+  text-align:center;
+  background:linear-gradient(90deg,#3f4f2b,#2a331c);
+  border-bottom:1px solid var(--panel-border);
+}
+
+header h1{margin:0;font-size:2.2rem;}
+header p{margin:0.6rem 0 0;color:var(--muted);}
+
+main{
+  max-width:1100px;
+  margin:0 auto;
+  padding:2rem 1.5rem 3rem;
+}
+
+.panel{
+  background:var(--panel);
+  border-radius:18px;
+  border:1px solid var(--panel-border);
+  box-shadow:0 12px 30px rgba(0,0,0,0.6);
+  padding:1.6rem;
+}
+
+/* INFO BOX */
+.info-box{
+  background:var(--soft);
+  border-left:5px solid var(--accent);
+  border-radius:12px;
+  padding:1rem 1.2rem;
+  margin-bottom:1.5rem;
+  color:var(--muted);
+  line-height:1.5;
+}
+
+/* STAPPEN */
+.steps{
+  display:grid;
+  gap:0.8rem;
+  margin:1rem 0 1.5rem;
+}
+
+.step{
+  background:rgba(40,50,28,0.9);
+  border-radius:12px;
+  border:1px solid rgba(164,200,95,0.3);
+  padding:0.9rem;
+}
+
+/* TABLE */
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:0.6rem;
+  font-size:0.95rem;
+}
+
+th,td{
+  border:1px solid rgba(164,200,95,0.25);
+  padding:0.5rem;
+}
+
+th{
+  background:rgba(164,200,95,0.2);
+}
+
+/* UNITS */
+.unit-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:1.2rem;
+  margin-top:1.2rem;
+}
+
+.unit-card{
+  background:rgba(36,46,25,0.9);
+  border-radius:16px;
+  border:1px solid rgba(164,200,95,0.25);
+  padding:1.3rem;
+  display:flex;
+  flex-direction:column;
+  gap:0.6rem;
+}
+
+.unit-card h4{margin:0;}
+.unit-card p{margin:0;color:var(--muted);font-size:0.95rem;}
+
+.unit-card a{
+  margin-top:auto;
+  text-decoration:none;
+  font-weight:700;
+  color:white;
+  background:linear-gradient(120deg,var(--accent),var(--accent-2));
+  padding:0.45rem 0.9rem;
+  border-radius:999px;
+  width:fit-content;
+}
+
+/* BUTTON BACK */
+.back-btn{
+  display:inline-block;
+  margin-top:2rem;
+  text-decoration:none;
+  color:white;
+  font-weight:700;
+  padding:0.5rem 1rem;
+  border-radius:999px;
+  background:linear-gradient(120deg,var(--accent),var(--accent-2));
+}
+
+</style>
 </head>
+
 <body>
-  <header>
-    <h1>🧮 Thema 6 – Schatten</h1>
-    <p>Leer snel schatten met afgeronde getallen en controleer daarna je exacte uitkomst.</p>
-  </header>
 
-  <main data-theme-id="6">
-    <section class="panel">
-      <h2>Stappenplan schatten</h2>
-      <div class="steps">
-        <div class="step"><strong>Stap 1:</strong> Rond getallen af naar handige getallen om hoofdrekenen eenvoudiger te maken.</div>
-        <div class="step"><strong>Stap 2:</strong> Reken met de afgeronde getallen om een schatting te krijgen.</div>
-        <div class="step"><strong>Stap 3:</strong> Controleer of je exacte antwoord logisch is vergeleken met je schatting.</div>
-      </div>
+<header>
+  <h1>Thema 6 – Schatten</h1>
+  <p>Leer redeneren met schattingen en controleer je exacte uitkomst</p>
+</header>
 
-      <div class="exercise">
-        <h3>Oefenreeks</h3>
-        <p>Vul eerst een schatting in en bereken daarna exact:</p>
-        <table>
-          <thead>
-            <tr><th>Som</th><th>Schatting</th><th>Exacte uitkomst</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>319 + 86</td><td>≈ 320 + 90 = 410</td><td>405</td></tr>
-            <tr><td>87 − 23</td><td>≈ 90 − 20 = 70</td><td>64</td></tr>
-            <tr><td>24 × 19</td><td>≈ 20 × 20 = 400</td><td>456</td></tr>
-            <tr><td>243 : 9</td><td>≈ 240 : 10 = 24</td><td>27</td></tr>
-          </tbody>
-        </table>
-      </div>
+<main>
+<section class="panel">
 
-      <div class="exercise">
-        <h3>📚 Units</h3>
-        <div class="unit-grid">
-          <div class="unit-card" data-unit="1">
-            <h4>Unit 1</h4>
-            <p>Getallen slim afronden.</p>
-            <p class="status">Beschikbaar</p>
-            <a href="thema6unit1.html"><button>Start</button></a>
-          </div>
-          <div class="unit-card" data-unit="2">
-            <h4>Unit 2</h4>
-            <p>Schatten bij plus en min.</p>
-            <p class="status">Beschikbaar</p>
-            <a href="thema6unit2.html"><button>Start</button></a>
-          </div>
-          <div class="unit-card" data-unit="3">
-            <h4>Unit 3</h4>
-            <p>Schatten bij keer en delen.</p>
-            <p class="status">Beschikbaar</p>
-            <a href="thema6unit3.html"><button>Start</button></a>
-          </div>
-        </div>
-      </div>
+  <h2>Focus van dit thema</h2>
+  <p>
+    In dit thema leer je getallen slim afronden om snel een
+    <strong>realistische schatting</strong> te maken.
+    Daarna controleer je of je exacte antwoord logisch is.
+  </p>
 
-      <a class="btn" href="index.html">← Terug naar overzicht</a>
-    </section>
+  <div class="info-box">
+    <strong>Belangrijk in dit thema</strong><br><br>
+    Je noteert niet alleen je antwoord, maar je
+    <strong>legt ook uit waarom je afrondt zoals je doet</strong>.
+    Een correcte redenering is even belangrijk als het juiste resultaat.
+  </div>
 
-    <aside class="panel">
-      <h2>🤖 Chattie</h2>
-      <p style="color: var(--muted);">Vraag extra schatoefeningen of uitleg over afronden.</p>
-      <iframe class="chat-embed" title="Chattie" src="chattie.html?thema=Thema%206%20Schatten"></iframe>
-    </aside>
-  </main>
-  <script src="./pavo-theme-progress.js"></script>
+  <h2>Stappenplan schatten</h2>
+
+  <div class="steps">
+    <div class="step">
+      <strong>Stap 1:</strong> Rond getallen af naar handige getallen.
+    </div>
+    <div class="step">
+      <strong>Stap 2:</strong> Reken met de afgeronde getallen.
+    </div>
+    <div class="step">
+      <strong>Stap 3:</strong> Vergelijk je exacte antwoord met je schatting.
+    </div>
+  </div>
+
+  <h3>Voorbeeld</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Som</th>
+        <th>Schatting</th>
+        <th>Exact</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>319 + 86</td>
+        <td>≈ 320 + 90 = 410</td>
+        <td>405</td>
+      </tr>
+      <tr>
+        <td>24 × 19</td>
+        <td>≈ 20 × 20 = 400</td>
+        <td>456</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- EXTRA VAK BOVEN UNITS -->
+  <div class="info-box" style="margin-top:2rem;">
+    <strong>Argumenteren is verplicht</strong><br><br>
+    Bij elke oefening schrijf je:
+    <ul>
+      <li>Waarom je bepaalde getallen afrondt</li>
+      <li>Waarom je schatting logisch is</li>
+      <li>Of je exacte antwoord hoger of lager moest uitvallen</li>
+    </ul>
+    Zonder uitleg is je oplossing niet volledig.
+  </div>
+
+  <h2>Units</h2>
+
+  <div class="unit-grid">
+    <div class="unit-card">
+      <h4>Unit 1</h4>
+      <p>Getallen slim afronden</p>
+      <a href="thema6unit1.html">Start</a>
+    </div>
+
+    <div class="unit-card">
+      <h4>Unit 2</h4>
+      <p>Schatten bij plus en min</p>
+      <a href="thema6unit2.html">Start</a>
+    </div>
+
+    <div class="unit-card">
+      <h4>Unit 3</h4>
+      <p>Schatten bij keer en delen</p>
+      <a href="thema6unit3.html">Start</a>
+    </div>
+  </div>
+
+  <a href="index.html" class="back-btn">Terug naar overzicht</a>
+
+</section>
+</main>
+
 </body>
 </html>
