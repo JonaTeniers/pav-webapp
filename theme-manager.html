@@ -14,16 +14,12 @@
 --border:#e2e8f0;
 --text:#1e293b;
 }
-
 body{
 margin:0;
 font-family:'Nunito',sans-serif;
 background:var(--bg);
 display:flex;
 }
-
-/* SIDEBAR */
-
 .sidebar{
 width:260px;
 background:white;
@@ -32,12 +28,10 @@ position:fixed;
 border-right:1px solid var(--border);
 padding:20px;
 }
-
 .sidebar h2{
 color:var(--primary);
 font-weight:800;
 }
-
 .sidebar a{
 display:block;
 padding:12px 15px;
@@ -47,15 +41,11 @@ text-decoration:none;
 font-weight:700;
 color:var(--text);
 }
-
 .sidebar a.active,
 .sidebar a:hover{
 background:#e0f2fe;
 color:var(--primary);
 }
-
-/* MAIN */
-
 .main{
 margin-left:260px;
 width:calc(100% - 260px);
@@ -64,20 +54,12 @@ grid-template-columns:1fr 1.2fr;
 gap:30px;
 padding:40px;
 }
-
-/* LEFT PANEL */
-
 .editor{
 background:white;
 padding:25px;
 border-radius:18px;
 box-shadow:0 4px 12px rgba(0,0,0,0.05);
 }
-
-.editor h2{
-margin-top:0;
-}
-
 .editor input,
 .editor textarea{
 width:100%;
@@ -87,12 +69,6 @@ border:1px solid var(--border);
 margin-bottom:15px;
 font-family:inherit;
 }
-
-.editor textarea{
-min-height:80px;
-resize:none;
-}
-
 .editor button{
 background:var(--primary);
 color:white;
@@ -103,32 +79,25 @@ cursor:pointer;
 font-weight:700;
 margin-bottom:10px;
 }
-
 .save-btn{
 background:#10b981 !important;
 }
-
 .unit-item{
 background:#f8fafc;
 padding:10px;
 border-radius:8px;
 margin-bottom:10px;
 }
-
-/* RIGHT PREVIEW */
-
 .preview{
 background:white;
 border-radius:20px;
 overflow:hidden;
 box-shadow:0 4px 20px rgba(0,0,0,0.08);
 }
-
 .preview-header{
 padding:30px;
 color:white;
 }
-
 .preview-body{
 padding:25px;
 display:grid;
@@ -136,31 +105,17 @@ grid-template-columns:2fr 1fr;
 gap:20px;
 background:#f9fafb;
 }
-
-.focus-box{
-background:#eef3f7;
-padding:15px;
-border-radius:10px;
-margin-bottom:15px;
-}
-
-.section{
-margin-bottom:20px;
-}
-
 .units-grid{
 display:grid;
 grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
 gap:12px;
 }
-
 .unit-card{
 background:#e6f3f0;
 padding:12px;
 border-radius:10px;
 font-size:0.9rem;
 }
-
 .unit-card button{
 margin-top:8px;
 width:100%;
@@ -172,14 +127,12 @@ color:white;
 font-weight:600;
 cursor:pointer;
 }
-
 .chat-box{
 background:#fff;
 padding:15px;
 border-radius:12px;
 box-shadow:0 3px 8px rgba(0,0,0,0.05);
 }
-
 </style>
 </head>
 
@@ -224,49 +177,29 @@ box-shadow:0 3px 8px rgba(0,0,0,0.05);
 </div>
 
 <div class="preview-body">
-
 <div>
-
-<div class="focus-box">
-<strong>Focus van dit thema</strong>
-<p id="previewDesc2">Beschrijving verschijnt hier...</p>
-</div>
-
-<div class="section">
-<strong>Onderdelen</strong>
 <div class="units-grid" id="previewUnits"></div>
 </div>
-
-</div>
-
 <div>
 <div class="chat-box">
 <strong>🤖 Chattie</strong>
 <p>Chat assistent preview</p>
 </div>
 </div>
-
-</div>
 </div>
 
 </div>
+</div>
 
-<!-- FIREBASE -->
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 <script src="./firebase.js"></script>
 
 <script>
-
-const db = firebase.firestore();
 
 const titleInput = document.getElementById('titleInput');
 const descInput = document.getElementById('descInput');
 const colorInput = document.getElementById('colorInput');
 const previewTitle = document.getElementById('previewTitle');
 const previewDesc = document.getElementById('previewDesc');
-const previewDesc2 = document.getElementById('previewDesc2');
 const previewHeader = document.getElementById('previewHeader');
 const previewUnits = document.getElementById('previewUnits');
 const unitList = document.getElementById('unitList');
@@ -279,7 +212,6 @@ previewTitle.innerText = titleInput.value || "Thema titel";
 
 descInput.addEventListener('input',()=>{
 previewDesc.innerText = descInput.value || "Beschrijving van het thema";
-previewDesc2.innerText = descInput.value || "Beschrijving verschijnt hier...";
 });
 
 colorInput.addEventListener('input',()=>{
@@ -291,10 +223,8 @@ if(units.length >= 12){
 alert("Maximum 12 units toegestaan.");
 return;
 }
-
 const unitTitle = prompt("Naam van de unit?");
 if(!unitTitle) return;
-
 units.push(unitTitle);
 renderUnits();
 }
@@ -302,16 +232,13 @@ renderUnits();
 function renderUnits(){
 previewUnits.innerHTML="";
 unitList.innerHTML="";
-
 units.forEach((unit,i)=>{
-
 previewUnits.innerHTML += `
 <div class="unit-card">
 <strong>Deel ${i+1}</strong>
 <p>${unit}</p>
 <button>Start</button>
 </div>`;
-
 unitList.innerHTML += `
 <div class="unit-item">
 Deel ${i+1}: ${unit}
@@ -328,7 +255,9 @@ return;
 
 try{
 
-await db.collection("themes").add({
+await window.firebaseReady;
+
+await window.db.collection("themes").add({
 title:titleInput.value,
 description:descInput.value,
 color:colorInput.value,
@@ -343,6 +272,10 @@ titleInput.value="";
 descInput.value="";
 units=[];
 renderUnits();
+
+previewTitle.innerText="Thema titel";
+previewDesc.innerText="Beschrijving van het thema";
+previewHeader.style.background="#0f766e";
 
 }catch(error){
 console.error(error);
