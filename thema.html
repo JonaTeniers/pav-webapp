@@ -1,1 +1,243 @@
-444 
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PAV-O | Thema</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+--accent:#0f766e;
+--bg:#f8fafc;
+--panel:#ffffff;
+--text:#1f2937;
+--muted:#6b7280;
+}
+
+*{box-sizing:border-box;}
+
+body{
+margin:0;
+font-family:'Nunito',sans-serif;
+background:var(--bg);
+color:var(--text);
+}
+
+header{
+color:white;
+padding:2rem 1rem;
+text-align:center;
+}
+
+main{
+width:min(1200px,95%);
+margin:2rem auto;
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:2rem;
+}
+
+.panel{
+background:var(--panel);
+border-radius:16px;
+padding:1.5rem;
+box-shadow:0 6px 16px rgba(0,0,0,0.08);
+}
+
+.units-grid{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+gap:1rem;
+margin-top:1rem;
+}
+
+.unit-card{
+background:#f0fdfa;
+border-radius:12px;
+padding:1rem;
+}
+
+.unit-card button{
+margin-top:10px;
+width:100%;
+border:none;
+padding:8px;
+border-radius:8px;
+font-weight:700;
+cursor:pointer;
+color:white;
+}
+
+.dynamic-block{
+margin-top:2rem;
+}
+
+.source-card{
+background:#f0fdfa;
+padding:1rem;
+border-radius:10px;
+margin-bottom:10px;
+}
+
+.chat-box{
+background:#f3f7ff;
+border-radius:12px;
+padding:1rem;
+}
+
+.back-link{
+display:inline-block;
+margin-bottom:1rem;
+text-decoration:none;
+font-weight:700;
+}
+
+@media(max-width:900px){
+main{grid-template-columns:1fr;}
+}
+</style>
+</head>
+
+<body>
+
+<header id="themeHeader">
+<h1 id="themeTitle">Laden...</h1>
+<p id="themeDesc"></p>
+</header>
+
+<main>
+
+<section class="panel">
+
+<a href="index.html" class="back-link">← Terug naar overzicht</a>
+
+<h2>Focus van dit thema</h2>
+<p id="focusText"></p>
+
+<div id="dynamicContent" class="dynamic-block"></div>
+
+<h2 style="margin-top:2rem;">📚 Units</h2>
+<div id="unitsContainer" class="units-grid"></div>
+
+</section>
+
+<aside class="panel">
+<h2>🤖 Chattie</h2>
+<p style="color:var(--muted);">Chat assistent voor dit thema.</p>
+<div class="chat-box">
+<p>Chattie preview</p>
+</div>
+</aside>
+
+</main>
+
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+<script src="./firebase.js"></script>
+
+<script>
+
+async function loadTheme(){
+
+await window.firebaseReady;
+
+const params = new URLSearchParams(window.location.search);
+const themeId = params.get("id");
+
+if(!themeId){
+document.body.innerHTML = "Geen thema ID gevonden.";
+return;
+}
+
+const doc = await window.db.collection("themes").doc(themeId).get();
+
+if(!doc.exists){
+document.body.innerHTML = "Thema niet gevonden.";
+return;
+}
+
+const theme = doc.data();
+
+document.getElementById("themeTitle").innerText = theme.title;
+document.getElementById("themeDesc").innerText = theme.description;
+document.getElementById("focusText").innerText = theme.description;
+
+document.getElementById("themeHeader").style.background = theme.color;
+document.documentElement.style.setProperty('--accent', theme.color);
+
+/* UNITS */
+
+const unitsContainer = document.getElementById("unitsContainer");
+unitsContainer.innerHTML = "";
+
+if(theme.units && theme.units.length){
+
+theme.units.forEach((unit,i)=>{
+
+unitsContainer.innerHTML += `
+<div class="unit-card">
+<strong>Unit ${i+1}</strong>
+<p>${unit}</p>
+<button style="background:${theme.color};">Start</button>
+</div>
+`;
+
+});
+
+}else{
+unitsContainer.innerHTML = "<p>Nog geen units toegevoegd.</p>";
+}
+
+/* DYNAMISCHE CONTENT */
+
+const dynamicContent = document.getElementById("dynamicContent");
+dynamicContent.innerHTML = "";
+
+if(theme.contentType === "sources" && theme.sources){
+
+dynamicContent.innerHTML += "<h3>Bronnen</h3>";
+
+theme.sources.forEach(source=>{
+dynamicContent.innerHTML += `
+<div class="source-card">
+<strong>${source.title}</strong><br>
+<a href="${source.url}" target="_blank" style="color:${theme.color};font-weight:700;text-decoration:none;">
+Bekijk artikel
+</a>
+</div>
+`;
+});
+
+}
+
+else if(theme.contentType === "image" && theme.imageUrl){
+
+dynamicContent.innerHTML = `
+<h3>Afbeelding</h3>
+<img src="${theme.imageUrl}" style="width:100%;border-radius:12px;margin-top:10px;">
+`;
+
+}
+
+else if(theme.contentType === "text" && theme.extraText){
+
+dynamicContent.innerHTML = `
+<h3>Extra informatie</h3>
+<div style="background:#f8fafc;padding:1rem;border-radius:10px;margin-top:10px;">
+${theme.extraText}
+</div>
+`;
+
+}
+
+}
+
+loadTheme();
+
+</script>
+
+</body>
+</html>
