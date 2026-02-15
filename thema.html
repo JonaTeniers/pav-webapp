@@ -1,1 +1,260 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Thema</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --accent:#0f766e;
+  --accent-dark:#0b5f58;
+  --bg:#f8fafc;
+  --panel:#ffffff;
+  --text:#1f2937;
+  --muted:#6b7280;
+}
+
+*{box-sizing:border-box;}
+
+body{
+  margin:0;
+  font-family:'Nunito',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+header{
+  background:var(--accent);
+  color:white;
+  padding:2rem 1rem;
+  text-align:center;
+}
+
+main{
+  width:min(1100px,95%);
+  margin:2rem auto;
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:1.5rem;
+}
+
+.panel{
+  background:var(--panel);
+  border-radius:16px;
+  padding:1.5rem;
+  box-shadow:0 6px 16px rgba(0,0,0,0.08);
+}
+
+.section{
+  margin-bottom:1.5rem;
+}
+
+.units-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:1rem;
+}
+
+.unit-card{
+  background:#f0fdfa;
+  border:2px solid #bce7e1;
+  border-radius:12px;
+  padding:1rem;
+}
+
+.unit-card h4{
+  margin:0 0 .5rem;
+}
+
+.unit-card button{
+  width:100%;
+  border:none;
+  padding:.6rem;
+  border-radius:8px;
+  background:var(--accent);
+  color:white;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.unit-card button:hover{
+  background:var(--accent-dark);
+}
+
+.chat-embed{
+  width:100%;
+  min-height:520px;
+  border:none;
+  border-radius:14px;
+  background:#f3f7ff;
+}
+
+.info-tabs{
+  display:flex;
+  gap:1rem;
+  margin-bottom:1rem;
+}
+
+.info-tab{
+  cursor:pointer;
+  font-weight:700;
+  color:var(--accent);
+}
+
+.hidden{
+  display:none;
+}
+
+.info-image{
+  width:100%;
+  border-radius:12px;
+}
+
+@media(max-width:900px){
+  main{grid-template-columns:1fr;}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1 id="themeTitle">Thema laden...</h1>
+  <p id="themeDesc"></p>
+</header>
+
+<main>
+
+<!-- LINKERKANT -->
+<section class="panel">
+
+  <!-- FLEXIBELE INFO -->
+  <div class="section">
+    <div class="info-tabs">
+      <div class="info-tab" onclick="showTab('focus')">Focus</div>
+      <div class="info-tab" onclick="showTab('sources')">Bronnen</div>
+      <div class="info-tab" onclick="showTab('image')">Afbeelding</div>
+    </div>
+
+    <div id="tab-focus">
+      <p id="focusContent">Focus wordt geladen...</p>
+    </div>
+
+    <div id="tab-sources" class="hidden">
+      <div id="sourcesList"></div>
+    </div>
+
+    <div id="tab-image" class="hidden">
+      <img id="themeImage" class="info-image"/>
+    </div>
+  </div>
+
+  <!-- UNITS -->
+  <div class="section">
+    <h3>📚 Units</h3>
+    <div class="units-grid" id="unitsContainer"></div>
+  </div>
+
+</section>
+
+<!-- RECHTERKANT -->
+<aside class="panel">
+  <h2>🤖 Chattie</h2>
+  <iframe id="chattieFrame" class="chat-embed"></iframe>
+</aside>
+
+</main>
+
+<script src="./firebase.js"></script>
+
+<script>
+
+const params = new URLSearchParams(window.location.search);
+const themeId = params.get("id");
+
+async function loadTheme(){
+
+  await window.firebaseReady;
+
+  const doc = await window.db.collection("themes").doc(themeId).get();
+
+  if(!doc.exists){
+    document.body.innerHTML = "<h2>Thema niet gevonden</h2>";
+    return;
+  }
+
+  const data = doc.data();
+
+  document.getElementById("themeTitle").innerText = data.title;
+  document.getElementById("themeDesc").innerText = data.description;
+  document.getElementById("focusContent").innerText = data.description;
+
+  document.documentElement.style.setProperty('--accent', data.color);
+  document.documentElement.style.setProperty('--accent-dark', shadeColor(data.color,-15));
+
+  // Units
+  const container = document.getElementById("unitsContainer");
+  container.innerHTML="";
+
+  data.units?.forEach((unit,i)=>{
+    container.innerHTML += `
+      <div class="unit-card">
+        <h4>Unit ${i+1}</h4>
+        <p>${unit}</p>
+        <button onclick="openUnit(${i+1})">Start</button>
+      </div>
+    `;
+  });
+
+  // Afbeelding
+  if(data.image){
+    document.getElementById("themeImage").src = data.image;
+  }
+
+  // Bronnen
+  if(data.sources){
+    const list = document.getElementById("sourcesList");
+    data.sources.forEach(src=>{
+      list.innerHTML += `<p><a href="${src}" target="_blank">${src}</a></p>`;
+    });
+  }
+
+  // Chattie koppelen
+  document.getElementById("chattieFrame").src =
+    "chattie.html?thema=" + encodeURIComponent(data.title);
+
+}
+
+function openUnit(unitNr){
+  window.location.href = "unit.html?theme=" + themeId + "&unit=" + unitNr;
+}
+
+function showTab(tab){
+  document.querySelectorAll("[id^='tab-']").forEach(el=>el.classList.add("hidden"));
+  document.getElementById("tab-"+tab).classList.remove("hidden");
+}
+
+function shadeColor(color, percent) {
+  let f=parseInt(color.slice(1),16),
+  t=percent<0?0:255,
+  p=percent<0?percent*-1:percent,
+  R=f>>16,
+  G=f>>8&0x00FF,
+  B=f&0x0000FF;
+  return "#"+(0x1000000+
+  (Math.round((t-R)*p/100)+R)*0x10000+
+  (Math.round((t-G)*p/100)+G)*0x100+
+  (Math.round((t-B)*p/100)+B))
+  .toString(16).slice(1);
+}
+
+loadTheme();
+
+</script>
+
+</body>
+</html>
 
