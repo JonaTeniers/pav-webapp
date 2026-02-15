@@ -4,95 +4,128 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PAV-O | Unit</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-:root {
-    --accent: #0b4da2;
-    --accent-dark: #083a7a;
-    --bg: #f8fafc;
-    --panel: #ffffff;
-    --text: #1f2937;
-    --muted: #4b5563;
-}
-
 body {
-    margin: 0;
-    font-family: 'Nunito', sans-serif;
-    background: var(--bg);
-    color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  background: #f4f7fb;
+  padding: 2rem;
+  margin: 0;
 }
 
-header {
-    background: var(--accent);
-    color: white;
-    padding: 1.5rem;
-    text-align: center;
+h1 { text-align: center; }
+
+.unit-header {
+  max-width: 1000px;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
 }
 
-main {
-    width: min(900px, 95%);
-    margin: 2rem auto;
+.quiz-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  max-width: 1000px;
+  margin: auto;
 }
 
-.panel {
-    background: var(--panel);
-    padding: 1.5rem;
-    border-radius: 14px;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
-    margin-bottom: 1.5rem;
+.box {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
 }
 
-.question {
-    margin-bottom: 1.5rem;
+.reasoning-box {
+  background: #eef6ff;
+  border: 2px dashed #0b4da2;
 }
 
-.question h4 {
-    margin-bottom: 0.6rem;
+label {
+  display: block;
+  background: #f9f9f9;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  cursor: pointer;
 }
 
-textarea, input[type="number"] {
-    width: 100%;
-    padding: 8px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    font-family: inherit;
+textarea, input[type="text"], input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin-top: 10px;
 }
 
 button {
-    background: var(--accent);
-    color: white;
-    border: none;
-    padding: 0.7rem 1.2rem;
-    border-radius: 8px;
-    font-weight: 700;
-    cursor: pointer;
+  background: #0b4da2;
+  color: white;
+  border: none;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 1rem;
 }
 
-button:hover {
-    background: var(--accent-dark);
+.feedback {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: bold;
 }
 
-.result {
-    font-weight: 800;
-    font-size: 1.2rem;
+.success { background: #d1fae5; color: #065f46; }
+.error { background: #fee2e2; color: #991b1b; }
+
+.hidden { display: none; }
+
+@media (max-width: 850px) {
+  .quiz-container { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
 
-<header>
-    <h1 id="unitTitle">Unit laden...</h1>
-</header>
+<h1 id="unitTitle">Unit laden...</h1>
 
-<main>
-    <form id="unitForm">
-        <div id="questionsContainer"></div>
-        <button type="submit">Indienen</button>
-    </form>
+<div class="unit-header">
+  <span id="progressText"></span>
+  <span id="xpDisplay">0 XP</span>
+</div>
 
-    <div id="resultContainer"></div>
-</main>
+<div id="quizContainer" class="quiz-container">
+  <div class="box">
+    <h3 id="questionText"></h3>
+    <div id="answerForm"></div>
+  </div>
+
+  <div class="box reasoning-box">
+    <p><strong>Argumentatie</strong></p>
+    <p style="font-size:0.9rem;">
+      Leg uit hoe je tot je antwoord komt.
+    </p>
+    <textarea id="reasoningInput"></textarea>
+
+    <button id="checkBtn">Controleer Antwoord</button>
+
+    <div id="feedback" class="feedback hidden"></div>
+    <button id="nextBtn" class="hidden">Volgende vraag →</button>
+  </div>
+</div>
+
+<div id="endScreen" class="box hidden" style="max-width:500px;margin:3rem auto;text-align:center;">
+  <h2>🎉 Unit voltooid!</h2>
+  <p>Je behaalde:</p>
+  <div style="font-size:2rem;font-weight:bold;" id="finalXP">0 XP</div>
+</div>
 
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
@@ -104,147 +137,193 @@ const params = new URLSearchParams(window.location.search);
 const themeId = params.get("theme");
 const unitId = params.get("unit");
 
-if(!themeId || !unitId) {
-    document.body.innerHTML = "Ongeldige URL.";
-}
-
 const db = firebase.firestore();
+
+let questions = [];
+let currentQ = 0;
+let xp = 0;
+let answersLog = [];
 
 async function loadUnit() {
 
-    const themeDoc = await db.collection("themes").doc(themeId).get();
-    const unitDoc = await db.collection("themes")
-        .doc(themeId)
-        .collection("units")
-        .doc(unitId)
-        .get();
+  const unitDoc = await db.collection("themes")
+    .doc(themeId)
+    .collection("units")
+    .doc(unitId)
+    .get();
 
-    const theme = themeDoc.data();
-    const unit = unitDoc.data();
+  const unit = unitDoc.data();
+  document.getElementById("unitTitle").innerText = unit.title;
 
-    if(theme.accentColor) {
-        document.documentElement.style.setProperty("--accent", theme.accentColor);
-    }
+  const snapshot = await db.collection("themes")
+    .doc(themeId)
+    .collection("units")
+    .doc(unitId)
+    .collection("questions")
+    .get();
 
-    document.getElementById("unitTitle").innerText = unit.title;
+  snapshot.forEach(doc => {
+    questions.push({ id: doc.id, ...doc.data() });
+  });
 
-    const snapshot = await db.collection("themes")
-        .doc(themeId)
-        .collection("units")
-        .doc(unitId)
-        .collection("questions")
-        .get();
-
-    const container = document.getElementById("questionsContainer");
-    container.innerHTML = "";
-
-    snapshot.forEach((doc, index) => {
-        const q = doc.data();
-
-        let html = `<div class="panel question">
-            <h4>Vraag ${index+1}</h4>
-            <p>${q.question}</p>`;
-
-        if(q.type === "Meerkeuze (1)") {
-            q.options.forEach(opt => {
-                html += `<label>
-                    <input type="radio" name="q${index}" value="${opt}">
-                    ${opt}
-                </label><br>`;
-            });
-        }
-
-        else if(q.type === "Meerkeuze (meerdere)") {
-            q.options.forEach(opt => {
-                html += `<label>
-                    <input type="checkbox" name="q${index}" value="${opt}">
-                    ${opt}
-                </label><br>`;
-            });
-        }
-
-        else if(q.type === "Juist/Onjuist") {
-            html += `
-                <label><input type="radio" name="q${index}" value="Juist"> Juist</label><br>
-                <label><input type="radio" name="q${index}" value="Onjuist"> Onjuist</label>
-            `;
-        }
-
-        else if(q.type === "Open vraag") {
-            html += `<textarea name="q${index}" rows="4"></textarea>`;
-        }
-
-        else if(q.type === "Numeriek") {
-            html += `<input type="number" name="q${index}">`;
-        }
-
-        if(q.requireExplanation) {
-            html += `<br><br><strong>Waarom kies je dit antwoord?</strong>
-                     <textarea name="exp${index}" rows="3" required></textarea>`;
-        }
-
-        html += `</div>`;
-        container.innerHTML += html;
-    });
+  loadQuestion();
 }
 
-document.getElementById("unitForm").addEventListener("submit", async function(e) {
-    e.preventDefault();
+function loadQuestion(){
 
-    const snapshot = await db.collection("themes")
-        .doc(themeId)
-        .collection("units")
-        .doc(unitId)
-        .collection("questions")
-        .get();
+  const q = questions[currentQ];
 
-    let score = 0;
-    let total = 0;
+  document.getElementById("progressText").innerText =
+    `Vraag ${currentQ+1} van ${questions.length}`;
 
-    snapshot.forEach((doc, index) => {
-        const q = doc.data();
-        total += q.points;
+  document.getElementById("xpDisplay").innerText = xp + " XP";
 
-        const formData = new FormData(document.getElementById("unitForm"));
-        const answer = formData.getAll(`q${index}`);
+  document.getElementById("questionText").innerText = q.question;
 
-        if(q.type === "Meerkeuze (1)" && answer[0] === q.correctAnswer) {
-            score += q.points;
-        }
+  const form = document.getElementById("answerForm");
+  form.innerHTML = "";
 
-        else if(q.type === "Meerkeuze (meerdere)") {
-            if(JSON.stringify(answer.sort()) === JSON.stringify(q.correctAnswer.sort())) {
-                score += q.points;
-            }
-        }
+  // 🔹 Vraagtypes
 
-        else if(q.type === "Juist/Onjuist" && answer[0] === q.correctAnswer) {
-            score += q.points;
-        }
-
-        else if(q.type === "Numeriek" && parseFloat(answer[0]) === q.correctAnswer) {
-            score += q.points;
-        }
-
-        else if(q.type === "Open vraag") {
-            score += 0; // manueel nazicht
-        }
+  if(q.type === "Meerkeuze (1)"){
+    q.options.forEach(opt => {
+      form.innerHTML += `
+        <label>
+          <input type="radio" name="ans" value="${opt}">
+          ${opt}
+        </label>`;
     });
+  }
 
-    const percentage = Math.round((score/total)*100);
-
-    await db.collection("scores").add({
-        naam: localStorage.getItem("studentName") || "Onbekend",
-        klas: localStorage.getItem("studentClass") || "-",
-        thema: themeId,
-        unit: unitId,
-        score: percentage,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  else if(q.type === "Meerkeuze (meerdere)"){
+    q.options.forEach(opt => {
+      form.innerHTML += `
+        <label>
+          <input type="checkbox" name="ans" value="${opt}">
+          ${opt}
+        </label>`;
     });
+  }
 
-    document.getElementById("resultContainer").innerHTML =
-        `<div class="panel result">Score: ${percentage}%</div>`;
-});
+  else if(q.type === "Juist/Onjuist"){
+    form.innerHTML = `
+      <label><input type="radio" name="ans" value="Juist"> Juist</label>
+      <label><input type="radio" name="ans" value="Onjuist"> Onjuist</label>
+    `;
+  }
+
+  else if(q.type === "Open vraag"){
+    form.innerHTML = `<input type="text" id="openAns">`;
+  }
+
+  else if(q.type === "Numeriek"){
+    form.innerHTML = `<input type="number" id="openAns">`;
+  }
+
+  // 🔹 Motivatie placeholder aanpassen
+  const reasoningField = document.getElementById("reasoningInput");
+  reasoningField.value = "";
+
+  if(q.requireExplanation){
+    reasoningField.placeholder = "Leg uit hoe je tot je antwoord komt (verplicht)";
+  } else {
+    reasoningField.placeholder = "Je mag hier je redenering noteren (optioneel)";
+  }
+
+  document.getElementById("feedback").classList.add("hidden");
+  document.getElementById("nextBtn").classList.add("hidden");
+  document.getElementById("checkBtn").classList.remove("hidden");
+}
+
+document.getElementById("checkBtn").onclick = function(){
+
+  const q = questions[currentQ];
+  const reasoning = document.getElementById("reasoningInput").value.trim();
+
+  // 🔹 Alleen verplicht indien ingesteld
+  if(q.requireExplanation && reasoning.length < 5){
+    alert("Geef eerst een uitleg bij je antwoord.");
+    return;
+  }
+
+  let correct = false;
+  let givenAnswer = null;
+
+  if(q.type === "Meerkeuze (1)" || q.type === "Juist/Onjuist"){
+    const selected = document.querySelector('input[name="ans"]:checked');
+    if(!selected){ alert("Kies een antwoord."); return; }
+    givenAnswer = selected.value;
+    correct = givenAnswer === q.correctAnswer;
+  }
+
+  else if(q.type === "Meerkeuze (meerdere)"){
+    const selected = [...document.querySelectorAll('input[name="ans"]:checked')];
+    if(selected.length === 0){ alert("Kies minstens één antwoord."); return; }
+    givenAnswer = selected.map(i => i.value).sort();
+    correct = JSON.stringify(givenAnswer) === JSON.stringify(q.correctAnswer.sort());
+  }
+
+  else if(q.type === "Open vraag" || q.type === "Numeriek"){
+    const ans = document.getElementById("openAns").value.trim();
+    if(!ans){ alert("Vul een antwoord in."); return; }
+    givenAnswer = ans;
+
+    if(q.modelAnswer){
+      correct = ans.toLowerCase() === q.modelAnswer.toLowerCase();
+    }
+  }
+
+  document.getElementById("checkBtn").classList.add("hidden");
+  document.getElementById("nextBtn").classList.remove("hidden");
+
+  const fb = document.getElementById("feedback");
+  fb.classList.remove("hidden");
+
+  if(correct){
+    xp += q.points || 3;
+    fb.innerText = "✅ Correct! +" + (q.points || 3) + " XP";
+    fb.className = "feedback success";
+  } else {
+    fb.innerText = "❌ Niet correct.";
+    fb.className = "feedback error";
+  }
+
+  answersLog.push({
+    questionId: q.id,
+    answer: givenAnswer,
+    reasoning: reasoning,
+    correct: correct,
+    points: q.points || 3
+  });
+
+  document.getElementById("xpDisplay").innerText = xp + " XP";
+}
+
+document.getElementById("nextBtn").onclick = function(){
+  currentQ++;
+  if(currentQ < questions.length){
+    loadQuestion();
+  } else {
+    finish();
+  }
+}
+
+async function finish(){
+
+  document.getElementById("quizContainer").classList.add("hidden");
+  document.getElementById("endScreen").classList.remove("hidden");
+  document.getElementById("finalXP").innerText = xp + " XP";
+
+  await db.collection("scores").add({
+    naam: localStorage.getItem("studentName") || "Onbekend",
+    klas: localStorage.getItem("studentClass") || "-",
+    thema: themeId,
+    unit: unitId,
+    score: xp,
+    answers: answersLog,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  });
+}
 
 loadUnit();
 
