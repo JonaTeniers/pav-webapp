@@ -3,45 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PAV-O | Thema Beheer</title>
+<title>PAV-O | Theme Manager</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 :root {
     --primary: #0b4da2;
-    --primary-dark: #083a7a;
     --bg: #f0f4f8;
     --white: #ffffff;
-    --text: #1e293b;
     --border: #e2e8f0;
+    --text: #1e293b;
 }
 
 body {
     margin: 0;
     font-family: 'Nunito', sans-serif;
     background: var(--bg);
-    color: var(--text);
     display: flex;
+    min-height: 100vh;
 }
 
+/* SIDEBAR */
 .sidebar {
     width: 260px;
     background: var(--white);
-    height: 100vh;
-    position: fixed;
     border-right: 1px solid var(--border);
     padding: 20px;
 }
 
-.sidebar h2 { color: var(--primary); }
+.sidebar h2 {
+    color: var(--primary);
+    font-weight: 800;
+}
 
 .sidebar a {
     display: block;
-    padding: 10px;
-    border-radius: 8px;
     text-decoration: none;
     color: var(--text);
-    margin-bottom: 5px;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 8px;
     font-weight: 700;
 }
 
@@ -51,277 +53,226 @@ body {
     color: var(--primary);
 }
 
-.main {
-    margin-left: 260px;
+/* MAIN LAYOUT */
+.main-wrapper {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
     padding: 40px;
-    width: calc(100% - 260px);
 }
 
-.content-card {
-    background: var(--white);
+/* EDIT PANEL */
+.editor {
+    background: white;
     padding: 25px;
     border-radius: 16px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    margin-bottom: 30px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
-input, textarea, select {
+.editor h2 {
+    margin-top: 0;
+}
+
+.editor label {
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.editor input,
+.editor textarea,
+.editor select {
     width: 100%;
     padding: 10px;
-    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
     border-radius: 8px;
     border: 1px solid var(--border);
-    font-family: inherit;
 }
 
-.btn {
+.editor button {
     background: var(--primary);
     color: white;
+    padding: 10px 15px;
     border: none;
-    padding: 8px 15px;
     border-radius: 8px;
-    font-weight: 700;
     cursor: pointer;
+    font-weight: 700;
 }
 
-.btn:hover { background: var(--primary-dark); }
-
-.box {
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 10px;
-    margin-top: 10px;
+/* PREVIEW PANEL */
+.preview {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
-.small { font-size: 0.8rem; color: #64748b; }
+.preview-header {
+    padding: 30px;
+    color: white;
+}
+
+.preview-header h1 {
+    margin: 0;
+}
+
+.preview-body {
+    padding: 20px;
+}
+
+.unit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.unit-card {
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    padding: 15px;
+    background: #f9fafb;
+}
+
+.unit-card h4 {
+    margin: 0 0 5px;
+}
+
+.unit-card p {
+    font-size: 0.85rem;
+    color: #555;
+    margin: 0;
+}
+
+.image-preview {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
 </style>
 </head>
+
 <body>
 
+<!-- SIDEBAR -->
 <nav class="sidebar">
     <h2>PAV-O</h2>
     <a href="admin.html">📊 Resultaten</a>
-    <a href="#" class="active">📚 Thema Beheer</a>
+    <a href="theme-manager.html" class="active">➕ Maak nieuw thema</a>
     <a href="index.html">🚪 Leerlingomgeving</a>
 </nav>
 
-<main class="main">
+<!-- MAIN -->
+<div class="main-wrapper">
 
-<h1>Thema Beheer</h1>
+    <!-- EDITOR -->
+    <div class="editor">
+        <h2>Nieuw Thema</h2>
 
-<section class="content-card">
-    <h3>➕ Nieuw Thema</h3>
-    <input type="text" id="themeTitle" placeholder="Titel">
-    <textarea id="themeDescription" placeholder="Beschrijving"></textarea>
-    <button class="btn" onclick="createTheme()">Opslaan</button>
-</section>
+        <label>Titel</label>
+        <input type="text" id="themeTitle" placeholder="Bijv: Thema 10 – Gezondheid">
 
-<section class="content-card">
-    <h3>📂 Thema’s</h3>
-    <div id="themeList">Laden...</div>
-</section>
+        <label>Beschrijving</label>
+        <textarea id="themeDescription" rows="3" placeholder="Korte uitleg van het thema"></textarea>
 
-</main>
+        <label>Thema kleur</label>
+        <input type="color" id="themeColor" value="#0b4da2">
 
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-<script src="./firebase.js"></script>
+        <label>Afbeelding</label>
+        <input type="file" id="themeImage" accept="image/*">
+
+        <hr>
+
+        <h3>Units</h3>
+        <div id="unitInputs"></div>
+        <button onclick="addUnit()">➕ Unit toevoegen</button>
+    </div>
+
+    <!-- PREVIEW -->
+    <div class="preview">
+        <div id="previewHeader" class="preview-header" style="background:#0b4da2;">
+            <h1 id="previewTitle">Thema titel</h1>
+            <p id="previewDescription">Beschrijving van het thema</p>
+        </div>
+
+        <img id="previewImage" class="image-preview" style="display:none;">
+
+        <div class="preview-body">
+            <h3>Units</h3>
+            <div id="previewUnits" class="unit-grid"></div>
+        </div>
+    </div>
+
+</div>
 
 <script>
+let unitCount = 0;
+const maxUnits = 12;
 
-// ================= THEMES =================
+function updatePreview() {
+    document.getElementById("previewTitle").innerText =
+        document.getElementById("themeTitle").value || "Thema titel";
 
-async function createTheme() {
-    const title = themeTitle.value;
-    const desc = themeDescription.value;
-    if(!title) return alert("Titel verplicht");
+    document.getElementById("previewDescription").innerText =
+        document.getElementById("themeDescription").value || "Beschrijving van het thema";
 
-    await db.collection("themes").add({
-        title,
-        description: desc,
-        active: true,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    });
-
-    themeTitle.value = "";
-    themeDescription.value = "";
-    loadThemes();
+    const color = document.getElementById("themeColor").value;
+    document.getElementById("previewHeader").style.background = color;
 }
 
-async function loadThemes() {
-    const container = document.getElementById("themeList");
-    container.innerHTML = "";
+document.getElementById("themeTitle").addEventListener("input", updatePreview);
+document.getElementById("themeDescription").addEventListener("input", updatePreview);
+document.getElementById("themeColor").addEventListener("input", updatePreview);
 
-    const snapshot = await db.collection("themes").get();
+document.getElementById("themeImage").addEventListener("change", function(e) {
+    const reader = new FileReader();
+    reader.onload = function(event) {
+        const img = document.getElementById("previewImage");
+        img.src = event.target.result;
+        img.style.display = "block";
+    }
+    reader.readAsDataURL(e.target.files[0]);
+});
 
-    snapshot.forEach(doc => {
-        const t = doc.data();
+function addUnit() {
+    if (unitCount >= maxUnits) {
+        alert("Maximaal 12 units toegestaan.");
+        return;
+    }
 
-        container.innerHTML += `
-        <div class="box">
-            <strong>${t.title}</strong><br>
-            <span class="small">${t.description || ""}</span><br><br>
-            <button class="btn" onclick="showUnits('${doc.id}')">Units beheren</button>
-            <div id="units-${doc.id}"></div>
-        </div>`;
-    });
-}
+    unitCount++;
 
-loadThemes();
+    const container = document.getElementById("unitInputs");
+    const preview = document.getElementById("previewUnits");
 
-// ================= UNITS =================
-
-async function showUnits(themeId) {
-    const container = document.getElementById(`units-${themeId}`);
-    container.innerHTML = "Laden...";
-
-    const snapshot = await db.collection("themes")
-        .doc(themeId)
-        .collection("units")
-        .orderBy("order")
-        .get();
-
-    let html = `
-        <button class="btn" onclick="addUnit('${themeId}')">➕ Unit toevoegen</button>
+    const div = document.createElement("div");
+    div.innerHTML = `
+        <label>Unit ${unitCount} titel</label>
+        <input type="text" oninput="updateUnits()" data-unit="${unitCount}">
     `;
+    container.appendChild(div);
 
-    snapshot.forEach(doc => {
-        const u = doc.data();
-        html += `
-        <div class="box">
-            <strong>${u.title}</strong><br>
-            <span class="small">${u.description || ""}</span><br>
-            <span class="small">
-                ${u.active ? "✔ Actief" : "🚧 In ontwikkeling"} |
-                Motivatie verplicht: ${u.requireMotivation ? "Ja" : "Nee"}
-            </span><br><br>
-            <button class="btn" onclick="showQuestions('${themeId}','${doc.id}')">Vragen beheren</button>
-            <div id="questions-${doc.id}"></div>
-        </div>`;
+    updateUnits();
+}
+
+function updateUnits() {
+    const preview = document.getElementById("previewUnits");
+    preview.innerHTML = "";
+
+    const inputs = document.querySelectorAll("[data-unit]");
+    inputs.forEach((input, index) => {
+        const title = input.value || "Unit " + (index + 1);
+
+        const card = document.createElement("div");
+        card.className = "unit-card";
+        card.innerHTML = `
+            <h4>${title}</h4>
+            <p>Korte uitleg van deze unit</p>
+        `;
+        preview.appendChild(card);
     });
-
-    container.innerHTML = html;
 }
-
-async function addUnit(themeId) {
-    const snapshot = await db.collection("themes").doc(themeId).collection("units").get();
-    if(snapshot.size >= 12) return alert("Maximaal 12 units.");
-
-    const title = prompt("Unit titel:");
-    if(!title) return;
-
-    const description = prompt("Beschrijving:");
-    const requireMotivation = confirm("Motivatie verplicht?");
-
-    await db.collection("themes")
-        .doc(themeId)
-        .collection("units")
-        .add({
-            title,
-            description,
-            active: true,
-            requireMotivation,
-            order: snapshot.size + 1,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp()
-        });
-
-    showUnits(themeId);
-}
-
-// ================= QUESTIONS =================
-
-async function showQuestions(themeId, unitId) {
-    const container = document.getElementById(`questions-${unitId}`);
-    container.innerHTML = "Laden...";
-
-    const snapshot = await db.collection("themes")
-        .doc(themeId)
-        .collection("units")
-        .doc(unitId)
-        .collection("questions")
-        .get();
-
-    let html = `<button class="btn" onclick="addQuestion('${themeId}','${unitId}')">➕ Vraag toevoegen</button>`;
-
-    snapshot.forEach(doc => {
-        const q = doc.data();
-        html += `
-        <div class="box">
-            <strong>${q.type}</strong><br>
-            ${q.question}<br>
-            <span class="small">Punten: ${q.points}</span>
-        </div>`;
-    });
-
-    container.innerHTML = html;
-}
-
-async function addQuestion(themeId, unitId) {
-
-    const snapshot = await db.collection("themes")
-        .doc(themeId)
-        .collection("units")
-        .doc(unitId)
-        .collection("questions")
-        .get();
-
-    if(snapshot.size >= 10) return alert("Maximaal 10 vragen.");
-
-    const type = prompt("Type: 1=Meerkeuze 2=Meerdere 3=Juist/Onjuist 4=Open 5=Numeriek");
-    const question = prompt("Vraagtekst:");
-    if(!question) return;
-
-    let data = {
-        question,
-        points: parseInt(prompt("Punten:", "1")) || 1,
-        requireExplanation: confirm("Motivatie verplicht?")
-    };
-
-    if(type == 1) {
-        const a = prompt("Optie A:");
-        const b = prompt("Optie B:");
-        const c = prompt("Optie C:");
-        const correct = prompt("Correct (A/B/C)");
-        data.type = "Meerkeuze (1)";
-        data.options = [a,b,c];
-        data.correctAnswer = correct;
-    }
-    else if(type == 2) {
-        const a = prompt("Optie A:");
-        const b = prompt("Optie B:");
-        const c = prompt("Optie C:");
-        const correct = prompt("Correcte (A,C)");
-        data.type = "Meerkeuze (meerdere)";
-        data.options = [a,b,c];
-        data.correctAnswer = correct.split(",");
-    }
-    else if(type == 3) {
-        const correct = confirm("Is het antwoord Juist?");
-        data.type = "Juist/Onjuist";
-        data.correctAnswer = correct ? "Juist" : "Onjuist";
-    }
-    else if(type == 4) {
-        data.type = "Open vraag";
-    }
-    else if(type == 5) {
-        data.type = "Numeriek";
-        data.correctAnswer = parseFloat(prompt("Correct antwoord:"));
-    }
-    else return alert("Ongeldig type.");
-
-    await db.collection("themes")
-        .doc(themeId)
-        .collection("units")
-        .doc(unitId)
-        .collection("questions")
-        .add({
-            ...data,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp()
-        });
-
-    showQuestions(themeId, unitId);
-}
-
 </script>
 
 </body>
