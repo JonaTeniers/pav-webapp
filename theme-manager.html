@@ -24,7 +24,6 @@ body {
     display: flex;
 }
 
-/* Sidebar */
 .sidebar {
     width: 260px;
     background: var(--white);
@@ -52,7 +51,6 @@ body {
     color: var(--primary);
 }
 
-/* Main */
 .main {
     margin-left: 260px;
     padding: 40px;
@@ -67,7 +65,7 @@ body {
     margin-bottom: 30px;
 }
 
-input, textarea {
+input, textarea, select {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
@@ -88,12 +86,13 @@ input, textarea {
 
 .btn:hover { background: var(--primary-dark); }
 
-.unit-box {
+.box {
     border: 1px solid var(--border);
     border-radius: 10px;
     padding: 10px;
     margin-top: 10px;
 }
+
 .small { font-size: 0.8rem; color: #64748b; }
 </style>
 </head>
@@ -159,13 +158,12 @@ async function loadThemes() {
         const t = doc.data();
 
         container.innerHTML += `
-        <div class="unit-box">
+        <div class="box">
             <strong>${t.title}</strong><br>
             <span class="small">${t.description || ""}</span><br><br>
-            <button class="btn" onclick="showUnitBuilder('${doc.id}')">Beheer Units</button>
+            <button class="btn" onclick="showUnits('${doc.id}')">Units beheren</button>
             <div id="units-${doc.id}"></div>
-        </div>
-        `;
+        </div>`;
     });
 }
 
@@ -173,34 +171,33 @@ loadThemes();
 
 // ================= UNITS =================
 
-async function showUnitBuilder(themeId) {
+async function showUnits(themeId) {
     const container = document.getElementById(`units-${themeId}`);
     container.innerHTML = "Laden...";
 
-    const snapshot = await db.collection("themes").doc(themeId).collection("units").orderBy("order").get();
+    const snapshot = await db.collection("themes")
+        .doc(themeId)
+        .collection("units")
+        .orderBy("order")
+        .get();
 
     let html = `
-        <div style="margin-top:10px;">
-            <h4>Units</h4>
-            <button class="btn" onclick="addUnit('${themeId}')">➕ Unit toevoegen</button>
-        </div>
+        <button class="btn" onclick="addUnit('${themeId}')">➕ Unit toevoegen</button>
     `;
 
     snapshot.forEach(doc => {
         const u = doc.data();
         html += `
-            <div class="unit-box">
-                <strong>${u.title}</strong>
-                <div class="small">${u.description || ""}</div>
-                <div class="small">
-                    ${u.active ? "✔ Actief" : "🚧 In ontwikkeling"} |
-                    Motivatie verplicht: ${u.requireMotivation ? "Ja" : "Nee"}
-                </div>
-                <button class="btn" onclick="toggleUnit('${themeId}','${doc.id}',${u.active})">
-                    ${u.active ? "In ontwikkeling zetten" : "Activeren"}
-                </button>
-            </div>
-        `;
+        <div class="box">
+            <strong>${u.title}</strong><br>
+            <span class="small">${u.description || ""}</span><br>
+            <span class="small">
+                ${u.active ? "✔ Actief" : "🚧 In ontwikkeling"} |
+                Motivatie verplicht: ${u.requireMotivation ? "Ja" : "Nee"}
+            </span><br><br>
+            <button class="btn" onclick="showQuestions('${themeId}','${doc.id}')">Vragen beheren</button>
+            <div id="questions-${doc.id}"></div>
+        </div>`;
     });
 
     container.innerHTML = html;
@@ -208,39 +205,124 @@ async function showUnitBuilder(themeId) {
 
 async function addUnit(themeId) {
     const snapshot = await db.collection("themes").doc(themeId).collection("units").get();
-    if(snapshot.size >= 12) {
-        alert("Maximaal 12 units per thema.");
-        return;
-    }
+    if(snapshot.size >= 12) return alert("Maximaal 12 units.");
 
     const title = prompt("Unit titel:");
     if(!title) return;
 
     const description = prompt("Beschrijving:");
-    const requireMotivation = confirm("Moet motivatie verplicht zijn?");
+    const requireMotivation = confirm("Motivatie verplicht?");
 
-    await db.collection("themes").doc(themeId).collection("units").add({
-        title,
-        description,
-        active: true,
-        inDevelopment: false,
-        requireMotivation,
-        order: snapshot.size + 1,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    });
+    await db.collection("themes")
+        .doc(themeId)
+        .collection("units")
+        .add({
+            title,
+            description,
+            active: true,
+            requireMotivation,
+            order: snapshot.size + 1,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
 
-    showUnitBuilder(themeId);
+    showUnits(themeId);
 }
 
-async function toggleUnit(themeId, unitId, status) {
-    await db.collection("themes").doc(themeId).collection("units").doc(unitId).update({
-        active: !status
+// ================= QUESTIONS =================
+
+async function showQuestions(themeId, unitId) {
+    const container = document.getElementById(`questions-${unitId}`);
+    container.innerHTML = "Laden...";
+
+    const snapshot = await db.collection("themes")
+        .doc(themeId)
+        .collection("units")
+        .doc(unitId)
+        .collection("questions")
+        .get();
+
+    let html = `<button class="btn" onclick="addQuestion('${themeId}','${unitId}')">➕ Vraag toevoegen</button>`;
+
+    snapshot.forEach(doc => {
+        const q = doc.data();
+        html += `
+        <div class="box">
+            <strong>${q.type}</strong><br>
+            ${q.question}<br>
+            <span class="small">Punten: ${q.points}</span>
+        </div>`;
     });
-    showUnitBuilder(themeId);
+
+    container.innerHTML = html;
+}
+
+async function addQuestion(themeId, unitId) {
+
+    const snapshot = await db.collection("themes")
+        .doc(themeId)
+        .collection("units")
+        .doc(unitId)
+        .collection("questions")
+        .get();
+
+    if(snapshot.size >= 10) return alert("Maximaal 10 vragen.");
+
+    const type = prompt("Type: 1=Meerkeuze 2=Meerdere 3=Juist/Onjuist 4=Open 5=Numeriek");
+    const question = prompt("Vraagtekst:");
+    if(!question) return;
+
+    let data = {
+        question,
+        points: parseInt(prompt("Punten:", "1")) || 1,
+        requireExplanation: confirm("Motivatie verplicht?")
+    };
+
+    if(type == 1) {
+        const a = prompt("Optie A:");
+        const b = prompt("Optie B:");
+        const c = prompt("Optie C:");
+        const correct = prompt("Correct (A/B/C)");
+        data.type = "Meerkeuze (1)";
+        data.options = [a,b,c];
+        data.correctAnswer = correct;
+    }
+    else if(type == 2) {
+        const a = prompt("Optie A:");
+        const b = prompt("Optie B:");
+        const c = prompt("Optie C:");
+        const correct = prompt("Correcte (A,C)");
+        data.type = "Meerkeuze (meerdere)";
+        data.options = [a,b,c];
+        data.correctAnswer = correct.split(",");
+    }
+    else if(type == 3) {
+        const correct = confirm("Is het antwoord Juist?");
+        data.type = "Juist/Onjuist";
+        data.correctAnswer = correct ? "Juist" : "Onjuist";
+    }
+    else if(type == 4) {
+        data.type = "Open vraag";
+    }
+    else if(type == 5) {
+        data.type = "Numeriek";
+        data.correctAnswer = parseFloat(prompt("Correct antwoord:"));
+    }
+    else return alert("Ongeldig type.");
+
+    await db.collection("themes")
+        .doc(themeId)
+        .collection("units")
+        .doc(unitId)
+        .collection("questions")
+        .add({
+            ...data,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+    showQuestions(themeId, unitId);
 }
 
 </script>
 
 </body>
 </html>
-
