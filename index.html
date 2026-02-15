@@ -1,347 +1,409 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-<meta charset="UTF-8">
-<title>PAV-O | Mijn startpagina</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAV-O | Leeromgeving</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --blue: #1976d2;
+            --blue-light: #e3f2fd;
+            --blue-dark: #1565c0;
+            --bg: #f4f7fb;
+            --sidebar: #ffffff;
+            --text: #1f2937;
+            --muted: #6b7280;
+            --white: #ffffff;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+        * { box-sizing: border-box; }
 
-<style>
-:root{
-  --blue:#1976d2;
-  --blue-dark:#1565c0;
-  --bg:#f4f7fb;
-  --panel:#ffffff;
-  --text:#1f2937;
-  --muted:#6b7280;
-}
+        body {
+            margin: 0;
+            font-family: 'Nunito', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            min-height: 100vh;
+        }
 
-*{box-sizing:border-box}
+        /* ================= SIDEBAR ================= */
+        .sidebar {
+            width: 280px;
+            background: var(--sidebar);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 0 15px rgba(0,0,0,0.05);
+            z-index: 100;
+        }
 
-body{
-  margin:0;
-  font-family:'Nunito',sans-serif;
-  background:var(--bg);
-  color:var(--text);
-}
+        .sidebar-header {
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+        }
 
-/* ================= TOPBAR ================= */
-.topbar{
-  background:white;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0.8rem 1.4rem;
-  box-shadow:0 2px 10px rgba(0,0,0,0.08);
-  position:sticky;
-  top:0;
-  z-index:10;
-}
+        .sidebar-header img {
+            width: 90px;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+            margin-bottom: 0.5rem;
+        }
 
-.top-left{
-  display:flex;
-  align-items:center;
-  gap:0.8rem;
-}
+        .sidebar-header h1 {
+            font-size: 1.6rem;
+            color: var(--blue);
+            margin: 0;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
 
-.top-left img{
-  height:44px;
-}
+        .nav-links {
+            flex-grow: 1;
+            padding: 1rem;
+        }
 
-.top-title{
-  font-size:1.35rem;
-  font-weight:800;
-  color:var(--blue);
-}
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.9rem 1.2rem;
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 700;
+            border-radius: 14px;
+            transition: all 0.2s ease;
+            margin-bottom: 0.6rem;
+            cursor: pointer;
+            border: none;
+            width: 100%;
+            background: transparent;
+            font-size: 1rem;
+            text-align: left;
+        }
 
-.top-right button{
-  background:var(--blue);
-  color:white;
-  border:none;
-  border-radius:999px;
-  padding:0.45rem 1.3rem;
-  font-weight:800;
-  cursor:pointer;
-}
+        .nav-item:hover {
+            background: var(--blue-light);
+            color: var(--blue);
+        }
 
-.top-right button:hover{
-  background:var(--blue-dark);
-}
+        .nav-item.active {
+            background: var(--blue);
+            color: white;
+        }
 
-/* ================= WELCOME ================= */
-.welcome{
-  width:min(1250px,95%);
-  margin:2rem auto 0.6rem;
-  font-size:1.4rem;
-  font-weight:800;
-  color:var(--blue);
-}
+        .sidebar-footer {
+            padding: 1.5rem;
+            border-top: 1px solid #eee;
+        }
 
-/* ================= CHATTIE ================= */
-.chattie-wrap{
-  width:min(1250px,95%);
-  margin:0 auto 2rem;
-}
+        .btn-teacher {
+            width: 100%;
+            background: #f3f4f6;
+            color: #4b5563;
+            border: 2px dashed #d1d5db;
+            padding: 0.75rem;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
 
-.chattie-card{
-  background:linear-gradient(135deg,#e3f2fd,#ffffff);
-  border-radius:22px;
-  padding:1.4rem 1.6rem;
-  box-shadow:0 10px 24px rgba(0,0,0,0.08);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:1.2rem;
-}
+        .btn-teacher:hover {
+            background: #e5e7eb;
+            color: var(--text);
+        }
 
-.chattie-left{
-  display:flex;
-  align-items:center;
-  gap:1rem;
-}
+        /* ================= MAIN CONTENT ================= */
+        .main-content {
+            margin-left: 280px;
+            flex-grow: 1;
+            padding: 2.5rem;
+            max-width: 1300px;
+        }
 
-.chattie-icon{
-  font-size:2.2rem;
-}
+        .welcome-section {
+            margin-bottom: 2rem;
+        }
 
-.chattie-text h2{
-  margin:0;
-  font-size:1.3rem;
-  color:var(--blue);
-}
+        .welcome-section h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--blue);
+            margin: 0;
+        }
 
-.chattie-text p{
-  margin:0.2rem 0 0;
-  color:var(--muted);
-  font-size:0.95rem;
-}
+        /* ================= WORD / NOTES AREA ================= */
+        .writing-zone {
+            display: none; /* Standaard uit */
+            background: white;
+            padding: 2rem;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+            margin-bottom: 2.5rem;
+            border: 1px solid #e0ecff;
+        }
 
-.chattie-card a button{
-  background:var(--blue);
-  color:white;
-  border:none;
-  border-radius:999px;
-  padding:0.55rem 1.6rem;
-  font-weight:700;
-  cursor:pointer;
-}
+        .writing-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
 
-.chattie-card a button:hover{
-  background:var(--blue-dark);
-}
+        .writing-zone h3 { margin: 0; color: var(--blue); display: flex; align-items: center; gap: 10px; }
+        
+        #notesArea {
+            width: 100%;
+            height: 250px;
+            border: 1px solid #d1d5db;
+            border-radius: 14px;
+            padding: 1.2rem;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            resize: vertical;
+            outline: none;
+            transition: border 0.2s;
+        }
 
-/* ================= THEMES ================= */
-.container{
-  width:min(1250px,95%);
-  margin:0 auto 4rem;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
-  gap:1.6rem;
-}
+        #notesArea:focus { border: 2px solid var(--blue); }
 
-.thema-card{
-  background:var(--panel);
-  border-radius:22px;
-  overflow:hidden;
-  box-shadow:0 10px 24px rgba(0,0,0,0.1);
-  display:flex;
-  flex-direction:column;
-  border:2px solid #e0ecff;
-}
+        /* ================= THEMA GRID ================= */
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.8rem;
+        }
 
-.thema-image{
-  height:170px;
-  background-size:cover;
-  background-position:center;
-  position:relative;
-}
+        .thema-card {
+            background: var(--white);
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.04);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #eef2f7;
+            transition: transform 0.3s ease;
+        }
 
-.thema-title{
-  position:absolute;
-  bottom:0;
-  width:100%;
-  padding:0.9rem 1rem;
-  background:linear-gradient(transparent, rgba(0,0,0,0.75));
-  color:white;
-  font-size:1.2rem;
-  font-weight:800;
-}
+        .thema-card:hover { transform: translateY(-5px); }
 
-.thema-content{
-  padding:1.3rem;
-  display:flex;
-  flex-direction:column;
-  flex-grow:1;
-}
+        .thema-image {
+            height: 160px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
 
-.progress{
-  margin:0.7rem 0 1rem;
-}
+        .thema-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            padding: 1.2rem;
+            display: flex;
+            align-items: flex-end;
+        }
 
-.progress-bar{
-  height:9px;
-  background:#e5e7eb;
-  border-radius:999px;
-  overflow:hidden;
-}
+        .thema-title {
+            color: white;
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin: 0;
+        }
 
-.progress-fill{
-  height:100%;
-  background:linear-gradient(90deg,#64b5f6,#1976d2);
-}
+        .thema-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
 
-.progress-label{
-  font-size:0.8rem;
-  color:var(--muted);
-  margin-top:0.3rem;
-}
+        .progress-container { margin-bottom: 1.2rem; }
+        .progress-bar { height: 10px; background: #eee; border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #42a5f5, var(--blue)); transition: width 0.5s; }
+        .progress-text { font-size: 0.85rem; color: var(--muted); margin-top: 0.4rem; font-weight: 700; }
 
-button.start{
-  background:var(--blue);
-  color:white;
-  border:none;
-  border-radius:999px;
-  padding:0.55rem 1.4rem;
-  font-weight:700;
-  cursor:pointer;
-}
+        button.start {
+            background: var(--blue);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 0.8rem;
+            font-weight: 800;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.2s;
+        }
 
-button.start:hover{
-  background:var(--blue-dark);
-}
+        button.start:hover { background: var(--blue-dark); }
+        button.start:disabled { background: #d1d5db; cursor: not-allowed; opacity: 0.7; }
 
-button.start:disabled{
-  opacity:0.45;
-  cursor:not-allowed;
-}
-</style>
+        @media (max-width: 900px) {
+            .sidebar { width: 80px; }
+            .sidebar-header h1, .nav-item span, .sidebar-footer, .welcome-section h2 { display: none; }
+            .main-content { margin-left: 80px; }
+            .nav-item { justify-content: center; padding: 1rem; }
+        }
+    </style>
 </head>
-
 <body>
 
-<!-- ================= TOPBAR ================= -->
-<div class="topbar">
-  <div class="top-left">
-    <img src="img/pavomascotte.png" alt="PAV-O">
-    <div class="top-title">PAV-O</div>
-  </div>
-  <div class="top-right">
-    <button id="loginBtn" onclick="handleLogin()">Log in</button>
-  </div>
-</div>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <img src="img/pavomascotte.png" alt="PAV-O Mascotte">
+            <h1>PAV-O</h1>
+        </div>
 
-<!-- ================= WELCOME ================= -->
-<div class="welcome" id="welcomeText" style="display:none"></div>
+        <nav class="nav-links">
+            <button class="nav-item active" onclick="showSection('dashboard')">
+                🏠 <span>Dashboard</span>
+            </button>
+            <button class="nav-item" onclick="showSection('notes')">
+                📝 <span>Mijn Notities</span>
+            </button>
+            <button class="nav-item" onclick="window.location.href='chattie.html'">
+                🤖 <span>Chattie AI</span>
+            </button>
+            <button class="nav-item" id="loginBtn" onclick="handleLogin()">
+                🔑 <span>Inloggen</span>
+            </button>
+        </nav>
 
-<!-- ================= CHATTIE ================= -->
-<div class="chattie-wrap">
-  <div class="chattie-card">
-    <div class="chattie-left">
-      <div class="chattie-icon">🤖</div>
-      <div class="chattie-text">
-        <h2>Chattie</h2>
-        <p>Stel vragen, krijg uitleg en hulp bij je oefeningen.</p>
-      </div>
+        <div class="sidebar-footer">
+            <button class="btn-teacher" onclick="window.location.href='teacher.html'">👨‍🏫 Leerkrachten</button>
+        </div>
     </div>
-    <a href="chattie.html">
-      <button>Open Chattie</button>
-    </a>
-  </div>
-</div>
 
-<!-- ================= THEMES ================= -->
-<div class="container" id="themes"></div>
-
-<script>
-const themes = [
-  {id:1,title:"🌍 Thema 1 – Landschappen", active:true},
-  {id:2,title:"🌿 Thema 2 – Levende natuur", active:true},
-  {id:3,title:"⏳ Thema 3 – Werkwoordstijden", active:true},
-  {id:4,title:"📐 Thema 4 – Wiskunde", active:true},
-  {id:5,title:"📖 Thema 5 – Fictie & non-fictie", active:true},
-  {id:6,title:"🎯 Thema 6 – Schatten", active:true},
-  {id:7,title:"💬 Thema 7 – Communicatie", active:true},
-  {id:8,title:"📰 Thema 8 – Actualiteit", active:true},
-  {id:9,title:"🏛️ Thema 9 – Geschiedenis", active:true},
-
-  {id:10,title:"🚧 Pavo bouwt aan dit thema", active:false},
-  {id:11,title:"🚧 Pavo bouwt aan dit thema", active:false},
-  {id:12,title:"🚧 Pavo bouwt aan dit thema", active:false},
-];
-
-function renderThemes(){
-  const c = document.getElementById("themes");
-  c.innerHTML = "";
-
-  themes.forEach(t=>{
-    const p = localStorage.getItem(`thema${t.id}_progress`) || 0;
-    const image = t.active
-      ? `img/images/thema${t.id}.jpg`
-      : `img/images/pavobouwmascotte.png`;
-
-    c.innerHTML += `
-      <div class="thema-card" style="${t.active ? "" : "opacity:0.6"}">
-        <div class="thema-image"
-             style="background-image:url('${image}')">
-          <div class="thema-title">${t.title}</div>
+    <div class="main-content">
+        <div class="welcome-section">
+            <h2 id="welcomeDisplay">Welkom bij PAV-O</h2>
+            <p style="color: var(--muted); margin-top: 5px;">Kies een thema en start met groeien!</p>
         </div>
 
-        <div class="thema-content">
-          ${
-            t.active
-            ? `
-              <div class="progress">
-                <div class="progress-bar">
-                  <div class="progress-fill" style="width:${p}%"></div>
-                </div>
-                <div class="progress-label">${p}% afgerond</div>
-              </div>
-              <a href="thema${t.id}.html">
-                <button class="start">Start</button>
-              </a>
-            `
-            : `
-              <div class="progress-label">In voorbereiding</div>
-              <button class="start" disabled>Binnenkort</button>
-            `
-          }
+        <div id="writingZone" class="writing-zone">
+            <div class="writing-header">
+                <h3>📝 Jouw Leer-Notities</h3>
+                <span style="font-size: 0.8rem; color: green; font-weight: bold;" id="saveStatus">Automatisch bewaard</span>
+            </div>
+            <textarea id="notesArea" placeholder="Schrijf hier belangrijke dingen op die je wilt onthouden..."></textarea>
         </div>
-      </div>
-    `;
-  });
-}
 
-function handleLogin(){
-  const loggedIn = localStorage.getItem("studentName");
-  if(loggedIn){
-    localStorage.removeItem("studentName");
-    localStorage.removeItem("studentClass");
-    updateUI();
-  } else {
-    window.location.href = "login.html";
-  }
-}
+        <div class="container" id="themeGrid"></div>
+    </div>
 
-function updateUI(){
-  const n = localStorage.getItem("studentName");
-  const k = localStorage.getItem("studentClass");
-  const welcome = document.getElementById("welcomeText");
-  const btn = document.getElementById("loginBtn");
+    <script>
+        const themes = [
+            {id:1, title:"🌍 Thema 1 – Landschappen", active:true},
+            {id:2, title:"🌿 Thema 2 – Levende natuur", active:true},
+            {id:3, title:"⏳ Thema 3 – Werkwoordstijden", active:true},
+            {id:4, title:"📐 Thema 4 – Wiskunde", active:true},
+            {id:5, title:"📖 Thema 5 – Fictie & non-fictie", active:true},
+            {id:6, title:"🎯 Thema 6 – Schatten", active:true},
+            {id:7, title:"💬 Thema 7 – Communicatie", active:true},
+            {id:8, title:"📰 Thema 8 – Actualiteit", active:true},
+            {id:9, title:"🏛️ Thema 9 – Geschiedenis", active:true},
+            {id:10, title:"🚧 Pavo bouwt verder", active:false},
+        ];
 
-  if(n){
-    welcome.style.display = "block";
-    welcome.textContent = `Welkom, ${n} (${k})`;
-    btn.textContent = "Log uit";
-  } else {
-    welcome.style.display = "none";
-    btn.textContent = "Log in";
-  }
-}
+        function renderThemes() {
+            const grid = document.getElementById("themeGrid");
+            grid.innerHTML = "";
 
-updateUI();
-renderThemes();
-</script>
+            themes.forEach(t => {
+                const progress = localStorage.getItem(`thema${t.id}_progress`) || 0;
+                const image = t.active ? `img/images/thema${t.id}.jpg` : `img/images/pavobouwmascotte.png`;
+                
+                grid.innerHTML += `
+                    <div class="thema-card" style="${!t.active ? 'opacity: 0.7;' : ''}">
+                        <div class="thema-image" style="background-image: url('${image}')">
+                            <div class="thema-overlay">
+                                <h4 class="thema-title">${t.title}</h4>
+                            </div>
+                        </div>
+                        <div class="thema-content">
+                            ${t.active ? `
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: ${progress}%"></div>
+                                    </div>
+                                    <div class="progress-text">${progress}% voltooid</div>
+                                </div>
+                                <button class="start" onclick="window.location.href='thema${t.id}.html'">Starten</button>
+                            ` : `
+                                <div class="progress-text">Binnenkort beschikbaar</div>
+                                <button class="start" disabled>In opbouw...</button>
+                            `}
+                        </div>
+                    </div>
+                `;
+            });
+        }
 
+        // Wisselen tussen Dashboard en Notities
+        function showSection(section) {
+            const zone = document.getElementById("writingZone");
+            const items = document.querySelectorAll('.nav-item');
+            
+            items.forEach(i => i.classList.remove('active'));
+            
+            if(section === 'notes') {
+                zone.style.display = "block";
+                items[1].classList.add('active');
+            } else {
+                zone.style.display = "none";
+                items[0].classList.add('active');
+            }
+        }
+
+        // Login logica
+        function handleLogin() {
+            const user = localStorage.getItem("studentName");
+            if(user) {
+                if(confirm("Wil je uitloggen?")) {
+                    localStorage.removeItem("studentName");
+                    localStorage.removeItem("studentClass");
+                    updateUI();
+                }
+            } else {
+                window.location.href = "login.html";
+            }
+        }
+
+        function updateUI() {
+            const name = localStorage.getItem("studentName");
+            const display = document.getElementById("welcomeDisplay");
+            const loginBtn = document.getElementById("loginBtn");
+
+            if(name) {
+                display.innerText = `Dag ${name}, klaar om te leren?`;
+                loginBtn.innerHTML = `🚪 <span>Uitloggen</span>`;
+            } else {
+                display.innerText = "Welkom bij PAV-O";
+                loginBtn.innerHTML = `🔑 <span>Inloggen</span>`;
+            }
+        }
+
+        // Notitie-opslag
+        const notesArea = document.getElementById("notesArea");
+        notesArea.value = localStorage.getItem("pavo_user_notes") || "";
+        
+        notesArea.addEventListener("input", () => {
+            localStorage.setItem("pavo_user_notes", notesArea.value);
+            document.getElementById("saveStatus").innerText = "Aan het opslaan...";
+            setTimeout(() => {
+                document.getElementById("saveStatus").innerText = "Automatisch bewaard";
+            }, 1000);
+        });
+
+        // Init
+        window.onload = () => {
+            updateUI();
+            renderThemes();
+        };
+    </script>
 </body>
 </html>
