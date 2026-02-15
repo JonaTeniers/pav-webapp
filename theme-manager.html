@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PAV-O | Thema Beheer</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --primary: #0b4da2;
+    --primary-dark: #083a7a;
+    --bg: #f0f4f8;
+    --white: #ffffff;
+    --text: #1e293b;
+    --border: #e2e8f0;
+}
+
+body {
+    margin: 0;
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 260px;
+    background: var(--white);
+    height: 100vh;
+    position: fixed;
+    border-right: 1px solid var(--border);
+    padding: 20px;
+}
+
+.sidebar h2 {
+    color: var(--primary);
+    font-weight: 800;
+}
+
+.sidebar a {
+    display: block;
+    padding: 10px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text);
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+    background: #e0f2fe;
+    color: var(--primary);
+}
+
+/* Main */
+.main {
+    margin-left: 260px;
+    padding: 40px;
+    width: calc(100% - 260px);
+}
+
+.content-card {
+    background: var(--white);
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    font-family: inherit;
+}
+
+.btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: var(--primary-dark);
+}
+
+.theme-item {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+</style>
+</head>
+<body>
+
+<nav class="sidebar">
+    <h2>PAV-O</h2>
+    <a href="admin.html">📊 Resultaten</a>
+    <a href="#" class="active">📚 Thema Beheer</a>
+    <a href="index.html">🚪 Leerlingomgeving</a>
+</nav>
+
+<main class="main">
+
+    <header>
+        <h1>Thema Beheer</h1>
+        <p>Maak en beheer hier je thema’s.</p>
+    </header>
+
+    <section class="content-card">
+        <h3>➕ Nieuw Thema</h3>
+
+        <input type="text" id="themeTitle" placeholder="Titel (bv. Thema 10 – Mediawijsheid)">
+        <textarea id="themeDescription" placeholder="Beschrijving van het thema"></textarea>
+
+        <label>Accentkleur</label>
+        <input type="color" id="themeAccent" value="#0b4da2">
+
+        <label>Headerkleur</label>
+        <input type="color" id="themeHeader" value="#14b8a6">
+
+        <button class="btn" onclick="createTheme()">Thema Opslaan</button>
+    </section>
+
+    <section class="content-card">
+        <h3>📂 Bestaande Thema’s</h3>
+        <div id="themeList">Laden...</div>
+    </section>
+
+</main>
+
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+<script src="./firebase.js"></script>
+
+<script>
+
+async function createTheme() {
+    const title = document.getElementById("themeTitle").value;
+    const desc = document.getElementById("themeDescription").value;
+    const accent = document.getElementById("themeAccent").value;
+    const header = document.getElementById("themeHeader").value;
+
+    if(!title) return alert("Titel verplicht.");
+
+    await db.collection("themes").add({
+        title: title,
+        description: desc,
+        accentColor: accent,
+        headerColor: header,
+        active: true,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    document.getElementById("themeTitle").value = "";
+    document.getElementById("themeDescription").value = "";
+    loadThemes();
+}
+
+async function loadThemes() {
+    const container = document.getElementById("themeList");
+    container.innerHTML = "";
+
+    const snapshot = await db.collection("themes").orderBy("createdAt","desc").get();
+
+    snapshot.forEach(doc => {
+        const t = doc.data();
+        container.innerHTML += `
+            <div class="theme-item">
+                <strong>${t.title}</strong><br>
+                <small>${t.description || ""}</small><br><br>
+                <button class="btn" onclick="toggleTheme('${doc.id}', ${t.active})">
+                    ${t.active ? "Deactiveren" : "Activeren"}
+                </button>
+            </div>
+        `;
+    });
+}
+
+async function toggleTheme(id, status) {
+    await db.collection("themes").doc(id).update({
+        active: !status
+    });
+    loadThemes();
+}
+
+loadThemes();
+
+</script>
+
+</body>
+</html>
