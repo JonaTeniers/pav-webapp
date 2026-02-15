@@ -9,136 +9,180 @@
       href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
 
 <style>
-:root{
-  color-scheme: dark;
-  --panel: rgba(28, 36, 22, 0.92);
-  --panel-border: rgba(164, 200, 95, 0.35);
-  --accent: #a4c85f;
-  --accent-2: #7aa132;
-  --text: #f3f8ea;
-  --muted: #c8d6b5;
-  --soft: rgba(164,200,95,0.15);
+:root {
+  --bg: #f8fafc;
+  --panel: #ffffff;
+  --accent: #7aa132;
+  --accent-dark: #5f8324;
+  --text: #1f2937;
+  --muted: #4b5563;
+  --border-soft: #dce8c5;
+  --soft-bg: #f7fbe8;
 }
 
-*{box-sizing:border-box}
+* { box-sizing: border-box; }
 
-body{
-  margin:0;
-  font-family:'Nunito',sans-serif;
-  background:radial-gradient(circle at top,#3f4f2b 0%,#1e2616 55%,#0e120b 100%);
-  color:var(--text);
+body {
+  margin: 0;
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  color: var(--text);
 }
 
-header{
-  padding:2rem 1rem 1.2rem;
-  text-align:center;
-  background:linear-gradient(90deg,#3f4f2b,#2a331c);
-  border-bottom:1px solid var(--panel-border);
+header {
+  background: #87b43b;
+  color: white;
+  padding: 1.8rem 1rem;
+  text-align: center;
 }
 
-header h1{margin:0;font-size:2.2rem;}
-header p{margin:0.6rem 0 0;color:var(--muted);}
-
-main{
-  max-width:1100px;
-  margin:0 auto;
-  padding:2rem 1.5rem 3rem;
+header h1 {
+  margin: 0;
+  font-size: 2.1rem;
 }
 
-.panel{
-  background:var(--panel);
-  border-radius:18px;
-  border:1px solid var(--panel-border);
-  box-shadow:0 12px 30px rgba(0,0,0,0.6);
-  padding:1.6rem;
+header p {
+  margin: 0.6rem 0 0;
+  opacity: 0.95;
+}
+
+main {
+  width: min(1200px, 95%);
+  margin: 1.6rem auto 2.5rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.2rem;
+}
+
+.panel {
+  background: var(--panel);
+  border-radius: 14px;
+  padding: 1.3rem;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
 }
 
 /* INFO BOX */
-.info-box{
-  background:var(--soft);
-  border-left:5px solid var(--accent);
-  border-radius:12px;
-  padding:1rem 1.2rem;
-  margin-bottom:1.5rem;
-  color:var(--muted);
-  line-height:1.5;
+.info-box {
+  background: var(--soft-bg);
+  border-left: 5px solid var(--accent);
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  margin-top: 1.2rem;
 }
 
 /* STAPPEN */
-.steps{
-  display:grid;
-  gap:0.8rem;
-  margin:1rem 0 1.5rem;
+.steps {
+  display: grid;
+  gap: 0.75rem;
+  margin: 1rem 0;
 }
 
-.step{
-  background:rgba(40,50,28,0.9);
-  border-radius:12px;
-  border:1px solid rgba(164,200,95,0.3);
-  padding:0.9rem;
+.step {
+  border-left: 5px solid #a4c85f;
+  background: #f7fbe8;
+  border-radius: 10px;
+  padding: 0.8rem;
 }
 
 /* TABLE */
-table{
-  width:100%;
-  border-collapse:collapse;
-  margin-top:0.6rem;
-  font-size:0.95rem;
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.8rem;
+  font-size: 0.95rem;
 }
 
-th,td{
-  border:1px solid rgba(164,200,95,0.25);
-  padding:0.5rem;
+th, td {
+  border: 1px solid var(--border-soft);
+  padding: 0.5rem;
+  text-align: left;
 }
 
-th{
-  background:rgba(164,200,95,0.2);
+th {
+  background: #f4f9e2;
 }
 
 /* UNITS */
-.unit-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:1.2rem;
-  margin-top:1.2rem;
+.panel-title {
+  font-size: 1.25rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.6rem;
 }
 
-.unit-card{
-  background:rgba(36,46,25,0.9);
-  border-radius:16px;
-  border:1px solid rgba(164,200,95,0.25);
-  padding:1.3rem;
-  display:flex;
-  flex-direction:column;
-  gap:0.6rem;
+.unit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 0.9rem;
+  margin-top: 0.8rem;
 }
 
-.unit-card h4{margin:0;}
-.unit-card p{margin:0;color:var(--muted);font-size:0.95rem;}
-
-.unit-card a{
-  margin-top:auto;
-  text-decoration:none;
-  font-weight:700;
-  color:white;
-  background:linear-gradient(120deg,var(--accent),var(--accent-2));
-  padding:0.45rem 0.9rem;
-  border-radius:999px;
-  width:fit-content;
+.unit-card {
+  background: var(--soft-bg);
+  border: 2px solid var(--border-soft);
+  border-radius: 12px;
+  padding: 0.9rem;
+  display: flex;
+  flex-direction: column;
 }
 
-/* BUTTON BACK */
-.back-btn{
-  display:inline-block;
-  margin-top:2rem;
-  text-decoration:none;
-  color:white;
-  font-weight:700;
-  padding:0.5rem 1rem;
-  border-radius:999px;
-  background:linear-gradient(120deg,var(--accent),var(--accent-2));
+.unit-card h4 {
+  margin: 0 0 0.35rem;
 }
 
+.unit-card p {
+  margin: 0 0 0.5rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.unit-card a {
+  margin-top: auto;
+  text-decoration: none;
+}
+
+.unit-card button {
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  padding: 0.45rem 0.7rem;
+  font-weight: 700;
+  color: white;
+  background: var(--accent);
+  cursor: pointer;
+}
+
+.unit-card button:hover {
+  background: var(--accent-dark);
+}
+
+/* BACK BUTTON */
+.btn-back {
+  display: inline-block;
+  margin-top: 1.6rem;
+  text-decoration: none;
+  background: var(--accent);
+  color: white;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.btn-back:hover {
+  background: var(--accent-dark);
+}
+
+/* CHAT */
+.chat-embed {
+  width: 100%;
+  min-height: 520px;
+  border: none;
+  border-radius: 12px;
+  background: #f3f7ff;
+}
+
+@media (max-width: 900px) {
+  main { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 
@@ -150,34 +194,31 @@ th{
 </header>
 
 <main>
+
 <section class="panel">
 
   <h2>Focus van dit thema</h2>
   <p>
     In dit thema leer je getallen slim afronden om snel een
-    <strong>realistische schatting</strong> te maken.
-    Daarna controleer je of je exacte antwoord logisch is.
+    realistische schatting te maken. Daarna controleer je
+    of je exacte antwoord logisch is.
   </p>
 
   <div class="info-box">
-    <strong>Belangrijk in dit thema</strong><br><br>
-    Je noteert niet alleen je antwoord, maar je
-    <strong>legt ook uit waarom je afrondt zoals je doet</strong>.
-    Een correcte redenering is even belangrijk als het juiste resultaat.
+    <strong>Belangrijk in dit thema</strong>
+    <p>
+      Je noteert niet alleen je antwoord, maar legt ook uit
+      waarom je afrondt zoals je doet.
+      Een correcte redenering is even belangrijk als het juiste resultaat.
+    </p>
   </div>
 
   <h2>Stappenplan schatten</h2>
 
   <div class="steps">
-    <div class="step">
-      <strong>Stap 1:</strong> Rond getallen af naar handige getallen.
-    </div>
-    <div class="step">
-      <strong>Stap 2:</strong> Reken met de afgeronde getallen.
-    </div>
-    <div class="step">
-      <strong>Stap 3:</strong> Vergelijk je exacte antwoord met je schatting.
-    </div>
+    <div class="step"><strong>Stap 1:</strong> Rond getallen af naar handige getallen.</div>
+    <div class="step"><strong>Stap 2:</strong> Reken met de afgeronde getallen.</div>
+    <div class="step"><strong>Stap 3:</strong> Vergelijk je exacte antwoord met je schatting.</div>
   </div>
 
   <h3>Voorbeeld</h3>
@@ -204,43 +245,48 @@ th{
     </tbody>
   </table>
 
-  <!-- EXTRA VAK BOVEN UNITS -->
-  <div class="info-box" style="margin-top:2rem;">
-    <strong>Argumenteren is verplicht</strong><br><br>
-    Bij elke oefening schrijf je:
+  <div class="info-box">
+    <strong>Argumenteren is verplicht</strong>
     <ul>
-      <li>Waarom je bepaalde getallen afrondt</li>
-      <li>Waarom je schatting logisch is</li>
-      <li>Of je exacte antwoord hoger of lager moest uitvallen</li>
+      <li>Waarom rond je bepaalde getallen af?</li>
+      <li>Waarom is je schatting logisch?</li>
+      <li>Moest je exacte antwoord hoger of lager zijn?</li>
     </ul>
     Zonder uitleg is je oplossing niet volledig.
   </div>
 
-  <h2>Units</h2>
+  <h2 class="panel-title">Units</h2>
 
   <div class="unit-grid">
     <div class="unit-card">
       <h4>Unit 1</h4>
       <p>Getallen slim afronden</p>
-      <a href="thema6unit1.html">Start</a>
+      <a href="thema6unit1.html"><button>Start</button></a>
     </div>
 
     <div class="unit-card">
       <h4>Unit 2</h4>
       <p>Schatten bij plus en min</p>
-      <a href="thema6unit2.html">Start</a>
+      <a href="thema6unit2.html"><button>Start</button></a>
     </div>
 
     <div class="unit-card">
       <h4>Unit 3</h4>
       <p>Schatten bij keer en delen</p>
-      <a href="thema6unit3.html">Start</a>
+      <a href="thema6unit3.html"><button>Start</button></a>
     </div>
   </div>
 
-  <a href="index.html" class="back-btn">Terug naar overzicht</a>
+  <a href="index.html" class="btn-back">Terug naar thema-overzicht</a>
 
 </section>
+
+<aside class="panel">
+  <h2 class="panel-title">Chattie</h2>
+  <iframe class="chat-embed"
+    src="chattie.html?thema=Thema%206%20Schatten"></iframe>
+</aside>
+
 </main>
 
 </body>
