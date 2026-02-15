@@ -258,12 +258,19 @@ try{
 await window.firebaseReady;
 
 await window.db.collection("themes").add({
-title:titleInput.value,
-description:descInput.value,
-color:colorInput.value,
-units:units,
-active:true,
-createdAt:firebase.firestore.FieldValue.serverTimestamp()
+title: titleInput.value,
+description: descInput.value,
+color: colorInput.value,
+units: units,
+
+// Voor thema.html
+contentType: "none",
+sources: [],
+imageUrl: "",
+extraText: "",
+
+active: true,
+createdAt: firebase.firestore.FieldValue.serverTimestamp()
 });
 
 alert("Thema succesvol opgeslagen!");
