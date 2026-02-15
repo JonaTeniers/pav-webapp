@@ -3,12 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PAV-O | Theme Manager</title>
+<title>PAV-O | Theme Builder</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 :root{
 --primary:#0b4da2;
+--green:#10b981;
+--danger:#ef4444;
 --bg:#f0f4f8;
 --white:#ffffff;
 --border:#e2e8f0;
@@ -21,25 +23,22 @@ background:var(--bg);
 display:flex;
 }
 .sidebar{
-width:260px;
+width:240px;
 background:white;
 height:100vh;
 position:fixed;
 border-right:1px solid var(--border);
 padding:20px;
 }
-.sidebar h2{
-color:var(--primary);
-font-weight:800;
-}
+.sidebar h2{color:var(--primary);}
 .sidebar a{
 display:block;
-padding:12px 15px;
-margin-bottom:6px;
-border-radius:10px;
+padding:10px;
+border-radius:8px;
 text-decoration:none;
 font-weight:700;
 color:var(--text);
+margin-bottom:6px;
 }
 .sidebar a.active,
 .sidebar a:hover{
@@ -47,91 +46,52 @@ background:#e0f2fe;
 color:var(--primary);
 }
 .main{
-margin-left:260px;
-width:calc(100% - 260px);
-display:grid;
-grid-template-columns:1fr 1.2fr;
-gap:30px;
-padding:40px;
+margin-left:240px;
+padding:30px;
+width:calc(100% - 240px);
 }
 .editor{
 background:white;
 padding:25px;
-border-radius:18px;
+border-radius:16px;
 box-shadow:0 4px 12px rgba(0,0,0,0.05);
 }
-.editor input,
-.editor textarea{
+input, textarea, select{
 width:100%;
-padding:10px;
+padding:8px;
+margin-bottom:10px;
 border-radius:8px;
 border:1px solid var(--border);
-margin-bottom:15px;
 font-family:inherit;
 }
-.editor button{
-background:var(--primary);
-color:white;
-padding:10px 16px;
+button{
+padding:8px 14px;
 border:none;
 border-radius:8px;
 cursor:pointer;
 font-weight:700;
-margin-bottom:10px;
 }
-.save-btn{
-background:#10b981 !important;
-}
-.unit-item{
+.add-btn{background:var(--primary);color:white;}
+.save-btn{background:var(--green);color:white;}
+.delete-btn{background:var(--danger);color:white;}
+
+.unit-block{
 background:#f8fafc;
-padding:10px;
-border-radius:8px;
-margin-bottom:10px;
-}
-.preview{
-background:white;
-border-radius:20px;
-overflow:hidden;
-box-shadow:0 4px 20px rgba(0,0,0,0.08);
-}
-.preview-header{
-padding:30px;
-color:white;
-}
-.preview-body{
-padding:25px;
-display:grid;
-grid-template-columns:2fr 1fr;
-gap:20px;
-background:#f9fafb;
-}
-.units-grid{
-display:grid;
-grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
-gap:12px;
-}
-.unit-card{
-background:#e6f3f0;
-padding:12px;
-border-radius:10px;
-font-size:0.9rem;
-}
-.unit-card button{
-margin-top:8px;
-width:100%;
-border:none;
-padding:6px;
-border-radius:6px;
-background:#0f766e;
-color:white;
-font-weight:600;
-cursor:pointer;
-}
-.chat-box{
-background:#fff;
 padding:15px;
 border-radius:12px;
-box-shadow:0 3px 8px rgba(0,0,0,0.05);
+margin-bottom:15px;
+border:1px solid var(--border);
+}
+.exercise-block{
+background:#ffffff;
+padding:10px;
+border-radius:8px;
+margin-bottom:8px;
+border:1px solid #e5e7eb;
+}
+.small{
+font-size:0.8rem;
+color:#64748b;
 }
 </style>
 </head>
@@ -140,53 +100,31 @@ box-shadow:0 3px 8px rgba(0,0,0,0.05);
 
 <nav class="sidebar">
 <h2>PAV-O</h2>
-<a href="teacher-dashboard.html">📊 Resultaten</a>
-<a href="#" class="active">➕ Maak nieuw thema</a>
-<a href="index.html">🚪 Leerlingomgeving</a>
+<a href="#" class="active">Thema Builder</a>
+<a href="index.html">Leerlingomgeving</a>
 </nav>
 
 <div class="main">
-
 <div class="editor">
+
 <h2>Nieuw Thema</h2>
 
 <label>Titel</label>
-<input id="titleInput" placeholder="Bijv: Thema 10 – Gezondheid">
+<input id="titleInput">
 
 <label>Beschrijving</label>
-<textarea id="descInput" placeholder="Korte uitleg van het thema"></textarea>
-
-<label>Thema kleur</label>
-<input type="color" id="colorInput" value="#0f766e">
+<textarea id="descInput"></textarea>
 
 <hr>
 
-<h3>Units</h3>
-<div id="unitList"></div>
+<h3>Units (max 12)</h3>
+<div id="unitsContainer"></div>
+<button class="add-btn" onclick="addUnit()">+ Unit toevoegen</button>
 
-<button onclick="addUnit()">+ Unit toevoegen</button>
+<hr>
+<h3>Totaal XP: <span id="totalXp">0</span></h3>
+
 <button class="save-btn" onclick="saveTheme()">💾 Thema opslaan</button>
-
-</div>
-
-<div class="preview">
-
-<div class="preview-header" id="previewHeader" style="background:#0f766e;">
-<h1 id="previewTitle">Thema titel</h1>
-<p id="previewDesc">Beschrijving van het thema</p>
-</div>
-
-<div class="preview-body">
-<div>
-<div class="units-grid" id="previewUnits"></div>
-</div>
-<div>
-<div class="chat-box">
-<strong>🤖 Chattie</strong>
-<p>Chat assistent preview</p>
-</div>
-</div>
-</div>
 
 </div>
 </div>
@@ -195,61 +133,126 @@ box-shadow:0 3px 8px rgba(0,0,0,0.05);
 
 <script>
 
-const titleInput = document.getElementById('titleInput');
-const descInput = document.getElementById('descInput');
-const colorInput = document.getElementById('colorInput');
-const previewTitle = document.getElementById('previewTitle');
-const previewDesc = document.getElementById('previewDesc');
-const previewHeader = document.getElementById('previewHeader');
-const previewUnits = document.getElementById('previewUnits');
-const unitList = document.getElementById('unitList');
-
 let units = [];
 
-titleInput.addEventListener('input',()=>{
-previewTitle.innerText = titleInput.value || "Thema titel";
-});
-
-descInput.addEventListener('input',()=>{
-previewDesc.innerText = descInput.value || "Beschrijving van het thema";
-});
-
-colorInput.addEventListener('input',()=>{
-previewHeader.style.background = colorInput.value;
-});
-
 function addUnit(){
+
 if(units.length >= 12){
 alert("Maximum 12 units toegestaan.");
 return;
 }
-const unitTitle = prompt("Naam van de unit?");
-if(!unitTitle) return;
-units.push(unitTitle);
+
+const newUnit = {
+title: "Nieuwe unit",
+exercises: []
+};
+
+units.push(newUnit);
+renderUnits();
+}
+
+function addExercise(unitIndex){
+
+if(units[unitIndex].exercises.length >= 10){
+alert("Maximum 10 oefeningen per unit.");
+return;
+}
+
+units[unitIndex].exercises.push({
+question:"",
+type:"multiple",
+options:["","","",""],
+correct:0,
+xp:10,
+image:""
+});
+
 renderUnits();
 }
 
 function renderUnits(){
-previewUnits.innerHTML="";
-unitList.innerHTML="";
-units.forEach((unit,i)=>{
-previewUnits.innerHTML += `
-<div class="unit-card">
-<strong>Deel ${i+1}</strong>
-<p>${unit}</p>
-<button>Start</button>
-</div>`;
-unitList.innerHTML += `
-<div class="unit-item">
-Deel ${i+1}: ${unit}
-</div>`;
+
+const container = document.getElementById("unitsContainer");
+container.innerHTML = "";
+
+let totalXp = 0;
+
+units.forEach((unit,uIndex)=>{
+
+let unitXp = 0;
+
+unit.exercises.forEach(ex => unitXp += parseInt(ex.xp||0));
+totalXp += unitXp;
+
+let html = `
+<div class="unit-block">
+<label>Unit titel</label>
+<input value="${unit.title}" onchange="updateUnitTitle(${uIndex}, this.value)">
+
+<h4>Oefeningen (max 10)</h4>
+`;
+
+unit.exercises.forEach((ex,eIndex)=>{
+
+html += `
+<div class="exercise-block">
+
+<label>Vraag</label>
+<textarea onchange="updateQuestion(${uIndex},${eIndex},this.value)">${ex.question}</textarea>
+
+<label>Type oefening</label>
+<select onchange="updateType(${uIndex},${eIndex},this.value)">
+<option value="multiple" ${ex.type=="multiple"?"selected":""}>Meerkeuze</option>
+<option value="open" ${ex.type=="open"?"selected":""}>Open vraag</option>
+<option value="truefalse" ${ex.type=="truefalse"?"selected":""}>Juist / Fout</option>
+</select>
+
+<label>XP voor deze vraag</label>
+<input type="number" value="${ex.xp}" onchange="updateXp(${uIndex},${eIndex},this.value)">
+
+<label>Afbeelding URL (optioneel)</label>
+<input value="${ex.image}" onchange="updateImage(${uIndex},${eIndex},this.value)">
+
+<button class="delete-btn" onclick="deleteExercise(${uIndex},${eIndex})">Verwijderen</button>
+
+</div>
+`;
 });
+
+html += `
+<p class="small">Unit XP: ${unitXp}</p>
+<button class="add-btn" onclick="addExercise(${uIndex})">+ Oefening toevoegen</button>
+<button class="delete-btn" onclick="deleteUnit(${uIndex})">Verwijder unit</button>
+</div>
+`;
+
+container.innerHTML += html;
+
+});
+
+document.getElementById("totalXp").innerText = totalXp;
+}
+
+function updateUnitTitle(u,v){ units[u].title=v; }
+function updateQuestion(u,e,v){ units[u].exercises[e].question=v; }
+function updateType(u,e,v){ units[u].exercises[e].type=v; }
+function updateXp(u,e,v){ units[u].exercises[e].xp=parseInt(v); renderUnits(); }
+function updateImage(u,e,v){ units[u].exercises[e].image=v; }
+
+function deleteExercise(u,e){
+units[u].exercises.splice(e,1);
+renderUnits();
+}
+
+function deleteUnit(u){
+units.splice(u,1);
+renderUnits();
 }
 
 async function saveTheme(){
 
 if(!titleInput.value){
-alert("Geef een titel in.");
+alert("Geef titel in.");
 return;
 }
 
@@ -260,35 +263,23 @@ await window.firebaseReady;
 await window.db.collection("themes").add({
 title: titleInput.value,
 description: descInput.value,
-color: colorInput.value,
 units: units,
-
-// Voor thema.html
-contentType: "none",
-sources: [],
-imageUrl: "",
-extraText: "",
-
-active: true,
+totalXp: units.reduce((sum,u)=>sum + u.exercises.reduce((s,e)=>s+parseInt(e.xp||0),0),0),
+active:true,
 createdAt: firebase.firestore.FieldValue.serverTimestamp()
 });
 
-alert("Thema succesvol opgeslagen!");
+alert("Thema opgeslagen!");
 
-titleInput.value="";
-descInput.value="";
 units=[];
 renderUnits();
-
-previewTitle.innerText="Thema titel";
-previewDesc.innerText="Beschrijving van het thema";
-previewHeader.style.background="#0f766e";
+titleInput.value="";
+descInput.value="";
 
 }catch(error){
 console.error(error);
-alert("Fout bij opslaan.");
+alert("Opslaan mislukt.");
 }
-
 }
 
 </script>
