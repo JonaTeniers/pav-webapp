@@ -25,58 +25,61 @@ body {
     color: var(--text);
 }
 
-.wrapper { display: flex; }
+.wrapper {
+    display: flex;
+}
 
+/* SIDEBAR */
 .sidebar {
     width: 260px;
     background: white;
     height: 100vh;
     position: fixed;
-    left: 0;
-    top: 0;
     border-right: 1px solid #e5eaf1;
     padding: 2rem 1.5rem;
 }
 
-.sidebar-header { text-align: center; margin-bottom: 3rem; }
+.sidebar-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
 .sidebar-header img { width: 70px; }
 
 .sidebar-header h1 {
     margin: 0.5rem 0 0 0;
     color: var(--blue);
-    font-size: 1.5rem;
 }
 
 .nav-item {
     display: block;
     padding: 0.7rem 1rem;
-    margin-bottom: 0.3rem;
     border-radius: 8px;
     font-weight: 700;
     text-decoration: none;
     color: var(--text);
 }
 
-.nav-item:hover { background: var(--blue-soft); color: var(--blue); }
-.nav-item.active { background: var(--blue); color: white; }
+.nav-item.active {
+    background: var(--blue);
+    color: white;
+}
 
+/* MAIN */
 .main-content {
     margin-left: 260px;
     padding: 3rem 3.5rem;
 }
 
 .welcome-section h2 {
-    margin: 0;
     font-size: 2.3rem;
     color: var(--blue);
 }
 
-.welcome-section p { margin-top: 8px; color: var(--muted); }
-
 .theme-grid {
     margin-top: 3rem;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr); /* 2x breder */
     gap: 2rem;
 }
 
@@ -86,7 +89,7 @@ body {
     overflow: hidden;
     text-decoration: none;
     border: 1px solid #e6ebf2;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    transition: 0.25s;
     background: white;
 }
 
@@ -96,7 +99,7 @@ body {
 }
 
 .thema-image {
-    height: 160px;
+    height: 200px;
     background-size: cover;
     background-position: center;
     position: relative;
@@ -114,11 +117,12 @@ body {
 .thema-title {
     color: white;
     font-weight: 800;
-    font-size: 1.05rem;
-    margin: 0;
+    font-size: 1.2rem;
 }
 
-.thema-bottom { padding: 1rem; }
+.thema-bottom {
+    padding: 1rem;
+}
 
 .progress-bar {
     height: 5px;
@@ -128,11 +132,21 @@ body {
     margin-bottom: 0.6rem;
 }
 
-.progress-fill { height: 100%; background: var(--blue); }
+.progress-fill {
+    height: 100%;
+    background: var(--blue);
+}
 
 .progress-text {
     font-size: 0.8rem;
     color: var(--muted);
+}
+
+/* Locked */
+.locked {
+    pointer-events: none;
+    opacity: 0.6;
+    filter: grayscale(0.4);
 }
 
 .footer {
@@ -143,17 +157,6 @@ body {
     color: var(--muted);
     border-top: 1px solid #e6ebf2;
     background: white;
-}
-
-.footer a { color: var(--blue); font-weight: 700; text-decoration: none; }
-
-@media (max-width: 1200px) {
-    .theme-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 700px) {
-    .sidebar { display: none; }
-    .main-content, .footer { margin-left: 0; padding: 2rem; }
-    .theme-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -182,51 +185,80 @@ body {
 
     <div class="theme-grid" id="themeGrid">
 
-        <!-- ===== 9 VASTE THEMA'S ===== -->
+        <!-- VASTE THEMA'S -->
 
-        <script>
-        const fixedThemes = [
-            {id:1,title:"Thema 1 – Landschappen"},
-            {id:2,title:"Thema 2 – Levende natuur"},
-            {id:3,title:"Thema 3 – Werkwoordstijden"},
-            {id:4,title:"Thema 4 – Wiskunde"},
-            {id:5,title:"Thema 5 – Fictie & non-fictie"},
-            {id:6,title:"Thema 6 – Schatten"},
-            {id:7,title:"Thema 7 – Communicatie"},
-            {id:8,title:"Thema 8 – Actualiteit"},
-            {id:9,title:"Thema 9 – Geschiedenis"}
-        ];
+        <a href="thema1.html" class="thema-card">
+            <div class="thema-image" style="background-image:url('img/images/thema1.jpg')">
+                <div class="thema-overlay"><h4 class="thema-title">Thema 1 – Landschappen</h4></div>
+            </div>
+            <div class="thema-bottom"><div class="progress-text">0% voltooid</div></div>
+        </a>
 
-        const grid = document.currentScript.parentElement;
+        <a href="thema2.html" class="thema-card">
+            <div class="thema-image" style="background-image:url('img/images/thema2.jpg')">
+                <div class="thema-overlay"><h4 class="thema-title">Thema 2 – Levende natuur</h4></div>
+            </div>
+            <div class="thema-bottom"><div class="progress-text">0% voltooid</div></div>
+        </a>
 
-        fixedThemes.forEach(t=>{
-            grid.innerHTML += `
-            <a href="thema${t.id}.html" class="thema-card">
-                <div class="thema-image" style="background-image:url('img/images/thema${t.id}.jpg')">
-                    <div class="thema-overlay">
-                        <h4 class="thema-title">${t.title}</h4>
-                    </div>
-                </div>
-                <div class="thema-bottom">
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width:0%"></div>
-                    </div>
-                    <div class="progress-text">0% voltooid</div>
-                </div>
-            </a>`;
-        });
-        </script>
+        <a href="thema3.html" class="thema-card">
+            <div class="thema-image" style="background-image:url('img/images/thema3.jpg')">
+                <div class="thema-overlay"><h4 class="thema-title">Thema 3 – Werkwoordstijden</h4></div>
+            </div>
+            <div class="thema-bottom"><div class="progress-text">0% voltooid</div></div>
+        </a>
+
+        <a href="thema4.html" class="thema-card">
+            <div class="thema-image" style="background-image:url('img/images/thema4.jpg')">
+                <div class="thema-overlay"><h4 class="thema-title">Thema 4 – Wiskunde</h4></div>
+            </div>
+            <div class="thema-bottom"><div class="progress-text">0% voltooid</div></div>
+        </a>
+
+        <a href="thema5.html" class="thema-card">
+            <div class="thema-image" style="background-image:url('img/images/thema5.jpg')">
+                <div class="thema-overlay"><h4 class="thema-title">Thema 5 – Fictie & non-fictie</h4></div>
+            </div>
+            <div class="thema-bottom"><div class="progress-text">0% voltooid</div></div>
+        </a>
+
+        <a href="thema6.html" class="thema-card">
+            <div class="thema-image" style="background-image:url('img/images/thema6.jpg')">
+                <div class="thema-overlay"><h4 class="thema-title">Thema 6 – Schatten</h4></div>
+            </div>
+            <div class="thema-bottom"><div class="progress-text">0% voltooid</div></div>
+        </a>
+
+        <a href="thema7.html" class="thema-card">
+            <div class="thema-image" style="background-image:url('img/images/thema7.jpg')">
+                <div class="thema-overlay"><h4 class="thema-title">Thema 7 – Communicatie</h4></div>
+            </div>
+            <div class="thema-bottom"><div class="progress-text">0% voltooid</div></div>
+        </a>
+
+        <a href="thema8.html" class="thema-card">
+            <div class="thema-image" style="background-image:url('img/images/thema8.jpg')">
+                <div class="thema-overlay"><h4 class="thema-title">Thema 8 – Actualiteit</h4></div>
+            </div>
+            <div class="thema-bottom"><div class="progress-text">0% voltooid</div></div>
+        </a>
+
+        <a href="thema9.html" class="thema-card">
+            <div class="thema-image" style="background-image:url('img/images/thema9.jpg')">
+                <div class="thema-overlay"><h4 class="thema-title">Thema 9 – Geschiedenis</h4></div>
+            </div>
+            <div class="thema-bottom"><div class="progress-text">0% voltooid</div></div>
+        </a>
 
     </div>
 </div>
-
 </div>
 
 <footer class="footer">
-    &copy; 2026 PAV-O |
-    <a href="voorwaarden.html">Gebruikersvoorwaarden & Privacy</a>
+© 2026 PAV-O
 </footer>
 
+<!-- FIREBASE -->
 <script src="./firebase.js"></script>
 
 <script>
@@ -257,9 +289,6 @@ async function loadExtraThemes(){
                 </div>
             </div>
             <div class="thema-bottom">
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width:0%"></div>
-                </div>
                 <div class="progress-text">Nieuw thema</div>
             </div>
         `;
