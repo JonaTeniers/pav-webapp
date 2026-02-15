@@ -1,350 +1,317 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PAV-O | Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --blue: #1976d2;
-            --blue-light: #e3f2fd;
-            --blue-dark: #1565c0;
-            --bg: #f4f7fb;
-            --sidebar: #ffffff;
-            --text: #1f2937;
-            --muted: #6b7280;
-            --white: #ffffff;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PAV-O Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-        * { box-sizing: border-box; }
+<style>
+:root {
+    --bg: #f4f6f9;
+    --sidebar: #111827;
+    --sidebar-text: #9ca3af;
+    --sidebar-active: #ffffff;
+    --card-radius: 16px;
+}
 
-        body {
-            margin: 0;
-            font-family: 'Nunito', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            display: flex;
-            flex-direction: column; /* Veranderd om footer onderaan te krijgen */
-            min-height: 100vh;
-        }
+* { box-sizing: border-box; }
 
-        /* Container voor Sidebar + Main */
-        .wrapper {
-            display: flex;
-            flex: 1;
-        }
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: #111827;
+}
 
-        /* ================= SIDEBAR ================= */
-        .sidebar {
-            width: 280px;
-            background: var(--sidebar);
-            height: 100vh;
-            position: fixed;
-            left: 0;
-            top: 0;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 2px 0 15px rgba(0,0,0,0.05);
-            z-index: 100;
-        }
+.wrapper {
+    display: flex;
+    min-height: 100vh;
+}
 
-        .sidebar-header {
-            padding: 2.5rem 1.5rem;
-            text-align: center;
-        }
+/* Sidebar */
+.sidebar {
+    width: 260px;
+    background: #0f172a;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+}
 
-        .sidebar-header img {
-            width: 80px;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
-            margin-bottom: 0.5rem;
-        }
+.logo {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 50px;
+}
 
-        .sidebar-header h1 {
-            font-size: 1.6rem;
-            color: var(--blue);
-            margin: 0;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
+.nav-link {
+    color: var(--sidebar-text);
+    text-decoration: none;
+    padding: 12px 16px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    font-weight: 500;
+    transition: 0.2s ease;
+}
 
-        .nav-links {
-            flex-grow: 1;
-            padding: 1rem;
-        }
+.nav-link:hover {
+    background: rgba(255,255,255,0.05);
+    color: white;
+}
 
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 0.9rem 1.2rem;
-            text-decoration: none;
-            color: var(--text);
-            font-weight: 700;
-            border-radius: 14px;
-            transition: all 0.2s ease;
-            margin-bottom: 0.6rem;
-            cursor: pointer;
-            border: none;
-            width: 100%;
-            background: transparent;
-            font-size: 1rem;
-            text-align: left;
-        }
+.nav-link.active {
+    background: rgba(255,255,255,0.08);
+    color: var(--sidebar-active);
+}
 
-        .nav-item:hover, .nav-item.active {
-            background: var(--blue-light);
-            color: var(--blue);
-        }
+/* Main */
+.main {
+    flex: 1;
+    padding: 60px;
+}
 
-        /* ================= MAIN CONTENT ================= */
-        .main-content {
-            margin-left: 280px;
-            flex-grow: 1;
-            padding: 2.5rem;
-            padding-bottom: 5rem; /* Ruimte voor de footer */
-        }
+.header h1 {
+    font-size: 2.4rem;
+    font-weight: 800;
+    margin: 0;
+}
 
-        .welcome-section {
-            margin-bottom: 2.5rem;
-        }
+.header p {
+    color: #6b7280;
+    margin-top: 8px;
+}
 
-        .welcome-section h2 {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: var(--blue);
-            margin: 0;
-        }
+/* Grid */
+.theme-grid {
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+}
 
-        /* ================= THEMA GRID ================= */
-        .theme-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem;
-        }
+/* Theme Card */
+.theme-card {
+    position: relative;
+    height: 240px;
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    cursor: pointer;
+    transition: 0.4s ease;
+}
 
-        .thema-card {
-            background: var(--white);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            display: flex;
-            flex-direction: column;
-            border: 1px solid #eef2f7;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+.theme-card:hover {
+    transform: translateY(-6px);
+}
 
-        .thema-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-        }
+.theme-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.5s ease;
+}
 
-        .thema-image {
-            height: 140px;
-            background-size: cover;
-            background-position: center;
-            position: relative;
-        }
+.theme-card:hover img {
+    transform: scale(1.05);
+}
 
-        .thema-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
-            padding: 1rem;
-            display: flex;
-            align-items: flex-end;
-        }
+.theme-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to top,
+        rgba(0,0,0,0.75),
+        rgba(0,0,0,0.2)
+    );
+}
 
-        .thema-title {
-            color: white;
-            font-size: 1.1rem;
-            font-weight: 800;
-            margin: 0;
-        }
+.theme-content {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: white;
+}
 
-        .thema-content {
-            padding: 1.2rem;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
+.theme-number {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    opacity: 0.8;
+    letter-spacing: 1px;
+}
 
-        .progress-bar {
-            height: 8px;
-            background: #eee;
-            border-radius: 10px;
-            margin-bottom: 1rem;
-            overflow: hidden;
-        }
+.theme-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-top: 5px;
+}
 
-        .progress-fill {
-            height: 100%;
-            background: var(--blue);
-            width: 0%;
-            transition: width 0.5s;
-        }
+.theme-progress {
+    margin-top: 10px;
+    font-size: 0.85rem;
+    opacity: 0.85;
+}
 
-        button.start {
-            background: var(--blue);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            padding: 0.7rem;
-            font-weight: 800;
-            cursor: pointer;
-            width: 100%;
-            transition: 0.2s;
-        }
+/* In aanbouw kaart */
+.theme-card.construction {
+    background: #1f2937;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: default;
+}
 
-        button.start:hover { background: var(--blue-dark); }
-        
-        .thema-card.locked { opacity: 0.7; filter: grayscale(0.5); }
-        .thema-card.locked button { background: #d1d5db; cursor: not-allowed; }
+.construction-content {
+    text-align: center;
+    color: #e5e7eb;
+    padding: 20px;
+}
 
-        /* ================= FOOTER ================= */
-        .footer {
-            margin-left: 280px;
-            background: var(--white);
-            padding: 1.5rem;
-            text-align: center;
-            border-top: 1px solid #eef2f7;
-            color: var(--muted);
-            font-size: 0.9rem;
-        }
+.construction-content h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
 
-        .footer a {
-            color: var(--blue);
-            text-decoration: none;
-            font-weight: 800;
-            margin-left: 10px;
-        }
+.construction-content p {
+    font-size: 0.9rem;
+    margin-top: 8px;
+    opacity: 0.7;
+}
 
-        .footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* Responsive */
-        @media (max-width: 1400px) { .theme-grid { grid-template-columns: repeat(3, 1fr); } }
-        @media (max-width: 1000px) { .theme-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 600px) { 
-            .sidebar { width: 70px; }
-            .sidebar h1, .nav-item span { display: none; }
-            .main-content, .footer { margin-left: 70px; }
-            .theme-grid { grid-template-columns: 1fr; }
-        }
-    </style>
+@media (max-width: 900px) {
+    .sidebar { display: none; }
+    .main { padding: 30px; }
+}
+</style>
 </head>
+
 <body>
 
-    <div class="wrapper">
-        <div class="sidebar">
-            <div class="sidebar-header">
-                <img src="img/pavomascotte.png" alt="Pavo">
-                <h1>PAV-O</h1>
-            </div>
+<div class="wrapper">
 
-            <nav class="nav-links">
-                <a href="index.html" class="nav-item active">🏠 <span>Dashboard</span></a>
-                <a href="portfolio.html" class="nav-item">📝 <span>Mijn Portfolio</span></a>
-                <a href="chattie.html" class="nav-item">🤖 <span>Chattie AI</span></a>
-                <button class="nav-item" id="loginBtnNav" onclick="handleLogin()">🔑 <span>Inloggen</span></button>
-            </nav>
+    <aside class="sidebar">
+        <div class="logo">PAV-O</div>
+        <a href="#" class="nav-link active">Dashboard</a>
+        <a href="#" class="nav-link">Mijn Portfolio</a>
+        <a href="#" class="nav-link">Chattie AI</a>
+        <a href="#" class="nav-link">Inloggen</a>
+    </aside>
+
+    <main class="main">
+        <div class="header">
+            <h1>Welkom bij PAV-O</h1>
+            <p>Kies een thema en ga verder met leren.</p>
         </div>
 
-        <div class="main-content">
-            <div class="welcome-section">
-                <h2 id="welcomeText">Welkom bij PAV-O</h2>
-                <p id="subWelcome" style="color: var(--muted); margin-top: 5px;">Kies een thema en start met leren.</p>
+        <div class="theme-grid">
+
+            <!-- Bestaande Thema's -->
+            <div class="theme-card">
+                <img src="images/landschap.jpg">
+                <div class="theme-overlay"></div>
+                <div class="theme-content">
+                    <div class="theme-number">Thema 1</div>
+                    <div class="theme-title">Landschappen</div>
+                    <div class="theme-progress">0% voltooid</div>
+                </div>
             </div>
 
-            <div class="theme-grid" id="grid"></div>
+            <div class="theme-card">
+                <img src="images/natuur.jpg">
+                <div class="theme-overlay"></div>
+                <div class="theme-content">
+                    <div class="theme-number">Thema 2</div>
+                    <div class="theme-title">Levende natuur</div>
+                    <div class="theme-progress">0% voltooid</div>
+                </div>
+            </div>
+
+            <div class="theme-card">
+                <img src="images/taal.jpg">
+                <div class="theme-overlay"></div>
+                <div class="theme-content">
+                    <div class="theme-number">Thema 3</div>
+                    <div class="theme-title">Werkwoordstijden</div>
+                    <div class="theme-progress">0% voltooid</div>
+                </div>
+            </div>
+
+            <div class="theme-card">
+                <img src="images/wiskunde.jpg">
+                <div class="theme-overlay"></div>
+                <div class="theme-content">
+                    <div class="theme-number">Thema 4</div>
+                    <div class="theme-title">Wiskunde</div>
+                    <div class="theme-progress">0% voltooid</div>
+                </div>
+            </div>
+
+            <div class="theme-card">
+                <img src="images/fictie.jpg">
+                <div class="theme-overlay"></div>
+                <div class="theme-content">
+                    <div class="theme-number">Thema 5</div>
+                    <div class="theme-title">Fictie & Non-fictie</div>
+                    <div class="theme-progress">0% voltooid</div>
+                </div>
+            </div>
+
+            <div class="theme-card">
+                <img src="images/schatten.jpg">
+                <div class="theme-overlay"></div>
+                <div class="theme-content">
+                    <div class="theme-number">Thema 6</div>
+                    <div class="theme-title">Schatten</div>
+                    <div class="theme-progress">0% voltooid</div>
+                </div>
+            </div>
+
+            <div class="theme-card">
+                <img src="images/communicatie.jpg">
+                <div class="theme-overlay"></div>
+                <div class="theme-content">
+                    <div class="theme-number">Thema 7</div>
+                    <div class="theme-title">Communicatie</div>
+                    <div class="theme-progress">0% voltooid</div>
+                </div>
+            </div>
+
+            <div class="theme-card">
+                <img src="images/actualiteit.jpg">
+                <div class="theme-overlay"></div>
+                <div class="theme-content">
+                    <div class="theme-number">Thema 8</div>
+                    <div class="theme-title">Actualiteit</div>
+                    <div class="theme-progress">0% voltooid</div>
+                </div>
+            </div>
+
+            <!-- In aanbouw -->
+            <div class="theme-card construction">
+                <div class="construction-content">
+                    <h3>Nieuw thema in ontwikkeling</h3>
+                    <p>PAV-O bouwt aan een nieuw thema.</p>
+                </div>
+            </div>
+
+            <div class="theme-card construction">
+                <div class="construction-content">
+                    <h3>Nieuw thema in ontwikkeling</h3>
+                    <p>Meer leerinhoud volgt binnenkort.</p>
+                </div>
+            </div>
+
+            <div class="theme-card construction">
+                <div class="construction-content">
+                    <h3>Nieuw thema in ontwikkeling</h3>
+                    <p>Blijf op de hoogte.</p>
+                </div>
+            </div>
+
         </div>
-    </div>
 
-    <footer class="footer">
-        <span>&copy; 2026 PAV-O | Alle rechten voorbehouden.</span>
-        <a href="voorwaarden.html">Gebruikersvoorwaarden & Privacy</a>
-    </footer>
+    </main>
 
-    <script>
-        const themes = [
-            { id: 1, title: "🌍 Thema 1 – Landschappen", active: true },
-            { id: 2, title: "🌿 Thema 2 – Levende natuur", active: true },
-            { id: 3, title: "⏳ Thema 3 – Werkwoordstijden", active: true },
-            { id: 4, title: "📐 Thema 4 – Wiskunde", active: true },
-            { id: 5, title: "📖 Thema 5 – Fictie & non-fictie", active: true },
-            { id: 6, title: "🎯 Thema 6 – Schatten", active: true },
-            { id: 7, title: "💬 Thema 7 – Communicatie", active: true },
-            { id: 8, title: "📰 Thema 8 – Actualiteit", active: true },
-            { id: 9, title: "🏛️ Thema 9 – Geschiedenis", active: true },
-            { id: 10, title: "🚧 Thema 10 – In aanbouw", active: false },
-            { id: 11, title: "🚧 Thema 11 – In aanbouw", active: false },
-            { id: 12, title: "🚧 Thema 12 – In aanbouw", active: false }
-        ];
+</div>
 
-        function renderThemes() {
-            const grid = document.getElementById("grid");
-            grid.innerHTML = "";
-
-            themes.forEach(t => {
-                const p = localStorage.getItem(`thema${t.id}_progress`) || 0;
-                const image = t.active ? `img/images/thema${t.id}.jpg` : `img/images/pavobouwmascotte.png`;
-                
-                grid.innerHTML += `
-                    <div class="thema-card ${t.active ? '' : 'locked'}">
-                        <div class="thema-image" style="background-image: url('${image}')">
-                            <div class="thema-overlay"><h4 class="thema-title">${t.title}</h4></div>
-                        </div>
-                        <div class="thema-content">
-                            <div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: ${p}%"></div>
-                                </div>
-                                <p style="font-size: 0.8rem; color: var(--muted); margin-bottom: 1rem;">${t.active ? p + '% voltooid' : 'Binnenkort beschikbaar'}</p>
-                            </div>
-                            <button class="start" ${t.active ? `onclick="window.location.href='thema${t.id}.html'"` : 'disabled'}>
-                                ${t.active ? 'Starten' : 'In afwachting'}
-                            </button>
-                        </div>
-                    </div>
-                `;
-            });
-        }
-
-        function handleLogin() {
-            const user = localStorage.getItem("studentName");
-            if(user) {
-                if(confirm("Wil je uitloggen?")) {
-                    localStorage.removeItem("studentName");
-                    localStorage.removeItem("studentClass");
-                    updateUI();
-                }
-            } else {
-                window.location.href = "login.html";
-            }
-        }
-
-        function updateUI() {
-            const n = localStorage.getItem("studentName");
-            const k = localStorage.getItem("studentClass");
-            const welcome = document.getElementById("welcomeText");
-            const btn = document.getElementById("loginBtnNav");
-
-            if(n) {
-                welcome.textContent = `Dag ${n}! 👋`;
-                document.getElementById("subWelcome").textContent = `Klaar voor Thema ${k}?`;
-                btn.innerHTML = `🚪 <span>Uitloggen</span>`;
-            } else {
-                welcome.textContent = "Welkom bij PAV-O";
-                btn.innerHTML = `🔑 <span>Inloggen</span>`;
-            }
-        }
-
-        window.onload = () => {
-            updateUI();
-            renderThemes();
-        };
-    </script>
 </body>
 </html>
