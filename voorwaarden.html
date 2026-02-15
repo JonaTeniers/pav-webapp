@@ -3,172 +3,300 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PAV-O | Hoe het werkt & Voorwaarden</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+    <title>PAV-O | Gebruikersgids & Voorwaarden</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --blue: #1976d2;
-            --bg: #f4f7fb;
+            --primary: #1976d2;
+            --primary-light: #e3f2fd;
+            --primary-dark: #115293;
+            --secondary: #64748b;
+            --bg: #f8fafc;
             --white: #ffffff;
-            --text: #1f2937;
-            --muted: #6b7280;
-            --accent: #ff9800;
+            --border: #e2e8f0;
+            --text-main: #1e293b;
+            --accent: #f59e0b;
         }
+
+        * { box-sizing: border-box; }
 
         body {
             margin: 0;
             font-family: 'Nunito', sans-serif;
-            background: var(--bg);
-            color: var(--text);
+            background-color: var(--bg);
+            color: var(--text-main);
             line-height: 1.6;
         }
 
-        .container {
-            max-width: 950px;
-            margin: 3rem auto;
-            padding: 3rem;
+        /* Layout Container */
+        .page-wrapper {
+            display: flex;
+            max-width: 1200px;
+            width: 100%;
+            margin: 40px auto;
+            gap: 40px;
+            padding: 0 20px;
+        }
+
+        /* Sticky Navigation Sidebar */
+        .sidebar-nav {
+            width: 280px;
+            position: sticky;
+            top: 40px;
+            height: fit-content;
+        }
+
+        .nav-card {
             background: var(--white);
-            border-radius: 28px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.07);
+            padding: 24px;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            border: 1px solid var(--border);
         }
 
-        header {
-            text-align: center;
-            margin-bottom: 3rem;
-            border-bottom: 2px solid var(--bg);
-            padding-bottom: 2rem;
+        .nav-card h4 { 
+            color: var(--secondary); 
+            text-transform: uppercase; 
+            font-size: 0.75rem; 
+            letter-spacing: 1.2px; 
+            margin-bottom: 20px;
+            margin-top: 0;
         }
 
-        h1 { color: var(--blue); font-weight: 800; font-size: 2.2rem; margin-bottom: 0.5rem; }
-        h2 { 
-            color: var(--blue); 
-            margin-top: 2.5rem; 
-            display: flex; 
-            align-items: center; 
-            gap: 10px;
-        }
-
-        .info-box {
-            background: #f0f7ff;
-            border-radius: 18px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            border: 1px solid #d0e3ff;
-        }
-
-        .step-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .step-card {
-            background: #fff;
-            padding: 1.2rem;
-            border-radius: 15px;
-            border: 1px solid #eee;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-        }
-
-        .step-card span {
+        .toc-link {
             display: block;
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
+            padding: 12px 16px;
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 12px;
+            transition: 0.2s;
+            margin-bottom: 6px;
         }
 
-        ul { padding-left: 1.2rem; }
-        li { margin-bottom: 0.5rem; }
+        .toc-link:hover { 
+            background: var(--primary-light); 
+            color: var(--primary); 
+        }
 
-        .btn-back {
-            display: inline-block;
-            margin-top: 2rem;
-            padding: 1rem 2rem;
-            background: var(--blue);
+        /* Main Content Card */
+        .content-card {
+            flex: 1;
+            background: var(--white);
+            padding: 60px;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+            border: 1px solid var(--border);
+        }
+
+        header { margin-bottom: 60px; border-bottom: 2px solid var(--bg); padding-bottom: 30px; }
+        h1 { font-size: 2.8rem; font-weight: 800; color: var(--primary); margin: 0; }
+        .subtitle { color: var(--secondary); font-size: 1.2rem; margin-top: 10px; }
+
+        h2 { font-size: 1.8rem; margin-top: 50px; color: var(--primary-dark); display: flex; align-items: center; gap: 12px; }
+        
+        /* Feature Grid & Cards */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .feature-item {
+            padding: 24px;
+            border-radius: 18px;
+            background: #fcfdfe;
+            border: 1px solid var(--border);
+            transition: 0.3s;
+        }
+
+        .feature-item:hover { border-color: var(--primary); background: var(--white); }
+
+        .feature-item strong { 
+            display: block; 
+            font-size: 1.15rem; 
+            margin-bottom: 8px; 
+            color: var(--primary); 
+        }
+
+        /* Focus Box (Eindtermen) */
+        .goals-highlight {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin: 40px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .goals-highlight h3 { margin-top: 0; font-size: 1.5rem; }
+        .goals-highlight ul { list-style: none; padding: 0; }
+        .goals-highlight li { margin-bottom: 12px; display: flex; align-items: flex-start; gap: 12px; font-weight: 600; }
+        .goals-highlight li::before { content: "🎯"; }
+
+        /* Step List */
+        .step-list {
+            margin: 30px 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .step-item {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .step-number {
+            background: var(--primary-light);
+            color: var(--primary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .btn-home {
+            display: inline-flex;
+            align-items: center;
+            padding: 16px 32px;
+            background-color: var(--primary);
             color: white;
             text-decoration: none;
             border-radius: 14px;
             font-weight: 800;
-            transition: 0.2s;
+            transition: 0.3s;
+            margin-top: 40px;
+            box-shadow: 0 4px 14px rgba(25, 118, 210, 0.3);
         }
 
-        .btn-back:hover { background: #1565c0; transform: translateY(-2px); }
+        .btn-home:hover { 
+            background-color: var(--primary-dark); 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 20px rgba(25, 118, 210, 0.4);
+        }
 
-        footer { text-align: center; margin-top: 3rem; color: var(--muted); font-size: 0.9rem; padding-bottom: 2rem; }
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px;
+            color: var(--secondary);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 950px) {
+            .page-wrapper { flex-direction: column; }
+            .sidebar-nav { width: 100%; position: static; }
+            .content-card { padding: 30px; }
+            .feature-grid { grid-template-columns: 1fr; }
+            h1 { font-size: 2.2rem; }
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <header>
-        <h1>Hoe werkt PAV-O?</h1>
-        <p>Alles wat je moet weten over jouw digitale leeromgeving.</p>
-    </header>
-
-    <section>
-        <h2>💻 Wat heb je nodig?</h2>
-        <p>Om vlot te kunnen werken, zorg je voor het volgende:</p>
-        <ul>
-            <li>Een <strong>laptop of Chromebook</strong> met een stabiele internetverbinding.</li>
-            <li>Gebruik de browser <strong>Google Chrome</strong> voor de beste ervaring.</li>
-            <li>Jouw <strong>naam en klas</strong> om in te loggen (zo gaat je werk niet verloren).</li>
-        </ul>
-    </section>
-
-    <section>
-        <h2>🎯 Wat is de bedoeling van een thema?</h2>
-        <div class="info-box">
-            <p>Elk thema in PAV-O is een <strong>leertraject</strong> dat je voorbereidt op de maatschappij en de arbeidsmarkt. Het doel is niet alleen om informatie te lezen, maar om <strong>vaardigheden</strong> te trainen die je later echt nodig hebt.</p>
-        </div>
-        <p>Zo is elk thema opgebouwd:</p>
-        <div class="step-grid">
-            <div class="step-card">
-                <span>🔍</span>
-                <strong>Ontdekken</strong>
-                <p>Je bekijkt bronnen, video's of teksten over het onderwerp.</p>
+    <div class="page-wrapper">
+        <aside class="sidebar-nav">
+            <div class="nav-card">
+                <h4>Inhoudsopgave</h4>
+                <a href="#werkwijze" class="toc-link">1. Hoe werkt PAV-O?</a>
+                <a href="#themas" class="toc-link">2. De Thema-opbouw</a>
+                <a href="#eindtermen" class="toc-link">3. Onderwijsdoelen</a>
+                <a href="#privacy" class="toc-link">4. Afspraken & Privacy</a>
+                <a href="index.html" class="toc-link" style="margin-top: 20px; color: var(--primary);">← Terug naar Dashboard</a>
             </div>
-            <div class="step-card">
-                <span>🧠</span>
-                <strong>Oefenen</strong>
-                <p>Je test je kennis met interactieve vragen en opdrachten.</p>
+        </aside>
+
+        <main class="content-card">
+            <header>
+                <h1>Gebruikersgids & Voorwaarden</h1>
+                <p class="subtitle">Alles wat je moet weten over jouw digitale leeromgeving voor PAV.</p>
+            </header>
+
+            <section id="werkwijze">
+                <h2>💻 Hoe werkt PAV-O?</h2>
+                <p>PAV-O is een interactief leerplatform speciaal ontwikkeld voor de basisvorming. Je hebt geen papieren boeken nodig; alle bronnen, opdrachten en hulp vind je hier op één plek.</p>
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <strong>Wat heb je nodig?</strong>
+                        Een laptop of Chromebook met internetverbinding. Gebruik altijd de browser Google Chrome voor de beste functies van Chattie AI.
+                    </div>
+                    <div class="feature-item">
+                        <strong>Log altijd in</strong>
+                        Door in te loggen met je naam en klas, wordt je voortgang per thema automatisch bewaard in de database van de school.
+                    </div>
+                </div>
+            </section>
+
+            <section id="themas">
+                <h2>🎯 De bedoeling van een thema</h2>
+                <p>Een thema is een verzameling van lessen rondom een actueel onderwerp. Het doel is dat je de theorie niet alleen leest, maar leert hoe je deze informatie gebruikt in het dagelijks leven en op je (toekomstige) werkplek.</p>
+                
+                <div class="step-list">
+                    <div class="step-item">
+                        <div class="step-number">1</div>
+                        <div>
+                            <strong>Ontdekken</strong><br>
+                            Je bekijkt bronnen, video's en interactieve kaarten om de leerstof te begrijpen.
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">2</div>
+                        <div>
+                            <strong>Oefenen met Chattie AI</strong><br>
+                            Je test je kennis. Chattie helpt je als je vastloopt door tips te geven, zonder het antwoord direct te verklappen.
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">3</div>
+                        <div>
+                            <strong>Toepassen in je Portfolio</strong><br>
+                            Je verwerkt de leerstof in een eigen tekst of verslag. Dit is jouw bewijs van leren voor de leerkracht.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="eindtermen">
+                <div class="goals-highlight">
+                    <h3>Focus op Onderwijsdoelen</h3>
+                    <p>Onze inhouden zijn afgestemd op de eindtermen van <strong>onderwijsdoelen.be</strong> voor de 1ste en 2de graad (Arbeidsmarktfinaliteit):</p>
+                    <ul>
+                        <li>Functionele taalvaardigheid (Lezen, schrijven en spreken in context).</li>
+                        <li>Wiskundige geletterdheid (Rekenvaardigheid en schatten).</li>
+                        <li>Digitale competenties (Veilig omgaan met AI en online tools).</li>
+                        <li>Maatschappelijke vorming (Inzicht in de wereld om je heen).</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="privacy">
+                <h2>⚖️ Afspraken & Privacy</h2>
+                <p>We werken op basis van vertrouwen en respect:</p>
+                <ul>
+                    <li><strong>Eigenaarschap:</strong> Je bent zelf verantwoordelijk voor het indienen van je werk via de 🚀-knop in je portfolio.</li>
+                    <li><strong>AI-gebruik:</strong> Gebruik Chattie AI als coach. Het simpelweg kopiëren van teksten wordt niet als jouw eigen werk beschouwd.</li>
+                    <li><strong>Gegevens:</strong> Wij slaan enkel je naam, klas, voortgang en portfolioteksten op. Deze data is enkel inzichtelijk voor je vakleerkracht.</li>
+                </ul>
+            </section>
+
+            <div style="text-align: center;">
+                <a href="index.html" class="btn-home">Ik begrijp het, start de les!</a>
             </div>
-            <div class="step-card">
-                <span>✍️</span>
-                <strong>Toepassen</strong>
-                <p>Je schrijft een eigen tekst of verslag in je Portfolio.</p>
-            </div>
-        </div>
-    </section>
 
-    <section>
-        <h2>🤖 Joue hulptroepen</h2>
-        <p>Je staat er niet alleen voor. PAV-O heeft ingebouwde tools om je te helpen:</p>
-        <ul>
-            <li><strong>Chattie AI:</strong> Heb je een vraag of begrijp je een tekst niet? Vraag het aan Chattie. Hij geeft je tips zonder het antwoord direct te verklappen.</li>
-            <li><strong>Mijn Portfolio:</strong> Dit is je persoonlijke "Word-omgeving". Hier verzamel je al je bewijzen en antwoorden.</li>
-            <li><strong>Voortgangsbalk:</strong> Op je dashboard zie je precies hoeveel procent van een thema je al hebt afgerond.</li>
-        </ul>
-    </section>
-
-    <section>
-        <h2>⚖️ Afspraken & Privacy</h2>
-        <p>De inhouden zijn gebaseerd op de <strong>onderwijsdoelen voor de basisvorming</strong> (Arbeidsmarktfinaliteit). We verwachten dat je:</p>
-        <ul>
-            <li>Geen teksten simpelweg kopieert van het internet of AI.</li>
-            <li>Je werk altijd indient via de 🚀-knop in je Portfolio.</li>
-            <li>Wij bewaren enkel je naam, klas en resultaten voor je leerkracht. We delen deze data met niemand anders.</li>
-        </ul>
-    </section>
-
-    <div style="text-align: center;">
-        <a href="index.html" class="btn-back">Ik begrijp het, naar het Dashboard!</a>
+            <footer>
+                &copy; 2026 PAV-O | Ontwikkeld voor de Basisvorming Arbeidsmarktfinaliteit.
+            </footer>
+        </main>
     </div>
-</div>
-
-<footer>
-    &copy; 2026 PAV-O | Ontwikkeld voor de 1ste en 2de graad Arbeidsmarktfinaliteit.
-</footer>
 
 </body>
 </html>
