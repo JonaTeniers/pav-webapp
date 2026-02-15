@@ -4,128 +4,211 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="data:," />
-  <title>Thema 6 - Unit 2</title>
+  <title>Thema 6 - Unit 2: Vermenigvuldigen & Delen</title>
 
   <style>
     body { font-family: "Segoe UI", sans-serif; background: #f1f5e9; padding: 2rem; margin: 0; }
     h1 { text-align: center; color: #5f8324; }
-    .question-box { background: white; padding: 2rem; margin: 2rem auto; border-radius: 12px; max-width: 760px; box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1); }
-    button { background: #7aa132; color: white; padding: 0.5rem 1rem; border: none; border-radius: 6px; margin-top: 1rem; cursor: pointer; font-size: 1rem; }
-    .feedback { margin-top: 1rem; font-weight: bold; padding: 1rem; border-radius: 8px; }
-    .success { background-color: #c8e6c9; color: #2e7d32; }
-    .error { background-color: #ffcdd2; color: #c62828; }
-    .nav-buttons { margin-top: 2rem; text-align: center; }
-    .hidden { display: none; }
-    .helper { color: #546e7a; font-size: 0.95rem; }
-    .select-input, .text-input { padding: 0.4rem; font-size: 1rem; width: min(400px, 100%); }
-    .unit-header { max-width: 760px; margin: 0 auto 1.5rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
-    .unit-header a { text-decoration: none; font-weight: 700; }
-    .back-link { color: #455a64; }
-    .start-link { background: #7aa132; color: white; padding: 0.4rem 0.9rem; border-radius: 999px; }
-  </style>
+    
+    .unit-header { max-width: 1000px; margin: 0 auto 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+    .back-link { text-decoration: none; color: #455a64; font-weight: bold; }
 
+    /* Layout Splitscreen */
+    .quiz-container { 
+      display: grid; 
+      grid-template-columns: 1fr 1fr; 
+      gap: 2rem; 
+      max-width: 1000px; 
+      margin: 2rem auto; 
+    }
+
+    .box { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1); position: relative; }
+    
+    .reasoning-box { 
+      background: #e3f2fd; 
+      border: 2px dashed #1976d2; 
+    }
+
+    .helper { color: #546e7a; font-size: 0.85rem; font-weight: bold; text-transform: uppercase; margin-bottom: 0.5rem; }
+    
+    textarea { 
+      width: 100%; 
+      height: 120px; 
+      padding: 12px; 
+      border-radius: 8px; 
+      border: 1px solid #bbdefb; 
+      resize: none; 
+      font-family: inherit; 
+      box-sizing: border-box;
+      margin-top: 10px;
+    }
+
+    /* Vragen styling */
+    label { display: block; background: #f9f9f9; padding: 12px; border-radius: 8px; margin-bottom: 8px; cursor: pointer; border: 1px solid #eee; }
+    input[type="radio"] { margin-right: 10px; transform: scale(1.2); }
+    .input-field { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ccc; font-size: 1rem; box-sizing: border-box; }
+
+    /* Knoppen */
+    button { background: #7aa132; color: white; padding: 0.8rem 1.5rem; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem; font-weight: bold; width: 100%; margin-top: 1rem; }
+    button:disabled { background: #ccc; cursor: not-allowed; }
+    #nextBtn { background: #455a64; }
+
+    .feedback { margin-top: 1rem; font-weight: bold; padding: 1rem; border-radius: 8px; text-align: center; }
+    .success { background-color: #c8e6c9; color: #2e7d32; border: 1px solid #2e7d32; }
+    .error { background-color: #ffcdd2; color: #c62828; border: 1px solid #c62828; }
+    
+    .hidden { display: none; }
+
+    @media (max-width: 850px) {
+      .quiz-container { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
+
   <h1>📘 Thema 6 - Unit 2</h1>
+  
   <div class="unit-header">
     <a class="back-link" href="thema6.html">← Terug naar thema</a>
-    <a class="start-link" href="#quizBox">Start oefenen</a>
+    <span id="qCount" style="font-weight:bold;">Vraag 1 van 10</span>
   </div>
-  <div class="question-box" id="quizBox">
-    <h2 id="qCount">Vraag 1 van 10</h2>
-    <p class="helper" id="qType"></p>
-    <div id="questionText"></div>
-    <form id="answerForm"></form>
-    <button type="button" onclick="checkAnswer()">Controleer</button>
-    <div class="feedback" id="feedback"></div>
-    <div class="nav-buttons">
-      <button id="nextBtn" class="hidden" type="button" onclick="nextQuestion()">Volgende vraag →</button>
+
+  <div id="quizContainer" class="quiz-container">
+    <div class="box" id="leftSide">
+      <p class="helper" id="qType"></p>
+      <h3 id="questionText" style="margin-top:0;"></h3>
+      <div id="answerForm"></div>
+    </div>
+
+    <div class="box reasoning-box" id="rightSide">
+      <p class="helper">Bewerking & Argumentatie</p>
+      <p style="font-size: 0.9rem; margin: 0;">Leg uit hoe je tot deze schatting komt:</p>
+      <textarea id="reasoningInput" placeholder="Bijv: Ik maak van 24 een 25 en van 19 een 20..."></textarea>
+      
+      <button id="checkBtn" onclick="checkAnswer()">Controleer Antwoord</button>
+      
+      <div id="feedback" class="feedback hidden"></div>
+      <button id="nextBtn" class="hidden" onclick="nextQuestion()">Volgende vraag →</button>
     </div>
   </div>
-  <div class="question-box hidden" id="endScreen">
+
+  <div class="box hidden" id="endScreen" style="max-width: 500px; margin: 50px auto; text-align: center;">
     <h2>🎉 Unit voltooid!</h2>
-    <p>Je behaalde <span id="xpScore">0</span> XP.</p>
+    <p>Je hebt de schattingen voor vermenigvuldigen en delen afgerond.</p>
+    <div style="font-size: 2rem; font-weight: bold; color: #7aa132; margin: 1rem 0;">
+      <span id="xpScore">0</span> XP
+    </div>
     <div class="nav-buttons">
-      <a href="thema6.html"><button type="button">← Terug naar thema</button></a>
+      <a href="thema6.html"><button type="button" style="background:#455a64;">← Terug naar thema</button></a>
       <a href="thema6unit3.html"><button type="button">→ Volgende unit</button></a>
     </div>
   </div>
 
   <script>
-    const questions = [{"type": "mc", "typeLabel": "Meerkeuze", "question": "24 × 19 schat je als...", "options": ["20 × 20", "25 × 20", "20 × 10"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Schat: 49 × 6", "accepted": ["300"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies schatting voor 243 : 9.", "options": ["24", "27", "30"], "correctValue": "24"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "89 × 11 ligt ongeveer rond...", "options": ["900", "1000", "1100"], "correctIndex": 1}, {"type": "open", "typeLabel": "Open vraag", "question": "Schat: 203 : 4", "accepted": ["50"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies beste schatting voor 73 × 8.", "options": ["560", "600", "640"], "correctValue": "600"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Bij delen rond je vaak af naar...", "options": ["0", "handige veelvouden", "een willekeurig getal"], "correctIndex": 1}, {"type": "open", "typeLabel": "Open vraag", "question": "Schat: 999 : 3", "accepted": ["330", "300"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies schatting voor 15 × 15.", "options": ["100", "200", "300"], "correctValue": "200"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "45 × 21 is ongeveer...", "options": ["900", "1000", "1100"], "correctIndex": 1}];
-    let currentQuestion = 0;
+    const questions = [
+      { type: "mc", q: "24 × 19: Wat is de handigste schatting?", options: ["20 × 20", "25 × 20", "20 × 10"], correct: 0, label: "Meerkeuze" },
+      { type: "open", q: "Schat de uitkomst: 49 × 6", accepted: ["300"], label: "Open vraag" },
+      { type: "mc", q: "243 : 9: Welk getal dichtbij 243 is makkelijk deelbaar door 9?", options: ["240", "270", "180"], correct: 1, label: "Handig delen" },
+      { type: "mc", q: "89 × 11 ligt ongeveer rond...", options: ["900", "1000", "1100"], correct: 0, label: "Meerkeuze" },
+      { type: "open", q: "Schat de uitkomst: 203 : 4", accepted: ["50"], label: "Open vraag" },
+      { type: "mc", q: "73 × 8: Wat is de beste schatting?", options: ["70 × 8 = 560", "75 × 8 = 600", "80 × 8 = 640"], correct: 1, label: "Keuze" },
+      { type: "mc", q: "Bij het schatten van een deling zoek je naar...", options: ["Het dichtstbijzijnde ronde getal", "Een handig veelvoud", "Een getal met een 0 op het einde"], correct: 1, label: "Theorie" },
+      { type: "open", q: "Schat: 999 : 3", accepted: ["333", "330", "300"], label: "Open vraag" },
+      { type: "mc", q: "15 × 15: Wat is de beste schatting?", options: ["10 × 10 = 100", "15 × 10 = 150", "20 × 10 = 200"], correct: 2, label: "Meerkeuze" },
+      { type: "mc", q: "45 × 21 is ongeveer...", options: ["900", "1000", "1100"], correct: 0, label: "Meerkeuze" }
+    ];
+
+    let currentQ = 0;
     let score = 0;
 
-    function renderOptions(options, name) {
-      return options.map((opt, index) => (`<label><input type="radio" name="${name}" value="${index}"> ${opt}</label><br>`)).join('');
-    }
-
     function loadQuestion() {
-      const q = questions[currentQuestion];
-      document.getElementById('qCount').innerText = `Vraag ${currentQuestion + 1} van ${questions.length}`;
-      document.getElementById('qType').innerText = q.typeLabel;
-      document.getElementById('questionText').innerText = q.question;
+      const q = questions[currentQ];
+      document.getElementById('qCount').innerText = `Vraag ${currentQ + 1} van ${questions.length}`;
+      document.getElementById('qType').innerText = q.label;
+      document.getElementById('questionText').innerText = q.q;
       const form = document.getElementById('answerForm');
       form.innerHTML = '';
+      
       if (q.type === 'mc') {
-        form.innerHTML = renderOptions(q.options, 'answer');
-      } else if (q.type === 'open') {
-        form.innerHTML = `<input class="text-input" type="text" name="answer" placeholder="Typ je antwoord...">`;
-      } else if (q.type === 'drag') {
-        const options = ['Kies...', ...q.options];
-        form.innerHTML = `<select class="select-input" name="answer">${options.map((opt) => `<option value="${opt}">${opt}</option>`).join('')}</select>`;
+        q.options.forEach((opt, i) => {
+          form.innerHTML += `<label><input type="radio" name="ans" value="${i}"> ${opt}</label>`;
+        });
+      } else {
+        form.innerHTML = `<input type="text" id="openAns" class="input-field" placeholder="Typ je getal...">`;
       }
-      document.getElementById('feedback').innerText = '';
-      document.getElementById('feedback').className = 'feedback';
+
+      document.getElementById('reasoningInput').value = '';
+      document.getElementById('reasoningInput').disabled = false;
+      document.getElementById('checkBtn').disabled = false;
+      document.getElementById('checkBtn').classList.remove('hidden');
       document.getElementById('nextBtn').classList.add('hidden');
+      document.getElementById('feedback').classList.add('hidden');
     }
 
-    function normalize(value) { return value.trim().toLowerCase(); }
-
     function checkAnswer() {
-      const q = questions[currentQuestion];
-      let isCorrect = false;
-      if (q.type === 'mc') {
-        const selected = document.querySelector('input[name="answer"]:checked');
-        if (!selected) return;
-        isCorrect = Number(selected.value) === q.correctIndex;
-      } else if (q.type === 'open') {
-        const input = document.querySelector('input[name="answer"]');
-        if (!input || !input.value.trim()) return;
-        const normalized = normalize(input.value);
-        isCorrect = q.accepted.some((answer) => normalize(answer) === normalized);
-      } else if (q.type === 'drag') {
-        const selected = document.querySelector('select[name="answer"]');
-        if (!selected || selected.value === 'Kies...') return;
-        isCorrect = normalize(selected.value) === normalize(q.correctValue);
+      const q = questions[currentQ];
+      const reasoning = document.getElementById('reasoningInput').value.trim();
+      
+      if (reasoning.length < 5) {
+        alert("Schrijf eerst je berekening of reden op!");
+        return;
       }
 
-      const feedback = document.getElementById('feedback');
+      let isCorrect = false;
+      if (q.type === 'mc') {
+        const selected = document.querySelector('input[name="ans"]:checked');
+        if (!selected) { alert("Selecteer een antwoord!"); return; }
+        isCorrect = parseInt(selected.value) === q.correct;
+      } else {
+        const ans = document.getElementById('openAns').value.trim().toLowerCase();
+        if (!ans) { alert("Vul een antwoord in!"); return; }
+        isCorrect = q.accepted.includes(ans);
+      }
+
+      // One-shot: Blokkeer alles
+      document.getElementById('reasoningInput').disabled = true;
+      document.getElementById('checkBtn').classList.add('hidden');
+      const inputs = document.getElementById('answerForm').querySelectorAll('input');
+      inputs.forEach(i => i.disabled = true);
+
+      const fb = document.getElementById('feedback');
+      fb.classList.remove('hidden');
       if (isCorrect) {
         score += 3;
-        feedback.innerText = '✅ Juist! +3 XP';
-        feedback.classList.add('success');
+        fb.innerText = "✅ Juist! Je hebt goed nagedacht.";
+        fb.className = "feedback success";
       } else {
-        feedback.innerText = '❌ Fout. Geen XP.';
-        feedback.classList.add('error');
+        fb.innerText = "❌ Niet helemaal juist. Kijk goed naar de getallen.";
+        fb.className = "feedback error";
       }
       document.getElementById('nextBtn').classList.remove('hidden');
     }
 
     function nextQuestion() {
-      currentQuestion++;
-      if (currentQuestion < questions.length) {
+      currentQ++;
+      if (currentQ < questions.length) {
         loadQuestion();
       } else {
-        localStorage.setItem('thema6unit2', score);
-        document.getElementById('quizBox').classList.add('hidden');
-        document.getElementById('endScreen').classList.remove('hidden');
-        document.getElementById('xpScore').innerText = score;
+        finish();
       }
+    }
+
+    function finish() {
+      document.getElementById('quizContainer').classList.add('hidden');
+      document.getElementById('endScreen').classList.remove('hidden');
+      document.getElementById('xpScore').innerText = score;
+      localStorage.setItem('thema6unit2', score);
+      if (typeof syncXP === 'function') { syncXP('thema6unit2', score); }
     }
 
     window.onload = loadQuestion;
   </script>
+
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="./firebase.js"></script>
+  <script src="./pavo-xp-sync.js"></script>
 
 </body>
 </html>
