@@ -3,329 +3,262 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PAV-O | Unit</title>
+<title>Unit</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap" rel="stylesheet">
 
 <style>
-body {
-  font-family: 'Nunito', sans-serif;
-  background: #f4f7fb;
-  padding: 2rem;
-  margin: 0;
+
+body{
+font-family:'Nunito',sans-serif;
+background:#f1f5f9;
+margin:0;
+padding:40px;
 }
 
-h1 { text-align: center; }
-
-.unit-header {
-  max-width: 1000px;
-  margin: 0 auto 1.5rem;
-  display: flex;
-  justify-content: space-between;
-  font-weight: bold;
+.container{
+max-width:1000px;
+margin:auto;
 }
 
-.quiz-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  max-width: 1000px;
-  margin: auto;
+.card{
+background:white;
+padding:20px;
+border-radius:12px;
+box-shadow:0 6px 18px rgba(0,0,0,0.08);
+margin-bottom:20px;
 }
 
-.box {
-  background: white;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+button{
+background:#0f766e;
+color:white;
+border:none;
+padding:10px 18px;
+border-radius:8px;
+cursor:pointer;
+font-weight:700;
 }
 
-.reasoning-box {
-  background: #eef6ff;
-  border: 2px dashed #0b4da2;
+button:hover{
+background:#0b5f58;
 }
 
-label {
-  display: block;
-  background: #f9f9f9;
-  padding: 10px;
-  border-radius: 8px;
-  margin-bottom: 8px;
-  cursor: pointer;
+.answers button{
+display:block;
+margin:8px 0;
+width:100%;
 }
 
-textarea, input[type="text"], input[type="number"] {
-  width: 100%;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  margin-top: 10px;
+img{
+max-width:100%;
+border-radius:10px;
+margin-top:10px;
 }
 
-button {
-  background: #0b4da2;
-  color: white;
-  border: none;
-  padding: 0.8rem 1rem;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  width: 100%;
-  margin-top: 1rem;
+.xp{
+font-weight:800;
+text-align:right;
+margin-bottom:10px;
 }
 
-.feedback {
-  margin-top: 1rem;
-  padding: 1rem;
-  border-radius: 8px;
-  text-align: center;
-  font-weight: bold;
-}
-
-.success { background: #d1fae5; color: #065f46; }
-.error { background: #fee2e2; color: #991b1b; }
-
-.hidden { display: none; }
-
-@media (max-width: 850px) {
-  .quiz-container { grid-template-columns: 1fr; }
-}
 </style>
 </head>
+
 <body>
 
-<h1 id="unitTitle">Unit laden...</h1>
+<div class="container">
 
-<div class="unit-header">
-  <span id="progressText"></span>
-  <span id="xpDisplay">0 XP</span>
+<h1 id="title">Unit laden...</h1>
+<div class="xp" id="xpBox">0 XP</div>
+
+<div id="questionCard" class="card"></div>
+
+<div id="navButtons"></div>
+
 </div>
 
-<div id="quizContainer" class="quiz-container">
-  <div class="box">
-    <h3 id="questionText"></h3>
-    <div id="answerForm"></div>
-  </div>
 
-  <div class="box reasoning-box">
-    <p><strong>Argumentatie</strong></p>
-    <p style="font-size:0.9rem;">
-      Leg uit hoe je tot je antwoord komt.
-    </p>
-    <textarea id="reasoningInput"></textarea>
-
-    <button id="checkBtn">Controleer Antwoord</button>
-
-    <div id="feedback" class="feedback hidden"></div>
-    <button id="nextBtn" class="hidden">Volgende vraag →</button>
-  </div>
-</div>
-
-<div id="endScreen" class="box hidden" style="max-width:500px;margin:3rem auto;text-align:center;">
-  <h2>🎉 Unit voltooid!</h2>
-  <p>Je behaalde:</p>
-  <div style="font-size:2rem;font-weight:bold;" id="finalXP">0 XP</div>
-</div>
-
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 <script src="./firebase.js"></script>
 
 <script>
 
-const params = new URLSearchParams(window.location.search);
-const themeId = params.get("theme");
-const unitId = params.get("unit");
+let themeId;
+let unitIndex;
+let themeData;
+let unitData;
 
-const db = firebase.firestore();
+let questionIndex=0;
+let totalXP=0;
 
-let questions = [];
-let currentQ = 0;
-let xp = 0;
-let answersLog = [];
+/* ================= LOAD ================= */
 
-async function loadUnit() {
+async function load(){
 
-  const unitDoc = await db.collection("themes")
-    .doc(themeId)
-    .collection("units")
-    .doc(unitId)
-    .get();
+await window.firebaseReady;
 
-  const unit = unitDoc.data();
-  document.getElementById("unitTitle").innerText = unit.title;
+const params=new URLSearchParams(window.location.search);
 
-  const snapshot = await db.collection("themes")
-    .doc(themeId)
-    .collection("units")
-    .doc(unitId)
-    .collection("questions")
-    .get();
+themeId=params.get("theme");
+unitIndex=parseInt(params.get("unit"));
 
-  snapshot.forEach(doc => {
-    questions.push({ id: doc.id, ...doc.data() });
-  });
+const doc=await window.db.collection("themes").doc(themeId).get();
 
-  loadQuestion();
+if(!doc.exists){
+document.getElementById("title").innerText="Thema niet gevonden";
+return;
 }
 
-function loadQuestion(){
+themeData=doc.data();
 
-  const q = questions[currentQ];
+unitData=themeData.units?.[unitIndex];
 
-  document.getElementById("progressText").innerText =
-    `Vraag ${currentQ+1} van ${questions.length}`;
+if(!unitData){
 
-  document.getElementById("xpDisplay").innerText = xp + " XP";
+document.getElementById("questionCard").innerHTML=`
+<img src="img/images/pavobouwmascotte.png">
+<h3>Deze unit bestaat nog niet</h3>
+`;
 
-  document.getElementById("questionText").innerText = q.question;
-
-  const form = document.getElementById("answerForm");
-  form.innerHTML = "";
-
-  // 🔹 Vraagtypes
-
-  if(q.type === "Meerkeuze (1)"){
-    q.options.forEach(opt => {
-      form.innerHTML += `
-        <label>
-          <input type="radio" name="ans" value="${opt}">
-          ${opt}
-        </label>`;
-    });
-  }
-
-  else if(q.type === "Meerkeuze (meerdere)"){
-    q.options.forEach(opt => {
-      form.innerHTML += `
-        <label>
-          <input type="checkbox" name="ans" value="${opt}">
-          ${opt}
-        </label>`;
-    });
-  }
-
-  else if(q.type === "Juist/Onjuist"){
-    form.innerHTML = `
-      <label><input type="radio" name="ans" value="Juist"> Juist</label>
-      <label><input type="radio" name="ans" value="Onjuist"> Onjuist</label>
-    `;
-  }
-
-  else if(q.type === "Open vraag"){
-    form.innerHTML = `<input type="text" id="openAns">`;
-  }
-
-  else if(q.type === "Numeriek"){
-    form.innerHTML = `<input type="number" id="openAns">`;
-  }
-
-  // 🔹 Motivatie placeholder aanpassen
-  const reasoningField = document.getElementById("reasoningInput");
-  reasoningField.value = "";
-
-  if(q.requireExplanation){
-    reasoningField.placeholder = "Leg uit hoe je tot je antwoord komt (verplicht)";
-  } else {
-    reasoningField.placeholder = "Je mag hier je redenering noteren (optioneel)";
-  }
-
-  document.getElementById("feedback").classList.add("hidden");
-  document.getElementById("nextBtn").classList.add("hidden");
-  document.getElementById("checkBtn").classList.remove("hidden");
+return;
 }
 
-document.getElementById("checkBtn").onclick = function(){
+document.getElementById("title").innerText=unitData.title || "Unit";
 
-  const q = questions[currentQ];
-  const reasoning = document.getElementById("reasoningInput").value.trim();
+showQuestion();
 
-  // 🔹 Alleen verplicht indien ingesteld
-  if(q.requireExplanation && reasoning.length < 5){
-    alert("Geef eerst een uitleg bij je antwoord.");
-    return;
-  }
-
-  let correct = false;
-  let givenAnswer = null;
-
-  if(q.type === "Meerkeuze (1)" || q.type === "Juist/Onjuist"){
-    const selected = document.querySelector('input[name="ans"]:checked');
-    if(!selected){ alert("Kies een antwoord."); return; }
-    givenAnswer = selected.value;
-    correct = givenAnswer === q.correctAnswer;
-  }
-
-  else if(q.type === "Meerkeuze (meerdere)"){
-    const selected = [...document.querySelectorAll('input[name="ans"]:checked')];
-    if(selected.length === 0){ alert("Kies minstens één antwoord."); return; }
-    givenAnswer = selected.map(i => i.value).sort();
-    correct = JSON.stringify(givenAnswer) === JSON.stringify(q.correctAnswer.sort());
-  }
-
-  else if(q.type === "Open vraag" || q.type === "Numeriek"){
-    const ans = document.getElementById("openAns").value.trim();
-    if(!ans){ alert("Vul een antwoord in."); return; }
-    givenAnswer = ans;
-
-    if(q.modelAnswer){
-      correct = ans.toLowerCase() === q.modelAnswer.toLowerCase();
-    }
-  }
-
-  document.getElementById("checkBtn").classList.add("hidden");
-  document.getElementById("nextBtn").classList.remove("hidden");
-
-  const fb = document.getElementById("feedback");
-  fb.classList.remove("hidden");
-
-  if(correct){
-    xp += q.points || 3;
-    fb.innerText = "✅ Correct! +" + (q.points || 3) + " XP";
-    fb.className = "feedback success";
-  } else {
-    fb.innerText = "❌ Niet correct.";
-    fb.className = "feedback error";
-  }
-
-  answersLog.push({
-    questionId: q.id,
-    answer: givenAnswer,
-    reasoning: reasoning,
-    correct: correct,
-    points: q.points || 3
-  });
-
-  document.getElementById("xpDisplay").innerText = xp + " XP";
 }
 
-document.getElementById("nextBtn").onclick = function(){
-  currentQ++;
-  if(currentQ < questions.length){
-    loadQuestion();
-  } else {
-    finish();
-  }
+load();
+
+
+/* ================= SHOW QUESTION ================= */
+
+function showQuestion(){
+
+const q=unitData.questions[questionIndex];
+
+if(!q){
+
+finishUnit();
+return;
 }
 
-async function finish(){
+const card=document.getElementById("questionCard");
 
-  document.getElementById("quizContainer").classList.add("hidden");
-  document.getElementById("endScreen").classList.remove("hidden");
-  document.getElementById("finalXP").innerText = xp + " XP";
+let html=`<h3>${q.question}</h3>`;
 
-  await db.collection("scores").add({
-    naam: localStorage.getItem("studentName") || "Onbekend",
-    klas: localStorage.getItem("studentClass") || "-",
-    thema: themeId,
-    unit: unitId,
-    score: xp,
-    answers: answersLog,
-    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-  });
+if(q.image){
+html+=`<img src="${q.image}">`;
 }
 
-loadUnit();
+if(q.type==="meerkeuze"){
+
+html+=`<div class="answers">`;
+
+q.answers.forEach(ans=>{
+if(ans){
+html+=`<button onclick="checkAnswer('${ans}')">${ans}</button>`;
+}
+});
+
+html+=`</div>`;
+
+}
+
+else if(q.type==="ja"){
+
+html+=`
+<div class="answers">
+<button onclick="checkAnswer('ja')">Ja</button>
+<button onclick="checkAnswer('nee')">Nee</button>
+</div>
+`;
+
+}
+
+else{
+
+html+=`
+<textarea id="inputAnswer" style="width:100%;height:100px"></textarea>
+<button onclick="checkAnswer(document.getElementById('inputAnswer').value)">
+Controleer
+</button>
+`;
+
+}
+
+card.innerHTML=html;
+
+}
+
+
+/* ================= CHECK ================= */
+
+function checkAnswer(answer){
+
+const q=unitData.questions[questionIndex];
+
+let correct=false;
+
+if(answer.toLowerCase().trim() ===
+(q.correct||"").toLowerCase().trim()){
+correct=true;
+}
+
+if(correct){
+
+totalXP+=q.xp || 0;
+
+document.getElementById("xpBox").innerText=
+totalXP+" XP";
+
+alert("Correct! +" + q.xp + " XP");
+
+}else{
+
+alert("Niet juist");
+}
+
+questionIndex++;
+showQuestion();
+
+}
+
+
+/* ================= FINISH ================= */
+
+function finishUnit(){
+
+const nav=document.getElementById("navButtons");
+
+let nextUnit=unitIndex+1;
+
+nav.innerHTML=`
+
+<div class="card">
+
+<h2>Klaar!</h2>
+<p>Je behaalde ${totalXP} XP</p>
+
+<button onclick="goTheme()">Terug naar thema</button>
+<button onclick="goNext()">Volgende unit</button>
+
+</div>
+`;
+
+document.getElementById("questionCard").innerHTML="";
+
+}
+
+
+function goTheme(){
+window.history.back();
+}
+
+function goNext(){
+window.location.href=
+"unit.html?theme="+themeId+"&unit="+(unitIndex+1);
+}
 
 </script>
 
