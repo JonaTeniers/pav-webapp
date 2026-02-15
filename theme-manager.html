@@ -34,10 +34,7 @@ body {
     padding: 20px;
 }
 
-.sidebar h2 {
-    color: var(--primary);
-    font-weight: 800;
-}
+.sidebar h2 { color: var(--primary); }
 
 .sidebar a {
     display: block;
@@ -70,10 +67,10 @@ body {
     margin-bottom: 30px;
 }
 
-input, textarea, select {
+input, textarea {
     width: 100%;
     padding: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     border-radius: 8px;
     border: 1px solid var(--border);
     font-family: inherit;
@@ -83,22 +80,21 @@ input, textarea, select {
     background: var(--primary);
     color: white;
     border: none;
-    padding: 10px 20px;
+    padding: 8px 15px;
     border-radius: 8px;
     font-weight: 700;
     cursor: pointer;
 }
 
-.btn:hover {
-    background: var(--primary-dark);
-}
+.btn:hover { background: var(--primary-dark); }
 
-.theme-item {
+.unit-box {
     border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 15px;
-    margin-bottom: 10px;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 10px;
 }
+.small { font-size: 0.8rem; color: #64748b; }
 </style>
 </head>
 <body>
@@ -112,30 +108,19 @@ input, textarea, select {
 
 <main class="main">
 
-    <header>
-        <h1>Thema Beheer</h1>
-        <p>Maak en beheer hier je thema’s.</p>
-    </header>
+<h1>Thema Beheer</h1>
 
-    <section class="content-card">
-        <h3>➕ Nieuw Thema</h3>
+<section class="content-card">
+    <h3>➕ Nieuw Thema</h3>
+    <input type="text" id="themeTitle" placeholder="Titel">
+    <textarea id="themeDescription" placeholder="Beschrijving"></textarea>
+    <button class="btn" onclick="createTheme()">Opslaan</button>
+</section>
 
-        <input type="text" id="themeTitle" placeholder="Titel (bv. Thema 10 – Mediawijsheid)">
-        <textarea id="themeDescription" placeholder="Beschrijving van het thema"></textarea>
-
-        <label>Accentkleur</label>
-        <input type="color" id="themeAccent" value="#0b4da2">
-
-        <label>Headerkleur</label>
-        <input type="color" id="themeHeader" value="#14b8a6">
-
-        <button class="btn" onclick="createTheme()">Thema Opslaan</button>
-    </section>
-
-    <section class="content-card">
-        <h3>📂 Bestaande Thema’s</h3>
-        <div id="themeList">Laden...</div>
-    </section>
+<section class="content-card">
+    <h3>📂 Thema’s</h3>
+    <div id="themeList">Laden...</div>
+</section>
 
 </main>
 
@@ -145,25 +130,22 @@ input, textarea, select {
 
 <script>
 
-async function createTheme() {
-    const title = document.getElementById("themeTitle").value;
-    const desc = document.getElementById("themeDescription").value;
-    const accent = document.getElementById("themeAccent").value;
-    const header = document.getElementById("themeHeader").value;
+// ================= THEMES =================
 
-    if(!title) return alert("Titel verplicht.");
+async function createTheme() {
+    const title = themeTitle.value;
+    const desc = themeDescription.value;
+    if(!title) return alert("Titel verplicht");
 
     await db.collection("themes").add({
-        title: title,
+        title,
         description: desc,
-        accentColor: accent,
-        headerColor: header,
         active: true,
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
     });
 
-    document.getElementById("themeTitle").value = "";
-    document.getElementById("themeDescription").value = "";
+    themeTitle.value = "";
+    themeDescription.value = "";
     loadThemes();
 }
 
@@ -171,32 +153,94 @@ async function loadThemes() {
     const container = document.getElementById("themeList");
     container.innerHTML = "";
 
-    const snapshot = await db.collection("themes").orderBy("createdAt","desc").get();
+    const snapshot = await db.collection("themes").get();
 
     snapshot.forEach(doc => {
         const t = doc.data();
+
         container.innerHTML += `
-            <div class="theme-item">
-                <strong>${t.title}</strong><br>
-                <small>${t.description || ""}</small><br><br>
-                <button class="btn" onclick="toggleTheme('${doc.id}', ${t.active})">
-                    ${t.active ? "Deactiveren" : "Activeren"}
-                </button>
-            </div>
+        <div class="unit-box">
+            <strong>${t.title}</strong><br>
+            <span class="small">${t.description || ""}</span><br><br>
+            <button class="btn" onclick="showUnitBuilder('${doc.id}')">Beheer Units</button>
+            <div id="units-${doc.id}"></div>
+        </div>
         `;
     });
 }
 
-async function toggleTheme(id, status) {
-    await db.collection("themes").doc(id).update({
-        active: !status
+loadThemes();
+
+// ================= UNITS =================
+
+async function showUnitBuilder(themeId) {
+    const container = document.getElementById(`units-${themeId}`);
+    container.innerHTML = "Laden...";
+
+    const snapshot = await db.collection("themes").doc(themeId).collection("units").orderBy("order").get();
+
+    let html = `
+        <div style="margin-top:10px;">
+            <h4>Units</h4>
+            <button class="btn" onclick="addUnit('${themeId}')">➕ Unit toevoegen</button>
+        </div>
+    `;
+
+    snapshot.forEach(doc => {
+        const u = doc.data();
+        html += `
+            <div class="unit-box">
+                <strong>${u.title}</strong>
+                <div class="small">${u.description || ""}</div>
+                <div class="small">
+                    ${u.active ? "✔ Actief" : "🚧 In ontwikkeling"} |
+                    Motivatie verplicht: ${u.requireMotivation ? "Ja" : "Nee"}
+                </div>
+                <button class="btn" onclick="toggleUnit('${themeId}','${doc.id}',${u.active})">
+                    ${u.active ? "In ontwikkeling zetten" : "Activeren"}
+                </button>
+            </div>
+        `;
     });
-    loadThemes();
+
+    container.innerHTML = html;
 }
 
-loadThemes();
+async function addUnit(themeId) {
+    const snapshot = await db.collection("themes").doc(themeId).collection("units").get();
+    if(snapshot.size >= 12) {
+        alert("Maximaal 12 units per thema.");
+        return;
+    }
+
+    const title = prompt("Unit titel:");
+    if(!title) return;
+
+    const description = prompt("Beschrijving:");
+    const requireMotivation = confirm("Moet motivatie verplicht zijn?");
+
+    await db.collection("themes").doc(themeId).collection("units").add({
+        title,
+        description,
+        active: true,
+        inDevelopment: false,
+        requireMotivation,
+        order: snapshot.size + 1,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    showUnitBuilder(themeId);
+}
+
+async function toggleUnit(themeId, unitId, status) {
+    await db.collection("themes").doc(themeId).collection("units").doc(unitId).update({
+        active: !status
+    });
+    showUnitBuilder(themeId);
+}
 
 </script>
 
 </body>
 </html>
+
