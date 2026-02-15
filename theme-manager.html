@@ -4,275 +4,325 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PAV-O | Theme Manager</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-:root {
-    --primary: #0b4da2;
-    --bg: #f0f4f8;
-    --white: #ffffff;
-    --border: #e2e8f0;
-    --text: #1e293b;
+:root{
+--primary:#0b4da2;
+--bg:#f0f4f8;
+--white:#ffffff;
+--border:#e2e8f0;
+--text:#1e293b;
 }
 
-body {
-    margin: 0;
-    font-family: 'Nunito', sans-serif;
-    background: var(--bg);
-    display: flex;
-    min-height: 100vh;
+body{
+margin:0;
+font-family:'Nunito',sans-serif;
+background:var(--bg);
+display:flex;
 }
 
 /* SIDEBAR */
-.sidebar {
-    width: 260px;
-    background: var(--white);
-    border-right: 1px solid var(--border);
-    padding: 20px;
+
+.sidebar{
+width:260px;
+background:white;
+height:100vh;
+position:fixed;
+border-right:1px solid var(--border);
+padding:20px;
 }
 
-.sidebar h2 {
-    color: var(--primary);
-    font-weight: 800;
+.sidebar h2{
+color:var(--primary);
+font-weight:800;
 }
 
-.sidebar a {
-    display: block;
-    text-decoration: none;
-    color: var(--text);
-    padding: 12px;
-    border-radius: 10px;
-    margin-bottom: 8px;
-    font-weight: 700;
+.sidebar a{
+display:block;
+padding:12px 15px;
+margin-bottom:6px;
+border-radius:10px;
+text-decoration:none;
+font-weight:700;
+color:var(--text);
 }
 
-.sidebar a:hover,
-.sidebar a.active {
-    background: #e0f2fe;
-    color: var(--primary);
+.sidebar a.active,
+.sidebar a:hover{
+background:#e0f2fe;
+color:var(--primary);
 }
 
-/* MAIN LAYOUT */
-.main-wrapper {
-    flex: 1;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-    padding: 40px;
+/* MAIN */
+
+.main{
+margin-left:260px;
+width:calc(100% - 260px);
+display:grid;
+grid-template-columns:1fr 1.2fr;
+gap:30px;
+padding:40px;
 }
 
-/* EDIT PANEL */
-.editor {
-    background: white;
-    padding: 25px;
-    border-radius: 16px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+/* LEFT PANEL */
+
+.editor{
+background:white;
+padding:25px;
+border-radius:18px;
+box-shadow:0 4px 12px rgba(0,0,0,0.05);
 }
 
-.editor h2 {
-    margin-top: 0;
-}
-
-.editor label {
-    font-weight: 700;
-    font-size: 0.9rem;
+.editor h2{
+margin-top:0;
 }
 
 .editor input,
-.editor textarea,
-.editor select {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
+.editor textarea{
+width:100%;
+padding:10px;
+border-radius:8px;
+border:1px solid var(--border);
+margin-bottom:15px;
+font-family:inherit;
 }
 
-.editor button {
-    background: var(--primary);
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 700;
+.editor textarea{
+min-height:80px;
+resize:none;
 }
 
-/* PREVIEW PANEL */
-.preview {
-    background: white;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+.editor button{
+background:var(--primary);
+color:white;
+padding:10px 16px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-weight:700;
 }
 
-.preview-header {
-    padding: 30px;
-    color: white;
+.unit-item{
+background:#f8fafc;
+padding:10px;
+border-radius:8px;
+margin-bottom:10px;
 }
 
-.preview-header h1 {
-    margin: 0;
+/* RIGHT PREVIEW */
+
+.preview{
+background:white;
+border-radius:20px;
+overflow:hidden;
+box-shadow:0 4px 20px rgba(0,0,0,0.08);
 }
 
-.preview-body {
-    padding: 20px;
+.preview-header{
+padding:30px;
+color:white;
 }
 
-.unit-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 15px;
-    margin-top: 20px;
+.preview-body{
+padding:25px;
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:20px;
+background:#f9fafb;
 }
 
-.unit-card {
-    border: 2px solid #ddd;
-    border-radius: 12px;
-    padding: 15px;
-    background: #f9fafb;
+.focus-box{
+background:#eef3f7;
+padding:15px;
+border-radius:10px;
+margin-bottom:15px;
 }
 
-.unit-card h4 {
-    margin: 0 0 5px;
+.section{
+margin-bottom:20px;
 }
 
-.unit-card p {
-    font-size: 0.85rem;
-    color: #555;
-    margin: 0;
+.units-grid{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+gap:12px;
 }
 
-.image-preview {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
+.unit-card{
+background:#e6f3f0;
+padding:12px;
+border-radius:10px;
+font-size:0.9rem;
 }
+
+.unit-card button{
+margin-top:8px;
+width:100%;
+border:none;
+padding:6px;
+border-radius:6px;
+background:#0f766e;
+color:white;
+font-weight:600;
+cursor:pointer;
+}
+
+.chat-box{
+background:#fff;
+padding:15px;
+border-radius:12px;
+box-shadow:0 3px 8px rgba(0,0,0,0.05);
+}
+
 </style>
 </head>
 
 <body>
 
-<!-- SIDEBAR -->
 <nav class="sidebar">
-    <h2>PAV-O</h2>
-    <a href="admin.html">📊 Resultaten</a>
-    <a href="theme-manager.html" class="active">➕ Maak nieuw thema</a>
-    <a href="index.html">🚪 Leerlingomgeving</a>
+<h2>PAV-O</h2>
+<a href="teacher-dashboard.html">📊 Resultaten</a>
+<a href="#" class="active">➕ Maak nieuw thema</a>
+<a href="index.html">🚪 Leerlingomgeving</a>
 </nav>
 
-<!-- MAIN -->
-<div class="main-wrapper">
+<div class="main">
 
-    <!-- EDITOR -->
-    <div class="editor">
-        <h2>Nieuw Thema</h2>
+<!-- LINKERKANT -->
 
-        <label>Titel</label>
-        <input type="text" id="themeTitle" placeholder="Bijv: Thema 10 – Gezondheid">
+<div class="editor">
+<h2>Nieuw Thema</h2>
 
-        <label>Beschrijving</label>
-        <textarea id="themeDescription" rows="3" placeholder="Korte uitleg van het thema"></textarea>
+<label>Titel</label>
+<input id="titleInput" placeholder="Bijv: Thema 10 – Gezondheid">
 
-        <label>Thema kleur</label>
-        <input type="color" id="themeColor" value="#0b4da2">
+<label>Beschrijving</label>
+<textarea id="descInput" placeholder="Korte uitleg van het thema"></textarea>
 
-        <label>Afbeelding</label>
-        <input type="file" id="themeImage" accept="image/*">
+<label>Thema kleur</label>
+<input type="color" id="colorInput" value="#0f766e">
 
-        <hr>
+<hr>
 
-        <h3>Units</h3>
-        <div id="unitInputs"></div>
-        <button onclick="addUnit()">➕ Unit toevoegen</button>
-    </div>
+<h3>Units</h3>
 
-    <!-- PREVIEW -->
-    <div class="preview">
-        <div id="previewHeader" class="preview-header" style="background:#0b4da2;">
-            <h1 id="previewTitle">Thema titel</h1>
-            <p id="previewDescription">Beschrijving van het thema</p>
-        </div>
+<div id="unitList"></div>
 
-        <img id="previewImage" class="image-preview" style="display:none;">
+<button onclick="addUnit()">+ Unit toevoegen</button>
+</div>
 
-        <div class="preview-body">
-            <h3>Units</h3>
-            <div id="previewUnits" class="unit-grid"></div>
-        </div>
-    </div>
+<!-- RECHTERKANT -->
+
+<div class="preview">
+
+<div class="preview-header" id="previewHeader" style="background:#0f766e;">
+<h1 id="previewTitle">Thema titel</h1>
+<p id="previewDesc">Beschrijving van het thema</p>
+</div>
+
+<div class="preview-body">
+
+<div>
+
+<div class="focus-box">
+<strong>Focus van dit thema</strong>
+<p id="previewDesc2">Beschrijving verschijnt hier...</p>
+</div>
+
+<div class="section">
+<strong>Wat oefen je?</strong>
+<ul>
+<li>Leerdoelen aanpassen via aparte pagina</li>
+<li>Beschrijving aanpassen links</li>
+<li>Kleur past automatisch aan</li>
+</ul>
+</div>
+
+<div class="section">
+<strong>Onderdelen</strong>
+<div class="units-grid" id="previewUnits"></div>
+</div>
+
+</div>
+
+<div>
+<div class="chat-box">
+<strong>🤖 Chattie</strong>
+<p>Chat assistent preview</p>
+</div>
+</div>
+
+</div>
+</div>
 
 </div>
 
 <script>
-let unitCount = 0;
-const maxUnits = 12;
 
-function updatePreview() {
-    document.getElementById("previewTitle").innerText =
-        document.getElementById("themeTitle").value || "Thema titel";
+const titleInput = document.getElementById('titleInput');
+const descInput = document.getElementById('descInput');
+const colorInput = document.getElementById('colorInput');
+const previewTitle = document.getElementById('previewTitle');
+const previewDesc = document.getElementById('previewDesc');
+const previewDesc2 = document.getElementById('previewDesc2');
+const previewHeader = document.getElementById('previewHeader');
+const previewUnits = document.getElementById('previewUnits');
+const unitList = document.getElementById('unitList');
 
-    document.getElementById("previewDescription").innerText =
-        document.getElementById("themeDescription").value || "Beschrijving van het thema";
+let units = [];
 
-    const color = document.getElementById("themeColor").value;
-    document.getElementById("previewHeader").style.background = color;
-}
-
-document.getElementById("themeTitle").addEventListener("input", updatePreview);
-document.getElementById("themeDescription").addEventListener("input", updatePreview);
-document.getElementById("themeColor").addEventListener("input", updatePreview);
-
-document.getElementById("themeImage").addEventListener("change", function(e) {
-    const reader = new FileReader();
-    reader.onload = function(event) {
-        const img = document.getElementById("previewImage");
-        img.src = event.target.result;
-        img.style.display = "block";
-    }
-    reader.readAsDataURL(e.target.files[0]);
+titleInput.addEventListener('input',()=>{
+previewTitle.innerText = titleInput.value || "Thema titel";
 });
 
-function addUnit() {
-    if (unitCount >= maxUnits) {
-        alert("Maximaal 12 units toegestaan.");
-        return;
-    }
+descInput.addEventListener('input',()=>{
+previewDesc.innerText = descInput.value || "Beschrijving van het thema";
+previewDesc2.innerText = descInput.value || "Beschrijving verschijnt hier...";
+});
 
-    unitCount++;
+colorInput.addEventListener('input',()=>{
+previewHeader.style.background = colorInput.value;
+});
 
-    const container = document.getElementById("unitInputs");
-    const preview = document.getElementById("previewUnits");
-
-    const div = document.createElement("div");
-    div.innerHTML = `
-        <label>Unit ${unitCount} titel</label>
-        <input type="text" oninput="updateUnits()" data-unit="${unitCount}">
-    `;
-    container.appendChild(div);
-
-    updateUnits();
+function addUnit(){
+if(units.length >= 12){
+alert("Maximum 12 units toegestaan.");
+return;
 }
 
-function updateUnits() {
-    const preview = document.getElementById("previewUnits");
-    preview.innerHTML = "";
+const unitTitle = prompt("Naam van de unit?");
+if(!unitTitle) return;
 
-    const inputs = document.querySelectorAll("[data-unit]");
-    inputs.forEach((input, index) => {
-        const title = input.value || "Unit " + (index + 1);
-
-        const card = document.createElement("div");
-        card.className = "unit-card";
-        card.innerHTML = `
-            <h4>${title}</h4>
-            <p>Korte uitleg van deze unit</p>
-        `;
-        preview.appendChild(card);
-    });
+units.push(unitTitle);
+renderUnits();
 }
+
+function renderUnits(){
+
+previewUnits.innerHTML="";
+unitList.innerHTML="";
+
+units.forEach((unit,i)=>{
+
+// Preview kaart
+previewUnits.innerHTML += `
+<div class="unit-card">
+<strong>Deel ${i+1}</strong>
+<p>${unit}</p>
+<button>Start</button>
+</div>`;
+
+// Editor lijst
+unitList.innerHTML += `
+<div class="unit-item">
+Deel ${i+1}: ${unit}
+</div>
+`;
+
+});
+}
+
 </script>
 
 </body>
