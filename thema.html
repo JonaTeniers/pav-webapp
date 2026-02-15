@@ -1,269 +1,227 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Thema</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PAVO Thema</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
 
 <style>
-:root{
---primary:#14b8a6;
---bg:#f3f6fa;
---white:#ffffff;
---border:#e2e8f0;
---text:#1e293b;
+:root {
+  --bg:#f8fafc;
+  --panel:#ffffff;
+  --accent:#0f766e;
+  --accent-dark:#0b5f58;
+  --text:#1f2937;
+  --muted:#4b5563;
 }
-
+*{box-sizing:border-box}
 body{
-margin:0;
-font-family:'Nunito',sans-serif;
-background:var(--bg);
-color:var(--text);
+  margin:0;
+  font-family:'Nunito',sans-serif;
+  background:var(--bg);
+  color:var(--text);
 }
-
-/* TOP BAR */
-.topbar{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:20px 40px;
+header{
+  background:#14b8a6;
+  color:white;
+  padding:1.8rem 1rem;
+  text-align:center;
 }
-
-.back-btn{
-background:#2563eb;
-color:white;
-padding:10px 18px;
-border-radius:10px;
-text-decoration:none;
-font-weight:700;
+main{
+  width:min(1100px,95%);
+  margin:1.5rem auto 2rem;
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:1rem;
 }
-
-.xp-box{
-background:white;
-padding:10px 18px;
-border-radius:12px;
-font-weight:700;
-box-shadow:0 4px 10px rgba(0,0,0,0.05);
+.panel{
+  background:var(--panel);
+  border-radius:14px;
+  padding:1.2rem;
+  box-shadow:0 6px 16px rgba(0,0,0,0.08);
 }
-
-/* HEADER */
-.theme-header{
-background:var(--primary);
-color:white;
-padding:40px;
-text-align:center;
+.task{
+  margin-top:1rem;
+  border-top:1px solid #dbe5ef;
+  padding-top:1rem;
 }
-
-.theme-header h1{
-margin:0;
-font-size:2rem;
+.unit-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:0.8rem;
+  margin-top:0.8rem;
 }
-
-.theme-header p{
-margin-top:10px;
-opacity:0.9;
-}
-
-/* CONTENT GRID */
-.content{
-max-width:1200px;
-margin:40px auto;
-display:grid;
-grid-template-columns:2fr 1fr;
-gap:30px;
-padding:0 20px;
-}
-
-/* LEFT CARD */
-.card{
-background:white;
-border-radius:18px;
-padding:30px;
-box-shadow:0 6px 18px rgba(0,0,0,0.05);
-}
-
-.card h2{
-margin-top:0;
-}
-
-.card hr{
-border:none;
-height:1px;
-background:#e5e7eb;
-margin:25px 0;
-}
-
-/* UNITS */
-.units{
-margin-top:40px;
-}
-
-.units-grid{
-display:grid;
-grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
-gap:20px;
-}
-
 .unit-card{
-background:#ecfdf5;
-padding:18px;
-border-radius:14px;
-text-decoration:none;
-color:var(--text);
-font-weight:600;
-box-shadow:0 4px 10px rgba(0,0,0,0.04);
-transition:0.2s;
+  border:2px solid #bce7e1;
+  border-radius:12px;
+  padding:0.9rem;
+  background:#f0fdfa;
 }
-
-.unit-card:hover{
-transform:translateY(-4px);
+.unit-card h4{margin:0 0 .35rem}
+.unit-card p{
+  margin:0 0 .65rem;
+  color:var(--muted);
+  font-size:.95rem;
 }
-
-.placeholder{
-text-align:center;
-opacity:0.7;
+.unit-card .status{
+  font-size:.82rem;
+  font-weight:700;
+  color:#0b5f58;
+  margin-bottom:.7rem;
 }
-
-.placeholder img{
-width:120px;
-margin-bottom:15px;
+.unit-card button{
+  width:100%;
+  border:none;
+  border-radius:8px;
+  padding:.5rem .7rem;
+  font-weight:700;
+  color:#fff;
+  background:var(--accent);
+  cursor:pointer;
 }
-
-/* CHAT CARD */
-.chat-card{
-background:white;
-border-radius:18px;
-padding:25px;
-box-shadow:0 6px 18px rgba(0,0,0,0.05);
+.unit-card button:disabled{
+  background:#cbd5e1;
+  cursor:not-allowed;
 }
-
-.chat-card button{
-margin-top:15px;
-width:100%;
-padding:10px;
-border-radius:10px;
-border:none;
-background:#10b981;
-color:white;
-font-weight:700;
-cursor:pointer;
+.chat-embed{
+  width:100%;
+  min-height:520px;
+  border:none;
+  border-radius:12px;
 }
-
+.btn{
+  display:inline-block;
+  margin-top:.8rem;
+  background:var(--accent);
+  color:white;
+  padding:.5rem .9rem;
+  border-radius:999px;
+  font-weight:700;
+  text-decoration:none;
+}
 @media(max-width:900px){
-.content{
-grid-template-columns:1fr;
-}
+  main{grid-template-columns:1fr}
 }
 </style>
 </head>
-
 <body>
 
-<div class="topbar">
-<a href="index.html" class="back-btn">Terug naar dashboard</a>
-<div class="xp-box" id="xpBox">XP: 0</div>
-</div>
+<header>
+  <h1 id="themeTitle">Laden...</h1>
+  <p id="themeSubtitle"></p>
+</header>
 
-<div class="theme-header">
-<h1 id="themeTitle">Thema titel</h1>
-<p id="themeDesc">Beschrijving van het thema</p>
-</div>
+<main>
+  <section class="panel">
 
-<div class="content">
+    <h2>Focus van dit thema</h2>
+    <p id="themeFocus"></p>
 
-<div>
+    <div class="task">
+      <h3>Wat oefen je?</h3>
+      <ul id="themeSkills"></ul>
+    </div>
 
-<div class="card">
-<h2>Focus van dit thema</h2>
-<p id="focusText">Focus wordt hier weergegeven.</p>
+    <div class="task">
+      <h3> Units</h3>
+      <div class="unit-grid" id="unitsContainer"></div>
+    </div>
 
-<hr>
+    <a class="btn" href="index.html">← Terug naar overzicht</a>
 
-<h3>Wat oefen je?</h3>
-<ul id="skillsList">
-<li>Vaardigheid 1</li>
-<li>Vaardigheid 2</li>
-</ul>
-</div>
+  </section>
 
-<div class="units">
-<h2>Units</h2>
-<div class="units-grid" id="unitsGrid"></div>
-</div>
+  <aside class="panel">
+    <h2>Chattie</h2>
+    <iframe id="chattieFrame" class="chat-embed"></iframe>
+  </aside>
 
-</div>
-
-<div class="chat-card">
-<h3>Chattie</h3>
-<p>Laat Chattie je helpen bij dit thema.</p>
-<button onclick="openChattie()">Open Chattie</button>
-</div>
-
-</div>
+</main>
 
 <script src="./firebase.js"></script>
 
 <script>
-const params = new URLSearchParams(window.location.search);
-const themeId = params.get("id");
-
-const unitsGrid = document.getElementById("unitsGrid");
-const xpBox = document.getElementById("xpBox");
-
 async function loadTheme(){
-await window.firebaseReady;
 
-const doc = await window.db.collection("themes").doc(themeId).get();
+  await window.firebaseReady;
 
-if(!doc.exists){
-document.getElementById("themeTitle").innerText="Thema niet gevonden";
-return;
+  const params = new URLSearchParams(window.location.search);
+  const themeId = params.get("id");
+
+  if(!themeId){
+    document.getElementById("themeTitle").innerText = "Thema niet gevonden";
+    return;
+  }
+
+  const doc = await window.db.collection("themes").doc(themeId).get();
+
+  if(!doc.exists){
+    document.getElementById("themeTitle").innerText = "Thema bestaat niet";
+    return;
+  }
+
+  const data = doc.data();
+
+  // Header
+  document.getElementById("themeTitle").innerText = data.title || "Thema";
+  document.getElementById("themeSubtitle").innerText = data.description || "";
+
+  // Focus
+  document.getElementById("themeFocus").innerText = data.focus || "";
+
+  // Skills
+  const skillsList = document.getElementById("themeSkills");
+  skillsList.innerHTML = "";
+  if(data.skills){
+    data.skills.forEach(skill=>{
+      skillsList.innerHTML += `<li>${skill}</li>`;
+    });
+  }
+
+  // Units
+  const unitsContainer = document.getElementById("unitsContainer");
+  unitsContainer.innerHTML = "";
+
+  if(data.units && data.units.length > 0){
+
+    data.units.forEach((unit,index)=>{
+
+      const card = document.createElement("div");
+      card.className = "unit-card";
+
+      card.innerHTML = `
+        <h4>Unit ${index+1}</h4>
+        <p>${unit.title || ""}</p>
+        <p class="status">${unit.active ? "Beschikbaar" : "In ontwikkeling"}</p>
+        ${
+          unit.active
+          ? `<button onclick="openUnit('${themeId}',${index})">Start</button>`
+          : `<button disabled>Binnenkort</button>`
+        }
+      `;
+
+      unitsContainer.appendChild(card);
+    });
+
+  } else {
+
+    unitsContainer.innerHTML = `
+      <div class="unit-card">
+        <h4>In ontwikkeling</h4>
+        <img src="img/images/pavobouwmascotte.png" style="width:100%;border-radius:10px;margin-top:10px;">
+      </div>
+    `;
+  }
+
+  // Chattie koppelen
+  document.getElementById("chattieFrame").src =
+    "chattie.html?thema=" + encodeURIComponent(data.title);
+
 }
 
-const theme = doc.data();
-
-document.getElementById("themeTitle").innerText = theme.title;
-document.getElementById("themeDesc").innerText = theme.description;
-document.getElementById("focusText").innerText = theme.focus || "";
-
-document.getElementById("skillsList").innerHTML="";
-(theme.skills || []).forEach(skill=>{
-document.getElementById("skillsList").innerHTML += `<li>${skill}</li>`;
-});
-
-/* XP berekenen */
-let totalXP = 0;
-(theme.units || []).forEach(u=>{
-totalXP += u.xp || 0;
-});
-xpBox.innerText = "XP: " + totalXP;
-
-/* Units */
-unitsGrid.innerHTML="";
-
-if(!theme.units || theme.units.length === 0){
-unitsGrid.innerHTML=`
-<div class="placeholder">
-<img src="img/images/pavobouwmascotte.png">
-<p>Hier komt binnenkort een nieuwe unit.</p>
-</div>`;
-return;
-}
-
-theme.units.forEach((unit,index)=>{
-unitsGrid.innerHTML+=`
-<a href="unit.html?theme=${themeId}&unit=${index}" class="unit-card">
-${unit.title}
-<br>
-<small>${unit.xp || 0} XP</small>
-</a>`;
-});
-}
-
-function openChattie(){
-window.location.href = "chattie.html?thema=" + document.getElementById("themeTitle").innerText;
+function openUnit(themeId,index){
+  window.location.href = "unit.html?theme="+themeId+"&unit="+index;
 }
 
 loadTheme();
@@ -271,4 +229,3 @@ loadTheme();
 
 </body>
 </html>
-
