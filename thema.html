@@ -3,35 +3,39 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Thema | PAV-O</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<title>Thema</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
+:root{
+--primary:#14b8a6;
+--bg:#f3f6fa;
+--white:#ffffff;
+--border:#e2e8f0;
+--text:#1e293b;
+}
+
 body{
 margin:0;
 font-family:'Nunito',sans-serif;
-background:#f1f5f9;
-color:#1e293b;
+background:var(--bg);
+color:var(--text);
 }
 
-.container{
-max-width:1200px;
-margin:auto;
-padding:40px 20px;
-}
-
+/* TOP BAR */
 .topbar{
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:30px;
+padding:20px 40px;
 }
 
 .back-btn{
-background:#1f6fd6;
+background:#2563eb;
 color:white;
-padding:8px 16px;
-border-radius:8px;
+padding:10px 18px;
+border-radius:10px;
 text-decoration:none;
 font-weight:700;
 }
@@ -39,40 +43,77 @@ font-weight:700;
 .xp-box{
 background:white;
 padding:10px 18px;
-border-radius:10px;
-box-shadow:0 4px 12px rgba(0,0,0,0.05);
+border-radius:12px;
 font-weight:700;
+box-shadow:0 4px 10px rgba(0,0,0,0.05);
 }
 
-.header{
+/* HEADER */
+.theme-header{
+background:var(--primary);
+color:white;
+padding:40px;
+text-align:center;
+}
+
+.theme-header h1{
+margin:0;
+font-size:2rem;
+}
+
+.theme-header p{
+margin-top:10px;
+opacity:0.9;
+}
+
+/* CONTENT GRID */
+.content{
+max-width:1200px;
+margin:40px auto;
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:30px;
+padding:0 20px;
+}
+
+/* LEFT CARD */
+.card{
 background:white;
+border-radius:18px;
 padding:30px;
-border-radius:16px;
-margin-bottom:30px;
-box-shadow:0 4px 12px rgba(0,0,0,0.05);
+box-shadow:0 6px 18px rgba(0,0,0,0.05);
 }
 
-.header h1{
-margin:0 0 10px 0;
+.card h2{
+margin-top:0;
 }
 
-.header p{
-margin:6px 0;
-color:#475569;
+.card hr{
+border:none;
+height:1px;
+background:#e5e7eb;
+margin:25px 0;
+}
+
+/* UNITS */
+.units{
+margin-top:40px;
 }
 
 .units-grid{
 display:grid;
-grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
 gap:20px;
 }
 
 .unit-card{
-background:white;
-padding:20px;
+background:#ecfdf5;
+padding:18px;
 border-radius:14px;
-box-shadow:0 4px 12px rgba(0,0,0,0.05);
-cursor:pointer;
+text-decoration:none;
+color:var(--text);
+font-weight:600;
+box-shadow:0 4px 10px rgba(0,0,0,0.04);
 transition:0.2s;
 }
 
@@ -80,57 +121,84 @@ transition:0.2s;
 transform:translateY(-4px);
 }
 
-.unit-card.locked{
-opacity:0.5;
-pointer-events:none;
-}
-
-.progress-bar{
-height:6px;
-background:#e2e8f0;
-border-radius:6px;
-overflow:hidden;
-margin-top:10px;
-}
-
-.progress-fill{
-height:100%;
-background:#1f6fd6;
-width:0%;
-}
-
-.finished{
+.placeholder{
 text-align:center;
-margin-top:40px;
+opacity:0.7;
 }
 
-.finished img{
-max-width:200px;
+.placeholder img{
+width:120px;
+margin-bottom:15px;
+}
+
+/* CHAT CARD */
+.chat-card{
+background:white;
+border-radius:18px;
+padding:25px;
+box-shadow:0 6px 18px rgba(0,0,0,0.05);
+}
+
+.chat-card button{
+margin-top:15px;
+width:100%;
+padding:10px;
+border-radius:10px;
+border:none;
+background:#10b981;
+color:white;
+font-weight:700;
+cursor:pointer;
+}
+
+@media(max-width:900px){
+.content{
+grid-template-columns:1fr;
+}
 }
 </style>
 </head>
-<body>
 
-<div class="container">
+<body>
 
 <div class="topbar">
 <a href="index.html" class="back-btn">Terug naar dashboard</a>
-<div class="xp-box">
-XP: <span id="xpScore">0</span>
-</div>
+<div class="xp-box" id="xpBox">XP: 0</div>
 </div>
 
-<div class="header">
-<h1 id="themeTitle">Laden...</h1>
-<p id="themeFocus"></p>
-<p id="themeSkills"></p>
+<div class="theme-header">
+<h1 id="themeTitle">Thema titel</h1>
+<p id="themeDesc">Beschrijving van het thema</p>
 </div>
 
+<div class="content">
+
+<div>
+
+<div class="card">
+<h2>Focus van dit thema</h2>
+<p id="focusText">Focus wordt hier weergegeven.</p>
+
+<hr>
+
+<h3>Wat oefen je?</h3>
+<ul id="skillsList">
+<li>Vaardigheid 1</li>
+<li>Vaardigheid 2</li>
+</ul>
+</div>
+
+<div class="units">
+<h2>Units</h2>
 <div class="units-grid" id="unitsGrid"></div>
+</div>
 
-<div class="finished" id="finishedBox" style="display:none;">
-<img src="img/images/pavobouwmascotte.png">
-<p>Je hebt alle onderdelen voltooid.</p>
+</div>
+
+<div class="chat-card">
+<h3>Chattie</h3>
+<p>Laat Chattie je helpen bij dit thema.</p>
+<button onclick="openChattie()">Open Chattie</button>
 </div>
 
 </div>
@@ -141,116 +209,64 @@ XP: <span id="xpScore">0</span>
 const params = new URLSearchParams(window.location.search);
 const themeId = params.get("id");
 
-let currentUser;
-let themeData;
-let studentProgress = {};
+const unitsGrid = document.getElementById("unitsGrid");
+const xpBox = document.getElementById("xpBox");
 
-async function init(){
-
+async function loadTheme(){
 await window.firebaseReady;
 
-window.auth.onAuthStateChanged(async user=>{
-if(!user){
-window.location.href="login.html";
+const doc = await window.db.collection("themes").doc(themeId).get();
+
+if(!doc.exists){
+document.getElementById("themeTitle").innerText="Thema niet gevonden";
 return;
 }
 
-currentUser = user;
+const theme = doc.data();
 
-const themeDoc = await window.db.collection("themes").doc(themeId).get();
-if(!themeDoc.exists) return;
+document.getElementById("themeTitle").innerText = theme.title;
+document.getElementById("themeDesc").innerText = theme.description;
+document.getElementById("focusText").innerText = theme.focus || "";
 
-themeData = themeDoc.data();
+document.getElementById("skillsList").innerHTML="";
+(theme.skills || []).forEach(skill=>{
+document.getElementById("skillsList").innerHTML += `<li>${skill}</li>`;
+});
 
-document.getElementById("themeTitle").innerText = themeData.title;
-document.getElementById("themeFocus").innerText = "Focus: " + (themeData.focus || "");
-document.getElementById("themeSkills").innerText = "Wat oefen je: " + (themeData.skills || "");
+/* XP berekenen */
+let totalXP = 0;
+(theme.units || []).forEach(u=>{
+totalXP += u.xp || 0;
+});
+xpBox.innerText = "XP: " + totalXP;
 
-const progressDoc = await window.db
-.collection("users")
-.doc(user.uid)
-.collection("progress")
-.doc(themeId)
-.get();
+/* Units */
+unitsGrid.innerHTML="";
 
-if(progressDoc.exists){
-studentProgress = progressDoc.data();
+if(!theme.units || theme.units.length === 0){
+unitsGrid.innerHTML=`
+<div class="placeholder">
+<img src="img/images/pavobouwmascotte.png">
+<p>Hier komt binnenkort een nieuwe unit.</p>
+</div>`;
+return;
 }
 
-renderUnits();
-calculateXP();
+theme.units.forEach((unit,index)=>{
+unitsGrid.innerHTML+=`
+<a href="unit.html?theme=${themeId}&unit=${index}" class="unit-card">
+${unit.title}
+<br>
+<small>${unit.xp || 0} XP</small>
+</a>`;
 });
 }
 
-function renderUnits(){
-
-const grid = document.getElementById("unitsGrid");
-grid.innerHTML = "";
-
-let completedUnits = 0;
-
-themeData.units.forEach((unit,index)=>{
-
-const isCompleted = studentProgress[unit.id];
-if(isCompleted) completedUnits++;
-
-const locked = index > completedUnits;
-
-const div = document.createElement("div");
-div.className = "unit-card" + (locked ? " locked" : "");
-
-div.innerHTML = `
-<h3>${unit.title}</h3>
-<p>${unit.description || ""}</p>
-<p>${unit.xp || 10} XP</p>
-`;
-
-div.onclick = ()=>{
-openUnit(unit,index);
-};
-
-grid.appendChild(div);
-
-});
-
-if(completedUnits === themeData.units.length){
-document.getElementById("finishedBox").style.display="block";
-}
+function openChattie(){
+window.location.href = "chattie.html?thema=" + document.getElementById("themeTitle").innerText;
 }
 
-async function openUnit(unit,index){
-
-alert("Hier komt de unit pagina.");
-
-await window.db
-.collection("users")
-.doc(currentUser.uid)
-.collection("progress")
-.doc(themeId)
-.set({
-[unit.id]: true
-},{merge:true});
-
-studentProgress[unit.id] = true;
-
-renderUnits();
-calculateXP();
-}
-
-function calculateXP(){
-
-let total = 0;
-
-themeData.units.forEach(unit=>{
-if(studentProgress[unit.id]){
-total += unit.xp || 10;
-}
-});
-
-document.getElementById("xpScore").innerText = total;
-}
-
-init();
+loadTheme();
 </script>
 
 </body>
