@@ -2,26 +2,129 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PAV-O | Mijn Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap" rel="stylesheet">
     <style>
-        :root { --blue: #1976d2; --bg: #f4f7fb; }
-        body { margin: 0; font-family: 'Nunito', sans-serif; background: var(--bg); display: flex; }
+        :root { 
+            --blue: #1976d2; 
+            --bg: #f4f7fb; 
+            --word-blue: #2b579a;
+            --ribbon-bg: #f3f2f1;
+            --border: #d2d2d2;
+        }
         
-        /* Gebruik dezelfde sidebar styling als index.html voor consistentie */
-        .sidebar { width: 280px; background: white; height: 100vh; position: fixed; box-shadow: 2px 0 15px rgba(0,0,0,0.05); display:flex; flex-direction:column; }
-        .main-content { margin-left: 280px; flex-grow: 1; padding: 2.5rem; display: flex; flex-direction: column; height: 100vh; }
+        body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); display: flex; overflow: hidden; }
         
-        .editor-container { background: white; flex-grow: 1; border-radius: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); display: flex; flex-direction: column; overflow: hidden; border: 1px solid #e0ecff; }
-        .editor-header { padding: 1.5rem; background: #f8faff; border-bottom: 1px solid #eef2f7; display: flex; justify-content: space-between; align-items: center; }
+        /* Sidebar consistent met Dashboard */
+        .sidebar { width: 280px; background: white; height: 100vh; position: fixed; box-shadow: 2px 0 15px rgba(0,0,0,0.05); display:flex; flex-direction:column; z-index: 1000; }
+        .main-content { margin-left: 280px; flex-grow: 1; display: flex; flex-direction: column; height: 100vh; background: #e1e1e1; position: relative; }
         
-        #assignmentBox { background: #fffde7; padding: 1rem 1.5rem; border-left: 5px solid #fbc02d; margin: 1.5rem; border-radius: 8px; font-size: 1.1rem; }
-        
-        #portfolioEditor { flex-grow: 1; border: none; padding: 2rem; font-family: 'Nunito', sans-serif; font-size: 1.1rem; line-height: 1.6; outline: none; resize: none; }
-        
-        .btn-submit { background: var(--blue); color: white; border: none; padding: 1rem 2rem; border-radius: 12px; font-weight: 800; cursor: pointer; transition: 0.2s; margin: 1.5rem; align-self: flex-end; }
-        .btn-submit:hover { background: #1565c0; transform: scale(1.02); }
+        /* Microsoft Word Header met Pavo Logo */
+        .word-header {
+            background: var(--word-blue);
+            color: white;
+            padding: 8px 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 0.9rem;
+        }
 
+        .word-header img {
+            height: 28px;
+            width: auto;
+            filter: brightness(0) invert(1); /* Maakt het logo wit voor op de blauwe balk */
+        }
+
+        /* Microsoft Word Ribbon Style */
+        .word-ribbon {
+            background: var(--ribbon-bg);
+            border-bottom: 1px solid var(--border);
+            padding: 8px 20px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .ribbon-group {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding-right: 15px;
+            border-right: 1px solid var(--border);
+        }
+
+        .ribbon-button {
+            background: transparent;
+            border: 1px solid transparent;
+            padding: 6px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .ribbon-button:hover { background: #e1e1e1; border: 1px solid #c8c8c8; }
+
+        select { padding: 4px; border-radius: 3px; border: 1px solid var(--border); outline: none; }
+
+        /* Het "Papier" effect */
+        .page-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 50px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .word-page {
+            width: 210mm; 
+            min-height: 297mm;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.15);
+            padding: 2.5cm; 
+            outline: none;
+            font-family: 'Calibri', 'Arial', sans-serif;
+            font-size: 11pt;
+            color: black;
+            cursor: text;
+            margin-bottom: 50px;
+        }
+
+        /* Status & Actie balk */
+        .action-bar {
+            background: white;
+            border-top: 1px solid var(--border);
+            padding: 10px 30px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .status-badge { color: #666; font-size: 0.85rem; font-family: 'Nunito'; }
+        
+        .btn-submit { 
+            background: var(--word-blue); 
+            color: white; 
+            border: none; 
+            padding: 10px 22px; 
+            border-radius: 6px; 
+            font-weight: 700; 
+            cursor: pointer; 
+            font-family: 'Nunito';
+            transition: 0.2s;
+        }
+        .btn-submit:hover { background: #1a3a6d; transform: scale(1.02); }
+
+        /* Sidebar Nav */
         .nav-item { padding: 0.9rem 1.2rem; text-decoration: none; color: #1f2937; font-weight: 700; border-radius: 14px; margin: 0.5rem 1rem; display: flex; align-items: center; gap: 10px; }
         .nav-item.active { background: #e3f2fd; color: var(--blue); }
     </style>
@@ -29,9 +132,9 @@
 <body>
 
     <div class="sidebar">
-        <div style="padding: 2.5rem 1.5rem; text-align: center;">
-            <img src="img/pavomascotte.png" style="width: 80px;">
-            <h1 style="color: var(--blue); margin:0;">PAV-O</h1>
+        <div style="padding: 2rem 1.5rem; text-align: center;">
+            <img src="img/pavomascotte.png" style="width: 60px;">
+            <h2 style="color: var(--blue); margin:0; font-family: 'Nunito';">PAV-O</h2>
         </div>
         <a href="index.html" class="nav-item">🏠 Dashboard</a>
         <a href="portfolio.html" class="nav-item active">📝 Mijn Portfolio</a>
@@ -39,20 +142,49 @@
     </div>
 
     <div class="main-content">
-        <div class="editor-container">
-            <div class="editor-header">
-                <h2 style="margin:0; color: var(--blue);">📝 Portfolio Werkplek</h2>
-                <span id="status" style="color: var(--muted); font-size: 0.9rem;">Lokaal opgeslagen</span>
-            </div>
+        
+        <div class="word-header">
+            <img src="img/pavomascottemetpen.png" alt="Pavo Logo">
+            <span>Document 1 - PAV-O Portfolio</span>
+        </div>
 
-            <div id="assignmentBox">
-                <strong>📌 Actuele Opdracht:</strong>
-                <p id="assignmentText">Laden van opdracht...</p>
+        <div class="word-ribbon">
+            <div class="ribbon-group">
+                <select onchange="execCommand('fontName', this.value)">
+                    <option value="Calibri">Calibri</option>
+                    <option value="Arial">Arial</option>
+                    <option value="Verdana">Verdana</option>
+                    <option value="Nunito">Nunito</option>
+                </select>
+                <select onchange="execCommand('fontSize', this.value)">
+                    <option value="3">11 pt</option>
+                    <option value="4">12 pt</option>
+                    <option value="5">14 pt</option>
+                    <option value="6">18 pt</option>
+                </select>
             </div>
+            <div class="ribbon-group">
+                <button class="ribbon-button" onclick="execCommand('bold')">B</button>
+                <button class="ribbon-button" onclick="execCommand('italic')">I</button>
+                <button class="ribbon-button" onclick="execCommand('underline')">U</button>
+            </div>
+            <div class="ribbon-group">
+                <button class="ribbon-button" onclick="execCommand('justifyLeft')">⬅</button>
+                <button class="ribbon-button" onclick="execCommand('justifyCenter')">↔</button>
+                <button class="ribbon-button" onclick="execCommand('insertUnorderedList')">• Lijst</button>
+            </div>
+        </div>
 
-            <textarea id="portfolioEditor" placeholder="Begin hier met je tekst..."></textarea>
-            
-            <button class="btn-submit" onclick="submitToTeacher()">🚀 Werk indienen bij leerkracht</button>
+        <div class="page-container">
+            <div id="portfolioEditor" class="word-page" contenteditable="true">
+                <h1 style="text-align: center;">Mijn Portfolio Opdracht</h1>
+                <p>Klik hier om te beginnen met typen...</p>
+            </div>
+        </div>
+
+        <div class="action-bar">
+            <div class="status-badge" id="status">Lokaal opgeslagen</div>
+            <button class="btn-submit" onclick="submitToTeacher()">🚀 Werk indienen</button>
         </div>
     </div>
 
@@ -64,43 +196,47 @@
         const editor = document.getElementById("portfolioEditor");
         const status = document.getElementById("status");
 
-        // 1. Laden van lokale backup
-        editor.value = localStorage.getItem("pavo_portfolio_cache") || "";
-
-        // 2. Automatisch opslaan in browser
-        editor.addEventListener("input", () => {
-            localStorage.setItem("pavo_portfolio_cache", editor.value);
-            status.innerText = "Bezig met opslaan...";
-            setTimeout(() => { status.innerText = "Lokaal bewaard"; }, 1000);
-        });
-
-        // 3. Opdracht ophalen uit Firebase
-        async function fetchAssignment() {
-            try {
-                const doc = await db.collection("settings").doc("currentAssignment").get();
-                document.getElementById("assignmentText").innerText = doc.exists ? doc.data().text : "Schrijf een reflectie over wat je vandaag hebt geleerd.";
-            } catch (e) { console.error(e); }
+        // Rich Text Commando's
+        function execCommand(command, value = null) {
+            document.execCommand(command, false, value);
+            editor.focus();
         }
 
-        // 4. Indienen naar Leerkracht Dashboard
+        // 1. Laden van laatste versie
+        if(localStorage.getItem("pavo_rich_portfolio")) {
+            editor.innerHTML = localStorage.getItem("pavo_rich_portfolio");
+        }
+
+        // 2. Automatisch opslaan tijdens typen
+        editor.addEventListener("input", () => {
+            localStorage.setItem("pavo_rich_portfolio", editor.innerHTML);
+            status.innerText = "Bezig met opslaan...";
+            setTimeout(() => { status.innerText = "Lokaal opgeslagen"; }, 800);
+        });
+
+        // 3. Indienen naar Firebase
         async function submitToTeacher() {
             const name = localStorage.getItem("studentName");
             const klas = localStorage.getItem("studentClass");
 
-            if(!name) return alert("Log eerst in!");
+            if(!name) {
+                alert("Je bent niet ingelogd! Ga terug naar het dashboard.");
+                return;
+            }
             
             try {
                 await db.collection("portfolio").doc(name + "_" + klas).set({
                     studentName: name,
                     studentClass: klas,
-                    text: editor.value,
+                    content: editor.innerHTML,
                     timestamp: firebase.firestore.FieldValue.serverTimestamp()
                 });
                 alert("✅ Je werk is verzonden naar de leerkracht!");
-            } catch (e) { alert("Fout bij verzenden."); }
+            } catch (e) {
+                alert("Oeps! Er ging iets mis bij het verzenden.");
+                console.error(e);
+            }
         }
-
-        window.onload = fetchAssignment;
     </script>
 </body>
 </html>
