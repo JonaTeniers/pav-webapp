@@ -13,7 +13,7 @@
             --white: #ffffff;
             --text: #1e293b;
             --border: #e2e8f0;
-            --accent: #10b981; /* Succes groen */
+            --accent: #10b981;
         }
 
         body {
@@ -22,6 +22,7 @@
             background: var(--bg);
             color: var(--text);
             display: flex;
+            min-height: 100vh;
         }
 
         /* Sidebar Styling */
@@ -35,6 +36,7 @@
             flex-direction: column;
             padding: 20px;
             box-shadow: 4px 0 10px rgba(0,0,0,0.02);
+            z-index: 1001;
         }
 
         .sidebar h2 { color: var(--primary); font-weight: 800; margin-bottom: 30px; display: flex; align-items: center; gap: 10px; }
@@ -46,6 +48,9 @@
             margin-bottom: 5px; 
             font-weight: 700;
             transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         .sidebar a:hover { background: #f1f5f9; color: var(--primary); }
         .sidebar a.active { background: #e0f2fe; color: var(--primary); }
@@ -64,6 +69,7 @@
             margin-bottom: 30px;
         }
 
+        /* Stats Grid */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -82,7 +88,7 @@
         .stat-card small { color: #64748b; font-weight: 700; text-transform: uppercase; font-size: 0.75rem; }
         .stat-card div { font-size: 1.8rem; font-weight: 800; color: var(--primary); }
 
-        /* Tables & Cards */
+        /* Table Card */
         .content-card {
             background: var(--white);
             border-radius: 16px;
@@ -127,20 +133,24 @@
             cursor: pointer;
             text-decoration: none;
             transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .btn:hover { background: var(--primary-dark); transform: translateY(-1px); }
         .btn-secondary { background: #64748b; }
 
         .badge {
-            padding: 4px 8px;
+            padding: 4px 10px;
             border-radius: 6px;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             font-weight: 800;
             background: #dcfce7;
             color: #166534;
         }
 
+        /* Login Overlay */
         #authSection {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -168,7 +178,7 @@
 
 <nav class="sidebar">
     <h2><img src="img/pavomascotte.png" style="width: 30px;"> Admin</h2>
-    <a href="#" class="active">📊 Overzicht</a>
+    <a href="#" class="active">📊 Overzicht Resultaten</a>
     <a href="leerkracht-doelen.html">📋 Thema's & Doelen</a>
     <a href="index.html">🚪 Leerlingomgeving</a>
     <div style="margin-top: auto;">
@@ -179,35 +189,36 @@
 <main class="main-wrapper">
     <header>
         <div>
-            <h1>Dashboard Overzicht</h1>
-            <p id="status">Systeem is gereed.</p>
+            <h1>Dashboard Resultaten</h1>
+            <p id="status">Data gesynchroniseerd met Firestore.</p>
         </div>
-        <button class="btn" id="refreshButton">🔄 Data Vernieuwen</button>
+        <button class="btn" onclick="loadDashboardData()">🔄 Data Vernieuwen</button>
     </header>
 
     <div class="stats-grid">
         <div class="stat-card">
-            <small>Totaal Ingediend</small>
+            <small>Totaal Oefeningen</small>
             <div id="count-total">0</div>
         </div>
         <div class="stat-card">
-            <small>Actieve Klassen</small>
-            <div id="count-classes">0</div>
+            <small>Gemiddelde Score</small>
+            <div id="avg-score">0%</div>
         </div>
         <div class="stat-card">
-            <small>Portfolio Opdrachten</small>
-            <div id="count-portfolio">0</div>
+            <small>Laatste Update</small>
+            <div id="last-update" style="font-size: 1.1rem; padding-top: 10px;">--:--</div>
         </div>
     </div>
 
     <section class="content-card">
-        <h3>📝 Voortgang & Scores</h3>
+        <h3>📝 Recente Scores</h3>
         <div class="filter-bar">
-            <strong>Filter:</strong>
-            <select id="klasFilter">
+            <strong>Filter op klas:</strong>
+            <select id="klasFilter" onchange="loadDashboardData()">
                 <option value="">Alle klassen</option>
+                <option value="3stw">3STW</option>
+                <option value="4stw">4STW</option>
             </select>
-            <button class="btn btn-secondary" id="backfillButton" style="font-size: 0.8rem;">Herstel Thema Data</button>
         </div>
 
         <table>
@@ -227,13 +238,6 @@
             </tbody>
         </table>
     </section>
-
-    <section class="content-card">
-        <h3>📂 Recente Portfolio's</h3>
-        <p>Bekijk hier de teksten die leerlingen hebben geschreven in de "Word-omgeving".</p>
-        <div id="portfolioList" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-            </div>
-    </section>
 </main>
 
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
@@ -242,10 +246,8 @@
 <script src="./firebase.js"></script>
 
 <script>
-    // Toegestane e-mails
+    // 1. Configuratie & Auth
     window.TEACHER_EMAILS = ["jona@pavo.be", "kaat@pavo.be"];
-
-    // Login Logica
     const authSection = document.getElementById('authSection');
     const loginForm = document.getElementById('teacherLoginForm');
 
@@ -259,57 +261,94 @@
                 await firebase.auth().signInWithEmailAndPassword(email, pass);
                 authSection.style.display = 'none';
                 loadDashboardData();
-            } catch (err) { alert("Fout: " + err.message); }
+            } catch (err) { alert("Login mislukt: " + err.message); }
         } else {
-            alert("Toegang geweigerd: Geen leerkracht account.");
+            alert("Toegang geweigerd: Geen leerkracht-account.");
         }
     };
 
-    // Data Laden
+    // 2. Data ophalen uit Firestore (Afgestemd op jouw screenshot)
     async function loadDashboardData() {
         const tbody = document.getElementById('scoresTableBody');
-        const portfolioDiv = document.getElementById('portfolioList');
+        const countDisplay = document.getElementById('count-total');
+        const avgDisplay = document.getElementById('avg-score');
+        const timeDisplay = document.getElementById('last-update');
+        const selectedKlas = document.getElementById('klasFilter').value;
         
-        // 1. Scores ophalen
-        const snapshot = await db.collection("scores").orderBy("timestamp", "desc").limit(50).get();
-        tbody.innerHTML = "";
-        
-        snapshot.forEach(doc => {
-            const d = doc.data();
-            const date = d.timestamp ? d.timestamp.toDate().toLocaleDateString() : "Pas verzonden";
-            tbody.innerHTML += `
-                <tr>
-                    <td><strong>${d.studentName}</strong></td>
-                    <td>${d.studentClass}</td>
-                    <td>${d.themeId}</td>
-                    <td>${d.unitId}</td>
-                    <td><span class="badge">${d.score}%</span></td>
-                    <td>${date}</td>
-                    <td>Ingeleverd</td>
-                </tr>
-            `;
-        });
+        try {
+            let query = db.collection("scores").orderBy("createdAt", "desc");
+            
+            // Filter toepassen indien geselecteerd
+            if (selectedKlas) {
+                query = query.where("klas", "==", selectedKlas);
+            }
 
-        // 2. Portfolio's ophalen (Echt werk uit de Word-editor)
-        const portSnap = await db.collection("portfolio").limit(4).get();
-        portfolioDiv.innerHTML = "";
-        portSnap.forEach(doc => {
-            const p = doc.data();
-            portfolioDiv.innerHTML += `
-                <div class="content-card" style="border: 1px solid #e2e8f0; font-size: 0.85rem;">
-                    <strong>${p.studentName} (${p.studentClass})</strong><br>
-                    <div style="height: 100px; overflow: hidden; color: #64748b; margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px;">
-                        ${p.content}
-                    </div>
-                    <button class="btn" style="margin-top: 10px; padding: 5px 10px; font-size: 0.7rem;">Volledig bekijken</button>
-                </div>
-            `;
-        });
+            const snapshot = await query.limit(100).get();
+            tbody.innerHTML = "";
+            
+            let totalScore = 0;
+            let count = 0;
+
+            if (snapshot.empty) {
+                tbody.innerHTML = `<tr><td colspan="7">Geen resultaten gevonden voor ${selectedKlas || 'alle klassen'}.</td></tr>`;
+                countDisplay.innerText = "0";
+                return;
+            }
+
+            snapshot.forEach(doc => {
+                const d = doc.data();
+                count++;
+                
+                // DATA MAPPER (Matches jouw Firebase screenshot)
+                const naam = d.naam || "Onbekend";
+                const klas = d.klas || "-";
+                const thema = d.thema || "-";
+                const unit = d.unit || "-";
+                const score = d.score !== undefined ? d.score : 0;
+                totalScore += score;
+
+                // Datum formatting
+                let datumString = "Pas verzonden";
+                if (d.createdAt) {
+                    const date = d.createdAt.toDate();
+                    datumString = date.toLocaleDateString('nl-BE') + " " + date.toLocaleTimeString('nl-BE', {hour: '2-digit', minute:'2-digit'});
+                }
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${naam}</strong></td>
+                        <td>${klas}</td>
+                        <td>${thema}</td>
+                        <td>${unit}</td>
+                        <td><span class="badge" style="background: ${score < 50 ? '#fee2e2' : '#dcfce7'}; color: ${score < 50 ? '#991b1b' : '#166534'};">${score}%</span></td>
+                        <td><small>${datumString}</small></td>
+                        <td><span style="color: var(--accent);">✔ Ontvangen</span></td>
+                    </tr>
+                `;
+            });
+
+            // Stats updaten
+            countDisplay.innerText = count;
+            avgDisplay.innerText = Math.round(totalScore / count) + "%";
+            timeDisplay.innerText = new Date().toLocaleTimeString('nl-BE', {hour: '2-digit', minute:'2-digit'});
+
+        } catch (err) {
+            console.error("Dashboard error:", err);
+            tbody.innerHTML = `<tr><td colspan="7" style="color:red;">Fout: ${err.message}</td></tr>`;
+        }
     }
 
     document.getElementById('teacherLogoutButton').onclick = () => {
         firebase.auth().signOut().then(() => location.reload());
     };
+
+    // Check of gebruiker al is ingelogd
+    firebase.auth().onAuthStateChanged(user => {
+        if (user && window.TEACHER_EMAILS.includes(user.email)) {
+            authSection.style.display = 'none';
+            loadDashboardData();
+        }
+    });
 </script>
 
 </body>
