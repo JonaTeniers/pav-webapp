@@ -3,15 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PAV-O Theme Manager</title>
+<title>PAV-O Theme Manager PRO</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
+
 :root{
---primary:#0f766e;
 --bg:#f1f5f9;
---white:#ffffff;
+--panel:#ffffff;
+--accent:#0f766e;
 --border:#e2e8f0;
 --text:#1e293b;
 }
@@ -24,49 +25,46 @@ display:flex;
 }
 
 .sidebar{
-width:240px;
+width:260px;
 background:white;
 height:100vh;
-border-right:1px solid var(--border);
-padding:20px;
 position:fixed;
+padding:20px;
+border-right:1px solid var(--border);
 }
 
 .sidebar h2{
-color:var(--primary);
+margin:0;
+color:#0b4da2;
 }
 
 .sidebar a{
 display:block;
+margin-top:10px;
 padding:10px;
 border-radius:8px;
 text-decoration:none;
-font-weight:700;
 color:var(--text);
-margin-bottom:5px;
+font-weight:700;
 }
 
 .sidebar a:hover{
-background:#e6f3f0;
-color:var(--primary);
+background:#e0f2fe;
 }
 
 .main{
-margin-left:240px;
+margin-left:260px;
 padding:30px;
 display:grid;
-grid-template-columns:1fr 1.1fr;
-gap:30px;
+grid-template-columns:1fr 1.2fr;
+gap:25px;
 width:100%;
 }
-
-/* EDITOR */
 
 .editor{
 background:white;
 padding:20px;
-border-radius:14px;
-box-shadow:0 6px 18px rgba(0,0,0,0.08);
+border-radius:12px;
 overflow:auto;
 max-height:90vh;
 }
@@ -79,14 +77,13 @@ padding:8px;
 margin-bottom:10px;
 border-radius:6px;
 border:1px solid var(--border);
-font-family:inherit;
 }
 
 .editor button{
-background:var(--primary);
+background:var(--accent);
 color:white;
 border:none;
-padding:8px 12px;
+padding:8px 14px;
 border-radius:6px;
 cursor:pointer;
 font-weight:700;
@@ -98,14 +95,20 @@ border:1px solid var(--border);
 padding:10px;
 border-radius:8px;
 margin-bottom:12px;
-background:#f8fafc;
 }
 
-/* PREVIEW */
+.question-box{
+border:1px dashed #cbd5e1;
+padding:8px;
+margin-top:8px;
+border-radius:6px;
+}
+
+/* ===== PREVIEW ===== */
 
 .preview{
 background:white;
-border-radius:14px;
+border-radius:12px;
 overflow:hidden;
 box-shadow:0 6px 18px rgba(0,0,0,0.08);
 }
@@ -118,7 +121,17 @@ text-align:center;
 }
 
 .preview-body{
+padding:20px;
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:15px;
+}
+
+.panel{
+background:#ffffff;
+border-radius:10px;
 padding:15px;
+box-shadow:0 4px 12px rgba(0,0,0,0.06);
 }
 
 .unit-card{
@@ -129,10 +142,9 @@ margin-bottom:8px;
 background:#f0fdfa;
 }
 
-.mascot{
+.mascotte{
 width:100%;
 border-radius:10px;
-margin-top:10px;
 }
 
 </style>
@@ -140,11 +152,10 @@ margin-top:10px;
 
 <body>
 
-<div class="sidebar">
+<nav class="sidebar">
 <h2>PAV-O</h2>
-<a href="teacher-dashboard.html">Dashboard</a>
 <a href="index.html">Leerlingomgeving</a>
-</div>
+</nav>
 
 <div class="main">
 
@@ -152,26 +163,39 @@ margin-top:10px;
 
 <div class="editor">
 
-<h2>Thema bouwen</h2>
+<h2>Thema</h2>
 
 <input id="title" placeholder="Titel">
-<textarea id="description" placeholder="Beschrijving"></textarea>
-<input id="focus" placeholder="Focus van dit thema">
+<textarea id="desc" placeholder="Beschrijving"></textarea>
 
-<textarea id="skills" placeholder="Wat oefen je? (komma gescheiden)"></textarea>
+<h3>Blokken</h3>
+
+<label><input type="checkbox" id="showFocus" checked> Focus tonen</label>
+<label><input type="checkbox" id="showSkills" checked> Wat oefen je</label>
+<label><input type="checkbox" id="showLinks"> Links</label>
+<label><input type="checkbox" id="showImage"> Afbeelding</label>
+<label><input type="checkbox" id="showVideo"> Video</label>
+<label><input type="checkbox" id="showExtra"> Extra info</label>
+
+<hr>
+
+<h3>XP</h3>
+<input id="themeXP" type="number" placeholder="Thema XP totaal">
 
 <hr>
 
 <h3>Units</h3>
-<div id="unitsContainer"></div>
+
+<div id="units"></div>
 
 <button onclick="addUnit()">+ Unit toevoegen</button>
 
 <hr>
 
-<button onclick="saveTheme()">💾 Thema opslaan</button>
+<button onclick="saveTheme()">💾 Opslaan</button>
 
 </div>
+
 
 <!-- ================= PREVIEW ================= -->
 
@@ -184,14 +208,26 @@ margin-top:10px;
 
 <div class="preview-body">
 
+<div class="panel">
+
 <h3>Units</h3>
-<div id="previewUnits"></div>
+<div id="pUnits"></div>
+
+</div>
+
+<div class="panel">
+
+<h3>Chattie</h3>
+<p>Preview</p>
 
 </div>
 
 </div>
 
 </div>
+
+</div>
+
 
 <script src="./firebase.js"></script>
 
@@ -211,147 +247,169 @@ return;
 const unit={
 title:"",
 active:true,
-exercises:[]
+xp:0,
+questions:[]
 };
 
 units.push(unit);
 renderUnits();
 }
 
-function addExercise(unitIndex){
+function addQuestion(unitIndex){
 
-const exercise={
-type:"meerkeuze",
+if(units[unitIndex].questions.length>=10){
+alert("Max 10 vragen");
+return;
+}
+
+units[unitIndex].questions.push({
+type:"open",
 question:"",
-answers:[""],
+answers:["","","",""],
 correct:"",
 xp:10,
 image:""
-};
+});
 
-units[unitIndex].exercises.push(exercise);
 renderUnits();
 }
 
+/* ================= RENDER ================= */
+
 function renderUnits(){
 
-const container=document.getElementById("unitsContainer");
-const preview=document.getElementById("previewUnits");
+const container=document.getElementById("units");
+const preview=document.getElementById("pUnits");
 
 container.innerHTML="";
 preview.innerHTML="";
 
 units.forEach((unit,uIndex)=>{
 
-/* ===== EDITOR ===== */
+/* EDITOR */
 
-const unitDiv=document.createElement("div");
-unitDiv.className="unit-box";
-
-unitDiv.innerHTML=`
+let html=`
+<div class="unit-box">
 
 <h4>Unit ${uIndex+1}</h4>
 
 <input placeholder="Unit titel"
 value="${unit.title}"
-oninput="units[${uIndex}].title=this.value;renderPreview()">
+oninput="units[${uIndex}].title=this.value;updatePreview()">
 
-<label>Actief</label>
 <select onchange="units[${uIndex}].active=this.value==='true'">
-<option value="true">Ja</option>
+<option value="true">Actief</option>
 <option value="false">In ontwikkeling</option>
 </select>
 
-<button onclick="addExercise(${uIndex})">+ Oefening</button>
+<input type="number" placeholder="Unit XP"
+value="${unit.xp}"
+oninput="units[${uIndex}].xp=parseInt(this.value)||0">
 
-<div id="exercises${uIndex}"></div>
-
+<button onclick="addQuestion(${uIndex})">+ Vraag</button>
 `;
 
-container.appendChild(unitDiv);
+unit.questions.forEach((q,qIndex)=>{
 
-/* ===== EXERCISES ===== */
+html+=`
+<div class="question-box">
 
-const exContainer=unitDiv.querySelector(`#exercises${uIndex}`);
+<strong>Vraag ${qIndex+1}</strong>
 
-unit.exercises.forEach((ex,eIndex)=>{
-
-const exDiv=document.createElement("div");
-
-exDiv.innerHTML=`
-
-<hr>
-<h5>Vraag ${eIndex+1}</h5>
-
-<select onchange="units[${uIndex}].exercises[${eIndex}].type=this.value">
-<option>meerkeuze</option>
-<option>open</option>
-<option>gesloten</option>
-<option>suggestief</option>
-<option>controle</option>
+<select onchange="units[${uIndex}].questions[${qIndex}].type=this.value">
+<option value="open">Open</option>
+<option value="ja">Ja/Nee</option>
+<option value="meerkeuze">Meerkeuze</option>
+<option value="suggestief">Suggestief</option>
+<option value="controle">Controle</option>
 </select>
 
 <input placeholder="Vraag"
-value="${ex.question}"
-oninput="units[${uIndex}].exercises[${eIndex}].question=this.value">
+value="${q.question}"
+oninput="units[${uIndex}].questions[${qIndex}].question=this.value">
 
-<input placeholder="Mogelijke antwoorden (komma)"
-oninput="units[${uIndex}].exercises[${eIndex}].answers=this.value.split(',')">
+<input placeholder="Antwoord 1"
+value="${q.answers[0]}"
+oninput="units[${uIndex}].questions[${qIndex}].answers[0]=this.value">
+
+<input placeholder="Antwoord 2"
+value="${q.answers[1]}"
+oninput="units[${uIndex}].questions[${qIndex}].answers[1]=this.value">
+
+<input placeholder="Antwoord 3"
+value="${q.answers[2]}"
+oninput="units[${uIndex}].questions[${qIndex}].answers[2]=this.value">
+
+<input placeholder="Antwoord 4"
+value="${q.answers[3]}"
+oninput="units[${uIndex}].questions[${qIndex}].answers[3]=this.value">
 
 <input placeholder="Juiste antwoord"
-oninput="units[${uIndex}].exercises[${eIndex}].correct=this.value">
+value="${q.correct}"
+oninput="units[${uIndex}].questions[${qIndex}].correct=this.value">
 
-<input type="number" value="${ex.xp}"
-oninput="units[${uIndex}].exercises[${eIndex}].xp=this.value">
+<input type="number" placeholder="XP"
+value="${q.xp}"
+oninput="units[${uIndex}].questions[${qIndex}].xp=parseInt(this.value)||0">
 
 <input placeholder="Afbeelding URL"
-oninput="units[${uIndex}].exercises[${eIndex}].image=this.value">
+value="${q.image}"
+oninput="units[${uIndex}].questions[${qIndex}].image=this.value">
 
+</div>
 `;
-
-exContainer.appendChild(exDiv);
 
 });
 
-/* ===== PREVIEW ===== */
+html+=`</div>`;
 
-const pDiv=document.createElement("div");
-pDiv.className="unit-card";
+container.innerHTML+=html;
+
+/* PREVIEW */
+
+let previewCard="";
 
 if(unit.active){
 
-pDiv.innerHTML=`
-<h4>${unit.title || "Unit"}</h4>
-<button>Start</button>
+previewCard=`
+<div class="unit-card">
+<strong>${unit.title||"Unit"}</strong>
+<br><button>Start</button>
+</div>
 `;
 
 }else{
 
-pDiv.innerHTML=`
-<h4>${unit.title || "Unit"}</h4>
-<img class="mascot" src="img/images/pavobouwmascotte.png">
+previewCard=`
+<div class="unit-card">
+<strong>${unit.title||"Unit"}</strong>
+<p>In ontwikkeling</p>
+<img src="img/images/pavobouwmascotte.png" class="mascotte">
+</div>
 `;
 
 }
 
-preview.appendChild(pDiv);
+preview.innerHTML+=previewCard;
 
 });
 
-renderPreview();
+updatePreview();
 }
 
-/* ================= PREVIEW HEADER ================= */
 
-function renderPreview(){
+/* ================= PREVIEW ================= */
+
+function updatePreview(){
 
 document.getElementById("pTitle").innerText=
 document.getElementById("title").value || "Thema titel";
 
 document.getElementById("pDesc").innerText=
-document.getElementById("description").value || "Beschrijving";
+document.getElementById("desc").value || "Beschrijving";
 
 }
+
 
 /* ================= SAVE ================= */
 
@@ -359,29 +417,39 @@ async function saveTheme(){
 
 await window.firebaseReady;
 
-const themeData={
+await window.db.collection("themes").add({
+
 title:document.getElementById("title").value,
-description:document.getElementById("description").value,
-focus:document.getElementById("focus").value,
-skills:document.getElementById("skills").value.split(","),
+description:document.getElementById("desc").value,
+themeXP:parseInt(document.getElementById("themeXP").value)||0,
+
+blocks:{
+focus:document.getElementById("showFocus").checked,
+skills:document.getElementById("showSkills").checked,
+links:document.getElementById("showLinks").checked,
+image:document.getElementById("showImage").checked,
+video:document.getElementById("showVideo").checked,
+extra:document.getElementById("showExtra").checked
+},
+
 units:units,
-createdAt:firebase.firestore.FieldValue.serverTimestamp(),
-active:true
-};
+createdAt:firebase.firestore.FieldValue.serverTimestamp()
 
-await window.db.collection("themes").add(themeData);
+});
 
-alert("Thema opgeslagen");
+alert("Opgeslagen!");
 
 }
 
+
 /* ================= INIT ================= */
 
-document.getElementById("title").oninput=renderPreview;
-document.getElementById("description").oninput=renderPreview;
+document.getElementById("title").addEventListener("input",updatePreview);
+document.getElementById("desc").addEventListener("input",updatePreview);
 
 </script>
 
 </body>
 </html>
+
 
