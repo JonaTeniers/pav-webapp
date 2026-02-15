@@ -3,34 +3,39 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PAV-O | Theme Builder</title>
+<title>PAV-O Theme Manager</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 :root{
---primary:#0b4da2;
---green:#10b981;
---danger:#ef4444;
---bg:#f0f4f8;
+--primary:#0f766e;
+--bg:#f1f5f9;
 --white:#ffffff;
 --border:#e2e8f0;
 --text:#1e293b;
 }
+
 body{
 margin:0;
 font-family:'Nunito',sans-serif;
 background:var(--bg);
 display:flex;
 }
+
 .sidebar{
 width:240px;
 background:white;
 height:100vh;
-position:fixed;
 border-right:1px solid var(--border);
 padding:20px;
+position:fixed;
 }
-.sidebar h2{color:var(--primary);}
+
+.sidebar h2{
+color:var(--primary);
+}
+
 .sidebar a{
 display:block;
 padding:10px;
@@ -38,251 +43,345 @@ border-radius:8px;
 text-decoration:none;
 font-weight:700;
 color:var(--text);
-margin-bottom:6px;
+margin-bottom:5px;
 }
-.sidebar a.active,
+
 .sidebar a:hover{
-background:#e0f2fe;
+background:#e6f3f0;
 color:var(--primary);
 }
+
 .main{
 margin-left:240px;
 padding:30px;
-width:calc(100% - 240px);
+display:grid;
+grid-template-columns:1fr 1.1fr;
+gap:30px;
+width:100%;
 }
+
+/* EDITOR */
+
 .editor{
 background:white;
-padding:25px;
-border-radius:16px;
-box-shadow:0 4px 12px rgba(0,0,0,0.05);
+padding:20px;
+border-radius:14px;
+box-shadow:0 6px 18px rgba(0,0,0,0.08);
+overflow:auto;
+max-height:90vh;
 }
-input, textarea, select{
+
+.editor input,
+.editor textarea,
+.editor select{
 width:100%;
 padding:8px;
 margin-bottom:10px;
-border-radius:8px;
+border-radius:6px;
 border:1px solid var(--border);
 font-family:inherit;
 }
-button{
-padding:8px 14px;
+
+.editor button{
+background:var(--primary);
+color:white;
 border:none;
-border-radius:8px;
+padding:8px 12px;
+border-radius:6px;
 cursor:pointer;
 font-weight:700;
+margin-bottom:10px;
 }
-.add-btn{background:var(--primary);color:white;}
-.save-btn{background:var(--green);color:white;}
-.delete-btn{background:var(--danger);color:white;}
 
-.unit-block{
-background:#f8fafc;
-padding:15px;
-border-radius:12px;
-margin-bottom:15px;
+.unit-box{
 border:1px solid var(--border);
-}
-.exercise-block{
-background:#ffffff;
 padding:10px;
 border-radius:8px;
+margin-bottom:12px;
+background:#f8fafc;
+}
+
+/* PREVIEW */
+
+.preview{
+background:white;
+border-radius:14px;
+overflow:hidden;
+box-shadow:0 6px 18px rgba(0,0,0,0.08);
+}
+
+.preview-header{
+background:#14b8a6;
+color:white;
+padding:20px;
+text-align:center;
+}
+
+.preview-body{
+padding:15px;
+}
+
+.unit-card{
+border:2px solid #bce7e1;
+border-radius:10px;
+padding:10px;
 margin-bottom:8px;
-border:1px solid #e5e7eb;
+background:#f0fdfa;
 }
-.small{
-font-size:0.8rem;
-color:#64748b;
+
+.mascot{
+width:100%;
+border-radius:10px;
+margin-top:10px;
 }
+
 </style>
 </head>
 
 <body>
 
-<nav class="sidebar">
+<div class="sidebar">
 <h2>PAV-O</h2>
-<a href="#" class="active">Thema Builder</a>
+<a href="teacher-dashboard.html">Dashboard</a>
 <a href="index.html">Leerlingomgeving</a>
-</nav>
+</div>
 
 <div class="main">
+
+<!-- ================= EDITOR ================= -->
+
 <div class="editor">
 
-<h2>Nieuw Thema</h2>
+<h2>Thema bouwen</h2>
 
-<label>Titel</label>
-<input id="titleInput">
+<input id="title" placeholder="Titel">
+<textarea id="description" placeholder="Beschrijving"></textarea>
+<input id="focus" placeholder="Focus van dit thema">
 
-<label>Beschrijving</label>
-<textarea id="descInput"></textarea>
+<textarea id="skills" placeholder="Wat oefen je? (komma gescheiden)"></textarea>
 
 <hr>
 
-<h3>Units (max 12)</h3>
+<h3>Units</h3>
 <div id="unitsContainer"></div>
-<button class="add-btn" onclick="addUnit()">+ Unit toevoegen</button>
+
+<button onclick="addUnit()">+ Unit toevoegen</button>
 
 <hr>
-<h3>Totaal XP: <span id="totalXp">0</span></h3>
 
-<button class="save-btn" onclick="saveTheme()">💾 Thema opslaan</button>
+<button onclick="saveTheme()">💾 Thema opslaan</button>
 
 </div>
+
+<!-- ================= PREVIEW ================= -->
+
+<div class="preview">
+
+<div class="preview-header">
+<h1 id="pTitle">Thema titel</h1>
+<p id="pDesc">Beschrijving</p>
+</div>
+
+<div class="preview-body">
+
+<h3>Units</h3>
+<div id="previewUnits"></div>
+
+</div>
+
+</div>
+
 </div>
 
 <script src="./firebase.js"></script>
 
 <script>
 
-let units = [];
+let units=[];
+
+/* ================= UNITS ================= */
 
 function addUnit(){
 
-if(units.length >= 12){
-alert("Maximum 12 units toegestaan.");
+if(units.length>=12){
+alert("Max 12 units");
 return;
 }
 
-const newUnit = {
-title: "Nieuwe unit",
-exercises: []
+const unit={
+title:"",
+active:true,
+exercises:[]
 };
 
-units.push(newUnit);
+units.push(unit);
 renderUnits();
 }
 
 function addExercise(unitIndex){
 
-if(units[unitIndex].exercises.length >= 10){
-alert("Maximum 10 oefeningen per unit.");
-return;
-}
-
-units[unitIndex].exercises.push({
+const exercise={
+type:"meerkeuze",
 question:"",
-type:"multiple",
-options:["","","",""],
-correct:0,
+answers:[""],
+correct:"",
 xp:10,
 image:""
-});
+};
 
+units[unitIndex].exercises.push(exercise);
 renderUnits();
 }
 
 function renderUnits(){
 
-const container = document.getElementById("unitsContainer");
-container.innerHTML = "";
+const container=document.getElementById("unitsContainer");
+const preview=document.getElementById("previewUnits");
 
-let totalXp = 0;
+container.innerHTML="";
+preview.innerHTML="";
 
 units.forEach((unit,uIndex)=>{
 
-let unitXp = 0;
+/* ===== EDITOR ===== */
 
-unit.exercises.forEach(ex => unitXp += parseInt(ex.xp||0));
-totalXp += unitXp;
+const unitDiv=document.createElement("div");
+unitDiv.className="unit-box";
 
-let html = `
-<div class="unit-block">
-<label>Unit titel</label>
-<input value="${unit.title}" onchange="updateUnitTitle(${uIndex}, this.value)">
+unitDiv.innerHTML=`
 
-<h4>Oefeningen (max 10)</h4>
+<h4>Unit ${uIndex+1}</h4>
+
+<input placeholder="Unit titel"
+value="${unit.title}"
+oninput="units[${uIndex}].title=this.value;renderPreview()">
+
+<label>Actief</label>
+<select onchange="units[${uIndex}].active=this.value==='true'">
+<option value="true">Ja</option>
+<option value="false">In ontwikkeling</option>
+</select>
+
+<button onclick="addExercise(${uIndex})">+ Oefening</button>
+
+<div id="exercises${uIndex}"></div>
+
 `;
+
+container.appendChild(unitDiv);
+
+/* ===== EXERCISES ===== */
+
+const exContainer=unitDiv.querySelector(`#exercises${uIndex}`);
 
 unit.exercises.forEach((ex,eIndex)=>{
 
-html += `
-<div class="exercise-block">
+const exDiv=document.createElement("div");
 
-<label>Vraag</label>
-<textarea onchange="updateQuestion(${uIndex},${eIndex},this.value)">${ex.question}</textarea>
+exDiv.innerHTML=`
 
-<label>Type oefening</label>
-<select onchange="updateType(${uIndex},${eIndex},this.value)">
-<option value="multiple" ${ex.type=="multiple"?"selected":""}>Meerkeuze</option>
-<option value="open" ${ex.type=="open"?"selected":""}>Open vraag</option>
-<option value="truefalse" ${ex.type=="truefalse"?"selected":""}>Juist / Fout</option>
+<hr>
+<h5>Vraag ${eIndex+1}</h5>
+
+<select onchange="units[${uIndex}].exercises[${eIndex}].type=this.value">
+<option>meerkeuze</option>
+<option>open</option>
+<option>gesloten</option>
+<option>suggestief</option>
+<option>controle</option>
 </select>
 
-<label>XP voor deze vraag</label>
-<input type="number" value="${ex.xp}" onchange="updateXp(${uIndex},${eIndex},this.value)">
+<input placeholder="Vraag"
+value="${ex.question}"
+oninput="units[${uIndex}].exercises[${eIndex}].question=this.value">
 
-<label>Afbeelding URL (optioneel)</label>
-<input value="${ex.image}" onchange="updateImage(${uIndex},${eIndex},this.value)">
+<input placeholder="Mogelijke antwoorden (komma)"
+oninput="units[${uIndex}].exercises[${eIndex}].answers=this.value.split(',')">
 
-<button class="delete-btn" onclick="deleteExercise(${uIndex},${eIndex})">Verwijderen</button>
+<input placeholder="Juiste antwoord"
+oninput="units[${uIndex}].exercises[${eIndex}].correct=this.value">
 
-</div>
+<input type="number" value="${ex.xp}"
+oninput="units[${uIndex}].exercises[${eIndex}].xp=this.value">
+
+<input placeholder="Afbeelding URL"
+oninput="units[${uIndex}].exercises[${eIndex}].image=this.value">
+
 `;
+
+exContainer.appendChild(exDiv);
+
 });
 
-html += `
-<p class="small">Unit XP: ${unitXp}</p>
-<button class="add-btn" onclick="addExercise(${uIndex})">+ Oefening toevoegen</button>
-<button class="delete-btn" onclick="deleteUnit(${uIndex})">Verwijder unit</button>
-</div>
+/* ===== PREVIEW ===== */
+
+const pDiv=document.createElement("div");
+pDiv.className="unit-card";
+
+if(unit.active){
+
+pDiv.innerHTML=`
+<h4>${unit.title || "Unit"}</h4>
+<button>Start</button>
 `;
 
-container.innerHTML += html;
+}else{
+
+pDiv.innerHTML=`
+<h4>${unit.title || "Unit"}</h4>
+<img class="mascot" src="img/images/pavobouwmascotte.png">
+`;
+
+}
+
+preview.appendChild(pDiv);
 
 });
 
-document.getElementById("totalXp").innerText = totalXp;
+renderPreview();
 }
 
-function updateUnitTitle(u,v){ units[u].title=v; }
-function updateQuestion(u,e,v){ units[u].exercises[e].question=v; }
-function updateType(u,e,v){ units[u].exercises[e].type=v; }
-function updateXp(u,e,v){ units[u].exercises[e].xp=parseInt(v); renderUnits(); }
-function updateImage(u,e,v){ units[u].exercises[e].image=v; }
+/* ================= PREVIEW HEADER ================= */
 
-function deleteExercise(u,e){
-units[u].exercises.splice(e,1);
-renderUnits();
+function renderPreview(){
+
+document.getElementById("pTitle").innerText=
+document.getElementById("title").value || "Thema titel";
+
+document.getElementById("pDesc").innerText=
+document.getElementById("description").value || "Beschrijving";
+
 }
 
-function deleteUnit(u){
-units.splice(u,1);
-renderUnits();
-}
+/* ================= SAVE ================= */
 
 async function saveTheme(){
 
-if(!titleInput.value){
-alert("Geef titel in.");
-return;
-}
-
-try{
-
 await window.firebaseReady;
 
-await window.db.collection("themes").add({
-title: titleInput.value,
-description: descInput.value,
-units: units,
-totalXp: units.reduce((sum,u)=>sum + u.exercises.reduce((s,e)=>s+parseInt(e.xp||0),0),0),
-active:true,
-createdAt: firebase.firestore.FieldValue.serverTimestamp()
-});
+const themeData={
+title:document.getElementById("title").value,
+description:document.getElementById("description").value,
+focus:document.getElementById("focus").value,
+skills:document.getElementById("skills").value.split(","),
+units:units,
+createdAt:firebase.firestore.FieldValue.serverTimestamp(),
+active:true
+};
 
-alert("Thema opgeslagen!");
+await window.db.collection("themes").add(themeData);
 
-units=[];
-renderUnits();
-titleInput.value="";
-descInput.value="";
+alert("Thema opgeslagen");
 
-}catch(error){
-console.error(error);
-alert("Opslaan mislukt.");
 }
-}
+
+/* ================= INIT ================= */
+
+document.getElementById("title").oninput=renderPreview;
+document.getElementById("description").oninput=renderPreview;
 
 </script>
 
 </body>
 </html>
+
