@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>PAV-O | Mijn Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --blue: #1976d2; --bg: #f4f7fb; }
+        body { margin: 0; font-family: 'Nunito', sans-serif; background: var(--bg); display: flex; }
+        
+        /* Gebruik dezelfde sidebar styling als index.html voor consistentie */
+        .sidebar { width: 280px; background: white; height: 100vh; position: fixed; box-shadow: 2px 0 15px rgba(0,0,0,0.05); display:flex; flex-direction:column; }
+        .main-content { margin-left: 280px; flex-grow: 1; padding: 2.5rem; display: flex; flex-direction: column; height: 100vh; }
+        
+        .editor-container { background: white; flex-grow: 1; border-radius: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); display: flex; flex-direction: column; overflow: hidden; border: 1px solid #e0ecff; }
+        .editor-header { padding: 1.5rem; background: #f8faff; border-bottom: 1px solid #eef2f7; display: flex; justify-content: space-between; align-items: center; }
+        
+        #assignmentBox { background: #fffde7; padding: 1rem 1.5rem; border-left: 5px solid #fbc02d; margin: 1.5rem; border-radius: 8px; font-size: 1.1rem; }
+        
+        #portfolioEditor { flex-grow: 1; border: none; padding: 2rem; font-family: 'Nunito', sans-serif; font-size: 1.1rem; line-height: 1.6; outline: none; resize: none; }
+        
+        .btn-submit { background: var(--blue); color: white; border: none; padding: 1rem 2rem; border-radius: 12px; font-weight: 800; cursor: pointer; transition: 0.2s; margin: 1.5rem; align-self: flex-end; }
+        .btn-submit:hover { background: #1565c0; transform: scale(1.02); }
+
+        .nav-item { padding: 0.9rem 1.2rem; text-decoration: none; color: #1f2937; font-weight: 700; border-radius: 14px; margin: 0.5rem 1rem; display: flex; align-items: center; gap: 10px; }
+        .nav-item.active { background: #e3f2fd; color: var(--blue); }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div style="padding: 2.5rem 1.5rem; text-align: center;">
+            <img src="img/pavomascotte.png" style="width: 80px;">
+            <h1 style="color: var(--blue); margin:0;">PAV-O</h1>
+        </div>
+        <a href="index.html" class="nav-item">🏠 Dashboard</a>
+        <a href="portfolio.html" class="nav-item active">📝 Mijn Portfolio</a>
+        <a href="chattie.html" class="nav-item">🤖 Chattie AI</a>
+    </div>
+
+    <div class="main-content">
+        <div class="editor-container">
+            <div class="editor-header">
+                <h2 style="margin:0; color: var(--blue);">📝 Portfolio Werkplek</h2>
+                <span id="status" style="color: var(--muted); font-size: 0.9rem;">Lokaal opgeslagen</span>
+            </div>
+
+            <div id="assignmentBox">
+                <strong>📌 Actuele Opdracht:</strong>
+                <p id="assignmentText">Laden van opdracht...</p>
+            </div>
+
+            <textarea id="portfolioEditor" placeholder="Begin hier met je tekst..."></textarea>
+            
+            <button class="btn-submit" onclick="submitToTeacher()">🚀 Werk indienen bij leerkracht</button>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="./firebase.js"></script>
+
+    <script>
+        const editor = document.getElementById("portfolioEditor");
+        const status = document.getElementById("status");
+
+        // 1. Laden van lokale backup
+        editor.value = localStorage.getItem("pavo_portfolio_cache") || "";
+
+        // 2. Automatisch opslaan in browser
+        editor.addEventListener("input", () => {
+            localStorage.setItem("pavo_portfolio_cache", editor.value);
+            status.innerText = "Bezig met opslaan...";
+            setTimeout(() => { status.innerText = "Lokaal bewaard"; }, 1000);
+        });
+
+        // 3. Opdracht ophalen uit Firebase
+        async function fetchAssignment() {
+            try {
+                const doc = await db.collection("settings").doc("currentAssignment").get();
+                document.getElementById("assignmentText").innerText = doc.exists ? doc.data().text : "Schrijf een reflectie over wat je vandaag hebt geleerd.";
+            } catch (e) { console.error(e); }
+        }
+
+        // 4. Indienen naar Leerkracht Dashboard
+        async function submitToTeacher() {
+            const name = localStorage.getItem("studentName");
+            const klas = localStorage.getItem("studentClass");
+
+            if(!name) return alert("Log eerst in!");
+            
+            try {
+                await db.collection("portfolio").doc(name + "_" + klas).set({
+                    studentName: name,
+                    studentClass: klas,
+                    text: editor.value,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                alert("✅ Je werk is verzonden naar de leerkracht!");
+            } catch (e) { alert("Fout bij verzenden."); }
+        }
+
+        window.onload = fetchAssignment;
+    </script>
+</body>
+</html>
