@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PAV-O | Dashboard</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap" rel="stylesheet">
 
 <style>
 :root {
     --blue: #1f6fd6;
     --blue-dark: #1554a6;
-    --blue-soft: #e9f2ff;
     --bg: #eef3f8;
     --text: #1e293b;
     --muted: #6b7280;
@@ -25,11 +25,10 @@ body {
     color: var(--text);
 }
 
-.wrapper {
-    display: flex;
-}
-
 /* SIDEBAR */
+
+.wrapper { display: flex; }
+
 .sidebar {
     width: 260px;
     background: white;
@@ -66,6 +65,7 @@ body {
 }
 
 /* MAIN */
+
 .main-content {
     margin-left: 260px;
     padding: 3rem 3.5rem;
@@ -76,30 +76,45 @@ body {
     color: var(--blue);
 }
 
-.theme-grid {
+/* SECTION TITLES */
+
+.section-title {
     margin-top: 3rem;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2x breder */
-    gap: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--blue);
+    border-bottom: 2px solid #dbe7ff;
+    padding-bottom: 0.4rem;
 }
+
+/* GRID */
+
+.theme-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1.6rem;
+}
+
+/* CARD */
 
 .thema-card {
     display: block;
-    border-radius: 12px;
+    border-radius: 16px;
     overflow: hidden;
     text-decoration: none;
+    background: white;
     border: 1px solid #e6ebf2;
     transition: 0.25s;
-    background: white;
 }
 
 .thema-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 25px rgba(0,0,0,0.08);
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.08);
 }
 
 .thema-image {
-    height: 200px;
+    height: 220px;
     background-size: cover;
     background-position: center;
     position: relative;
@@ -108,16 +123,18 @@ body {
 .thema-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0.2));
-    padding: 1rem;
+    background: linear-gradient(to top,
+        rgba(0,0,0,0.75),
+        rgba(0,0,0,0.2));
     display: flex;
     align-items: flex-end;
+    padding: 1rem;
 }
 
 .thema-title {
     color: white;
     font-weight: 800;
-    font-size: 1.2rem;
+    font-size: 1.25rem;
 }
 
 .thema-bottom {
@@ -125,11 +142,11 @@ body {
 }
 
 .progress-bar {
-    height: 5px;
+    height: 6px;
     background: #e5e7eb;
     border-radius: 4px;
     overflow: hidden;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.5rem;
 }
 
 .progress-fill {
@@ -138,16 +155,11 @@ body {
 }
 
 .progress-text {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     color: var(--muted);
 }
 
-/* Locked */
-.locked {
-    pointer-events: none;
-    opacity: 0.6;
-    filter: grayscale(0.4);
-}
+/* FOOTER */
 
 .footer {
     margin-left: 260px;
@@ -158,6 +170,7 @@ body {
     border-top: 1px solid #e6ebf2;
     background: white;
 }
+
 </style>
 </head>
 
@@ -178,127 +191,110 @@ body {
 </div>
 
 <div class="main-content">
-    <div class="welcome-section">
-        <h2>Welkom bij PAV-O</h2>
-        <p>Kies een thema en start met leren.</p>
-    </div>
 
-    <div class="theme-grid" id="themeGrid">
+<div class="welcome-section">
+    <h2>Welkom bij PAV-O</h2>
+    <p>Kies een thema en start met leren.</p>
+</div>
 
-        <!-- VASTE THEMA'S -->
 
-        <a href="thema1.html" class="thema-card">
-            <div class="thema-image" style="background-image:url('img/images/thema1.jpg')">
-                <div class="thema-overlay"><h4 class="thema-title">Thema 1 – Landschappen</h4></div>
-            </div>
-            <div class="thema-bottom"><div class="progress-text">0% voltooid</div></div>
-        </a>
+<!-- ================= HOOFDTHEMA'S ================= -->
 
-        <a href="thema2.html" class="thema-card">
-            <div class="thema-image" style="background-image:url('img/images/thema2.jpg')">
-                <div class="thema-overlay"><h4 class="thema-title">Thema 2 – Levende natuur</h4></div>
-            </div>
-            <div class="thema-bottom"><div class="progress-text">0% voltooid</div></div>
-        </a>
+<div class="section-title">📘 Hoofdthema’s</div>
 
-        <a href="thema3.html" class="thema-card">
-            <div class="thema-image" style="background-image:url('img/images/thema3.jpg')">
-                <div class="thema-overlay"><h4 class="thema-title">Thema 3 – Werkwoordstijden</h4></div>
-            </div>
-            <div class="thema-bottom"><div class="progress-text">0% voltooid</div></div>
-        </a>
+<div class="theme-grid">
 
-        <a href="thema4.html" class="thema-card">
-            <div class="thema-image" style="background-image:url('img/images/thema4.jpg')">
-                <div class="thema-overlay"><h4 class="thema-title">Thema 4 – Wiskunde</h4></div>
-            </div>
-            <div class="thema-bottom"><div class="progress-text">0% voltooid</div></div>
-        </a>
+<a href="thema1.html" class="thema-card">
+<div class="thema-image" style="background-image:url('img/images/thema1.jpg')">
+<div class="thema-overlay"><div class="thema-title">Thema 1 – Landschappen</div></div>
+</div>
+<div class="thema-bottom">
+<div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+<div class="progress-text">0% voltooid</div>
+</div>
+</a>
 
-        <a href="thema5.html" class="thema-card">
-            <div class="thema-image" style="background-image:url('img/images/thema5.jpg')">
-                <div class="thema-overlay"><h4 class="thema-title">Thema 5 – Fictie & non-fictie</h4></div>
-            </div>
-            <div class="thema-bottom"><div class="progress-text">0% voltooid</div></div>
-        </a>
+<a href="thema2.html" class="thema-card">
+<div class="thema-image" style="background-image:url('img/images/thema2.jpg')">
+<div class="thema-overlay"><div class="thema-title">Thema 2 – Levende natuur</div></div>
+</div>
+<div class="thema-bottom">
+<div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+<div class="progress-text">0% voltooid</div>
+</div>
+</a>
 
-        <a href="thema6.html" class="thema-card">
-            <div class="thema-image" style="background-image:url('img/images/thema6.jpg')">
-                <div class="thema-overlay"><h4 class="thema-title">Thema 6 – Schatten</h4></div>
-            </div>
-            <div class="thema-bottom"><div class="progress-text">0% voltooid</div></div>
-        </a>
+<a href="thema9.html" class="thema-card">
+<div class="thema-image" style="background-image:url('img/images/thema9.jpg')">
+<div class="thema-overlay"><div class="thema-title">Thema 9 – Geschiedenis</div></div>
+</div>
+<div class="thema-bottom">
+<div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+<div class="progress-text">0% voltooid</div>
+</div>
+</a>
 
-        <a href="thema7.html" class="thema-card">
-            <div class="thema-image" style="background-image:url('img/images/thema7.jpg')">
-                <div class="thema-overlay"><h4 class="thema-title">Thema 7 – Communicatie</h4></div>
-            </div>
-            <div class="thema-bottom"><div class="progress-text">0% voltooid</div></div>
-        </a>
+</div>
 
-        <a href="thema8.html" class="thema-card">
-            <div class="thema-image" style="background-image:url('img/images/thema8.jpg')">
-                <div class="thema-overlay"><h4 class="thema-title">Thema 8 – Actualiteit</h4></div>
-            </div>
-            <div class="thema-bottom"><div class="progress-text">0% voltooid</div></div>
-        </a>
 
-        <a href="thema9.html" class="thema-card">
-            <div class="thema-image" style="background-image:url('img/images/thema9.jpg')">
-                <div class="thema-overlay"><h4 class="thema-title">Thema 9 – Geschiedenis</h4></div>
-            </div>
-            <div class="thema-bottom"><div class="progress-text">0% voltooid</div></div>
-        </a>
 
-    </div>
+<!-- ================= OEFENTHEMA'S ================= -->
+
+<div class="section-title">🧠 Oefenthema’s</div>
+
+<div class="theme-grid">
+
+<a href="thema3.html" class="thema-card">
+<div class="thema-image" style="background-image:url('img/images/thema3.jpg')">
+<div class="thema-overlay"><div class="thema-title">Thema 3 – Werkwoordstijden</div></div>
+</div>
+<div class="thema-bottom"><div class="progress-text">0% voltooid</div></div>
+</a>
+
+<a href="thema4.html" class="thema-card">
+<div class="thema-image" style="background-image:url('img/images/thema4.jpg')">
+<div class="thema-overlay"><div class="thema-title">Thema 4 – Wiskunde</div></div>
+</div>
+<div class="thema-bottom"><div class="progress-text">0% voltooid</div></div>
+</a>
+
+<a href="thema5.html" class="thema-card">
+<div class="thema-image" style="background-image:url('img/images/thema5.jpg')">
+<div class="thema-overlay"><div class="thema-title">Thema 5 – Fictie & non-fictie</div></div>
+</div>
+<div class="thema-bottom"><div class="progress-text">0% voltooid</div></div>
+</a>
+
+<a href="thema6.html" class="thema-card">
+<div class="thema-image" style="background-image:url('img/images/thema6.jpg')">
+<div class="thema-overlay"><div class="thema-title">Thema 6 – Schatten</div></div>
+</div>
+<div class="thema-bottom"><div class="progress-text">0% voltooid</div></div>
+</a>
+
+<a href="thema7.html" class="thema-card">
+<div class="thema-image" style="background-image:url('img/images/thema7.jpg')">
+<div class="thema-overlay"><div class="thema-title">Thema 7 – Communicatie</div></div>
+</div>
+<div class="thema-bottom"><div class="progress-text">0% voltooid</div></div>
+</a>
+
+<a href="thema8.html" class="thema-card">
+<div class="thema-image" style="background-image:url('img/images/thema8.jpg')">
+<div class="thema-overlay"><div class="thema-title">Thema 8 – Actualiteit</div></div>
+</div>
+<div class="thema-bottom"><div class="progress-text">0% voltooid</div></div>
+</a>
+
+</div>
+
+
 </div>
 </div>
 
 <footer class="footer">
 © 2026 PAV-O
 </footer>
-
-<!-- FIREBASE -->
-<script src="./firebase.js"></script>
-
-<script>
-async function loadExtraThemes(){
-
-    await window.firebaseReady;
-
-    const grid = document.getElementById("themeGrid");
-
-    const snapshot = await window.db
-        .collection("themes")
-        .where("active","==",true)
-        .get();
-
-    snapshot.forEach(doc => {
-
-        const t = doc.data();
-        const themeId = doc.id;
-
-        const card = document.createElement("a");
-        card.className = "thema-card";
-        card.href = `thema.html?id=${themeId}`;
-
-        card.innerHTML = `
-            <div class="thema-image" style="background:${t.color};">
-                <div class="thema-overlay">
-                    <h4 class="thema-title">${t.title}</h4>
-                </div>
-            </div>
-            <div class="thema-bottom">
-                <div class="progress-text">Nieuw thema</div>
-            </div>
-        `;
-
-        grid.appendChild(card);
-    });
-}
-
-window.addEventListener("load", loadExtraThemes);
-</script>
 
 </body>
 </html>
