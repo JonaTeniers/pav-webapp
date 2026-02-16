@@ -92,8 +92,24 @@ body {
 
 .theme-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.6rem;
+}
+
+/* Tablet */
+@media (max-width: 1200px) {
+    .theme-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Mobiel */
+@media (max-width: 700px) {
+    .theme-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 }
 
 /* CARD */
