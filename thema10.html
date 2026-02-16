@@ -1,194 +1,262 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>thema 4 – Monsterlijke Groene Groei</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hoofdthema – Monsterlijke Groene Groei</title>
 
 <link rel="stylesheet"
 href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
 
 <style>
-:root{
-  color-scheme: dark;
-  --panel: rgba(23, 38, 23, 0.92);
-  --panel-border: rgba(120, 200, 120, 0.35);
-  --accent: #6ccf6c;
-  --accent-2: #3aa63a;
-  --text: #eaf7ea;
-  --muted: #c6dec6;
-  --soft: rgba(108,207,108,0.15);
+:root {
+  --bg: #f8fafc;
+  --panel: #ffffff;
+  --accent: #2f855a;
+  --accent-dark: #276749;
+  --text: #1f2937;
+  --muted: #4b5563;
+  --border-soft: #dbe5ef;
+  --soft-bg: #f0fdf4;
 }
 
-*{box-sizing:border-box}
+* { box-sizing: border-box; }
 
-body{
-  margin:0;
-  font-family:'Nunito',sans-serif;
-  background:radial-gradient(circle at top,#274a27 0%,#132413 55%,#091409 100%);
-  color:var(--text);
+body {
+  margin: 0;
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  color: var(--text);
 }
 
-header{
-  text-align:center;
-  padding:2rem 1rem 1.2rem;
-  background:linear-gradient(90deg,#2e5a2e,#1f3f1f);
-  border-bottom:1px solid var(--panel-border);
+header {
+  background: #38a169;
+  color: white;
+  padding: 1.8rem 1rem;
+  text-align: center;
 }
 
-header h1{margin:0;font-size:2.2rem;}
-header p{margin:0.6rem 0 0;color:var(--muted);}
-
-main{
-  max-width:1100px;
-  margin:0 auto;
-  padding:2rem 1.5rem 3rem;
+header h1 {
+  margin: 0;
+  font-size: 2.1rem;
 }
 
-.panel{
-  background:var(--panel);
-  border-radius:18px;
-  border:1px solid var(--panel-border);
-  padding:1.6rem;
+header p {
+  margin: 0.6rem 0 0;
+  opacity: 0.95;
 }
 
-/* INFO BOX */
-.info-box{
-  background:var(--soft);
-  border-left:5px solid var(--accent);
-  border-radius:12px;
-  padding:1rem 1.2rem;
-  margin-bottom:1.4rem;
-  color:var(--muted);
+main {
+  width: min(1200px, 95%);
+  margin: 1.6rem auto 2.5rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.2rem;
 }
 
-/* CURSUS BLOK */
-.course-box{
-  background:rgba(30,50,30,0.9);
-  border-radius:14px;
-  border:1px solid rgba(120,200,120,0.25);
-  padding:1.2rem;
-  margin-bottom:1.5rem;
+.panel {
+  background: var(--panel);
+  border-radius: 14px;
+  padding: 1.3rem;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+.task {
+  margin-top: 1.2rem;
+  border-top: 1px solid var(--border-soft);
+  padding-top: 1.2rem;
+}
+
+.info-box {
+  background: var(--soft-bg);
+  border-left: 5px solid var(--accent);
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  margin-bottom: 1.4rem;
+}
+
+.course-box {
+  background: var(--soft-bg);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.course-btn {
+  display: inline-block;
+  margin-top: 0.6rem;
+  text-decoration: none;
+  background: var(--accent);
+  color: white;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.course-btn:hover {
+  background: var(--accent-dark);
+}
+
+.panel-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.6rem;
 }
 
 /* UNITS */
-.unit-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:1.2rem;
-  margin-top:1.2rem;
+.unit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 0.9rem;
+  margin-top: 0.8rem;
 }
 
-.unit-card{
-  background:rgba(30,50,30,0.9);
-  border-radius:16px;
-  border:1px solid rgba(120,200,120,0.25);
-  padding:1.3rem;
-  display:flex;
-  flex-direction:column;
-  gap:0.6rem;
+.unit-card {
+  background: var(--soft-bg);
+  border: 2px solid #b7e4c7;
+  border-radius: 12px;
+  padding: 0.9rem;
+  display: flex;
+  flex-direction: column;
 }
 
-.unit-card h4{margin:0;}
-.unit-card p{margin:0;color:var(--muted);}
-
-.unit-card a{
-  margin-top:auto;
-  text-decoration:none;
-  font-weight:700;
-  color:white;
-  background:linear-gradient(120deg,var(--accent),var(--accent-2));
-  padding:0.45rem 0.9rem;
-  border-radius:999px;
-  width:fit-content;
+.unit-card h4 {
+  margin: 0 0 0.35rem;
 }
 
-/* BUTTON */
-.back-btn{
-  display:inline-block;
-  margin-top:2rem;
-  text-decoration:none;
-  color:white;
-  font-weight:700;
-  padding:0.5rem 1rem;
-  border-radius:999px;
-  background:linear-gradient(120deg,var(--accent),var(--accent-2));
+.unit-card p {
+  margin: 0 0 0.5rem;
+  color: var(--muted);
+  font-size: 0.95rem;
 }
 
+.unit-card a button {
+  margin-top: auto;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  padding: 0.45rem 0.7rem;
+  font-weight: 700;
+  color: white;
+  background: var(--accent);
+  cursor: pointer;
+}
+
+.unit-card a button:hover {
+  background: var(--accent-dark);
+}
+
+.btn-back {
+  display: inline-block;
+  margin-top: 1.6rem;
+  text-decoration: none;
+  background: var(--accent);
+  color: white;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.btn-back:hover {
+  background: var(--accent-dark);
+}
+
+.chat-embed {
+  width: 100%;
+  min-height: 520px;
+  border: none;
+  border-radius: 12px;
+  background: #f3f7ff;
+}
+
+@media (max-width: 900px) {
+  main { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 
 <body>
 
 <header>
-  <h1>🌱 Monsterlijke Groene Groei</h1>
+  <h1>Monsterlijke Groene Groei</h1>
   <p>Ontdek hoe planten groeien dankzij fotosynthese</p>
 </header>
 
 <main>
+
 <section class="panel">
 
   <h2>Focus van dit thema</h2>
   <p>
     In dit hoofdthema leer je hoe planten groeien en energie maken.
-    Je ontdekt het proces van <strong>fotosynthese</strong> en waarom
-    planten zo belangrijk zijn voor het leven op aarde.
+    Je ontdekt het proces van fotosynthese en waarom planten belangrijk
+    zijn voor het leven op aarde.
   </p>
 
   <div class="info-box">
-    <strong>Kapstok</strong>
+    <strong>Kapstok van het thema</strong>
     <ul>
       <li>Wat hebben planten nodig om te groeien?</li>
       <li>Hoe maken planten zuurstof?</li>
-      <li>Waarom zijn planten belangrijk voor mensen en dieren?</li>
+      <li>Waarom zijn planten belangrijk?</li>
     </ul>
   </div>
 
   <!-- CURSUS -->
-  <h2>📘 Cursus</h2>
+  <div class="task">
+    <h2>Cursus</h2>
 
-  <div class="course-box">
-    <p>
-      Hier vind je de cursus van dit hoofdthema.
-      Lees eerst de theorie voordat je de units maakt.
-    </p>
+    <div class="course-box">
+      <p>
+        Lees eerst de cursus voordat je de oefeningen start.
+      </p>
 
-    <!-- PAS HIER AAN -->
-    <a href="cursus_monsterlijke_groei.pdf"
-       target="_blank"
-       style="color:#9cff9c;font-weight:700;">
-       📄 Open cursus
-    </a>
+      <a class="course-btn"
+         href="cursus/thema4/thema4.cursus.html">
+         Open cursus
+      </a>
+    </div>
   </div>
 
   <!-- UNITS -->
-  <h2>📚 Units</h2>
+  <div class="task">
+    <h2 class="panel-title">Units</h2>
 
-  <div class="unit-grid">
+    <div class="unit-grid">
 
-    <div class="unit-card">
-      <h4>Unit 1</h4>
-      <p>Wat hebben planten nodig?</p>
-      <a href="monsterunit1.html">Start</a>
+      <div class="unit-card">
+        <h4>Unit 1</h4>
+        <p>Wat hebben planten nodig?</p>
+        <a href="monsterunit1.html"><button>Start</button></a>
+      </div>
+
+      <div class="unit-card">
+        <h4>Unit 2</h4>
+        <p>Fotosynthese begrijpen</p>
+        <a href="monsterunit2.html"><button>Start</button></a>
+      </div>
+
+      <div class="unit-card">
+        <h4>Unit 3</h4>
+        <p>Waarom planten belangrijk zijn</p>
+        <a href="monsterunit3.html"><button>Start</button></a>
+      </div>
+
     </div>
-
-    <div class="unit-card">
-      <h4>Unit 2</h4>
-      <p>Fotosynthese begrijpen</p>
-      <a href="monsterunit2.html">Start</a>
-    </div>
-
-    <div class="unit-card">
-      <h4>Unit 3</h4>
-      <p>Waarom planten belangrijk zijn</p>
-      <a href="monsterunit3.html">Start</a>
-    </div>
-
   </div>
 
-  <a href="index.html" class="back-btn">← Terug naar overzicht</a>
+  <a class="btn-back" href="index.html">
+    Terug naar thema-overzicht
+  </a>
 
 </section>
+
+<aside class="panel">
+  <h2 class="panel-title">Chattie</h2>
+  <iframe class="chat-embed"
+          src="chattie.html?thema=Monsterlijke%20Groene%20Groei">
+  </iframe>
+</aside>
+
 </main>
 
 </body>
