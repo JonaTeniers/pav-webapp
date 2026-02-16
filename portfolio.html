@@ -23,6 +23,29 @@
         .nav-item.active { background: #e3f2fd; color: var(--blue); }
 
         .main-content { margin-left: 280px; flex-grow: 1; display: flex; flex-direction: column; height: 100vh; background: #dbdbdb; }
+
+        .focus-card {
+            margin: 0 1rem 1rem;
+            padding: 1rem;
+            border-radius: 12px;
+            border: 1px solid #e6eaf2;
+            background: #f8fbff;
+            font-family: 'Nunito';
+        }
+
+        .focus-card h2 {
+            margin: 0 0 0.5rem;
+            color: #123968;
+            font-size: 1rem;
+        }
+
+        .focus-card ul {
+            margin: 0;
+            padding-left: 1.2rem;
+            color: #354862;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
         
         /* Word Header */
         .word-header {
@@ -53,6 +76,7 @@
             border-bottom: 1px solid var(--border);
             padding: 8px 15px;
             display: flex;
+            flex-wrap: wrap;
             gap: 12px;
             align-items: center;
         }
@@ -60,8 +84,10 @@
         .ribbon-group { display: flex; align-items: center; gap: 4px; padding-right: 12px; border-right: 1px solid var(--border); }
         .ribbon-button { background: transparent; border: 1px solid transparent; padding: 6px 12px; cursor: pointer; border-radius: 4px; font-size: 13px; font-weight: 600; transition: 0.1s; }
         .ribbon-button:hover { background: #e1e1e1; border: 1px solid #c8c8c8; }
+        .ribbon-label { font-size: 0.75rem; color: #4a4a4a; margin-right: 4px; font-weight: 700; }
         
         select { padding: 4px; border: 1px solid var(--border); border-radius: 3px; background: white; font-size: 0.85rem; }
+        input[type="color"] { width: 34px; height: 30px; border: 1px solid var(--border); border-radius: 4px; padding: 2px; background: white; }
 
         /* Papier Container */
         .page-container { flex-grow: 1; overflow-y: auto; padding: 40px 0; display: flex; flex-direction: column; align-items: center; }
@@ -76,6 +102,24 @@
             font-size: 11pt;
             color: black;
             cursor: text;
+        }
+
+        .cover-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            gap: 1rem;
+            min-height: 420px;
+            margin-bottom: 1.3rem;
+            padding: 1.8rem;
+        }
+
+        .cover-page h1,
+        .cover-page h2,
+        .cover-page p {
+            margin: 0;
         }
 
         /* De grijze balk onderaan (Statusbar) */
@@ -120,6 +164,44 @@
             align-items: center;
             gap: 8px;
         }
+
+        .template-dialog {
+            position: fixed;
+            inset: 0;
+            background: rgba(13, 28, 55, 0.45);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+        }
+
+        .template-dialog.open { display: flex; }
+
+        .template-dialog-content {
+            background: white;
+            width: min(760px, calc(100vw - 30px));
+            border-radius: 14px;
+            padding: 1.1rem;
+            box-shadow: 0 16px 30px rgba(0,0,0,0.2);
+        }
+
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 10px;
+            margin-top: 0.8rem;
+        }
+
+        .template-card {
+            border: 1px solid #d7dce5;
+            border-radius: 10px;
+            padding: 0.8rem;
+            background: #fbfcff;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .template-card:hover { border-color: #2b579a; background: #eef4ff; }
     </style>
 </head>
 <body>
@@ -132,6 +214,15 @@
         <a href="index.html" class="nav-item">🏠 Dashboard</a>
         <a href="portfolio.html" class="nav-item active">📝 Mijn Portfolio</a>
         <a href="chattie.html" class="nav-item">🤖 Chattie AI</a>
+        <div class="focus-card">
+            <h2>Zelfstandig werken</h2>
+            <ul>
+                <li>Start met een voorblad.</li>
+                <li>Kies een duidelijk lettertype.</li>
+                <li>Gebruik kleur enkel voor titels.</li>
+                <li>Controleer op het einde je woorden.</li>
+            </ul>
+        </div>
     </div>
 
     <div class="main-content">
@@ -144,15 +235,21 @@
 
         <div class="word-ribbon">
             <div class="ribbon-group">
+                <span class="ribbon-label">Lettertype</span>
                 <select onchange="execCommand('fontName', this.value)">
                     <option value="Calibri">Calibri</option>
                     <option value="Arial">Arial</option>
                     <option value="Nunito">Nunito</option>
+                    <option value="Verdana">Verdana</option>
+                    <option value="Georgia">Georgia</option>
+                    <option value="Comic Sans MS">Comic Sans MS</option>
                 </select>
+                <span class="ribbon-label">Grootte</span>
                 <select onchange="execCommand('fontSize', this.value)">
                     <option value="3">11 pt</option>
                     <option value="4">12 pt</option>
                     <option value="5">14 pt</option>
+                    <option value="6">18 pt</option>
                 </select>
             </div>
             <div class="ribbon-group">
@@ -164,6 +261,15 @@
                 <button class="ribbon-button" onclick="execCommand('justifyLeft')">⬅</button>
                 <button class="ribbon-button" onclick="execCommand('justifyCenter')">↔</button>
                 <button class="ribbon-button" onclick="execCommand('insertUnorderedList')">• Lijst</button>
+            </div>
+            <div class="ribbon-group">
+                <span class="ribbon-label">Tekstkleur</span>
+                <input type="color" onchange="setTextColor(this.value)" value="#000000" aria-label="Kies tekstkleur">
+                <span class="ribbon-label">Markeren</span>
+                <input type="color" onchange="setHighlightColor(this.value)" value="#fff2a8" aria-label="Kies markeerkleur">
+            </div>
+            <div class="ribbon-group" style="border-right:none;">
+                <button class="ribbon-button" onclick="openTemplateDialog()">📄 Voorblad toevoegen</button>
             </div>
         </div>
 
@@ -180,8 +286,31 @@
         </div>
 
         <div class="status-bar">
-            <div>Pagina 1 van 1 | 0 woorden | Nederlands (België)</div>
+            <div id="documentMeta">Pagina 1 van 1 | 0 woorden | Nederlands (België)</div>
             <div>Toegankelijkheid: Goed</div>
+        </div>
+    </div>
+
+    <div id="templateDialog" class="template-dialog" role="dialog" aria-modal="true" aria-label="Kies een voorblad">
+        <div class="template-dialog-content">
+            <strong>Kies een voorblad voor je portfolio</strong>
+            <div class="template-grid">
+                <button class="template-card" onclick="insertCoverPage('modern')">
+                    <strong>Modern</strong><br>
+                    Schone stijl met blauwe titel.
+                </button>
+                <button class="template-card" onclick="insertCoverPage('creative')">
+                    <strong>Creatief</strong><br>
+                    Gekleurde stijl voor een speels portfolio.
+                </button>
+                <button class="template-card" onclick="insertCoverPage('minimal')">
+                    <strong>Minimal</strong><br>
+                    Eenvoudig en rustig zwart-wit.
+                </button>
+            </div>
+            <div style="display:flex; justify-content:flex-end; margin-top: 0.8rem;">
+                <button class="ribbon-button" onclick="closeTemplateDialog()">Sluiten</button>
+            </div>
         </div>
     </div>
 
@@ -192,19 +321,70 @@
     <script>
         const editor = document.getElementById("portfolioEditor");
         const status = document.getElementById("status");
+        const documentMeta = document.getElementById("documentMeta");
+        const templateDialog = document.getElementById("templateDialog");
 
         function execCommand(command, value = null) {
             document.execCommand(command, false, value);
             editor.focus();
         }
 
-        // Automatisch laden en opslaan (zoals voorheen)
-        editor.innerHTML = localStorage.getItem("pavo_rich_portfolio") || editor.innerHTML;
+        function setTextColor(color) {
+            execCommand('foreColor', color);
+        }
 
-        editor.addEventListener("input", () => {
+        function setHighlightColor(color) {
+            execCommand('hiliteColor', color);
+        }
+
+        function getCoverTemplate(type, studentName) {
+            const safeName = studentName || "Naam leerling";
+            const date = new Date().toLocaleDateString('nl-BE');
+            const templates = {
+                modern: `<section class="cover-page" style="background: linear-gradient(150deg, #eef4ff, #ffffff); border: 3px solid #2b579a;"><h2 style="color:#2b579a; letter-spacing: 2px; text-transform: uppercase;">Portfolio</h2><h1 style="font-size: 2.8rem; color: #123968;">${safeName}</h1><p style="color: #3a4860;">Schooljaar ${new Date().getFullYear()} • ${date}</p></section><hr>` ,
+                creative: `<section class="cover-page" style="background: linear-gradient(180deg, #fff0fa, #f1f7ff); border: 3px dashed #c4298f;"><h2 style="color:#c4298f; text-transform: uppercase; letter-spacing: 2px;">Mijn creatief portfolio</h2><h1 style="font-family: 'Comic Sans MS', 'Nunito', sans-serif; font-size: 2.8rem; color: #55206f;">${safeName}</h1><p style="color:#472b66;">Laat je talent zien • ${date}</p></section><hr>`,
+                minimal: `<section class="cover-page" style="border: 2px solid #222;"><h2 style="font-size: 1rem; text-transform: uppercase; letter-spacing: 4px;">Portfolio</h2><h1 style="font-size: 2.6rem;">${safeName}</h1><p>${date}</p></section><hr>`
+            };
+            return templates[type] || templates.modern;
+        }
+
+        function openTemplateDialog() {
+            templateDialog.classList.add('open');
+        }
+
+        function closeTemplateDialog() {
+            templateDialog.classList.remove('open');
+        }
+
+        function insertCoverPage(type) {
+            const studentName = localStorage.getItem("studentName");
+            const coverMarkup = getCoverTemplate(type, studentName);
+            editor.innerHTML = coverMarkup + editor.innerHTML;
+            closeTemplateDialog();
+            persistEditor();
+        }
+
+        function updateDocumentMeta() {
+            const text = editor.innerText.trim();
+            const wordCount = text ? text.split(/\s+/).length : 0;
+            documentMeta.innerText = `Pagina 1 van 1 | ${wordCount} woorden | Nederlands (België)`;
+        }
+
+        function persistEditor() {
             localStorage.setItem("pavo_rich_portfolio", editor.innerHTML);
             status.innerText = "Opslaan...";
+            updateDocumentMeta();
             setTimeout(() => { status.innerText = "Lokaal opgeslagen"; }, 800);
+        }
+
+        // Automatisch laden en opslaan (zoals voorheen)
+        editor.innerHTML = localStorage.getItem("pavo_rich_portfolio") || editor.innerHTML;
+        updateDocumentMeta();
+
+        editor.addEventListener("input", persistEditor);
+
+        templateDialog.addEventListener("click", (event) => {
+            if (event.target === templateDialog) closeTemplateDialog();
         });
 
         async function submitToTeacher() {
