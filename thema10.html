@@ -1,235 +1,194 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thema 4 – monsterlijke groene groei</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>thema 4 – Monsterlijke Groene Groei</title>
 
-  <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
+<link rel="stylesheet"
+href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
 
-  <style>
-    :root {
-      --bg: #f8fafc;
-      --panel: #ffffff;
-      --accent: #0f766e;
-      --accent-dark: #0b5f58;
-      --text: #1f2937;
-      --muted: #4b5563;
-      --soft-bg: #f0fdfa;
-      --border-soft: #dbe5ef;
-    }
+<style>
+:root{
+  color-scheme: dark;
+  --panel: rgba(23, 38, 23, 0.92);
+  --panel-border: rgba(120, 200, 120, 0.35);
+  --accent: #6ccf6c;
+  --accent-2: #3aa63a;
+  --text: #eaf7ea;
+  --muted: #c6dec6;
+  --soft: rgba(108,207,108,0.15);
+}
 
-    * { box-sizing: border-box; }
+*{box-sizing:border-box}
 
-    body {
-      margin: 0;
-      font-family: 'Nunito', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-    }
+body{
+  margin:0;
+  font-family:'Nunito',sans-serif;
+  background:radial-gradient(circle at top,#274a27 0%,#132413 55%,#091409 100%);
+  color:var(--text);
+}
 
-    header {
-      background: #14b8a6;
-      color: white;
-      padding: 1.8rem 1rem;
-      text-align: center;
-    }
+header{
+  text-align:center;
+  padding:2rem 1rem 1.2rem;
+  background:linear-gradient(90deg,#2e5a2e,#1f3f1f);
+  border-bottom:1px solid var(--panel-border);
+}
 
-    header h1 {
-      margin: 0;
-      font-size: 2.1rem;
-    }
+header h1{margin:0;font-size:2.2rem;}
+header p{margin:0.6rem 0 0;color:var(--muted);}
 
-    header p {
-      margin: 0.6rem 0 0;
-      opacity: 0.95;
-    }
+main{
+  max-width:1100px;
+  margin:0 auto;
+  padding:2rem 1.5rem 3rem;
+}
 
-    main {
-      width: min(1100px, 95%);
-      margin: 1.6rem auto 2.5rem;
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 1.2rem;
-    }
+.panel{
+  background:var(--panel);
+  border-radius:18px;
+  border:1px solid var(--panel-border);
+  padding:1.6rem;
+}
 
-    .panel {
-      background: var(--panel);
-      border-radius: 14px;
-      padding: 1.3rem;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
-    }
+/* INFO BOX */
+.info-box{
+  background:var(--soft);
+  border-left:5px solid var(--accent);
+  border-radius:12px;
+  padding:1rem 1.2rem;
+  margin-bottom:1.4rem;
+  color:var(--muted);
+}
 
-    h2 { margin-top: 0; }
+/* CURSUS BLOK */
+.course-box{
+  background:rgba(30,50,30,0.9);
+  border-radius:14px;
+  border:1px solid rgba(120,200,120,0.25);
+  padding:1.2rem;
+  margin-bottom:1.5rem;
+}
 
-    .info-box {
-      background: var(--soft-bg);
-      border-left: 5px solid var(--accent);
-      border-radius: 12px;
-      padding: 1rem 1.2rem;
-      margin-bottom: 1.2rem;
-    }
+/* UNITS */
+.unit-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:1.2rem;
+  margin-top:1.2rem;
+}
 
-    .score-card {
-      background: var(--soft-bg);
-      border-radius: 14px;
-      padding: 1rem;
-      margin-bottom: 1.4rem;
-    }
+.unit-card{
+  background:rgba(30,50,30,0.9);
+  border-radius:16px;
+  border:1px solid rgba(120,200,120,0.25);
+  padding:1.3rem;
+  display:flex;
+  flex-direction:column;
+  gap:0.6rem;
+}
 
-    .panel-title {
-      font-size: 1.25rem;
-      margin: 1.6rem 0 0.8rem;
-    }
+.unit-card h4{margin:0;}
+.unit-card p{margin:0;color:var(--muted);}
 
-    .unit-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 0.9rem;
-    }
+.unit-card a{
+  margin-top:auto;
+  text-decoration:none;
+  font-weight:700;
+  color:white;
+  background:linear-gradient(120deg,var(--accent),var(--accent-2));
+  padding:0.45rem 0.9rem;
+  border-radius:999px;
+  width:fit-content;
+}
 
-    .unit-card {
-      background: var(--soft-bg);
-      border: 2px solid #bce7e1;
-      border-radius: 12px;
-      padding: 1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
+/* BUTTON */
+.back-btn{
+  display:inline-block;
+  margin-top:2rem;
+  text-decoration:none;
+  color:white;
+  font-weight:700;
+  padding:0.5rem 1rem;
+  border-radius:999px;
+  background:linear-gradient(120deg,var(--accent),var(--accent-2));
+}
 
-    .unit-card h4 {
-      margin: 0;
-    }
-
-    .unit-card p {
-      margin: 0 0 0.5rem;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    .status {
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: var(--accent-dark);
-    }
-
-    .unit-card button {
-      margin-top: auto;
-      width: 100%;
-      border: none;
-      border-radius: 8px;
-      padding: 0.45rem 0.7rem;
-      font-weight: 700;
-      color: white;
-      background: var(--accent);
-      cursor: pointer;
-    }
-
-    .unit-card button:disabled {
-      opacity: 0.45;
-      cursor: not-allowed;
-    }
-
-    .btn {
-      display: inline-block;
-      text-decoration: none;
-      margin-top: 1rem;
-      background: var(--accent);
-      color: white;
-      padding: 0.5rem 0.9rem;
-      border-radius: 999px;
-      font-weight: 700;
-    }
-
-    .chat-embed {
-      width: 100%;
-      min-height: 520px;
-      border: none;
-      border-radius: 12px;
-      background: #f3f7ff;
-    }
-
-    @media (max-width: 900px) {
-      main { grid-template-columns: 1fr; }
-    }
-  </style>
+</style>
 </head>
 
 <body>
 
 <header>
-  <h1>Thema X – NAAM VAN HET THEMA</h1>
-  <p>KORTE BESCHRIJVING VAN HET THEMA</p>
+  <h1>🌱 Monsterlijke Groene Groei</h1>
+  <p>Ontdek hoe planten groeien dankzij fotosynthese</p>
 </header>
 
-<main data-theme-id="X">
-
+<main>
 <section class="panel">
-
-  <div class="score-card">
-    <h3>Totaalscore thema X</h3>
-    <p>0 / XXX XP</p>
-    <p>Vul later de juiste score in.</p>
-  </div>
 
   <h2>Focus van dit thema</h2>
   <p>
-    HIER KOMT DE ALGEMENE INLEIDING VAN HET THEMA.
-    Wat leren leerlingen? Waarover gaat dit thema?
+    In dit hoofdthema leer je hoe planten groeien en energie maken.
+    Je ontdekt het proces van <strong>fotosynthese</strong> en waarom
+    planten zo belangrijk zijn voor het leven op aarde.
   </p>
 
   <div class="info-box">
-    <strong>Wat oefen je?</strong>
+    <strong>Kapstok</strong>
     <ul>
-      <li>Doel 1 (later invullen)</li>
-      <li>Doel 2 (later invullen)</li>
-      <li>Doel 3 (later invullen)</li>
+      <li>Wat hebben planten nodig om te groeien?</li>
+      <li>Hoe maken planten zuurstof?</li>
+      <li>Waarom zijn planten belangrijk voor mensen en dieren?</li>
     </ul>
   </div>
 
-  <h2 class="panel-title">Units</h2>
+  <!-- CURSUS -->
+  <h2>📘 Cursus</h2>
+
+  <div class="course-box">
+    <p>
+      Hier vind je de cursus van dit hoofdthema.
+      Lees eerst de theorie voordat je de units maakt.
+    </p>
+
+    <!-- PAS HIER AAN -->
+    <a href="cursus_monsterlijke_groei.pdf"
+       target="_blank"
+       style="color:#9cff9c;font-weight:700;">
+       📄 Open cursus
+    </a>
+  </div>
+
+  <!-- UNITS -->
+  <h2>📚 Units</h2>
 
   <div class="unit-grid">
 
     <div class="unit-card">
       <h4>Unit 1</h4>
-      <p>TITEL OF BESCHRIJVING UNIT 1</p>
-      <p class="status">Nog niet beschikbaar</p>
-      <button disabled>Start</button>
+      <p>Wat hebben planten nodig?</p>
+      <a href="monsterunit1.html">Start</a>
     </div>
 
     <div class="unit-card">
       <h4>Unit 2</h4>
-      <p>TITEL OF BESCHRIJVING UNIT 2</p>
-      <p class="status">Nog niet beschikbaar</p>
-      <button disabled>Start</button>
+      <p>Fotosynthese begrijpen</p>
+      <a href="monsterunit2.html">Start</a>
     </div>
 
     <div class="unit-card">
       <h4>Unit 3</h4>
-      <p>TITEL OF BESCHRIJVING UNIT 3</p>
-      <p class="status">Nog niet beschikbaar</p>
-      <button disabled>Start</button>
+      <p>Waarom planten belangrijk zijn</p>
+      <a href="monsterunit3.html">Start</a>
     </div>
 
   </div>
 
-  <a class="btn" href="index.html">Terug naar overzicht</a>
+  <a href="index.html" class="back-btn">← Terug naar overzicht</a>
 
 </section>
-
-<aside class="panel">
-  <h2>Chattie</h2>
-  <p style="color: var(--muted);">
-    Hulp en uitleg bij dit thema.
-  </p>
-  <iframe class="chat-embed"
-    src="chattie.html?thema=Thema%20X">
-  </iframe>
-</aside>
-
 </main>
 
 </body>
