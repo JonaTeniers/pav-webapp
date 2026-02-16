@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Monsterlijke groene groei — Unit 1</title>
+
+<link rel="stylesheet"
+href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
+
+<style>
+
+:root{
+  --bg:#f8fafc;
+  --panel:#ffffff;
+  --accent:#0f766e;
+  --accent-dark:#0b5f58;
+  --text:#1f2937;
+  --muted:#4b5563;
+  --border-soft:#dbe5ef;
+  --soft-bg:#f0fdfa;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:'Nunito',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+header{
+  background:#14b8a6;
+  color:white;
+  padding:1.8rem 1rem;
+  text-align:center;
+}
+
+main{
+  width:min(900px,95%);
+  margin:1.5rem auto 2rem;
+}
+
+.panel{
+  background:var(--panel);
+  border-radius:14px;
+  padding:1.4rem;
+  box-shadow:0 6px 16px rgba(0,0,0,0.08);
+}
+
+.question{
+  margin-bottom:1.4rem;
+  padding-bottom:1.2rem;
+  border-bottom:1px solid var(--border-soft);
+}
+
+button{
+  border:none;
+  background:var(--accent);
+  color:white;
+  padding:0.5rem 1rem;
+  border-radius:8px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+button:hover{
+  background:var(--accent-dark);
+}
+
+.result{
+  margin-top:1rem;
+  font-weight:700;
+}
+
+.back-btn{
+  display:inline-block;
+  margin-top:1.5rem;
+  text-decoration:none;
+  background:var(--accent);
+  color:white;
+  padding:0.5rem 0.9rem;
+  border-radius:999px;
+  font-weight:700;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Monsterlijke groene groei — Unit 1</h1>
+  <p>Wat is fotosynthese?</p>
+</header>
+
+<main>
+
+<section class="panel">
+
+<div class="question">
+<p><strong>1. Wat is fotosynthese?</strong></p>
+<input type="text" id="q1">
+</div>
+
+<div class="question">
+<p><strong>2. Welke stof haalt een plant uit de lucht?</strong></p>
+<label><input type="radio" name="q2" value="a"> Zuurstof</label><br>
+<label><input type="radio" name="q2" value="b"> Koolstofdioxide</label><br>
+<label><input type="radio" name="q2" value="c"> Water</label>
+</div>
+
+<div class="question">
+<p><strong>3. Wat maakt een plant tijdens fotosynthese?</strong></p>
+<input type="text" id="q3">
+</div>
+
+<div class="question">
+<p><strong>4. Waarom heeft een plant zonlicht nodig?</strong></p>
+<input type="text" id="q4">
+</div>
+
+<div class="question">
+<p><strong>5. Waar in de plant gebeurt fotosynthese vooral?</strong></p>
+<label><input type="radio" name="q5" value="a"> Wortels</label><br>
+<label><input type="radio" name="q5" value="b"> Bladeren</label><br>
+<label><input type="radio" name="q5" value="c"> Bloemen</label>
+</div>
+
+<div class="question">
+<p><strong>6. Waarom is fotosynthese belangrijk voor mensen?</strong></p>
+<input type="text" id="q6">
+</div>
+
+<button onclick="checkAnswers()">Controleer</button>
+
+<div class="result" id="result"></div>
+
+<a href="thema10.html" class="back-btn">Terug naar thema</a>
+
+</section>
+
+</main>
+
+<script>
+
+function checkAnswers(){
+
+let score = 0;
+
+let q1 = document.getElementById("q1").value.toLowerCase();
+if(q1.includes("voedsel") || q1.includes("suiker")) score++;
+
+let q2 = document.querySelector('input[name="q2"]:checked');
+if(q2 && q2.value === "b") score++;
+
+let q3 = document.getElementById("q3").value.toLowerCase();
+if(q3.includes("zuurstof") || q3.includes("suiker")) score++;
+
+let q4 = document.getElementById("q4").value.toLowerCase();
+if(q4.includes("energie")) score++;
+
+let q5 = document.querySelector('input[name="q5"]:checked');
+if(q5 && q5.value === "b") score++;
+
+let q6 = document.getElementById("q6").value.toLowerCase();
+if(q6.includes("zuurstof") || q6.includes("voedsel") || q6.includes("eten")) score++;
+
+document.getElementById("result").textContent =
+"Score: " + score + " / 6";
+
+}
+
+</script>
+
+</body>
+</html>
