@@ -233,6 +233,13 @@ const KNOWLEDGE = {
   "soevereiniteit": "Soevereiniteit is de hoogste macht binnen een land.",
   "dienstplicht": "Dienstplicht betekent dat burgers verplicht zijn om in het leger te dienen.",
   "feedback": "Feedback is de reactie van de ontvanger waarmee je weet of de boodschap begrepen is."
+  ,"hoofdthema 1": "Hoofdthema 1 draait om landschappen en natuur. Je ontdekt hoe levende en niet-levende elementen samen een ecosysteem vormen.",
+  "hoofdthema 2": "Hoofdthema 2 focust op levende natuur: organismen, ecosystemen, voedselketens en aanpassingen aan de omgeving.",
+  "hoofdthema 3": "Hoofdthema 3 gaat over geschiedenis en historisch redeneren: oorzaken, gevolgen en veranderingen doorheen de tijd.",
+  "hoofdthema 4": "Hoofdthema 4 verkent duurzame groei, innovatie en de impact van menselijke keuzes op natuur en samenleving.",
+  "thema 1 landschappen": "In Thema 1 onderzoek je soorten landschappen zoals stedelijk, landelijk, industrieel en toeristisch.",
+  "thema 2 levende natuur": "In Thema 2 leer je hoe levende natuur werkt via begrippen zoals organisme, ecosysteem en voedselketen.",
+  "thema 9 geschiedenis": "In Thema 9 analyseer je sleutelmomenten uit de geschiedenis en koppel je bronnen aan oorzaak en gevolg."
 
 };
 const CANONICAL_KNOWLEDGE = JSON.parse(JSON.stringify(KNOWLEDGE));
@@ -334,8 +341,38 @@ const ASSIGNMENTS = {
   "de euro": "Geef één voordeel en één uitdaging van een gezamenlijke munt voor burgers in Vlaanderen.",
   "europese samenwerking": "Noem een Europese beslissing die je dagelijks leven beïnvloedt en leg het effect uit in 3 zinnen.",
   "historisch redeneren": "Beantwoord over je unit: wat is de oorzaak, wat is het gevolg op korte termijn en wat verandert op lange termijn?"
+  ,"hoofdthema 1": "Beschrijf een natuurplek in jouw buurt met minstens drie levende en drie niet-levende elementen.",
+  "hoofdthema 2": "Maak een mini-poster van een voedselketen met producent en drie consumenten.",
+  "hoofdthema 3": "Kies één historische gebeurtenis en noteer oorzaak, gevolg en waarom dit vandaag nog relevant is.",
+  "hoofdthema 4": "Bedenk twee duurzame keuzes voor school of thuis en leg per keuze het voordeel uit.",
+  "thema 1 landschappen": "Vergelijk een stedelijk en landelijk landschap met drie duidelijke verschillen.",
+  "thema 2 levende natuur": "Observeer een organisme in je omgeving en noteer twee aanpassingen aan de leefomgeving.",
+  "thema 9 geschiedenis": "Kies één persoon uit Thema 9 en leg in 4 zinnen uit welke impact die had op de samenleving."
 
 };
+
+const THEME_PROFILES = [
+  {
+    keywords: ["hoofdthema 1", "thema 1", "landschappen"],
+    welcome: "🌿 Welkom in Hoofdthema 1: we duiken de natuur in! Wist je dat één handvol gezonde bodem meer levende organismen kan bevatten dan er mensen op aarde zijn?",
+    prompts: ["leg uit: landschappen", "leg uit: ecosysteem", "leg uit: voedselketen"]
+  },
+  {
+    keywords: ["hoofdthema 2", "thema 2", "levende natuur"],
+    welcome: "🧬 Welkom in Hoofdthema 2: levende natuur! Wist je dat elke schakel in een voedselketen belangrijk is om een ecosysteem in balans te houden?",
+    prompts: ["leg uit: organisme", "leg uit: levende natuur", "leg uit: voedselketen"]
+  },
+  {
+    keywords: ["hoofdthema 3", "thema 9", "geschiedenis"],
+    welcome: "📖 Welkom in Hoofdthema 3: geschiedenis! Wist je dat je met historisch redeneren niet alleen het verleden begrijpt, maar ook betere keuzes maakt in het heden?",
+    prompts: ["leg uit: brabantse omwenteling", "leg uit: dossinkazerne", "leg uit: historisch redeneren"]
+  },
+  {
+    keywords: ["hoofdthema 4", "groene groei", "monsterlijke groene groei"],
+    welcome: "🌱 Welkom in Hoofdthema 4: monsterlijke groene groei! Wist je dat kleine duurzame keuzes van veel mensen samen een grote impact op klimaat en milieu maken?",
+    prompts: ["leg uit: energieverbruik van ai", "leg uit: ethiek", "leg uit: ecosysteem"]
+  }
+];
 
 function normalizeTopic(topic){ return topic.trim().toLowerCase(); }
 function buildTopicIndex(source){ const index={}; Object.entries(source).forEach(([k,v])=>{ index[normalizeTopic(k)]=v; }); return index; }
@@ -408,6 +445,12 @@ function updateUI(){}
 function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
 async function showTyping(){ appendMessage("Chattie denkt even na...",'bot'); await sleep(TYPING_MS); messagesEl.lastChild?.remove(); }
 
+function getThemeProfile(themeName){
+  if(!themeName) return null;
+  const normalized=themeName.toLowerCase();
+  return THEME_PROFILES.find(profile=>profile.keywords.some(keyword=>normalized.includes(keyword)));
+}
+
 // -------------------------
 // CHAT FUNCTIES
 // -------------------------
@@ -434,7 +477,18 @@ async function processInput(input){
     updateUI();
     return;
   }
-  if(normalizedInput==="start"){ isChatActive=true; appendMessage("🎉 Hallo! Typ 'leg uit: ai' om te starten.",'bot'); updateUI(); return; }
+  if(normalizedInput==="start"){
+    isChatActive=true;
+    const themeProfile=getThemeProfile(themaNaam);
+    if(themeProfile){
+      appendMessage(themeProfile.welcome,'bot');
+      appendMessage("💬 Probeer bijvoorbeeld: "+themeProfile.prompts.join(" • "),'bot');
+    } else {
+      appendMessage("🎉 Hallo! Typ 'leg uit: ai' om te starten.",'bot');
+    }
+    updateUI();
+    return;
+  }
   if(normalizedInput==="einde"){ isChatActive=false; appendMessage("👋 Tot later!",'bot'); updateUI(); return; }
 
   const teachKnowledge=parseTeachCommand(input,"leer:");
@@ -514,9 +568,10 @@ chips.forEach(chip=>{
 howBtn.addEventListener('click',()=>{ appendMessage("📚 Gebruik 'leg uit: <onderwerp>' voor uitleg, 'opdracht' voor een oefening. Nieuwe leerstof toevoegen? Typ: leer: onderwerp = uitleg en opdracht voor: onderwerp = opdracht.",'bot'); });
 
 if(themaNaam){
-  const themaLower = themaNaam.toLowerCase();
-  if(themaLower.includes('thema 9') || themaLower.includes('geschiedenis')){
-    appendMessage("📖 Welkom bij Thema 9. Vraag bv. 'leg uit: wetboek van napoleon' of 'leg uit: dossinkazerne'.",'bot');
+  const themeProfile=getThemeProfile(themaNaam);
+  if(themeProfile){
+    appendMessage(themeProfile.welcome,'bot');
+    appendMessage("💬 Starttips: "+themeProfile.prompts.join(" • "),'bot');
   }
 }
 
