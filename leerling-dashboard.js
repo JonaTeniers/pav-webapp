@@ -13,15 +13,15 @@
 
   // Thema-overzicht op basis van huidige webapp-structuur.
   const THEMAS = [
-    { id: 1, naam: 'Thema 1', maxUnit: 12, startLink: 'thema1.html' },
-    { id: 2, naam: 'Thema 2', maxUnit: 2, startLink: 'thema2.html' },
-    { id: 3, naam: 'Thema 3', maxUnit: 3, startLink: 'thema3.html' },
-    { id: 4, naam: 'Thema 4', maxUnit: 10, startLink: 'thema4.html' },
-    { id: 5, naam: 'Thema 5', maxUnit: 3, startLink: 'thema5.html' },
-    { id: 6, naam: 'Thema 6', maxUnit: 3, startLink: 'thema6.html' },
-    { id: 7, naam: 'Thema 7', maxUnit: 3, startLink: 'thema7.html' },
-    { id: 8, naam: 'Thema 8', maxUnit: 3, startLink: 'thema8.html' },
-    { id: 9, naam: 'Thema 9', maxUnit: 8, startLink: 'thema9.html' }
+    { id: 1, naam: 'Thema 1', maxUnit: 12, startLink: 'hoofdthema1.html' },
+    { id: 2, naam: 'Thema 2', maxUnit: 2, startLink: 'hoofdthema2.html' },
+    { id: 3, naam: 'Thema 3', maxUnit: 3, startLink: 'oefenthema1.html' },
+    { id: 4, naam: 'Thema 4', maxUnit: 10, startLink: 'oefenthema2.html' },
+    { id: 5, naam: 'Thema 5', maxUnit: 3, startLink: 'oefenthema3.html' },
+    { id: 6, naam: 'Thema 6', maxUnit: 3, startLink: 'oefenthema4.html' },
+    { id: 7, naam: 'Thema 7', maxUnit: 3, startLink: 'oefenthema5.html' },
+    { id: 8, naam: 'Thema 8', maxUnit: 3, startLink: 'oefenthema6.html' },
+    { id: 9, naam: 'Thema 9', maxUnit: 8, startLink: 'hoofdthema3.html' }
   ];
 
   function setStatus(text, isError) {
