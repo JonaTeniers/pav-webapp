@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="data:," />
-  <title>Thema 8 - Unit 3</title>
+  <title>Thema 8 - Doel 3</title>
 
   <style>
     body { font-family: "Segoe UI", sans-serif; background: #eefdfb; padding: 2rem; margin: 0; }
@@ -28,7 +28,7 @@
 
 </head>
 <body>
-  <h1>📘 Thema 8 - Unit 3 (Luisteren)</h1>
+  <h1>Thema 8 - Doel 3 (Luisteren)</h1>
   <div class="tip">
     Luister eerst naar het fragment via
     <a href="https://www.vrt.be/vrtnws/nl/luister/podcasts/programma/het-kwartier~program-55f7d28c-af40-43ca-884d-980d5e96212e/" target="_blank" rel="noopener noreferrer">Het Kwartier</a>
@@ -50,7 +50,7 @@
     </div>
   </div>
   <div class="question-box hidden" id="endScreen">
-    <h2>🎉 Unit voltooid!</h2>
+    <h2>Doel voltooid!</h2>
     <p>Je behaalde <span id="xpScore">0</span> XP.</p>
     <div class="nav-buttons">
       <a href="oefenthema6.html"><button type="button">← Terug naar thema</button></a>
@@ -61,7 +61,7 @@
     <script src="./firebase.js"></script>
   <script src="./pavo-xp-sync.js"></script>
 <script>
-    const questions = [{"type": "mc", "typeLabel": "Meerkeuze", "question": "Wat doe je best vóór je luistert?", "options": ["luisterdoel bepalen", "meteen afleiden", "alles negeren"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Welke korte notities maak je tijdens het luisteren?", "accepted": ["kernwoorden", "sleutelwoorden", "belangrijke woorden"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies de beste strategie.", "options": ["eerst globaal luisteren, daarna details", "na 10 seconden stoppen", "geen aantekeningen"], "correctValue": "eerst globaal luisteren, daarna details"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke vraag helpt bij luisterbegrip?", "options": ["Wie zegt wat en waarom?", "Welke kleur heeft de microfoon?", "Hoe lang is de kabel?"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Vul aan: een goede samenvatting is ... en correct.", "accepted": ["kort", "bondig"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Wat doe je als je iets mist?", "options": ["belangrijkste info blijven noteren", "opgeven", "alles overslaan"], "correctValue": "belangrijkste info blijven noteren"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Waarom is een tweede luisterbeurt nuttig?", "options": ["om details te controleren", "om minder te begrijpen", "om sneller te stoppen"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Noem 1 soort informatie die je vaak hoort in een nieuwsfragment.", "accepted": ["feiten", "cijfers", "meningen", "citaten"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies de beste luisterhouding.", "options": ["actief luisteren en focussen", "praten tijdens het fragment", "doelloos scrollen"], "correctValue": "actief luisteren en focussen"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Einddoel van deze unit:", "options": ["luisteren, begrijpen en samenvatten", "alleen gokken", "alleen titels verzamelen"], "correctIndex": 0}];
+    const questions = [{"type": "mc", "typeLabel": "Meerkeuze", "question": "Wat doe je best vóór je luistert?", "options": ["luisterdoel bepalen", "meteen afleiden", "alles negeren"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Welke korte notities maak je tijdens het luisteren?", "accepted": ["kernwoorden", "sleutelwoorden", "belangrijke woorden"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies de beste strategie.", "options": ["eerst globaal luisteren, daarna details", "na 10 seconden stoppen", "geen aantekeningen"], "correctValue": "eerst globaal luisteren, daarna details"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke vraag helpt bij luisterbegrip?", "options": ["Wie zegt wat en waarom?", "Welke kleur heeft de microfoon?", "Hoe lang is de kabel?"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Vul aan: een goede samenvatting is ... en correct.", "accepted": ["kort", "bondig"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Wat doe je als je iets mist?", "options": ["belangrijkste info blijven noteren", "opgeven", "alles overslaan"], "correctValue": "belangrijkste info blijven noteren"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Waarom is een tweede luisterbeurt nuttig?", "options": ["om details te controleren", "om minder te begrijpen", "om sneller te stoppen"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Noem 1 soort informatie die je vaak hoort in een nieuwsfragment.", "accepted": ["feiten", "cijfers", "meningen", "citaten"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies de beste luisterhouding.", "options": ["actief luisteren en focussen", "praten tijdens het fragment", "doelloos scrollen"], "correctValue": "actief luisteren en focussen"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Einddoel van dit doel:", "options": ["luisteren, begrijpen en samenvatten", "alleen gokken", "alleen titels verzamelen"], "correctIndex": 0}];
     let currentQuestion = 0;
     let score = 0;
 

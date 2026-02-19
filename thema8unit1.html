@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="data:," />
-  <title>Thema 8 - Unit 1</title>
+  <title>Thema 8 - Doel 1</title>
 
   <style>
     body { font-family: "Segoe UI", sans-serif; background: #eefdfb; padding: 2rem; margin: 0; }
@@ -26,7 +26,7 @@
 
 </head>
 <body>
-  <h1>📘 Thema 8 - Unit 1 (Lezen)</h1>
+  <h1>Thema 8 - Doel 1 (Lezen)</h1>
   <div class="unit-header">
     <a class="back-link" href="oefenthema6.html">← Terug naar thema</a>
     <a class="start-link" href="#quizBox">Start oefenen</a>
@@ -43,18 +43,18 @@
     </div>
   </div>
   <div class="question-box hidden" id="endScreen">
-    <h2>🎉 Unit voltooid!</h2>
+    <h2>Doel voltooid!</h2>
     <p>Je behaalde <span id="xpScore">0</span> XP.</p>
     <div class="nav-buttons">
       <a href="oefenthema6.html"><button type="button">← Terug naar thema</button></a>
-      <a href="thema8unit2.html"><button type="button">→ Volgende unit</button></a>
+      <a href="thema8unit2.html"><button type="button">→ Volgend doel</button></a>
     </div>
   </div>
 
     <script src="./firebase.js"></script>
   <script src="./pavo-xp-sync.js"></script>
 <script>
-    const questions = [{"type": "mc", "typeLabel": "Meerkeuze", "question": "Wat is het hoofdonderwerp van artikel 1 (HLN)?", "options": ["schaduw-AI en risico's", "weerbericht", "vakantiereclame"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Welk soort tekst is een nieuwsartikel meestal?", "accepted": ["informatief", "non-fictie", "non fictie"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Welke vraag helpt om de kern van een artikel te vinden?", "options": ["Waarover gaat dit vooral?", "Welke kleur heeft de site?", "Hoeveel emoji staan erin?"], "correctValue": "Waarover gaat dit vooral?"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Bij kritisch lezen let je op...", "options": ["bron en feiten", "alleen titel", "alleen foto's"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Noem 1 kernvraag uit een nieuwsartikel (wie/wat/waar/wanneer/waarom).", "accepted": ["wie", "wat", "waar", "wanneer", "waarom"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies de beste samenvattingstechniek.", "options": ["kernwoorden noteren", "alles woord voor woord overschrijven", "enkel de titel lezen"], "correctValue": "kernwoorden noteren"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Artikel 2 gaat vooral over...", "options": ["een controleactie met overtredingen", "een concert", "een kookwedstrijd"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Wat noteer je best bij een eerste lezing?", "accepted": ["kernwoorden", "belangrijke woorden", "hoofdzaken"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Wat is een betrouwbare gewoonte bij nieuws lezen?", "options": ["meerdere bronnen vergelijken", "alles meteen geloven", "alleen reacties lezen"], "correctValue": "meerdere bronnen vergelijken"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Wat is het doel van deze unit?", "options": ["nieuws begrijpen en samenvatten", "fantasieverhalen schrijven", "rekenen zonder context"], "correctIndex": 0}];
+    const questions = [{"type": "mc", "typeLabel": "Meerkeuze", "question": "Wat is het hoofdonderwerp van artikel 1 (HLN)?", "options": ["schaduw-AI en risico's", "weerbericht", "vakantiereclame"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Welk soort tekst is een nieuwsartikel meestal?", "accepted": ["informatief", "non-fictie", "non fictie"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Welke vraag helpt om de kern van een artikel te vinden?", "options": ["Waarover gaat dit vooral?", "Welke kleur heeft de site?", "Hoeveel emoji staan erin?"], "correctValue": "Waarover gaat dit vooral?"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Bij kritisch lezen let je op...", "options": ["bron en feiten", "alleen titel", "alleen foto's"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Noem 1 kernvraag uit een nieuwsartikel (wie/wat/waar/wanneer/waarom).", "accepted": ["wie", "wat", "waar", "wanneer", "waarom"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies de beste samenvattingstechniek.", "options": ["kernwoorden noteren", "alles woord voor woord overschrijven", "enkel de titel lezen"], "correctValue": "kernwoorden noteren"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Artikel 2 gaat vooral over...", "options": ["een controleactie met overtredingen", "een concert", "een kookwedstrijd"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Wat noteer je best bij een eerste lezing?", "accepted": ["kernwoorden", "belangrijke woorden", "hoofdzaken"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Wat is een betrouwbare gewoonte bij nieuws lezen?", "options": ["meerdere bronnen vergelijken", "alles meteen geloven", "alleen reacties lezen"], "correctValue": "meerdere bronnen vergelijken"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Wat is het doel van dit doel?", "options": ["nieuws begrijpen en samenvatten", "fantasieverhalen schrijven", "rekenen zonder context"], "correctIndex": 0}];
     let currentQuestion = 0;
     let score = 0;
 

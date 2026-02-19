@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thema 3 – Unit 3: De eerste treinrit</title>
+  <title>Thema 3 – Doel 3: De eerste treinrit</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
   <style>
     body { margin:0; font-family:'Nunito',sans-serif; background:#f5f3ff; color:#1f2937; }
@@ -27,7 +27,7 @@
 </head>
 <body>
   <header>
-    <h1>🏛️ Thema 9 – Unit 3</h1>
+    <h1>Thema 9 – Doel 3</h1>
     <p>De eerste treinrit</p>
   </header>
   <main>
@@ -66,12 +66,12 @@
     </section>
 
     <section class="question-box hidden" id="endScreen">
-      <h2>🎉 Unit voltooid!</h2>
+      <h2>Doel voltooid!</h2>
       <p>Je behaalde <span id="xpScore">0</span> XP.</p>
       <p>Top! Je hebt feiten, verbanden én reflectie verwerkt in jouw deel van <strong>het verhaal van Vlaanderen</strong>.</p>
       <div class="nav-buttons">
         <a href="hoofdthema3.html"><button type="button">← Terug naar thema</button></a>
-        <a href="thema9unit4.html"><button type="button">→ Volgende unit</button></a>
+        <a href="thema9unit4.html"><button type="button">→ Volgend doel</button></a>
       </div>
     </section>
   </main>
@@ -79,7 +79,7 @@
     <script src="./firebase.js"></script>
   <script src="./pavo-xp-sync.js"></script>
 <script>
-    const questions = [{"type": "mc", "typeLabel": "Meerkeuze", "question": "Waarom is de eerste treinrit historisch relevant?", "options": ["Ze markeert het begin van snelle moderne mobiliteit op het vasteland", "Ze was een eenmalig experiment zonder impact", "Ze verving alle andere vervoermiddelen meteen"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Tussen welke twee steden reed de eerste rit?", "accepted": ["brussel en mechelen", "mechelen en brussel"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke sector profiteerde sterk van spoorwegen?", "options": ["Handel en industrie", "Alleen theater", "Geen enkele sector"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies het beste oorzaak-gevolgverband.", "options": ["Sneller goederenvervoer maakte markten groter", "Treinen maakten afstanden langer", "Spoorwegen stopten verstedelijking"], "correctValue": "Sneller goederenvervoer maakte markten groter"}, {"type": "open", "typeLabel": "Open vraag", "question": "Noem 1 sociaal gevolg van spoorwegen voor gewone mensen.", "accepted": ["sneller reizen", "meer werk", "mobiliteit", "verplaatsing", "steden groeiden"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Waarom past deze unit in het verhaal van Vlaanderen?", "options": ["Ze toont hoe modernisering niet alleen politiek, maar ook technologisch verliep", "Ze gaat enkel over locomotieven als hobby", "Ze bewijst dat verandering onmogelijk is"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Selectie", "question": "Welke verdiepende vraag is het sterkst?", "options": ["Wie won en wie verloor door de nieuwe mobiliteit?", "Welke trein was het mooist geschilderd?", "Waren stations altijd warm?"], "correctValue": "Wie won en wie verloor door de nieuwe mobiliteit?"}, {"type": "open", "typeLabel": "Open vraag", "question": "Geef 2 kernwoorden die deze unit samenvatten.", "accepted": ["industrialisatie", "mobiliteit", "modernisering", "handel", "spoorwegen"]}];
+    const questions = [{"type": "mc", "typeLabel": "Meerkeuze", "question": "Waarom is de eerste treinrit historisch relevant?", "options": ["Ze markeert het begin van snelle moderne mobiliteit op het vasteland", "Ze was een eenmalig experiment zonder impact", "Ze verving alle andere vervoermiddelen meteen"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Tussen welke twee steden reed de eerste rit?", "accepted": ["brussel en mechelen", "mechelen en brussel"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke sector profiteerde sterk van spoorwegen?", "options": ["Handel en industrie", "Alleen theater", "Geen enkele sector"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies het beste oorzaak-gevolgverband.", "options": ["Sneller goederenvervoer maakte markten groter", "Treinen maakten afstanden langer", "Spoorwegen stopten verstedelijking"], "correctValue": "Sneller goederenvervoer maakte markten groter"}, {"type": "open", "typeLabel": "Open vraag", "question": "Noem 1 sociaal gevolg van spoorwegen voor gewone mensen.", "accepted": ["sneller reizen", "meer werk", "mobiliteit", "verplaatsing", "steden groeiden"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Waarom past dit doel in het verhaal van Vlaanderen?", "options": ["Ze toont hoe modernisering niet alleen politiek, maar ook technologisch verliep", "Ze gaat enkel over locomotieven als hobby", "Ze bewijst dat verandering onmogelijk is"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Selectie", "question": "Welke verdiepende vraag is het sterkst?", "options": ["Wie won en wie verloor door de nieuwe mobiliteit?", "Welke trein was het mooist geschilderd?", "Waren stations altijd warm?"], "correctValue": "Wie won en wie verloor door de nieuwe mobiliteit?"}, {"type": "open", "typeLabel": "Open vraag", "question": "Geef 2 kernwoorden die dit doel samenvatten.", "accepted": ["industrialisatie", "mobiliteit", "modernisering", "handel", "spoorwegen"]}];
     let currentQuestion = 0;
     let score = 0;
 

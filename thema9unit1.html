@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thema 3 – Unit 1: Het wetboek van Napoleon</title>
+  <title>Thema 3 – Doel 1: Het wetboek van Napoleon</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
   <style>
     body { margin:0; font-family:'Nunito',sans-serif; background:#f5f3ff; color:#1f2937; }
@@ -27,7 +27,7 @@
 </head>
 <body>
   <header>
-    <h1>🏛️ Thema 9 – Unit 1</h1>
+    <h1>Thema 9 – Doel 1</h1>
     <p>Het wetboek van Napoleon</p>
   </header>
   <main>
@@ -66,12 +66,12 @@
     </section>
 
     <section class="question-box hidden" id="endScreen">
-      <h2>🎉 Unit voltooid!</h2>
+      <h2>Doel voltooid!</h2>
       <p>Je behaalde <span id="xpScore">0</span> XP.</p>
       <p>Top! Je hebt feiten, verbanden én reflectie verwerkt in jouw deel van <strong>het verhaal van Vlaanderen</strong>.</p>
       <div class="nav-buttons">
         <a href="hoofdthema3.html"><button type="button">← Terug naar thema</button></a>
-        <a href="thema9unit2.html"><button type="button">→ Volgende unit</button></a>
+        <a href="thema9unit2.html"><button type="button">→ Volgend doel</button></a>
       </div>
     </section>
   </main>
@@ -79,7 +79,7 @@
     <script src="./firebase.js"></script>
   <script src="./pavo-xp-sync.js"></script>
 <script>
-    const questions = [{"type": "mc", "typeLabel": "Meerkeuze", "question": "Wat maakte het wetboek van Napoleon historisch belangrijk?", "options": ["Regels werden gecodificeerd en breder toepasbaar", "Alle lokale regels verdwenen in één dag", "Het was enkel een militair handboek"], "correctIndex": 0}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke nuance klopt?", "options": ["Er was meer rechtsgelijkheid, maar niet voor iedereen in dezelfde mate", "Iedereen kreeg exact dezelfde rechten", "Het wetboek ging alleen over straffen"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Noem 1 domein dat in een burgerlijk wetboek geregeld wordt.", "accepted": ["eigendom", "erfenis", "huwelijk", "contracten", "familie"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies de beste oorzaak-gevolgzin.", "options": ["Omdat regels op papier stonden, werd rechtspraak voorspelbaarder", "Omdat Napoleon kwam, stopte alle ongelijkheid meteen", "Omdat men schreef, waren er geen rechters meer"], "correctValue": "Omdat regels op papier stonden, werd rechtspraak voorspelbaarder"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Waarom past dit in het verhaal van Vlaanderen?", "options": ["Het toont de overgang van traditionele naar moderne staatsregels", "Het is alleen een Frans verhaal zonder invloed hier", "Het gaat enkel over oorlogen"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Wie had in die tijd vaak minder juridische macht binnen het gezin?", "accepted": ["vrouwen", "de vrouw", "vrouwenrechten"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Welke historische vraag is hier het sterkst?", "options": ["Wie profiteerde van deze hervorming, en wie minder?", "Welke kleur had de kaft van het wetboek?", "Hoeveel pagina’s las Napoleon zelf?"], "correctValue": "Wie profiteerde van deze hervorming, en wie minder?"}, {"type": "open", "typeLabel": "Open vraag", "question": "Geef 2 kernwoorden die deze unit samenvatten.", "accepted": ["rechtszekerheid", "gelijkheid", "wetboek", "modernisering", "ongelijkheid"]}];
+    const questions = [{"type": "mc", "typeLabel": "Meerkeuze", "question": "Wat maakte het wetboek van Napoleon historisch belangrijk?", "options": ["Regels werden gecodificeerd en breder toepasbaar", "Alle lokale regels verdwenen in één dag", "Het was enkel een militair handboek"], "correctIndex": 0}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke nuance klopt?", "options": ["Er was meer rechtsgelijkheid, maar niet voor iedereen in dezelfde mate", "Iedereen kreeg exact dezelfde rechten", "Het wetboek ging alleen over straffen"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Noem 1 domein dat in een burgerlijk wetboek geregeld wordt.", "accepted": ["eigendom", "erfenis", "huwelijk", "contracten", "familie"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies de beste oorzaak-gevolgzin.", "options": ["Omdat regels op papier stonden, werd rechtspraak voorspelbaarder", "Omdat Napoleon kwam, stopte alle ongelijkheid meteen", "Omdat men schreef, waren er geen rechters meer"], "correctValue": "Omdat regels op papier stonden, werd rechtspraak voorspelbaarder"}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Waarom past dit in het verhaal van Vlaanderen?", "options": ["Het toont de overgang van traditionele naar moderne staatsregels", "Het is alleen een Frans verhaal zonder invloed hier", "Het gaat enkel over oorlogen"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Wie had in die tijd vaak minder juridische macht binnen het gezin?", "accepted": ["vrouwen", "de vrouw", "vrouwenrechten"]}, {"type": "drag", "typeLabel": "Selectie", "question": "Welke historische vraag is hier het sterkst?", "options": ["Wie profiteerde van deze hervorming, en wie minder?", "Welke kleur had de kaft van het wetboek?", "Hoeveel pagina’s las Napoleon zelf?"], "correctValue": "Wie profiteerde van deze hervorming, en wie minder?"}, {"type": "open", "typeLabel": "Open vraag", "question": "Geef 2 kernwoorden die dit doel samenvatten.", "accepted": ["rechtszekerheid", "gelijkheid", "wetboek", "modernisering", "ongelijkheid"]}];
     let currentQuestion = 0;
     let score = 0;
 
