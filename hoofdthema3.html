@@ -246,6 +246,52 @@
       background: #f3f7ff;
     }
 
+    
+
+    .focus-goals {
+      margin-top: 1.4rem;
+      border-top: 1px solid var(--border-soft);
+      padding-top: 1.2rem;
+    }
+
+    .goal-list {
+      display: grid;
+      gap: 0.75rem;
+      margin-top: 0.6rem;
+    }
+
+    .goal-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.75rem 0.8rem;
+      border: 1px solid var(--border-soft);
+      border-radius: 10px;
+      background: #f8fffd;
+    }
+
+    .goal-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .goal-text strong {
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .goal-text span {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .goal-item a,
+    .goal-item button {
+      flex-shrink: 0;
+      min-width: 120px;
+    }
+
     @media (max-width: 900px) {
       main { grid-template-columns: 1fr; }
       .timeline-person { grid-template-columns: 1fr; }
@@ -333,7 +379,7 @@
   </div>
 
   <div class="task">
-    <h3>Units</h3>
+    <h3>Units kort uitgelegd</h3>
     <div class="unit-grid">
       <div class="unit-card"><h4>Unit 1</h4><p>Napoleon en gelijke regels voor iedereen</p><p class="status">Beschikbaar</p><a href="thema9unit1.html"><button>Start</button></a></div>
       <div class="unit-card"><h4>Unit 2</h4><p>Vrijheden en grondrechten in België</p><p class="status">Beschikbaar</p><a href="thema9unit2.html"><button>Start</button></a></div>
@@ -344,6 +390,11 @@
       <div class="unit-card"><h4>Unit 7</h4><p>Brabantse Omwenteling en Boerenkrijg</p><p class="status">Beschikbaar</p><a href="thema9unit7.html"><button>Start</button></a></div>
       <div class="unit-card"><h4>Unit 8</h4><p>Belgische Revolutie: oorzaken en gevolgen</p><p class="status">Beschikbaar</p><a href="thema9unit8.html"><button>Start</button></a></div>
     </div>
+  </div>
+
+  <div class="focus-goals">
+    <h2 class="panel-title">Focus op doel</h2>
+    <div class="goal-list" id="goalList"></div>
   </div>
 
   <a class="btn" href="index.html">Terug naar overzicht</a>
@@ -364,6 +415,53 @@
 </main>
 
 <script src="./pavo-theme-progress.js"></script>
+
+<script>
+(function () {
+  const cards = document.querySelectorAll('.unit-grid .unit-card');
+  const goalList = document.getElementById('goalList');
+
+  if (!cards.length || !goalList) return;
+
+  cards.forEach((card) => {
+    const title = card.querySelector('h4')?.textContent?.trim() || 'Unit';
+    const paragraphs = Array.from(card.querySelectorAll('p'));
+    const description = (paragraphs.find((p) => !p.classList.contains('status'))?.textContent || '').trim();
+
+    const link = card.querySelector('a[href]');
+    const button = card.querySelector('button');
+    const locked = button?.disabled || card.querySelector('.status.locked');
+
+    const row = document.createElement('div');
+    row.className = 'goal-item';
+
+    const text = document.createElement('div');
+    text.className = 'goal-text';
+    text.innerHTML = `<strong>${title}</strong><span>${description}</span>`;
+
+    if (link && !locked) {
+      const actionLink = document.createElement('a');
+      actionLink.href = link.href;
+
+      const actionBtn = document.createElement('button');
+      actionBtn.textContent = `Naar ${title.toLowerCase()}`;
+
+      actionLink.appendChild(actionBtn);
+      row.append(text, actionLink);
+    } else {
+      const actionBtn = document.createElement('button');
+      actionBtn.textContent = `Naar ${title.toLowerCase()}`;
+      actionBtn.disabled = true;
+      row.append(text, actionBtn);
+    }
+
+    goalList.appendChild(row);
+
+    card.querySelector('a')?.remove();
+    card.querySelector('button')?.remove();
+  });
+})();
+</script>
+
 </body>
 </html>
-

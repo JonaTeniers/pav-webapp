@@ -73,6 +73,11 @@
       padding-top: 1.2rem;
     }
 
+    .task h3,
+    .focus-goals h3 {
+      margin: 0 0 0.55rem;
+    }
+
     .unit-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
@@ -97,6 +102,63 @@
 
     .status.ready { color: var(--accent-dark); }
     .status.locked { color: #9ca3af; }
+
+    .unit-card h4 {
+      margin: 0 0 0.4rem;
+    }
+
+    .unit-card p {
+      margin: 0 0 0.5rem;
+      color: var(--muted);
+    }
+
+    .unit-card > a,
+    .unit-card > button {
+      display: none;
+    }
+
+    .focus-goals {
+      margin-top: 1.4rem;
+      border-top: 1px solid var(--border-soft);
+      padding-top: 1.2rem;
+    }
+
+    .goal-list {
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .goal-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.75rem 0.8rem;
+      border: 1px solid var(--border-soft);
+      border-radius: 10px;
+      background: #f8fffd;
+    }
+
+    .goal-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .goal-text strong {
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .goal-text span {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .goal-item a,
+    .goal-item button {
+      flex-shrink: 0;
+      min-width: 120px;
+    }
 
     .unit-card button {
       margin-top: auto;
@@ -162,22 +224,80 @@
     </p>
 
     <div class="task">
-      <h3>Kapstok van het thema</h3>
+      <h3>Units kort uitgelegd</h3>
       <ul>
-        <li>Soorten vervoer en hun functie</li>
-        <li>Verkeersregels begrijpen</li>
-        <li>Veilig gedrag onderweg</li>
+        <li><strong>Unit 1:</strong> Onderweg herkennen</li>
+        <li><strong>Unit 2:</strong> Verkeersregels</li>
+        <li><strong>Unit 3:</strong> Veilig oversteken</li>
+        <li><strong>Unit 4:</strong> Fietsveiligheid</li>
+        <li><strong>Unit 5:</strong> Verkeersborden</li>
+        <li><strong>Unit 6:</strong> Situaties begrijpen</li>
+        <li><strong>Unit 7:</strong> Openbaar vervoer</li>
+        <li><strong>Unit 8:</strong> Route plannen</li>
+        <li><strong>Unit 9:</strong> Kaart lezen</li>
+        <li><strong>Unit 10:</strong> Toepassen</li>
+        <li><strong>Unit 11:</strong> Oefenen</li>
+        <li><strong>Unit 12:</strong> Herhaling</li>
       </ul>
     </div>
 
-    <div class="task">
-      <h3>Wat oefen je?</h3>
-      <ul>
-        <li>Verkeerssituaties herkennen</li>
-        <li>Veilig oversteken</li>
-        <li>Verkeersborden begrijpen</li>
-        <li>Situaties beoordelen</li>
-      </ul>
+    <div class="focus-goals">
+      <h3>Focus op doel</h3>
+
+      <div class="goal-list">
+        <div class="goal-item" data-unit="1">
+          <div class="goal-text">
+            <strong>Doel 1 · Onderweg herkennen</strong>
+            <span>Je herkent manieren van verplaatsen en kan veilige keuzes maken onderweg.</span>
+          </div>
+          <a href="veiligonderweg_unit1.html"><button>Naar unit 1</button></a>
+        </div>
+
+        <div class="goal-item" data-unit="2">
+          <div class="goal-text"><strong>Doel 2 · Verkeersregels</strong><span>Je past basisregels correct toe in herkenbare verkeerssituaties.</span></div>
+          <button disabled>Naar unit 2</button>
+        </div>
+        <div class="goal-item" data-unit="3">
+          <div class="goal-text"><strong>Doel 3 · Veilig oversteken</strong><span>Je beslist waar en wanneer je veilig oversteekt.</span></div>
+          <button disabled>Naar unit 3</button>
+        </div>
+        <div class="goal-item" data-unit="4">
+          <div class="goal-text"><strong>Doel 4 · Fietsveiligheid</strong><span>Je controleert je fiets en past veilig fietsgedrag toe.</span></div>
+          <button disabled>Naar unit 4</button>
+        </div>
+        <div class="goal-item" data-unit="5">
+          <div class="goal-text"><strong>Doel 5 · Verkeersborden</strong><span>Je herkent veelgebruikte verkeersborden en hun betekenis.</span></div>
+          <button disabled>Naar unit 5</button>
+        </div>
+        <div class="goal-item" data-unit="6">
+          <div class="goal-text"><strong>Doel 6 · Situaties begrijpen</strong><span>Je beoordeelt verkeerssituaties met aandacht voor risico en veiligheid.</span></div>
+          <button disabled>Naar unit 6</button>
+        </div>
+        <div class="goal-item" data-unit="7">
+          <div class="goal-text"><strong>Doel 7 · Openbaar vervoer</strong><span>Je gebruikt bus of trein veilig en zelfstandig.</span></div>
+          <button disabled>Naar unit 7</button>
+        </div>
+        <div class="goal-item" data-unit="8">
+          <div class="goal-text"><strong>Doel 8 · Route plannen</strong><span>Je plant een haalbare route naar school of vrije tijd.</span></div>
+          <button disabled>Naar unit 8</button>
+        </div>
+        <div class="goal-item" data-unit="9">
+          <div class="goal-text"><strong>Doel 9 · Kaart lezen</strong><span>Je leest eenvoudige kaarten en oriënteert je onderweg.</span></div>
+          <button disabled>Naar unit 9</button>
+        </div>
+        <div class="goal-item" data-unit="10">
+          <div class="goal-text"><strong>Doel 10 · Toepassen</strong><span>Je combineert je verkeerskennis in realistische opdrachten.</span></div>
+          <button disabled>Naar unit 10</button>
+        </div>
+        <div class="goal-item" data-unit="11">
+          <div class="goal-text"><strong>Doel 11 · Oefenen</strong><span>Je herhaalt belangrijke leerpunten en werkt gericht bij.</span></div>
+          <button disabled>Naar unit 11</button>
+        </div>
+        <div class="goal-item" data-unit="12">
+          <div class="goal-text"><strong>Doel 12 · Herhaling</strong><span>Je rondt het thema af met een overzicht van alle kerninzichten.</span></div>
+          <button disabled>Naar unit 12</button>
+        </div>
+      </div>
     </div>
 
     <div class="task">
@@ -186,7 +306,7 @@
       <a class="btn-back" href="cursus/hoofdthema5/hoofdthema5.cursus.html">Open cursus</a>
     </div>
 
-    <h2>Onderdelen</h2>
+    <h2>Unitoverzicht</h2>
 
     <div class="unit-grid">
 
@@ -240,14 +360,28 @@
 
   });
 
+  document.querySelectorAll('.goal-item').forEach((goal, index) => {
+
+    const unitNumber = index + 1;
+
+    if (unitNumber === 1) return;
+
+    const prevDone = localStorage.getItem(`thema${themeNumber}unit${unitNumber - 1}_done`);
+
+    if (prevDone === "true") unlock(goal, unitNumber);
+
+  });
+
   function unlock(card, unitNumber) {
 
     const status = card.querySelector('.status');
     const button = card.querySelector('button');
 
-    status.textContent = "Beschikbaar";
-    status.classList.remove('locked');
-    status.classList.add('ready');
+    if (status) {
+      status.textContent = "Beschikbaar";
+      status.classList.remove('locked');
+      status.classList.add('ready');
+    }
 
     const link = document.createElement('a');
     link.href = `veiligonderweg_unit${unitNumber}.html`;
