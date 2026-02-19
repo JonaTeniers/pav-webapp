@@ -45,10 +45,52 @@
         z-index: 1;
       }
 
+      header {
+        background: linear-gradient(120deg, #0f4a7a, #2d7fbd) !important;
+        color: #fff;
+        border-bottom-left-radius: 18px;
+        border-bottom-right-radius: 18px;
+        box-shadow: 0 8px 22px rgba(9, 43, 73, 0.28);
+      }
+
+      main {
+        width: min(1120px, 95%);
+        margin: 1.2rem auto 2rem;
+      }
+
       .question-box,
       .card {
         background: rgba(255,255,255,0.95) !important;
         border: 1px solid #c8ddf0;
+        box-shadow: 0 8px 18px rgba(10, 47, 78, 0.12);
+      }
+
+      h1, h2, h3 {
+        color: #0f3f67;
+      }
+
+      header h1,
+      header h2,
+      header h3,
+      header p {
+        color: #fff !important;
+      }
+
+      button {
+        border: none;
+        border-radius: 999px;
+        background: linear-gradient(90deg, #0f6a9d, #1883b8) !important;
+        color: #fff;
+        font-weight: 800;
+        box-shadow: 0 3px 10px rgba(9, 52, 84, 0.2);
+      }
+
+      button:hover {
+        background: linear-gradient(90deg, #0d5d8b, #156f9c) !important;
+      }
+
+      .helper {
+        color: #365c75;
       }
 
       .all-question-list {
@@ -79,8 +121,23 @@
       .question-item .feedback {
         margin-top: 0.45rem;
       }
+
+      .question-item label {
+        display: block;
+        padding: 0.3rem 0.2rem;
+      }
+
+      .nav-buttons {
+        gap: 0.55rem;
+      }
     `;
     document.head.appendChild(style);
+  }
+
+  function harmonizeGoalLabels() {
+    document.querySelectorAll('header h1, header p').forEach((el) => {
+      el.textContent = el.textContent.replace(/\bUnit\b/g, 'Doel');
+    });
   }
 
   function normalize(value) {
@@ -367,6 +424,7 @@
 
   function setupAllInOneUnitMode() {
     applyUnitThemeRefresh();
+    harmonizeGoalLabels();
     buildAllQuestionsView();
   }
 
