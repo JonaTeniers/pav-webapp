@@ -563,7 +563,7 @@
   if (!cards.length || !goalList) return;
 
   cards.forEach((card) => {
-    const title = card.querySelector('h4')?.textContent?.trim() || 'Unit';
+    const title = card.querySelector('h4')?.textContent?.trim() || 'Doel';
     const paragraphs = Array.from(card.querySelectorAll('p'));
     const description = (paragraphs.find((p) => !p.classList.contains('status'))?.textContent || '').trim();
 
@@ -571,29 +571,25 @@
     const button = card.querySelector('button');
     const locked = button?.disabled || card.querySelector('.status.locked');
 
-    const row = document.createElement('div');
+    const row = document.createElement(link && !locked ? 'a' : 'div');
     row.className = 'goal-item';
 
     const text = document.createElement('div');
     text.className = 'goal-text';
     text.innerHTML = `<strong>${title}</strong><span>${description}</span>`;
 
+    const cta = document.createElement('span');
+    cta.className = 'goal-cta';
+
     if (link && !locked) {
-      const actionLink = document.createElement('a');
-      actionLink.href = link.href;
-
-      const actionBtn = document.createElement('button');
-      actionBtn.textContent = `Naar ${title.toLowerCase()}`;
-
-      actionLink.appendChild(actionBtn);
-      row.append(text, actionLink);
+      row.href = link.href;
+      row.classList.add('goal-clickable');
+      cta.textContent = 'Open doel';
     } else {
-      const actionBtn = document.createElement('button');
-      actionBtn.textContent = `Naar ${title.toLowerCase()}`;
-      actionBtn.disabled = true;
-      row.append(text, actionBtn);
+      cta.textContent = 'Vergrendeld';
     }
 
+    row.append(text, cta);
     goalList.appendChild(row);
 
     card.querySelector('a')?.remove();
