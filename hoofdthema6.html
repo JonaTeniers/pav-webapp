@@ -1,1 +1,316 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hoofdthema 6 - Sparen</title>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
+
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --panel: #ffffff;
+      --accent: #0f766e;
+      --accent-dark: #0b5f58;
+      --text: #1f2937;
+      --muted: #4b5563;
+      --border-soft: #dbe5ef;
+      --soft-bg: #f0fdfa;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    header {
+      background: #14b8a6;
+      color: white;
+      padding: 1.8rem 1rem;
+      text-align: center;
+    }
+
+    header h1 { margin: 0; font-size: 2.1rem; }
+    header p { margin: 0.6rem 0 0; opacity: 0.95; }
+
+    main {
+      width: min(1200px, 95%);
+      margin: 1.6rem auto 2.5rem;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1.2rem;
+    }
+
+    .panel {
+      background: var(--panel);
+      border-radius: 14px;
+      padding: 1.3rem;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+    }
+
+    .score-card {
+      background: var(--soft-bg);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .task {
+      margin-top: 1.2rem;
+      border-top: 1px solid var(--border-soft);
+      padding-top: 1.2rem;
+    }
+
+    .task ul {
+      margin: 0.4rem 0;
+      padding-left: 1.2rem;
+    }
+
+    .panel-title {
+      font-size: 1.25rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .unit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 0.9rem;
+      margin-top: 0.8rem;
+    }
+
+    .unit-card {
+      background: var(--soft-bg);
+      border: 2px solid #bce7e1;
+      border-radius: 12px;
+      padding: 0.9rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .unit-card h4 { margin: 0 0 0.35rem; }
+
+    .unit-card p {
+      margin: 0 0 0.5rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .status {
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+    }
+
+    .status.ready { color: var(--accent-dark); }
+    .status.locked { color: #9ca3af; }
+
+    .unit-card button {
+      margin-top: auto;
+      width: 100%;
+      border: none;
+      border-radius: 8px;
+      padding: 0.45rem 0.7rem;
+      font-weight: 700;
+      color: white;
+      background: var(--accent);
+      cursor: pointer;
+    }
+
+    .unit-card button:hover {
+      background: var(--accent-dark);
+    }
+
+    .unit-card button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .btn-back {
+      display: inline-block;
+      margin-top: 1.6rem;
+      text-decoration: none;
+      background: var(--accent);
+      color: white;
+      padding: 0.5rem 0.9rem;
+      border-radius: 999px;
+      font-weight: 700;
+    }
+
+    .btn-back:hover {
+      background: var(--accent-dark);
+    }
+
+    .chat-embed {
+      width: 100%;
+      min-height: 520px;
+      border: none;
+      border-radius: 12px;
+      background: #f3f7ff;
+    }
+
+    @media (max-width: 900px) {
+      main { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Hoofdthema 6 - Sparen</h1>
+  <p>Leer hoe je verstandig met geld omgaat en hoe sparen je helpt in de toekomst</p>
+</header>
+
+<main data-theme-id="11">
+
+<section class="panel">
+
+  <div class="score-card">
+    <h3>Totaalscore thema 6</h3>
+    <p id="themeTotalScore">0 / 360 XP</p>
+  </div>
+
+  <h2>Focus van dit thema</h2>
+  <p>
+    In dit thema leer je wat sparen betekent, waarom mensen sparen en hoe je
+    slimme keuzes kan maken met geld. Je ontdekt ook hoe banken werken en
+    welke soorten rekeningen er bestaan.
+  </p>
+
+  <div class="task">
+    <h3>Kapstok van het thema</h3>
+    <ul>
+      <li>Waarom sparen mensen?</li>
+      <li>Wat is een budget?</li>
+      <li>Welke soorten rekeningen bestaan er?</li>
+      <li>Hoe maak je verstandige financiële keuzes?</li>
+    </ul>
+  </div>
+
+  <div class="task">
+    <h3>Wat oefen je?</h3>
+    <ul>
+      <li>Inkomsten en uitgaven herkennen</li>
+      <li>Een eenvoudig budget opstellen</li>
+      <li>Verschillende betaalmiddelen begrijpen</li>
+      <li>Voor- en nadelen van financiële keuzes uitleggen</li>
+    </ul>
+  </div>
+
+  <div class="task">
+    <h3>Cursus</h3>
+    <p>Lees eerst de cursus van dit hoofdthema voor je met de onderdelen start.</p>
+    <a class="btn-back" href="cursus/hoofdthema6/hoofdthema6.cursus.html">
+      Open cursus
+    </a>
+  </div>
+
+  <h2 class="panel-title">Onderdelen</h2>
+
+  <div class="unit-grid">
+
+    <div class="unit-card">
+      <h4>Deel 1</h4>
+      <p>Inkomsten en uitgaven</p>
+      <p class="status ready">Beschikbaar</p>
+      <a href="thema11unit1.html"><button>Start</button></a>
+    </div>
+
+    <div class="unit-card">
+      <h4>Deel 2</h4>
+      <p>Budget beheren</p>
+      <p class="status locked">Vergrendeld</p>
+      <button disabled>Start</button>
+    </div>
+
+    <div class="unit-card">
+      <h4>Deel 3</h4>
+      <p>Sparen en plannen</p>
+      <p class="status locked">Vergrendeld</p>
+      <button disabled>Start</button>
+    </div>
+
+    <div class="unit-card">
+      <h4>Deel 4</h4>
+      <p>Betaalmiddelen</p>
+      <p class="status locked">Vergrendeld</p>
+      <button disabled>Start</button>
+    </div>
+
+    <div class="unit-card">
+      <h4>Deel 5</h4>
+      <p>Bankrekeningen</p>
+      <p class="status locked">Vergrendeld</p>
+      <button disabled>Start</button>
+    </div>
+
+    <div class="unit-card">
+      <h4>Deel 6</h4>
+      <p>Veilig omgaan met geld</p>
+      <p class="status locked">Vergrendeld</p>
+      <button disabled>Start</button>
+    </div>
+
+  </div>
+
+  <a class="btn-back" href="index.html">Terug naar thema-overzicht</a>
+
+</section>
+
+<aside class="panel">
+  <h2 class="panel-title">Chattie</h2>
+  <iframe class="chat-embed"
+          src="chattie.html?thema=Hoofdthema%206%20Sparen">
+  </iframe>
+</aside>
+
+</main>
+
+<script>
+(function () {
+
+  const themeNumber = 11;
+
+  document.querySelectorAll('.unit-card').forEach((card, index) => {
+
+    const unitNumber = index + 1;
+
+    if (unitNumber === 1) return;
+
+    const prevDone =
+      localStorage.getItem(`thema${themeNumber}unit${unitNumber - 1}_done`);
+
+    if (prevDone === "true") unlock(card, unitNumber);
+
+  });
+
+  function unlock(card, unitNumber) {
+
+    const status = card.querySelector('.status');
+    const button = card.querySelector('button');
+
+    status.textContent = "Beschikbaar";
+    status.classList.remove('locked');
+    status.classList.add('ready');
+
+    const link = document.createElement('a');
+    link.href = `thema${themeNumber}unit${unitNumber}.html`;
+
+    const newButton = document.createElement('button');
+    newButton.textContent = "Start";
+
+    link.appendChild(newButton);
+    button.replaceWith(link);
+  }
+
+})();
+</script>
+
+</body>
+</html>
 
