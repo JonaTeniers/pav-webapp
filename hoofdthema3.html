@@ -299,7 +299,216 @@
       .timeline-row .start,
       .timeline-row .end { text-align: left; }
     }
-  </style>
+  
+
+    /* Leeromgeving refresh */
+    body {
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      background: linear-gradient(135deg, #cfe9ff 0%, #7bb6f0 100%);
+      color: #12324b;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::before {
+      width: 520px;
+      height: 520px;
+      background: rgba(255, 255, 255, 0.26);
+      top: -170px;
+      left: -170px;
+      filter: blur(40px);
+    }
+
+    body::after {
+      width: 420px;
+      height: 420px;
+      background: rgba(0, 90, 170, 0.2);
+      bottom: -130px;
+      right: -130px;
+      filter: blur(34px);
+    }
+
+    header,
+    main {
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      background: linear-gradient(120deg, #0f4a7a, #2d7fbd);
+      border-bottom-left-radius: 18px;
+      border-bottom-right-radius: 18px;
+      box-shadow: 0 8px 22px rgba(9, 43, 73, 0.28);
+    }
+
+    header h1 {
+      letter-spacing: 0.01em;
+    }
+
+    main {
+      width: min(1180px, 94%);
+      gap: 1.1rem;
+      align-items: start;
+    }
+
+    .panel {
+      background: rgba(255, 255, 255, 0.93);
+      border: 1px solid #c9deef;
+      box-shadow: 0 10px 26px rgba(8, 39, 66, 0.14);
+      backdrop-filter: blur(4px);
+    }
+
+    h2,
+    h3,
+    .panel-title {
+      color: #0f3f67;
+    }
+
+    .score-card,
+    .info-box,
+    .task,
+    .focus-goals {
+      background: linear-gradient(180deg, rgba(245, 251, 255, 0.94), rgba(236, 247, 255, 0.9));
+      border: 1px solid #c7dff2;
+      border-radius: 12px;
+      padding: 0.95rem 1rem;
+    }
+
+    .task,
+    .focus-goals {
+      margin-top: 1rem;
+    }
+
+    .unit-card,
+    .goal-item,
+    .article-card,
+    .course-box {
+      border-color: #bdd9ee;
+      background: #f4faff;
+      box-shadow: 0 3px 10px rgba(29, 79, 117, 0.08);
+    }
+
+    .unit-card button,
+    .goal-item button,
+    .btn,
+    .btn-back,
+    .course-btn,
+    .back-btn {
+      border-radius: 999px;
+      background: linear-gradient(90deg, #0f6a9d, #1883b8);
+      box-shadow: 0 3px 10px rgba(9, 52, 84, 0.2);
+    }
+
+    .unit-card button:hover,
+    .goal-item button:hover,
+    .btn:hover,
+    .btn-back:hover,
+    .course-btn:hover,
+    .back-btn:hover {
+      background: linear-gradient(90deg, #0d5d8b, #156f9c);
+    }
+
+
+
+    /* Rechterkolom extra inhoud */
+    aside.panel {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .chat-embed {
+      min-height: 430px;
+      flex-shrink: 0;
+    }
+
+    .aside-card {
+      background: linear-gradient(180deg, rgba(245, 251, 255, 0.97), rgba(234, 246, 255, 0.95));
+      border: 1px solid #c7dff2;
+      border-radius: 12px;
+      padding: 0.85rem 0.95rem;
+      box-shadow: 0 5px 14px rgba(14, 59, 93, 0.12);
+    }
+
+    .aside-card h3 {
+      margin: 0 0 0.45rem;
+      font-size: 1rem;
+    }
+
+    .aside-card p {
+      margin: 0 0 0.55rem;
+      color: #355770;
+      font-size: 0.93rem;
+    }
+
+    .aside-card ul {
+      margin: 0;
+      padding-left: 1rem;
+      color: #23465f;
+      font-size: 0.92rem;
+    }
+
+
+
+    /* Doelen compacter + klikbare doelbalken */
+    .goals-title {
+      font-size: 1.08rem;
+      margin-bottom: 0.45rem;
+    }
+
+    .unit-grid.compact-goals {
+      grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+      gap: 0.65rem;
+    }
+
+    .unit-grid.compact-goals .unit-card {
+      padding: 0.65rem 0.7rem;
+      border-radius: 10px;
+    }
+
+    .unit-grid.compact-goals .unit-card h4 {
+      font-size: 0.95rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .unit-grid.compact-goals .unit-card p {
+      font-size: 0.87rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .goal-item {
+      text-decoration: none;
+      color: inherit;
+      cursor: default;
+    }
+
+    .goal-item.goal-clickable {
+      cursor: pointer;
+      transition: transform 0.14s ease, box-shadow 0.14s ease;
+    }
+
+    .goal-item.goal-clickable:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 7px 14px rgba(14, 59, 93, 0.14);
+    }
+
+    .goal-cta {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #0f6a9d;
+      white-space: nowrap;
+    }
+
+</style>
 </head>
 
 <body>
@@ -373,6 +582,7 @@
   </div>
 
   <div class="task">
+    <div class="task">
     <h3>Cursus</h3>
     <p>Lees eerst de cursus van dit hoofdthema voor je met de units start.</p>
     <a class="btn" href="cursus/hoofdthema3/hoofdthema3.cursus.html">Open cursus</a>
@@ -410,7 +620,14 @@
   <iframe class="chat-embed"
     src="chattie.html?thema=Thema%209%20Geschiedenis">
   </iframe>
-</aside>
+
+    <div class="aside-card">
+      <h3>Thema in het kort</h3>
+      <p id="asideSummary"></p>
+      <ul id="asideGoals"></ul>
+    </div>
+
+  </aside>
 
 </main>
 
