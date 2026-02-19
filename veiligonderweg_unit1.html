@@ -12,9 +12,7 @@ body {
   padding: 2rem;
 }
 
-h1 {
-  text-align: center;
-}
+h1 { text-align: center; }
 
 .question-box {
   background: white;
@@ -101,99 +99,103 @@ button {
 
 <script>
 
-/* ================= TEMPLATE VRAGEN ================= */
+/* ================= VRAGEN ================= */
 
 const questions = [
 
-/* ================= 1 MEERKEUZE ================= */
-
 {
 type:"mc",
-
 uitleg:"De tram is daar!",
+vraag:`De 14-jarige Janneke gaat samen met Opa Marcel een dagje naar zee. 
+Ze stappen uit de bus en lopen richting de dijk. Voor hen liggen twee tramsporen. 
+In de verte komt een kusttram aan. De tram rijdt op het spoor dat Janneke en Opa moeten oversteken. 
+Opa zegt: "Kom, we steken snel over, dan zijn we er bijna."
 
-vraag:"De 14‑jarige Janneke gaat samen met Opa Marcel een dagje naar zee. Ze stappen uit de bus en lopen richting de dijk. Voor hen liggen twee tramsporen. Opa Marcel kijkt naar links en rechts, maar hij twijfelt een beetje. In de verte komt een kusttram aan. De tram rijdt op het spoor dat Janneke en Opa moeten oversteken. Opa zegt:"Kom, we steken snel over, dan zijn we er bijna."",
-
-Mag Janneke nog oversteken vóór de tram?  
+Mag Janneke nog oversteken vóór de tram?`,
 opties:[
-{tekst:"Ja ze mag nog oversteken", juist:true},
-{tekst:"neen, de tram heeft altijd voorang", juist:false},
+{tekst:"Ja ze mag nog oversteken", juist:false},
+{tekst:"Neen, de tram heeft altijd voorrang", juist:true}
 ]
 },
 
-/* ================= 2 WAAR NIET ================= */
-
 {
 type:"waar_niet",
-
-uitleg:"UITLEG VAN DE OPDRACHT.",
-
-vraag:"SCHRIJF HIER DE WAAR / NIET WAAR STELLING.",
-
-juist:true
+uitleg:"Duid aan of de stelling juist is.",
+vraag:"Je mag altijd oversteken waar je wil, ook zonder te kijken.",
+juist:false
 },
-
-/* ================= 3 FOTO SLEEP ================= */
 
 {
 type:"foto_sleep",
-
 uitleg:"Sleep het juiste woord naar de juiste foto.",
-
 vraag:"Onderweg kom je veel tegen, zelfs veel meer dan we eigenlijk weten.",
-
 items:[
-
 {img:"images/kilometerpaal.jpg", antwoord:"kilometerpaal"},
 {img:"images/station.jpg", antwoord:"station"},
 {img:"images/stadhuis.jpg", antwoord:"stadhuis"},
 {img:"images/winkels.jpg", antwoord:"winkels"},
 {img:"images/park.jpg", antwoord:"park"},
 {img:"images/reclame.jpg", antwoord:"reclame"}
-
 ]
-
 },
-
-/* ================= 4 OPEN ================= */
 
 {
 type:"open",
-
 uitleg:"Leg uit in je eigen woorden.",
-
-vraag:"SCHRIJF HIER DE OPEN VRAAG."
+vraag:"Waarom is het belangrijk om goed rond te kijken in het verkeer?"
 },
-
-/* ================= 5 LEZEN INVUL ================= */
 
 {
-  "type": "lezen_invul",
-  "uitleg": "Lees de tekst en beantwoord de vragen.",
-  "tekst": "De 14‑jarige Janneke heeft gehoord dat Leuven de eerste Europese stad is waar een autonome bus met passagiers rondrijdt. Ze wil dat graag eens meemaken en overtuigt Opa Marcel om mee te gaan.\n\nWanneer ze in station Leuven aankomen, ziet Opa Marcel het kleine, moderne busje staan. Er zit geen chauffeur achter het stuur, alleen een begeleider.\n\nOpa trekt zijn wenkbrauwen op. \"Allez jong, een bus zonder chauffeur… dat kan toch niet goed aflopen,\" moppert hij.\n\nJanneke lacht. \"Komaan opa, het is veilig getest. We proberen het gewoon.\"\n\nMet enige tegenzin stapt Opa in. De bus vertrekt zachtjes richting station Heverlee. Hij stopt netjes aan kruispunten en houdt rekening met fietsers.\n\nDe begeleider legt uit dat Leuven een ideale testomgeving is: veel fietsers, scholen, druk verkeer en alles dicht bij elkaar. \"Als het hier werkt, werkt het overal,\" zegt hij.\n\nJanneke kijkt nieuwsgierig rond, maar Opa blijft met zijn armen gekruist zitten. \"Vroeger reed een mens gewoon zelf. Dat was duidelijker,\" mompelt hij.\n\nWanneer ze uitstappen, zegt Janneke: \"Opa, geef toe, het ging eigenlijk best goed.\"\n\nOpa haalt zijn schouders op. \"Het is niet gecrasht, dat is al iets. Maar ik blijf liever bij een chauffeur.\"",
-  "vragen": [
-    {
-      "vraag": "Waarom twijfelt Opa Marcel om in de autonome bus te stappen?",
-      "antwoord": ["Hij vertrouwt een bus zonder chauffeur niet."]
-    },
-    {
-      "vraag": "Hoe probeert Janneke Opa te overtuigen om toch mee te gaan?",
-      "antwoord": ["Ze zegt dat het veilig getest is en dat ze het gewoon willen proberen."]
-    },
-    {
-      "vraag": "Wat doet de bus tijdens de rit dat laat zien dat hij met verkeer rekening houdt?",
-      "antwoord": ["Hij stopt aan kruispunten en houdt rekening met fietsers."]
-    },
-    {
-      "vraag": "Waarom is Leuven volgens de begeleider een goede testomgeving?",
-      "antwoord": ["Omdat er veel fietsers, scholen, druk verkeer en alles dicht bij elkaar zijn."]
-    },
-    {
-      "vraag": "Wat zegt Opa aan het einde dat toont dat hij nog niet overtuigd is?",
-      "antwoord": ["Hij zegt dat hij liever bij een chauffeur blijft."]
-    }
-  ]
+type:"lezen_invul",
+uitleg:"Lees de tekst en beantwoord de vragen.",
+tekst:`
+De 14-jarige Janneke heeft gehoord dat Leuven de eerste Europese stad is waar een autonome bus met passagiers rondrijdt. 
+Ze wil dat graag eens meemaken en overtuigt Opa Marcel om mee te gaan.
+
+Wanneer ze in station Leuven aankomen, ziet Opa Marcel het kleine, moderne busje staan. 
+Er zit geen chauffeur achter het stuur, alleen een begeleider.
+
+Opa trekt zijn wenkbrauwen op. "Allez jong, een bus zonder chauffeur… dat kan toch niet goed aflopen," moppert hij.
+
+Janneke lacht. "Komaan opa, het is veilig getest. We proberen het gewoon."
+
+Met enige tegenzin stapt Opa in. De bus vertrekt zachtjes richting station Heverlee. 
+Hij stopt netjes aan kruispunten en houdt rekening met fietsers.
+
+De begeleider legt uit dat Leuven een ideale testomgeving is: veel fietsers, scholen, druk verkeer en alles dicht bij elkaar. 
+"Als het hier werkt, werkt het overal," zegt hij.
+
+Janneke kijkt nieuwsgierig rond, maar Opa blijft met zijn armen gekruist zitten. 
+"Vroeger reed een mens gewoon zelf. Dat was duidelijker," mompelt hij.
+
+Wanneer ze uitstappen, zegt Janneke: "Opa, geef toe, het ging eigenlijk best goed."
+
+Opa haalt zijn schouders op. "Het is niet gecrasht, dat is al iets. Maar ik blijf liever bij een chauffeur."
+`,
+vragen:[
+{
+vraag:"Waarom twijfelt Opa Marcel om in de autonome bus te stappen?",
+antwoord:["zonder chauffeur","geen chauffeur","bus zonder chauffeur"]
 },
+{
+vraag:"Hoe probeert Janneke Opa te overtuigen om toch mee te gaan?",
+antwoord:["veilig getest","veilig","proberen"]
+},
+{
+vraag:"Wat doet de bus tijdens de rit dat laat zien dat hij met verkeer rekening houdt?",
+antwoord:["stopt","kruispunten","fietsers"]
+},
+{
+vraag:"Waarom is Leuven volgens de begeleider een goede testomgeving?",
+antwoord:["veel fietsers","druk verkeer","scholen","dicht bij elkaar"]
+},
+{
+vraag:"Wat zegt Opa aan het einde dat toont dat hij nog niet overtuigd is?",
+antwoord:["liever bij een chauffeur","blijft liever"]
+}
+]
+}
+
 ];
 
 
@@ -211,16 +213,17 @@ document.getElementById("qCount").innerText=
 
 const text=document.getElementById("questionText");
 const form=document.getElementById("answerForm");
+const feedback=document.getElementById("feedback");
 
 text.innerHTML="";
 form.innerHTML="";
+feedback.innerHTML="";
+document.getElementById("nextBtn").classList.add("hidden");
 
-/* UITLEG BLOK */
+/* UITLEG */
 
 if(q.uitleg){
-
 text.innerHTML+=`<div class="uitleg">${q.uitleg}</div>`;
-
 }
 
 /* MC */
@@ -257,11 +260,8 @@ return;
 /* OPEN */
 
 if(q.type==="open"){
-
 text.innerHTML+=`<p>${q.vraag}</p>`;
-
 form.innerHTML=`<textarea style="width:100%;height:120px;"></textarea>`;
-
 return;
 }
 
@@ -283,7 +283,7 @@ form.innerHTML+=`
 return;
 }
 
-/* FOTO SLEEP */
+/* FOTO */
 
 if(q.type==="foto_sleep"){
 
@@ -320,6 +320,8 @@ return;
 }
 
 
+/* ================= CHECK ================= */
+
 function checkAnswer(){
 
 const q=questions[currentQuestion];
@@ -343,7 +345,10 @@ else{feedback.innerText="Controleer";}
 
 /* OPEN */
 
-if(q.type==="open"){score+=3;feedback.innerText="Antwoord opgeslagen";}
+if(q.type==="open"){
+score+=3;
+feedback.innerText="Antwoord opgeslagen";
+}
 
 /* LEZEN */
 
@@ -362,7 +367,6 @@ document.querySelectorAll(".dropzone").forEach(zone=>{
 
 const index=zone.dataset.index;
 const correct=q.items[index].antwoord;
-
 const user=zone.innerText.trim().toLowerCase();
 
 if(user===correct){
@@ -384,6 +388,8 @@ document.getElementById("nextBtn").classList.remove("hidden");
 }
 
 
+/* ================= NEXT ================= */
+
 function nextQuestion(){
 
 currentQuestion++;
@@ -394,6 +400,8 @@ loadQuestion();
 
 }else{
 
+localStorage.setItem("thema5unit1_done","true");
+
 document.getElementById("quizBox").classList.add("hidden");
 document.getElementById("endScreen").classList.remove("hidden");
 document.getElementById("xpScore").innerText=score;
@@ -403,7 +411,7 @@ document.getElementById("xpScore").innerText=score;
 }
 
 
-/* DRAG */
+/* ================= DRAG ================= */
 
 function allowDrop(ev){ev.preventDefault();}
 function drag(ev){ev.dataTransfer.setData("text",ev.target.innerText);}
