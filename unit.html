@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Unit</title>
+<title>Doel</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap" rel="stylesheet">
 
@@ -68,7 +68,7 @@ margin-bottom:10px;
 
 <div class="container">
 
-<h1 id="title">Unit laden...</h1>
+<h1 id="title">Doel laden...</h1>
 <div class="xp" id="xpBox">0 XP</div>
 
 <div id="questionCard" class="card"></div>
@@ -116,13 +116,13 @@ if(!unitData){
 
 document.getElementById("questionCard").innerHTML=`
 <img src="img/images/pavobouwmascotte.png">
-<h3>Deze unit bestaat nog niet</h3>
+<h3>Dit doel bestaat nog niet</h3>
 `;
 
 return;
 }
 
-document.getElementById("title").innerText=unitData.title || "Unit";
+document.getElementById("title").innerText=unitData.title || "Doel";
 
 showQuestion();
 
@@ -241,7 +241,7 @@ nav.innerHTML=`
 <p>Je behaalde ${totalXP} XP</p>
 
 <button onclick="goTheme()">Terug naar thema</button>
-<button onclick="goNext()">Volgende unit</button>
+<button onclick="goNext()">Volgend doel</button>
 
 </div>
 `;

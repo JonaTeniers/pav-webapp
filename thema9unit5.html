@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thema 9 – Unit 5: De Dossinkazerne</title>
+  <title>Thema 9 – Doel 5: De Dossinkazerne</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
   <style>
     body { margin:0; font-family:'Nunito',sans-serif; background:#f5f3ff; color:#1f2937; }
@@ -30,7 +30,7 @@
 </head>
 <body>
   <header>
-    <h1>🏛️ Thema 9 – Unit 5</h1>
+    <h1>Thema 9 – Doel 5</h1>
     <p>De Dossinkazerne</p>
   </header>
   <main>
@@ -75,12 +75,12 @@
     </section>
 
     <section class="question-box hidden" id="endScreen">
-      <h2>🎉 Unit voltooid!</h2>
+      <h2>Doel voltooid!</h2>
       <p>Je behaalde <span id="xpScore">0</span> XP.</p>
       <p>Top! Je hebt feiten, verbanden én reflectie verwerkt in jouw deel van <strong>het verhaal van Vlaanderen</strong>.</p>
       <div class="nav-buttons">
         <a href="hoofdthema3.html"><button type="button">← Terug naar thema</button></a>
-        <a href="thema9unit6.html"><button type="button">→ Volgende unit</button></a>
+        <a href="thema9unit6.html"><button type="button">→ Volgend doel</button></a>
       </div>
     </section>
   </main>
@@ -88,7 +88,7 @@
     <script src="./firebase.js"></script>
   <script src="./pavo-xp-sync.js"></script>
 <script>
-    const questions = [{"type": "mc", "typeLabel": "Meerkeuze", "question": "Wat was de rol van de Dossinkazerne in WOII?", "options": ["Verzamel- en deportatieplaats onder nazi-bezetting", "Schuilplaats voor vervolgde groepen", "Cultureel centrum zonder oorlogsfunctie"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Noem 1 vervolgde groep die via deze plek gedeporteerd werd.", "accepted": ["joden", "joodse mensen", "roma"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke waarschuwing zit in dit verhaal?", "options": ["Uitsluiting kan escaleren als rechten niet beschermd worden", "Geschiedenis herhaalt zich nooit", "Mensenrechten zijn alleen belangrijk in oorlog"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies de beste maatschappelijke les.", "options": ["Herinneren helpt discriminatie en ontmenselijking herkennen", "Herinneren houdt haat levend en moet vermeden worden", "Verleden heeft geen invloed op keuzes vandaag"], "correctValue": "Herinneren helpt discriminatie en ontmenselijking herkennen"}, {"type": "open", "typeLabel": "Open vraag", "question": "Noem 1 waarde die je centraal vindt bij dit onderwerp.", "accepted": ["mensenrechten", "respect", "waardigheid", "verdraagzaamheid", "solidariteit"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Waarom is dit deel van het verhaal van Vlaanderen zo belangrijk?", "options": ["Omdat het confronteert met de gevolgen van haat en uitsluiting", "Omdat het alleen over één gebouw gaat", "Omdat het geen link heeft met burgerschap"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Selectie", "question": "Welke verdiepende vraag is het meest historisch relevant?", "options": ["Welke mechanismen maakten vervolging maatschappelijk mogelijk?", "Welke dag was het koudst in Mechelen?", "Hoe groot was elke kamer exact?"], "correctValue": "Welke mechanismen maakten vervolging maatschappelijk mogelijk?"}, {"type": "open", "typeLabel": "Open vraag", "question": "Geef 2 kernwoorden die deze unit samenvatten.", "accepted": ["herinnering", "mensenrechten", "uitsluiting", "holocaust", "waakzaamheid"]}];
+    const questions = [{"type": "mc", "typeLabel": "Meerkeuze", "question": "Wat was de rol van de Dossinkazerne in WOII?", "options": ["Verzamel- en deportatieplaats onder nazi-bezetting", "Schuilplaats voor vervolgde groepen", "Cultureel centrum zonder oorlogsfunctie"], "correctIndex": 0}, {"type": "open", "typeLabel": "Open vraag", "question": "Noem 1 vervolgde groep die via deze plek gedeporteerd werd.", "accepted": ["joden", "joodse mensen", "roma"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke waarschuwing zit in dit verhaal?", "options": ["Uitsluiting kan escaleren als rechten niet beschermd worden", "Geschiedenis herhaalt zich nooit", "Mensenrechten zijn alleen belangrijk in oorlog"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Selectie", "question": "Kies de beste maatschappelijke les.", "options": ["Herinneren helpt discriminatie en ontmenselijking herkennen", "Herinneren houdt haat levend en moet vermeden worden", "Verleden heeft geen invloed op keuzes vandaag"], "correctValue": "Herinneren helpt discriminatie en ontmenselijking herkennen"}, {"type": "open", "typeLabel": "Open vraag", "question": "Noem 1 waarde die je centraal vindt bij dit onderwerp.", "accepted": ["mensenrechten", "respect", "waardigheid", "verdraagzaamheid", "solidariteit"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Waarom is dit deel van het verhaal van Vlaanderen zo belangrijk?", "options": ["Omdat het confronteert met de gevolgen van haat en uitsluiting", "Omdat het alleen over één gebouw gaat", "Omdat het geen link heeft met burgerschap"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Selectie", "question": "Welke verdiepende vraag is het meest historisch relevant?", "options": ["Welke mechanismen maakten vervolging maatschappelijk mogelijk?", "Welke dag was het koudst in Mechelen?", "Hoe groot was elke kamer exact?"], "correctValue": "Welke mechanismen maakten vervolging maatschappelijk mogelijk?"}, {"type": "open", "typeLabel": "Open vraag", "question": "Geef 2 kernwoorden die dit doel samenvatten.", "accepted": ["herinnering", "mensenrechten", "uitsluiting", "holocaust", "waakzaamheid"]}];
     let currentQuestion = 0;
     let score = 0;
 
