@@ -572,12 +572,12 @@
     <h3>Bronnen voor de lessen</h3>
     <div class="article-list">
       <div class="article-card"><strong>Startbron</strong><br><a href="https://nl.wikipedia.org/wiki/Periodisering_van_de_geschiedenis" target="_blank">Periodisering van de geschiedenis</a></div>
-      <div class="article-card"><strong>Unit 1</strong><br><a href="https://www.canonvanvlaanderen.be/events/het-wetboek-van-napoleon/" target="_blank">Het wetboek van Napoleon</a></div>
-      <div class="article-card"><strong>Unit 2</strong><br><a href="https://www.canonvanvlaanderen.be/events/een-liberale-grondwet/" target="_blank">Een liberale grondwet</a></div>
-      <div class="article-card"><strong>Unit 3</strong><br><a href="https://www.canonvanvlaanderen.be/events/de-eerste-treinrit/" target="_blank">De eerste treinrit</a></div>
-      <div class="article-card"><strong>Unit 4</strong><br><a href="https://www.canonvanvlaanderen.be/events/emilie-claeys/" target="_blank">Emilie Claeys</a></div>
-      <div class="article-card"><strong>Unit 5</strong><br><a href="https://www.canonvanvlaanderen.be/events/de-dossinkazerne/" target="_blank">De Dossinkazerne</a></div>
-      <div class="article-card"><strong>Unit 6</strong><br><a href="https://www.canonvanvlaanderen.be/events/de-euro/" target="_blank">De euro</a></div>
+      <div class="article-card"><strong>Doel 1</strong><br><a href="https://www.canonvanvlaanderen.be/events/het-wetboek-van-napoleon/" target="_blank">Het wetboek van Napoleon</a></div>
+      <div class="article-card"><strong>Doel 2</strong><br><a href="https://www.canonvanvlaanderen.be/events/een-liberale-grondwet/" target="_blank">Een liberale grondwet</a></div>
+      <div class="article-card"><strong>Doel 3</strong><br><a href="https://www.canonvanvlaanderen.be/events/de-eerste-treinrit/" target="_blank">De eerste treinrit</a></div>
+      <div class="article-card"><strong>Doel 4</strong><br><a href="https://www.canonvanvlaanderen.be/events/emilie-claeys/" target="_blank">Emilie Claeys</a></div>
+      <div class="article-card"><strong>Doel 5</strong><br><a href="https://www.canonvanvlaanderen.be/events/de-dossinkazerne/" target="_blank">De Dossinkazerne</a></div>
+      <div class="article-card"><strong>Doel 6</strong><br><a href="https://www.canonvanvlaanderen.be/events/de-euro/" target="_blank">De euro</a></div>
     </div>
   </div>
 
@@ -640,7 +640,7 @@
   if (!cards.length || !goalList) return;
 
   cards.forEach((card) => {
-    const title = card.querySelector('h4')?.textContent?.trim() || 'Unit';
+    const title = card.querySelector('h4')?.textContent?.trim() || 'Doel';
     const paragraphs = Array.from(card.querySelectorAll('p'));
     const description = (paragraphs.find((p) => !p.classList.contains('status'))?.textContent || '').trim();
 
@@ -648,29 +648,25 @@
     const button = card.querySelector('button');
     const locked = button?.disabled || card.querySelector('.status.locked');
 
-    const row = document.createElement('div');
+    const row = document.createElement(link && !locked ? 'a' : 'div');
     row.className = 'goal-item';
 
     const text = document.createElement('div');
     text.className = 'goal-text';
     text.innerHTML = `<strong>${title}</strong><span>${description}</span>`;
 
+    const cta = document.createElement('span');
+    cta.className = 'goal-cta';
+
     if (link && !locked) {
-      const actionLink = document.createElement('a');
-      actionLink.href = link.href;
-
-      const actionBtn = document.createElement('button');
-      actionBtn.textContent = `Naar ${title.toLowerCase()}`;
-
-      actionLink.appendChild(actionBtn);
-      row.append(text, actionLink);
+      row.href = link.href;
+      row.classList.add('goal-clickable');
+      cta.textContent = 'Open doel';
     } else {
-      const actionBtn = document.createElement('button');
-      actionBtn.textContent = `Naar ${title.toLowerCase()}`;
-      actionBtn.disabled = true;
-      row.append(text, actionBtn);
+      cta.textContent = 'Vergrendeld';
     }
 
+    row.append(text, cta);
     goalList.appendChild(row);
 
     card.querySelector('a')?.remove();
