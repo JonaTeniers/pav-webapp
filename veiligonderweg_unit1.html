@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Wat zien we onderweg</title>
+
+<style>
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #eef3f7;
+  padding: 2rem;
+}
+
+h1 {
+  text-align: center;
+}
+
+.question-box {
+  background: white;
+  padding: 2rem;
+  margin: auto;
+  border-radius: 12px;
+  max-width: 900px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.hidden { display:none; }
+
+button {
+  padding: 10px 20px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.feedback {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.grid {
+  display:grid;
+  grid-template-columns: repeat(3,1fr);
+  gap:20px;
+  margin-top:20px;
+}
+
+.dropzone {
+  min-height:40px;
+  border:2px dashed #aaa;
+  margin-top:10px;
+  padding:5px;
+  border-radius:6px;
+}
+
+.word {
+  display:inline-block;
+  padding:8px 12px;
+  margin:5px;
+  background:#333;
+  color:white;
+  border-radius:6px;
+  cursor:grab;
+}
+
+.success { background:#c8e6c9; }
+.error { background:#ffcdd2; }
+
+.uitleg {
+  background:#f5f5f5;
+  padding:15px;
+  border-radius:8px;
+  margin-bottom:15px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Hoofdthema 5 — Unit 1: Wat zien we allemaal onderweg</h1>
+
+<div class="question-box" id="quizBox">
+
+<h2 id="qCount"></h2>
+<div id="questionText"></div>
+<form id="answerForm"></form>
+
+<button onclick="checkAnswer()">Controleer</button>
+
+<div class="feedback" id="feedback"></div>
+
+<button id="nextBtn" class="hidden" onclick="nextQuestion()">Volgende →</button>
+
+</div>
+
+<div class="question-box hidden" id="endScreen">
+<h2>Unit voltooid</h2>
+<p>Score: <span id="xpScore">0</span> XP</p>
+</div>
+
+
+<script>
+
+/* ================= TEMPLATE VRAGEN ================= */
+
+const questions = [
+
+/* ================= 1 MEERKEUZE ================= */
+
+{
+type:"mc",
+
+uitleg:"De tram is daar!",
+
+vraag:"De 14‑jarige Janneke gaat samen met Opa Marcel een dagje naar zee. Ze stappen uit de bus en lopen richting de dijk. Voor hen liggen twee tramsporen. Opa Marcel kijkt naar links en rechts, maar hij twijfelt een beetje. In de verte komt een kusttram aan. De tram rijdt op het spoor dat Janneke en Opa moeten oversteken. Opa zegt:"Kom, we steken snel over, dan zijn we er bijna."",
+
+Mag Janneke nog oversteken vóór de tram?  
+opties:[
+{tekst:"Ja ze mag nog oversteken", juist:true},
+{tekst:"neen, de tram heeft altijd voorang", juist:false},
+]
+},
+
+/* ================= 2 WAAR NIET ================= */
+
+{
+type:"waar_niet",
+
+uitleg:"UITLEG VAN DE OPDRACHT.",
+
+vraag:"SCHRIJF HIER DE WAAR / NIET WAAR STELLING.",
+
+juist:true
+},
+
+/* ================= 3 FOTO SLEEP ================= */
+
+{
+type:"foto_sleep",
+
+uitleg:"Sleep het juiste woord naar de juiste foto.",
+
+vraag:"Onderweg kom je veel tegen, zelfs veel meer dan we eigenlijk weten.",
+
+items:[
+
+{img:"images/kilometerpaal.jpg", antwoord:"kilometerpaal"},
+{img:"images/station.jpg", antwoord:"station"},
+{img:"images/stadhuis.jpg", antwoord:"stadhuis"},
+{img:"images/winkels.jpg", antwoord:"winkels"},
+{img:"images/park.jpg", antwoord:"park"},
+{img:"images/reclame.jpg", antwoord:"reclame"}
+
+]
+
+},
+
+/* ================= 4 OPEN ================= */
+
+{
+type:"open",
+
+uitleg:"Leg uit in je eigen woorden.",
+
+vraag:"SCHRIJF HIER DE OPEN VRAAG."
+},
+
+/* ================= 5 LEZEN INVUL ================= */
+
+{
+  "type": "lezen_invul",
+  "uitleg": "Lees de tekst en beantwoord de vragen.",
+  "tekst": "De 14‑jarige Janneke heeft gehoord dat Leuven de eerste Europese stad is waar een autonome bus met passagiers rondrijdt. Ze wil dat graag eens meemaken en overtuigt Opa Marcel om mee te gaan.\n\nWanneer ze in station Leuven aankomen, ziet Opa Marcel het kleine, moderne busje staan. Er zit geen chauffeur achter het stuur, alleen een begeleider.\n\nOpa trekt zijn wenkbrauwen op. \"Allez jong, een bus zonder chauffeur… dat kan toch niet goed aflopen,\" moppert hij.\n\nJanneke lacht. \"Komaan opa, het is veilig getest. We proberen het gewoon.\"\n\nMet enige tegenzin stapt Opa in. De bus vertrekt zachtjes richting station Heverlee. Hij stopt netjes aan kruispunten en houdt rekening met fietsers.\n\nDe begeleider legt uit dat Leuven een ideale testomgeving is: veel fietsers, scholen, druk verkeer en alles dicht bij elkaar. \"Als het hier werkt, werkt het overal,\" zegt hij.\n\nJanneke kijkt nieuwsgierig rond, maar Opa blijft met zijn armen gekruist zitten. \"Vroeger reed een mens gewoon zelf. Dat was duidelijker,\" mompelt hij.\n\nWanneer ze uitstappen, zegt Janneke: \"Opa, geef toe, het ging eigenlijk best goed.\"\n\nOpa haalt zijn schouders op. \"Het is niet gecrasht, dat is al iets. Maar ik blijf liever bij een chauffeur.\"",
+  "vragen": [
+    {
+      "vraag": "Waarom twijfelt Opa Marcel om in de autonome bus te stappen?",
+      "antwoord": ["Hij vertrouwt een bus zonder chauffeur niet."]
+    },
+    {
+      "vraag": "Hoe probeert Janneke Opa te overtuigen om toch mee te gaan?",
+      "antwoord": ["Ze zegt dat het veilig getest is en dat ze het gewoon willen proberen."]
+    },
+    {
+      "vraag": "Wat doet de bus tijdens de rit dat laat zien dat hij met verkeer rekening houdt?",
+      "antwoord": ["Hij stopt aan kruispunten en houdt rekening met fietsers."]
+    },
+    {
+      "vraag": "Waarom is Leuven volgens de begeleider een goede testomgeving?",
+      "antwoord": ["Omdat er veel fietsers, scholen, druk verkeer en alles dicht bij elkaar zijn."]
+    },
+    {
+      "vraag": "Wat zegt Opa aan het einde dat toont dat hij nog niet overtuigd is?",
+      "antwoord": ["Hij zegt dat hij liever bij een chauffeur blijft."]
+    }
+  ]
+},
+];
+
+
+/* ================= ENGINE ================= */
+
+let currentQuestion=0;
+let score=0;
+
+function loadQuestion(){
+
+const q=questions[currentQuestion];
+
+document.getElementById("qCount").innerText=
+`Vraag ${currentQuestion+1} van ${questions.length}`;
+
+const text=document.getElementById("questionText");
+const form=document.getElementById("answerForm");
+
+text.innerHTML="";
+form.innerHTML="";
+
+/* UITLEG BLOK */
+
+if(q.uitleg){
+
+text.innerHTML+=`<div class="uitleg">${q.uitleg}</div>`;
+
+}
+
+/* MC */
+
+if(q.type==="mc"){
+
+text.innerHTML+=`<p>${q.vraag}</p>`;
+
+q.opties.forEach(opt=>{
+form.innerHTML+=`
+<label>
+<input type="radio" name="answer" value="${opt.juist}">
+${opt.tekst}
+</label><br>`;
+});
+
+return;
+}
+
+/* WAAR */
+
+if(q.type==="waar_niet"){
+
+text.innerHTML+=`<p>${q.vraag}</p>`;
+
+form.innerHTML=`
+<label><input type="radio" name="answer" value="true">Waar</label><br>
+<label><input type="radio" name="answer" value="false">Niet waar</label>
+`;
+
+return;
+}
+
+/* OPEN */
+
+if(q.type==="open"){
+
+text.innerHTML+=`<p>${q.vraag}</p>`;
+
+form.innerHTML=`<textarea style="width:100%;height:120px;"></textarea>`;
+
+return;
+}
+
+/* LEZEN */
+
+if(q.type==="lezen_invul"){
+
+text.innerHTML+=`
+<div style="background:#f5f5f5;padding:15px;border-radius:8px;margin-bottom:15px;">
+${q.tekst}
+</div>`;
+
+q.vragen.forEach((v,i)=>{
+form.innerHTML+=`
+<p>${i+1}. ${v.vraag}</p>
+<input type="text" name="invul${i}" style="width:100%;padding:8px;"><br>`;
+});
+
+return;
+}
+
+/* FOTO SLEEP */
+
+if(q.type==="foto_sleep"){
+
+text.innerHTML+=`<p>${q.vraag}</p>`;
+
+form.innerHTML=`<div class="grid" id="grid"></div>
+<div id="words"></div>`;
+
+const grid=document.getElementById("grid");
+const words=document.getElementById("words");
+
+q.items.forEach((item,i)=>{
+
+grid.innerHTML+=`
+<div>
+<img src="${item.img}" style="max-width:100%;">
+<div class="dropzone" data-index="${i}"
+ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+</div>`;
+
+const w=document.createElement("div");
+w.className="word";
+w.innerText=item.antwoord;
+w.draggable=true;
+w.ondragstart=drag;
+
+words.appendChild(w);
+
+});
+
+return;
+}
+
+}
+
+
+function checkAnswer(){
+
+const q=questions[currentQuestion];
+const feedback=document.getElementById("feedback");
+
+/* MC */
+
+if(q.type==="mc"){
+const sel=document.querySelector('input[name="answer"]:checked');
+if(sel && sel.value==="true"){score+=3;feedback.innerText="Juist";}
+else{feedback.innerText="Controleer je antwoord";}
+}
+
+/* WAAR */
+
+if(q.type==="waar_niet"){
+const sel=document.querySelector('input[name="answer"]:checked');
+if(sel && (sel.value==="true")==q.juist){score+=3;feedback.innerText="Juist";}
+else{feedback.innerText="Controleer";}
+}
+
+/* OPEN */
+
+if(q.type==="open"){score+=3;feedback.innerText="Antwoord opgeslagen";}
+
+/* LEZEN */
+
+if(q.type==="lezen_invul"){
+score+=3;
+feedback.innerText="Antwoorden opgeslagen";
+}
+
+/* FOTO */
+
+if(q.type==="foto_sleep"){
+
+let goed=0;
+
+document.querySelectorAll(".dropzone").forEach(zone=>{
+
+const index=zone.dataset.index;
+const correct=q.items[index].antwoord;
+
+const user=zone.innerText.trim().toLowerCase();
+
+if(user===correct){
+zone.classList.add("success");
+goed++;
+}else{
+zone.classList.add("error");
+}
+
+});
+
+score+=goed*3;
+feedback.innerText=`${goed} juist`;
+
+}
+
+document.getElementById("nextBtn").classList.remove("hidden");
+
+}
+
+
+function nextQuestion(){
+
+currentQuestion++;
+
+if(currentQuestion<questions.length){
+
+loadQuestion();
+
+}else{
+
+document.getElementById("quizBox").classList.add("hidden");
+document.getElementById("endScreen").classList.remove("hidden");
+document.getElementById("xpScore").innerText=score;
+
+}
+
+}
+
+
+/* DRAG */
+
+function allowDrop(ev){ev.preventDefault();}
+function drag(ev){ev.dataTransfer.setData("text",ev.target.innerText);}
+function drop(ev){
+ev.preventDefault();
+const data=ev.dataTransfer.getData("text");
+ev.target.innerHTML=data;
+}
+
+window.onload=loadQuestion;
+
+</script>
+
+</body>
+</html>
