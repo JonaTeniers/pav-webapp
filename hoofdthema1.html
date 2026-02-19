@@ -504,8 +504,6 @@
     <div class="goal-list" id="goalList"></div>
   </div>
 
-    
-
     <a class="btn-back" href="index.html">Terug naar thema-overzicht</a>
 
   </section>
@@ -565,7 +563,7 @@
   if (!cards.length || !goalList) return;
 
   cards.forEach((card) => {
-    const title = card.querySelector('h4')?.textContent?.trim() || 'Doel';
+    const title = card.querySelector('h4')?.textContent?.trim() || 'Unit';
     const paragraphs = Array.from(card.querySelectorAll('p'));
     const description = (paragraphs.find((p) => !p.classList.contains('status'))?.textContent || '').trim();
 
@@ -600,73 +598,6 @@
 
     card.querySelector('a')?.remove();
     card.querySelector('button')?.remove();
-  });
-})();
-</script>
-
-
-<script>
-(function () {
-  const summaryEl = document.getElementById('asideSummary');
-  const goalsEl = document.getElementById('asideGoals');
-  if (!summaryEl || !goalsEl) return;
-
-  const focusParagraph = document.querySelector('h2 + p');
-  summaryEl.textContent = (focusParagraph?.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 180) + '...';
-
-  const cards = Array.from(document.querySelectorAll('.unit-grid .unit-card')).slice(0, 3);
-  cards.forEach((card) => {
-    const title = card.querySelector('h4')?.textContent?.trim() || '';
-    const desc = card.querySelector('p:not(.status)')?.textContent?.trim() || '';
-    const li = document.createElement('li');
-    li.textContent = `${title}: ${desc}`;
-    goalsEl.appendChild(li);
-  });
-})();
-</script>
-
-
-<script>
-(function goalBarsInit() {
-  const rows = document.querySelectorAll('.goal-item');
-  rows.forEach((row) => {
-    const link = row.querySelector('a[href]');
-    const btn = row.querySelector('button');
-    let href = '';
-    let locked = false;
-
-    if (link) {
-      href = link.href;
-      link.remove();
-    }
-
-    if (btn) {
-      locked = !!btn.disabled;
-      btn.remove();
-    }
-
-    let cta = row.querySelector('.goal-cta');
-    if (!cta) {
-      cta = document.createElement('span');
-      cta.className = 'goal-cta';
-      row.appendChild(cta);
-    }
-
-    if (href && !locked) {
-      row.classList.add('goal-clickable');
-      cta.textContent = 'Open doel';
-      row.setAttribute('role', 'link');
-      row.tabIndex = 0;
-      row.addEventListener('click', () => { window.location.href = href; });
-      row.addEventListener('keydown', (ev) => {
-        if (ev.key === 'Enter' || ev.key === ' ') {
-          ev.preventDefault();
-          window.location.href = href;
-        }
-      });
-    } else {
-      cta.textContent = 'Vergrendeld';
-    }
   });
 })();
 </script>

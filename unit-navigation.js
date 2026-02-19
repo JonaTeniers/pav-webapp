@@ -11,7 +11,6 @@
         background: linear-gradient(135deg, #cfe9ff 0%, #7bb6f0 100%) !important;
         position: relative;
         overflow-x: hidden;
-        padding: 1rem;
       }
 
       body::before,
@@ -64,27 +63,6 @@
         background: rgba(255,255,255,0.95) !important;
         border: 1px solid #c8ddf0;
         box-shadow: 0 8px 18px rgba(10, 47, 78, 0.12);
-        max-width: 1120px;
-        margin: 1rem auto;
-        padding: 1.25rem !important;
-      }
-
-      .unit,
-      .task,
-      #quiz,
-      #quizContainer,
-      .box,
-      .panel {
-        background: rgba(255,255,255,0.95);
-        border: 1px solid #c8ddf0;
-        border-radius: 12px;
-        box-shadow: 0 8px 18px rgba(10, 47, 78, 0.12);
-      }
-
-      .unit {
-        width: min(1120px, 95%);
-        margin: 1.2rem auto 2rem;
-        padding: 1.2rem;
       }
 
       h1, h2, h3 {
@@ -113,7 +91,6 @@
 
       .helper {
         color: #365c75;
-        text-transform: none !important;
       }
 
       .all-question-list {
@@ -124,7 +101,7 @@
       .question-item {
         border: 1px solid #c8ddf0;
         border-radius: 10px;
-        padding: 1rem;
+        padding: 0.8rem;
         background: #f6fbff;
       }
 
@@ -158,24 +135,9 @@
   }
 
   function harmonizeGoalLabels() {
-    document.querySelectorAll('header h1, header p, h1').forEach((el) => {
+    document.querySelectorAll('header h1, header p').forEach((el) => {
       el.textContent = el.textContent.replace(/\bUnit\b/g, 'Doel');
     });
-
-    if (typeof document.title === 'string') {
-      document.title = document.title.replace(/\bUnit\b/g, 'Doel');
-    }
-
-    const filename = window.location.pathname.split('/').pop() || '';
-    const match = filename.match(/^thema(\d+)unit(\d+)\.html$/i);
-    if (match) {
-      const themeNumber = match[1];
-      const goalNumber = match[2];
-      const normalized = `Thema ${themeNumber} - Doel ${goalNumber}`;
-      const h1 = document.querySelector('h1');
-      if (h1) h1.textContent = `📘 ${normalized}`;
-      document.title = normalized;
-    }
   }
 
   function normalize(value) {
@@ -233,8 +195,7 @@
       snapshots.push({
         typeLabel: (qTypeEl?.textContent || '').trim(),
         question: (qTextEl?.textContent || '').trim(),
-        answerHtml: answerForm.innerHTML,
-        requiresReasoning: !!document.getElementById('reasoningInput')
+        answerHtml: answerForm.innerHTML
       });
       if (i < total - 1) window.nextQuestion();
     }
@@ -248,11 +209,8 @@
   }
 
   function buildAllQuestionsView() {
-    const quizBox = document.getElementById('quizBox') || document.getElementById('quiz') || document.getElementById('quizContainer');
+    const quizBox = document.getElementById('quizBox');
     if (!quizBox) return;
-
-    quizBox.classList.remove('quiz-container');
-    quizBox.classList.add('question-box');
 
     const filename = window.location.pathname.split('/').pop() || '';
     const storageKey = filename.replace(/\.html$/i, '');
@@ -284,9 +242,6 @@
       let inputHtml = '';
       if (!hasQuestionArray) {
         inputHtml = q.answerHtml || `<input class="text-input" type="text" name="q-${index}" placeholder="Typ je antwoord...">`;
-        if (q.requiresReasoning) {
-          inputHtml += `<div style="margin-top:.55rem"><label><strong>Licht je antwoord toe:</strong></label><textarea class="text-input" name="q-reason-${index}" placeholder="Leg kort uit waarom dit antwoord klopt..."></textarea></div>`;
-        }
       } else if (q.type === 'mc') {
         inputHtml = (q.options || []).map((opt, i) => `<label><input type="radio" name="q-${index}" value="${i}"> ${opt}</label>`).join('');
       } else if (q.type === 'drag') {
@@ -298,10 +253,6 @@
         inputHtml = `${subject}${body}<textarea name="q-${index}" class="text-input" placeholder="Schrijf je herwerkte versie hier..."></textarea>`;
       } else {
         inputHtml = `<input class="text-input" type="text" name="q-${index}" placeholder="Typ je antwoord...">`;
-      }
-
-      if (hasQuestionArray && document.getElementById('reasoningInput')) {
-        inputHtml += `<div style="margin-top:.55rem"><label><strong>Licht je antwoord toe:</strong></label><textarea class="text-input" name="q-reason-${index}" placeholder="Leg kort uit waarom dit antwoord klopt..."></textarea></div>`;
       }
 
       item.innerHTML = `
@@ -365,21 +316,6 @@
         items.forEach((item) => {
           if (item.dataset.correct === '1') totalScore += 3;
         });
-
-        const reasoningRequired = !!document.getElementById('reasoningInput');
-        if (reasoningRequired) {
-          let missing = 0;
-          items.forEach((item, idx) => {
-            const reason = item.querySelector(`[name="q-reason-${idx}"]`)?.value?.trim() || '';
-            if (reason.length < 4) missing += 1;
-          });
-          if (missing > 0) {
-            const summary = document.getElementById('allQuestionsFeedback');
-            summary.textContent = `Vul bij elke opdracht ook je beargumentering in (${missing} ontbreken).`;
-            summary.className = 'feedback error';
-            return;
-          }
-        }
       }
 
       localStorage.setItem(storageKey, String(totalScore));
