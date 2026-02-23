@@ -338,21 +338,59 @@
     });
   }
 
+  function findThemeBackLink() {
+    const links = Array.from(document.querySelectorAll('a[href]'));
+    const withLabel = links.find((link) => /terug naar thema/i.test(link.textContent || ''));
+    if (withLabel) return withLabel.getAttribute('href');
+
+    const backLink = document.querySelector('.back-link[href]');
+    if (backLink) return backLink.getAttribute('href');
+
+    return null;
+  }
+
+  function inferNextUnitFile(filename) {
+    const patterns = [
+      /^(thema\d+unit)(\d+)(\.html)$/i,
+      /^(thema\d+_\d+_unit)(\d+)(\.html)$/i,
+      /^(veiligonderweg_unit)(\d+)(\.html)$/i,
+      /^(monsterunit)(\d+)(\.html)$/i
+    ];
+
+    for (const pattern of patterns) {
+      const match = filename.match(pattern);
+      if (!match) continue;
+      const nextNumber = Number(match[2]) + 1;
+      return `${match[1]}${nextNumber}${match[3]}`;
+    }
+
+    return null;
+  }
+
   function parseUnitContext() {
     const filename = window.location.pathname.split('/').pop() || '';
 
-    // VERPLICHT formaat: themaXunitY.html
-    const match = filename.match(/^thema(\d+)unit(\d+)\.html$/i);
-    if (!match) return null;
+    const themed = filename.match(/^thema(\d+)unit(\d+)\.html$/i);
+    const legacyThemed = filename.match(/^thema(\d+)_\d+_unit(\d+)\.html$/i);
+    const veilig = filename.match(/^veiligonderweg_unit(\d+)\.html$/i);
 
-    const themeNumber = Number(match[1]);
-    const unitNumber = Number(match[2]);
+    const unitNumber = themed
+      ? Number(themed[2])
+      : legacyThemed
+      ? Number(legacyThemed[2])
+      : veilig
+      ? Number(veilig[1])
+      : null;
+
+    const themeBackLink = findThemeBackLink();
+    const nextUnitFile = inferNextUnitFile(filename);
+
+    if (!themeBackLink) return null;
 
     return {
-      themeNumber,
       unitNumber,
-      themeFile: `thema${themeNumber}.html`,
-      nextUnitFile: `thema${themeNumber}unit${unitNumber + 1}.html`
+      themeFile: themeBackLink,
+      nextUnitFile
     };
   }
 
@@ -391,34 +429,18 @@
     navContainer.appendChild(
       createButtonLink(
         context.themeFile,
-        `← Terug naar Thema ${context.themeNumber}`
+        '← Terug naar thema'
       )
     );
 
-    // VOLGENDE UNIT (alleen als bestand bestaat)
+    if (!context.nextUnitFile) return;
+
     const hasNext = await pageExists(context.nextUnitFile);
 
     if (hasNext) {
       navContainer.appendChild(
-        createButtonLink(context.nextUnitFile, '→ Volgende unit')
+        createButtonLink(context.nextUnitFile, '→ Volgend doel')
       );
-    } else {
-      // IN AANBOUW
-      const buildingMessage = document.createElement('p');
-      buildingMessage.textContent = 'Deze unit is PAVO nog aan het bouwen.';
-      buildingMessage.style.fontWeight = '700';
-      buildingMessage.style.marginTop = '1rem';
-      buildingMessage.style.textAlign = 'center';
-
-      const buildingImage = document.createElement('img');
-      buildingImage.src = 'img/images/pavobouwmascotte.png';
-      buildingImage.alt = 'PAVO mascotte werkt aan de volgende unit';
-      buildingImage.style.maxWidth = '120px';
-      buildingImage.style.display = 'block';
-      buildingImage.style.margin = '0.5rem auto 0';
-
-      navContainer.appendChild(buildingMessage);
-      navContainer.appendChild(buildingImage);
     }
   }
 

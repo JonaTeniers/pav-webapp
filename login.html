@@ -188,6 +188,7 @@ function loginStudent(){
   localStorage.setItem("studentName", name);
   localStorage.setItem("studentClass", klas);
   localStorage.setItem("role", "student");
+  localStorage.setItem("pavo_leerling_profiel", JSON.stringify({ voornaam: name, klas, loggedInAt: new Date().toISOString() }));
 
   window.location.href = "index.html";
 }
