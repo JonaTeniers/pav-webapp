@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Doel 7 — Openbaar vervoer</title>
+
+<style>
+body{
+  font-family:'Segoe UI',sans-serif;
+  background:#eef3f7;
+  padding:20px;
+}
+
+h1{text-align:center;margin-bottom:20px;}
+
+.main{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+  max-width:1500px;
+  margin:auto;
+}
+
+.panel{
+  background:white;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.1);
+}
+
+.leftPanel{
+  position:sticky;
+  top:10px;
+  height:fit-content;
+}
+
+img{
+  width:100%;
+  border-radius:8px;
+  border:2px solid #ddd;
+  margin-top:10px;
+}
+
+.story{
+  background:#f5f5f5;
+  padding:15px;
+  border-radius:8px;
+  margin-bottom:15px;
+}
+
+input{
+  padding:8px;
+  margin-bottom:10px;
+  width:150px;
+}
+
+button{
+  padding:10px 20px;
+  margin-top:20px;
+  cursor:pointer;
+}
+
+.feedback{margin-top:15px;font-weight:bold;}
+.hidden{display:none;}
+</style>
+</head>
+
+<body>
+
+<h1>Hoofdthema 5 — Doel 7: Openbaar vervoer</h1>
+
+<div class="main">
+
+<!-- LINKS -->
+
+<div class="panel leftPanel">
+
+<h3>Treinrooster (vertrek Leuven)</h3>
+<img src="img/images/SPOOR 1.jpg">
+
+<div id="busBox" class="hidden">
+<h3>Busuren</h3>
+<img id="busImg">
+</div>
+
+</div>
+
+<!-- RECHTS -->
+
+<div class="panel" id="quizBox">
+
+<h2 id="qCount"></h2>
+<div id="questionText"></div>
+<form id="answerForm"></form>
+
+<button onclick="checkAnswer()">Controleer</button>
+<div class="feedback" id="feedback"></div>
+
+<button id="nextBtn" class="hidden" onclick="nextQuestion()">Volgende →</button>
+
+</div>
+
+</div>
+
+
+<div class="panel hidden" id="endScreen" style="max-width:600px;margin:auto;margin-top:30px;">
+<h2>Doel voltooid</h2>
+<p>Score: <span id="xpScore">0</span> XP</p>
+</div>
+
+
+<script>
+
+/* ================= VRAGEN ================= */
+
+const questions=[
+
+{
+story:`1️⃣ Milan moet om 10:00 in Antwerpen-Centraal zijn.
+Hij vertrekt vanuit Leuven.`,
+vragen:[
+{vraag:"Welke trein moet Milan nemen? (vertrek Leuven)", antwoord:"08:50"},
+{vraag:"Om welk uur komt hij aan?", antwoord:"09:35"}
+]
+},
+
+{
+story:`2️⃣ Sarah vliegt om 09:00 vanaf Brussels Airport.
+Ze moet 2 uur vooraf aanwezig zijn.`,
+vragen:[
+{vraag:"Om welk uur moet Sarah op de luchthaven zijn?", antwoord:"07:00"},
+{vraag:"Welke trein moet ze nemen vanuit Leuven?", antwoord:"06:07"}
+]
+},
+
+{
+story:`3️⃣ Jonas neemt de trein van 08:37 vanuit Leuven en komt aan om 09:25.`,
+vragen:[
+{vraag:"Hoe lang duurt deze rit? (minuten)", antwoord:"48"}
+]
+},
+
+{
+story:`4️⃣ Noor reist naar Antwerpen.
+Ze neemt de trein van 07:37 en komt aan om 08:25.`,
+vragen:[
+{vraag:"Hoe lang duurt deze treinrit? (minuten)", antwoord:"48"}
+]
+},
+
+{
+story:`5️⃣ Liam komt met de trein aan in Leuven om 09:01.
+Hij wil bus 40 nemen die vertrekt om 09:02.`,
+busImg:"img/images/uren40.jpg",
+vragen:[
+{vraag:"Hoeveel minuten heeft Liam om over te stappen?", antwoord:"1"},
+{vraag:"Haalt hij deze bus? (ja/nee)", antwoord:"nee"}
+]
+},
+
+{
+story:`6️⃣ Liam neemt daarom de volgende bus van 09:32.`,
+busImg:"img/images/uren40.jpg",
+vragen:[
+{vraag:"Hoeveel minuten moet hij wachten?", antwoord:"31"}
+]
+},
+
+{
+story:`7️⃣ Emma neemt bus 33 om 10:04 aan Genk Station.`,
+busImg:"img/images/uren33.jpg",
+vragen:[
+{vraag:"Om welk uur komt ze aan?", antwoord:"10:26"}
+]
+},
+
+{
+story:`8️⃣ Noah twijfelt tussen trein 08:00 (aankomst 08:55)
+en trein 08:50 (aankomst 09:35).
+Hij moet vóór 09:30 in Antwerpen zijn.`,
+vragen:[
+{vraag:"Welke trein moet Noah nemen?", antwoord:"08:00"}
+]
+},
+
+{
+story:`9️⃣ Lucas komt aan om 08:25.
+Zijn volgende trein vertrekt om 08:37.`,
+vragen:[
+{vraag:"Hoeveel minuten overstaptijd heeft Lucas?", antwoord:"12"}
+]
+},
+
+{
+story:`🔟 Jij moet een reis plannen met trein en bus.`,
+vragen:[
+{vraag:"Wat controleer je eerst?", antwoord:"dienstregeling"},
+{vraag:"Waarom is overstaptijd belangrijk?", antwoord:"bus niet missen"}
+]
+}
+
+];
+
+
+/* ENGINE */
+
+let currentQuestion=0;
+let score=0;
+
+function loadQuestion(){
+
+const q=questions[currentQuestion];
+
+document.getElementById("qCount").innerText=
+`Vraag ${currentQuestion+1} van ${questions.length}`;
+
+const text=document.getElementById("questionText");
+const form=document.getElementById("answerForm");
+const feedback=document.getElementById("feedback");
+
+text.innerHTML="";
+form.innerHTML="";
+feedback.innerHTML="";
+document.getElementById("nextBtn").classList.add("hidden");
+
+/* BUS */
+
+const busBox=document.getElementById("busBox");
+
+if(q.busImg){
+busBox.classList.remove("hidden");
+document.getElementById("busImg").src=q.busImg;
+}else{
+busBox.classList.add("hidden");
+}
+
+/* STORY */
+
+text.innerHTML+=`<div class="story">${q.story}</div>`;
+
+/* VRAGEN */
+
+q.vragen.forEach((v,i)=>{
+form.innerHTML+=`
+<p>${i+1}. ${v.vraag}</p>
+<input type="text" name="vraag${i}">
+`;
+});
+
+}
+
+
+function checkAnswer(){
+
+const q=questions[currentQuestion];
+const feedback=document.getElementById("feedback");
+
+let goed=0;
+
+q.vragen.forEach((v,i)=>{
+
+const user=document.querySelector(`[name=vraag${i}]`).value
+.toLowerCase().trim();
+
+if(user===v.antwoord.toLowerCase()){
+goed++;
+}
+
+});
+
+score+=goed*3;
+feedback.innerText=`${goed} van ${q.vragen.length} juist`;
+
+document.getElementById("nextBtn").classList.remove("hidden");
+
+}
+
+
+function nextQuestion(){
+
+currentQuestion++;
+
+if(currentQuestion<questions.length){
+loadQuestion();
+}else{
+
+localStorage.setItem("thema5unit7_done","true");
+
+document.getElementById("quizBox").classList.add("hidden");
+document.getElementById("endScreen").classList.remove("hidden");
+document.getElementById("xpScore").innerText=score;
+}
+}
+
+window.onload=loadQuestion;
+
+</script>
+
+<script src="./unit-navigation.js"></script>
+
+</body>
+</html>
