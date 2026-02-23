@@ -164,7 +164,263 @@
     @media (max-width: 900px) {
       main { grid-template-columns: 1fr; }
     }
-  </style>
+
+    /* Leeromgeving refresh */
+    body {
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      background: linear-gradient(135deg, #cfe9ff 0%, #7bb6f0 100%);
+      color: #12324b;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::before {
+      width: 520px;
+      height: 520px;
+      background: rgba(255, 255, 255, 0.26);
+      top: -170px;
+      left: -170px;
+      filter: blur(40px);
+    }
+
+    body::after {
+      width: 420px;
+      height: 420px;
+      background: rgba(0, 90, 170, 0.2);
+      bottom: -130px;
+      right: -130px;
+      filter: blur(34px);
+    }
+
+    header,
+    main {
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      background: linear-gradient(120deg, #0f4a7a, #2d7fbd);
+      border-bottom-left-radius: 18px;
+      border-bottom-right-radius: 18px;
+      box-shadow: 0 8px 22px rgba(9, 43, 73, 0.28);
+    }
+
+    .panel {
+      background: rgba(255, 255, 255, 0.93);
+      border: 1px solid #c9deef;
+      box-shadow: 0 10px 26px rgba(8, 39, 66, 0.14);
+      backdrop-filter: blur(4px);
+    }
+
+    .score-card,
+    .task,
+    .focus-goals {
+      background: linear-gradient(180deg, rgba(245, 251, 255, 0.94), rgba(236, 247, 255, 0.9));
+      border: 1px solid #c7dff2;
+      border-radius: 12px;
+      padding: 0.95rem 1rem;
+    }
+
+    .unit-card,
+    .goal-item {
+      border-color: #bdd9ee;
+      background: #f4faff;
+      box-shadow: 0 3px 10px rgba(29, 79, 117, 0.08);
+    }
+
+    .unit-card button,
+    .btn-back {
+      border-radius: 999px;
+      background: linear-gradient(90deg, #0f6a9d, #1883b8);
+      box-shadow: 0 3px 10px rgba(9, 52, 84, 0.2);
+    }
+
+    .unit-card button:hover,
+    .btn-back:hover {
+      background: linear-gradient(90deg, #0d5d8b, #156f9c);
+    }
+    .ovur-layout {
+      margin-top: 1.1rem;
+      padding: 1.1rem;
+      border: 1px solid #a9d0ea;
+      border-radius: 16px;
+      background: linear-gradient(165deg, rgba(235, 246, 255, 0.98), rgba(221, 238, 252, 0.95));
+      box-shadow: 0 8px 22px rgba(15, 74, 122, 0.14);
+    }
+
+    .ovur-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.7rem;
+      margin-bottom: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .ovur-layout h3 {
+      margin: 0;
+      color: #0f3f67;
+    }
+
+    .ovur-badge {
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(15, 106, 157, 0.14);
+      color: #0f6a9d;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .ovur-layout > p {
+      margin: 0 0 0.8rem;
+      color: #244a67;
+      font-size: 0.95rem;
+    }
+
+    .ovur-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 0.65rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .ovur-step {
+      border: 1px solid #b8daef;
+      border-radius: 12px;
+      padding: 0.7rem 0.75rem;
+      background: rgba(245, 251, 255, 0.92);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    }
+
+    .ovur-step strong {
+      display: block;
+      color: #0f6a9d;
+      margin-bottom: 0.24rem;
+      font-size: 0.92rem;
+    }
+
+    .ovur-step span {
+      font-size: 0.88rem;
+      color: #355770;
+      line-height: 1.35;
+    }
+
+    .ovur-tip {
+      margin: 0 0 0.8rem;
+      padding: 0.6rem 0.7rem;
+      border-radius: 10px;
+      border-left: 4px solid #1f82bb;
+      background: rgba(255, 255, 255, 0.66);
+      color: #23465f;
+      font-size: 0.9rem;
+    }
+
+    .ovur-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+    }
+
+    .ovur-actions a {
+      text-decoration: none;
+      margin-top: 0;
+    }
+
+
+    .ovur-sidebar {
+      background: rgba(6, 46, 70, 0.93);
+      border: 1px solid #2a5e84;
+      color: #e8f6ff;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      position: sticky;
+      top: 1rem;
+    }
+
+    .ovur-sidebar .panel-title,
+    .ovur-sidebar h3 {
+      color: #ffffff;
+      margin: 0;
+    }
+
+    .ovur-side-nav {
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .ovur-link {
+      display: block;
+      padding: 0.72rem 0.78rem;
+      border-radius: 12px;
+      text-decoration: none;
+      color: #d7efff;
+      border: 1px solid rgba(166, 214, 247, 0.25);
+      background: rgba(8, 70, 106, 0.55);
+      transition: transform 0.14s ease, background 0.14s ease;
+    }
+
+    .ovur-link strong {
+      display: block;
+      margin-bottom: 0.2rem;
+      color: #ffffff;
+    }
+
+    .ovur-link span {
+      font-size: 0.84rem;
+      color: #c3e7ff;
+      line-height: 1.32;
+    }
+
+    .ovur-link:hover,
+    .ovur-link.active {
+      background: rgba(255, 255, 255, 0.16);
+      transform: translateY(-1px);
+    }
+
+    .ovur-side-goals {
+      border: 1px solid rgba(175, 220, 248, 0.33);
+      background: rgba(8, 80, 118, 0.48);
+      border-radius: 12px;
+      padding: 0.7rem 0.75rem;
+    }
+
+    .ovur-side-goals p {
+      margin: 0.3rem 0 0.55rem;
+      color: #cdeeff;
+      font-size: 0.88rem;
+    }
+
+    .ovur-chat-box {
+      border: 1px solid rgba(175, 220, 248, 0.33);
+      background: rgba(8, 80, 118, 0.42);
+      border-radius: 12px;
+      padding: 0.7rem;
+    }
+
+    .ovur-chat-box p {
+      margin: 0.3rem 0 0.6rem;
+      color: #d5f1ff;
+      font-size: 0.88rem;
+    }
+
+    .ovur-chat-box .chat-embed {
+      min-height: 270px;
+      border-radius: 10px;
+    }
+
+</style>
 </head>
 
 <body>
@@ -183,7 +439,7 @@
   <p id="themeTotalScore">0 / 360 XP</p>
 </div>
 
-<h2>Focus van dit thema</h2>
+<h2 id="orienteren-info">Focus van dit thema</h2>
 <p>
 In dit thema leer je hoe je je veilig kan verplaatsen.
 </p>
@@ -212,8 +468,27 @@ In dit thema leer je hoe je je veilig kan verplaatsen.
 
 </div>
 </div>
+  <div class="ovur-layout">
+    <div class="ovur-header">
+      <h3>OVUR-leidraad · Veilig onderweg handelen</h3>
+      <span class="ovur-badge">PAV OVUR</span>
+    </div>
+    <p>OVUR maakt van verkeerskennis een praktische routine voor elke verplaatsing.</p>
+    <div class="ovur-grid">
+      <div class="ovur-step"><strong>1. Oriënteren</strong><span>Observeer de verkeerssituatie en herken de relevante regels of gevaren.</span></div>
+      <div class="ovur-step"><strong>2. Voorbereiden</strong><span>Kies je doel en plan je route of aanpak voor een veilige verplaatsing.</span></div>
+      <div class="ovur-step"><strong>3. Uitvoeren</strong><span>Voer uit: pas verkeersregels en veiligheidsafspraken correct toe.</span></div>
+      <div class="ovur-step"><strong>4. Reflecteren</strong><span>Bespreek met Chattie wat goed ging en welke keuzes je nog veiliger kunt maken.</span></div>
+    </div>
+    <p class="ovur-tip"><strong>Leidraad-tip:</strong> Denk altijd in scenario’s: wat zie ik, wat plan ik, wat doe ik veilig, en wat leer ik eruit voor de volgende keer?</p>
+    <div class="ovur-actions">
+      <a class="btn-back" href="veiligonderweg_unit1.html">Start met doel 1</a>
+      <a class="btn-back" href="#doelen-overzicht">Ga naar doelen</a>
+      <a class="btn-back" href="#chattie-panel">Open Chattie</a>
+    </div>
+  </div>
 
-<h2>Doelenoverzicht</h2>
+<h2 id="doelen-overzicht">Doelenoverzicht</h2>
 
 <div class="unit-grid">
 
@@ -246,13 +521,48 @@ In dit thema leer je hoe je je veilig kan verplaatsen.
 
 </div>
 
-<a class="btn-back" href="index.html">Terug naar thema-overzicht</a>
+<div class="task" id="reflecteren-herhaling">
+    <h3>Reflecteren · Herhalingsdoel</h3>
+    <p>Kies hierna een herhalingsdoel en bespreek met je leerkracht wat extra geoefend moet worden.</p>
+  </div>
+
+  <a class="btn-back" href="index.html">Terug naar thema-overzicht</a>
 
 </section>
 
-<aside class="panel">
-  <h2>Chattie</h2>
-  <iframe class="chat-embed" src="chattie.html?thema=Hoofdthema%205%20Veilig%20Onderweg"></iframe>
+<aside class="panel ovur-sidebar">
+  <h2 class="panel-title">OVUR-balk</h2>
+
+  <nav class="ovur-side-nav">
+    <a class="ovur-link active" href="#orienteren-info">
+      <strong>Oriënteren · In het vizier</strong>
+      <span>Lees wat je in dit thema gaat doen en wat je nodig hebt. Je leerkracht kan altijd extra opdrachten geven.</span>
+    </a>
+    <a class="ovur-link" href="#doelen-overzicht">
+      <strong>Voorbereiden · Focus op doel</strong>
+      <span>Bereid je per doel voor: bekijk de uitleg, kies een aanpak en plan je stappen.</span>
+    </a>
+    <a class="ovur-link" href="#doelen-overzicht">
+      <strong>Uitvoeren · Aan de slag</strong>
+      <span>Werk de doelen uit en maak de opdrachten die bij dit hoofdthema horen.</span>
+    </a>
+    <a class="ovur-link" href="#reflecteren-herhaling">
+      <strong>Reflecteren · Doel bereikt</strong>
+      <span>Rond af met een herhalingsdoel en evalueer wat je nog extra wil inoefenen.</span>
+    </a>
+  </nav>
+
+  <div class="ovur-side-goals">
+    <h3>Doelen</h3>
+    <p>Hier staan alle doelen van dit hoofdthema. Start met doel 1 en werk stap voor stap verder.</p>
+    <a class="btn-back" href="#doelen-overzicht">Open doelen</a>
+  </div>
+
+  <div class="ovur-chat-box" id="chattie-panel">
+    <h3>Chattie</h3>
+    <p>Heb je een vraag? Ik kan ze zeker beantwoorden.</p>
+    <iframe class="chat-embed" src="chattie.html?thema=Hoofdthema%205%20Veilig%20Onderweg"></iframe>
+  </div>
 </aside>
 
 </main>
