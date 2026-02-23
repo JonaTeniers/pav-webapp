@@ -230,8 +230,7 @@ showQuestion();
 function finishUnit(){
 
 const nav=document.getElementById("navButtons");
-
-let nextUnit=unitIndex+1;
+const hasNextUnit=Boolean(themeData?.units?.[unitIndex+1]);
 
 nav.innerHTML=`
 
@@ -241,7 +240,7 @@ nav.innerHTML=`
 <p>Je behaalde ${totalXP} XP</p>
 
 <button onclick="goTheme()">Terug naar thema</button>
-<button onclick="goNext()">Volgend doel</button>
+${hasNextUnit ? '<button onclick="goNext()">Volgend doel</button>' : ''}
 
 </div>
 `;

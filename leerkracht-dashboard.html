@@ -249,6 +249,10 @@ td {
         <div id="avg-score">0%</div>
     </div>
     <div class="stat-card">
+        <small>Leerlingen met resultaten</small>
+        <div id="count-students">0</div>
+    </div>
+    <div class="stat-card">
         <small>Laatste Update</small>
         <div id="last-update">--:--</div>
     </div>
@@ -274,6 +278,24 @@ td {
 </section>
 
 <section class="content-card">
+    <h3>Leerlingen</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Leerling</th>
+                <th>Klas</th>
+                <th>Aantal scores</th>
+                <th>Gemiddelde score</th>
+                <th>Laatste resultaat</th>
+            </tr>
+        </thead>
+        <tbody id="studentsTableBody">
+            <tr><td colspan="5">Laden...</td></tr>
+        </tbody>
+    </table>
+</section>
+
+<section class="content-card">
     <h3>Ingediende Portfolio Teksten</h3>
     <div id="portfolioGrid" class="portfolio-grid"></div>
 </section>
@@ -290,13 +312,40 @@ td {
 window.TEACHER_EMAILS = ["jona@pavo.be","kaat@pavo.be"];
 const authSection = document.getElementById('authSection');
 
+function setStatus(message, isError = false) {
+    const status = document.getElementById('status');
+    status.textContent = message;
+    status.style.color = isError ? '#b00020' : '#1e293b';
+}
+
+function escapeHtml(value) {
+    return String(value ?? '-')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+}
+
+function parseDate(value) {
+    if (!value) return null;
+    if (typeof value.toDate === 'function') return value.toDate();
+    const parsed = new Date(value);
+    return Number.isNaN(parsed.getTime()) ? null : parsed;
+}
+
+function formatDate(value) {
+    const date = parseDate(value);
+    return date ? date.toLocaleString('nl-BE') : '-';
+}
+
 document.getElementById('teacherLoginForm').onsubmit = async (e) => {
     e.preventDefault();
-    const email = teacherEmail.value;
+    const email = teacherEmail.value.trim();
     const pass = teacherPassword.value;
 
     if (!window.TEACHER_EMAILS.includes(email)) {
-        alert("Geen toegang.");
+        alert('Geen toegang.');
         return;
     }
 
@@ -304,51 +353,116 @@ document.getElementById('teacherLoginForm').onsubmit = async (e) => {
         await firebase.auth().signInWithEmailAndPassword(email, pass);
         authSection.style.display = 'none';
         loadDashboardData();
-    } catch(err) { alert(err.message); }
+    } catch(err) {
+        alert(err.message);
+    }
 };
 
 async function loadDashboardData(){
     const tbody = document.getElementById('scoresTableBody');
-    const portGrid = document.getElementById('portfolioGrid');
+    const studentsBody = document.getElementById('studentsTableBody');
 
-    const snapshot = await db.collection("scores")
-        .orderBy("createdAt","desc")
-        .limit(50)
-        .get();
+    setStatus('Scores en leerlingen worden geladen...');
+    tbody.innerHTML = '<tr><td colspan="6">Laden...</td></tr>';
+    studentsBody.innerHTML = '<tr><td colspan="5">Laden...</td></tr>';
 
+    let snapshot;
+    try {
+        snapshot = await db.collection('scores').limit(500).get();
+    } catch (err) {
+        console.error('Fout bij ophalen scores', err);
+        setStatus('Fout bij laden van scores en leerlingen.', true);
+        tbody.innerHTML = '<tr><td colspan="6">Kon scores niet laden.</td></tr>';
+        studentsBody.innerHTML = '<tr><td colspan="5">Kon leerlingen niet laden.</td></tr>';
+        return;
+    }
+
+    const scores = snapshot.docs
+        .map(doc => ({ id: doc.id, ...doc.data() }))
+        .sort((a, b) => {
+            const dateA = parseDate(a.createdAt)?.getTime() ?? 0;
+            const dateB = parseDate(b.createdAt)?.getTime() ?? 0;
+            return dateB - dateA;
+        });
+
+    const recentScores = scores.slice(0, 50);
     let total = 0;
-    let count = 0;
-    tbody.innerHTML = "";
 
-    snapshot.forEach(doc=>{
-        const d = doc.data();
-        count++;
-        total += (d.score || 0);
+    if (!recentScores.length) {
+        tbody.innerHTML = '<tr><td colspan="6">Nog geen scores gevonden.</td></tr>';
+    } else {
+        tbody.innerHTML = recentScores.map(d => {
+            const score = Number(d.score) || 0;
+            total += score;
+            return `
+            <tr>
+                <td><strong>${escapeHtml(d.naam)}</strong></td>
+                <td>${escapeHtml(d.klas)}</td>
+                <td>${escapeHtml(d.thema)}</td>
+                <td>${escapeHtml(d.unit)}</td>
+                <td>
+                    <span class="badge ${score < 50 ? 'bad':'good'}">
+                        ${score}%
+                    </span>
+                </td>
+                <td>${escapeHtml(formatDate(d.createdAt))}</td>
+            </tr>`;
+        }).join('');
+    }
 
-        const datum = d.createdAt
-            ? d.createdAt.toDate().toLocaleString('nl-BE')
-            : "-";
+    const studentsMap = new Map();
+    scores.forEach(scoreItem => {
+        const name = (scoreItem.naam || '').trim();
+        const klas = (scoreItem.klas || '').trim();
+        if (!name) return;
 
-        tbody.innerHTML += `
-        <tr>
-            <td><strong>${d.naam || "-"}</strong></td>
-            <td>${d.klas || "-"}</td>
-            <td>${d.thema || "-"}</td>
-            <td>${d.unit || "-"}</td>
-            <td>
-                <span class="badge ${d.score < 50 ? 'bad':'good'}">
-                    ${d.score || 0}%
-                </span>
-            </td>
-            <td>${datum}</td>
-        </tr>`;
+        const key = `${name}__${klas}`;
+        if (!studentsMap.has(key)) {
+            studentsMap.set(key, {
+                naam: name,
+                klas: klas || '-',
+                count: 0,
+                total: 0,
+                latest: null
+            });
+        }
+
+        const student = studentsMap.get(key);
+        const scoreValue = Number(scoreItem.score) || 0;
+        student.count += 1;
+        student.total += scoreValue;
+
+        const createdAt = parseDate(scoreItem.createdAt);
+        if (createdAt && (!student.latest || createdAt > student.latest)) {
+            student.latest = createdAt;
+        }
     });
 
-    document.getElementById('count-total').innerText = count;
-    document.getElementById('avg-score').innerText =
-        count > 0 ? (total/count).toFixed(1)+"%" : "0%";
+    const students = [...studentsMap.values()]
+        .sort((a, b) => a.naam.localeCompare(b.naam, 'nl-BE'));
+
+    if (!students.length) {
+        studentsBody.innerHTML = '<tr><td colspan="5">Nog geen leerlingen met scores.</td></tr>';
+    } else {
+        studentsBody.innerHTML = students.map(student => `
+            <tr>
+                <td><strong>${escapeHtml(student.naam)}</strong></td>
+                <td>${escapeHtml(student.klas)}</td>
+                <td>${student.count}</td>
+                <td>${(student.total / student.count).toFixed(1)}%</td>
+                <td>${escapeHtml(student.latest ? student.latest.toLocaleString('nl-BE') : '-')}</td>
+            </tr>
+        `).join('');
+    }
+
+    const avg = recentScores.length ? (total / recentScores.length).toFixed(1) + '%' : '0%';
+    document.getElementById('count-total').innerText = scores.length;
+    document.getElementById('avg-score').innerText = avg;
+    document.getElementById('count-students').innerText = students.length;
     document.getElementById('last-update').innerText =
         new Date().toLocaleTimeString('nl-BE',{hour:'2-digit',minute:'2-digit'});
+
+    setStatus(`Klaar. ${scores.length} score(s) en ${students.length} leerling(en) geladen.`);
 }
 
 firebase.auth().onAuthStateChanged(user=>{
