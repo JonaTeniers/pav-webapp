@@ -24,15 +24,18 @@
     body {
       margin: 0;
       font-family: 'Nunito', sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      background: linear-gradient(135deg, #cfe9ff 0%, #7bb6f0 100%);
+      color: #12324b;
     }
 
     header {
-      background: #14b8a6;
+      background: linear-gradient(120deg, #0f4a7a, #2d7fbd);
       color: white;
       padding: 1.8rem 1rem;
       text-align: center;
+      border-bottom-left-radius: 18px;
+      border-bottom-right-radius: 18px;
+      box-shadow: 0 8px 22px rgba(9, 43, 73, 0.28);
     }
 
     header h1 {
@@ -46,81 +49,38 @@
     }
 
     main {
-      width: min(1200px, 95%);
+      width: min(1180px, 94%);
       margin: 1.6rem auto 2.5rem;
       display: grid;
       grid-template-columns: 2fr 1fr;
-      gap: 1.2rem;
+      gap: 1.1rem;
     }
 
     .panel {
-      background: var(--panel);
+      background: rgba(255, 255, 255, 0.93);
+      border: 1px solid #c9deef;
       border-radius: 14px;
       padding: 1.3rem;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+      box-shadow: 0 10px 26px rgba(8, 39, 66, 0.14);
     }
 
     .score-card {
-      background: var(--soft-bg);
+      background: #f0fdfa;
       border-radius: 12px;
       padding: 1rem;
       margin-bottom: 1.4rem;
     }
 
     .task {
-      margin-top: 1.2rem;
+      margin-top: 1rem;
       border-top: 1px solid var(--border-soft);
-      padding-top: 1.2rem;
-    }
-
-    .task h3,
-    .focus-goals h3 {
-      margin: 0 0 0.55rem;
-    }
-
-    .unit-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 0.9rem;
-      margin-top: 0.8rem;
-    }
-
-    .unit-card {
-      background: var(--soft-bg);
-      border: 2px solid #bce7e1;
-      border-radius: 12px;
-      padding: 0.9rem;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .status {
-      font-size: 0.85rem;
-      font-weight: 700;
-      margin-bottom: 0.6rem;
-    }
-
-    .status.ready { color: var(--accent-dark); }
-    .status.locked { color: #9ca3af; }
-
-    .unit-card h4 {
-      margin: 0 0 0.4rem;
-    }
-
-    .unit-card p {
-      margin: 0 0 0.5rem;
-      color: var(--muted);
-    }
-
-    .unit-card > a,
-    .unit-card > button {
-      display: none;
+      padding-top: 1rem;
     }
 
     .focus-goals {
-      margin-top: 1.4rem;
+      margin-top: 1rem;
       border-top: 1px solid var(--border-soft);
-      padding-top: 1.2rem;
+      padding-top: 1rem;
     }
 
     .goal-list {
@@ -139,48 +99,45 @@
       background: #f8fffd;
     }
 
-    .goal-text {
-      flex: 1;
-      min-width: 0;
-    }
-
     .goal-text strong {
       display: block;
       margin-bottom: 0.25rem;
     }
 
-    .goal-text span {
-      color: var(--muted);
-      font-size: 0.95rem;
+    .unit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+      gap: 0.65rem;
+      margin-top: 0.8rem;
     }
 
-    .goal-item a,
-    .goal-item button {
-      flex-shrink: 0;
-      min-width: 120px;
+    .unit-card {
+      border: 2px solid #bdd9ee;
+      background: #f4faff;
+      border-radius: 12px;
+      padding: 0.65rem 0.7rem;
+      box-shadow: 0 3px 10px rgba(29, 79, 117, 0.08);
     }
 
     .unit-card button {
-      margin-top: auto;
-      width: 100%;
-      border: none;
-      border-radius: 8px;
-      padding: 0.45rem 0.7rem;
-      font-weight: 700;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #0f6a9d, #1883b8);
       color: white;
-      background: var(--accent);
+      border: none;
+      padding: 0.45rem 0.7rem;
       cursor: pointer;
+      width: 100%;
+      margin-top: 6px;
     }
 
-    .unit-card button:hover {
-      background: var(--accent-dark);
-    }
+    .status.ready { color: #0f6a9d; font-weight: 700; }
+    .status.locked { color: #9ca3af; font-weight: 700; }
 
     .btn-back {
       display: inline-block;
       margin-top: 1.6rem;
       text-decoration: none;
-      background: var(--accent);
+      background: linear-gradient(90deg, #0f6a9d, #1883b8);
       color: white;
       padding: 0.5rem 0.9rem;
       border-radius: 999px;
@@ -189,225 +146,15 @@
 
     .chat-embed {
       width: 100%;
-      min-height: 520px;
+      min-height: 430px;
       border: none;
       border-radius: 12px;
-      background: #f3f7ff;
     }
 
     @media (max-width: 900px) {
       main { grid-template-columns: 1fr; }
     }
-  
-
-    /* Leeromgeving refresh */
-    body {
-      min-height: 100vh;
-      position: relative;
-      overflow-x: hidden;
-      background: linear-gradient(135deg, #cfe9ff 0%, #7bb6f0 100%);
-      color: #12324b;
-    }
-
-    body::before,
-    body::after {
-      content: "";
-      position: fixed;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    body::before {
-      width: 520px;
-      height: 520px;
-      background: rgba(255, 255, 255, 0.26);
-      top: -170px;
-      left: -170px;
-      filter: blur(40px);
-    }
-
-    body::after {
-      width: 420px;
-      height: 420px;
-      background: rgba(0, 90, 170, 0.2);
-      bottom: -130px;
-      right: -130px;
-      filter: blur(34px);
-    }
-
-    header,
-    main {
-      position: relative;
-      z-index: 1;
-    }
-
-    header {
-      background: linear-gradient(120deg, #0f4a7a, #2d7fbd);
-      border-bottom-left-radius: 18px;
-      border-bottom-right-radius: 18px;
-      box-shadow: 0 8px 22px rgba(9, 43, 73, 0.28);
-    }
-
-    header h1 {
-      letter-spacing: 0.01em;
-    }
-
-    main {
-      width: min(1180px, 94%);
-      gap: 1.1rem;
-      align-items: start;
-    }
-
-    .panel {
-      background: rgba(255, 255, 255, 0.93);
-      border: 1px solid #c9deef;
-      box-shadow: 0 10px 26px rgba(8, 39, 66, 0.14);
-      backdrop-filter: blur(4px);
-    }
-
-    h2,
-    h3,
-    .panel-title {
-      color: #0f3f67;
-    }
-
-    .score-card,
-    .info-box,
-    .task,
-    .focus-goals {
-      background: linear-gradient(180deg, rgba(245, 251, 255, 0.94), rgba(236, 247, 255, 0.9));
-      border: 1px solid #c7dff2;
-      border-radius: 12px;
-      padding: 0.95rem 1rem;
-    }
-
-    .task,
-    .focus-goals {
-      margin-top: 1rem;
-    }
-
-    .unit-card,
-    .goal-item,
-    .article-card,
-    .course-box {
-      border-color: #bdd9ee;
-      background: #f4faff;
-      box-shadow: 0 3px 10px rgba(29, 79, 117, 0.08);
-    }
-
-    .unit-card button,
-    .goal-item button,
-    .btn,
-    .btn-back,
-    .course-btn,
-    .back-btn {
-      border-radius: 999px;
-      background: linear-gradient(90deg, #0f6a9d, #1883b8);
-      box-shadow: 0 3px 10px rgba(9, 52, 84, 0.2);
-    }
-
-    .unit-card button:hover,
-    .goal-item button:hover,
-    .btn:hover,
-    .btn-back:hover,
-    .course-btn:hover,
-    .back-btn:hover {
-      background: linear-gradient(90deg, #0d5d8b, #156f9c);
-    }
-
-
-
-    /* Rechterkolom extra inhoud */
-    aside.panel {
-      display: flex;
-      flex-direction: column;
-      gap: 0.9rem;
-    }
-
-    .chat-embed {
-      min-height: 430px;
-      flex-shrink: 0;
-    }
-
-    .aside-card {
-      background: linear-gradient(180deg, rgba(245, 251, 255, 0.97), rgba(234, 246, 255, 0.95));
-      border: 1px solid #c7dff2;
-      border-radius: 12px;
-      padding: 0.85rem 0.95rem;
-      box-shadow: 0 5px 14px rgba(14, 59, 93, 0.12);
-    }
-
-    .aside-card h3 {
-      margin: 0 0 0.45rem;
-      font-size: 1rem;
-    }
-
-    .aside-card p {
-      margin: 0 0 0.55rem;
-      color: #355770;
-      font-size: 0.93rem;
-    }
-
-    .aside-card ul {
-      margin: 0;
-      padding-left: 1rem;
-      color: #23465f;
-      font-size: 0.92rem;
-    }
-
-
-
-    /* Doelen compacter + klikbare doelbalken */
-    .goals-title {
-      font-size: 1.08rem;
-      margin-bottom: 0.45rem;
-    }
-
-    .unit-grid.compact-goals {
-      grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
-      gap: 0.65rem;
-    }
-
-    .unit-grid.compact-goals .unit-card {
-      padding: 0.65rem 0.7rem;
-      border-radius: 10px;
-    }
-
-    .unit-grid.compact-goals .unit-card h4 {
-      font-size: 0.95rem;
-      margin-bottom: 0.25rem;
-    }
-
-    .unit-grid.compact-goals .unit-card p {
-      font-size: 0.87rem;
-      margin-bottom: 0.35rem;
-    }
-
-    .goal-item {
-      text-decoration: none;
-      color: inherit;
-      cursor: default;
-    }
-
-    .goal-item.goal-clickable {
-      cursor: pointer;
-      transition: transform 0.14s ease, box-shadow 0.14s ease;
-    }
-
-    .goal-item.goal-clickable:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 7px 14px rgba(14, 59, 93, 0.14);
-    }
-
-    .goal-cta {
-      font-size: 0.82rem;
-      font-weight: 800;
-      color: #0f6a9d;
-      white-space: nowrap;
-    }
-
-</style>
+  </style>
 </head>
 
 <body>
@@ -419,206 +166,72 @@
 
 <main data-theme-id="5">
 
-  <section class="panel">
+<section class="panel">
 
-    <div class="score-card">
-      <h3>Totaalscore thema 5</h3>
-      <p id="themeTotalScore">0 / 360 XP</p>
-    </div>
+<div class="score-card">
+  <h3>Totaalscore thema 5</h3>
+  <p id="themeTotalScore">0 / 360 XP</p>
+</div>
 
-    <h2>Focus van dit thema</h2>
-    <p>
-      In dit thema leer je hoe je je veilig kan verplaatsen. Je ontdekt verschillende vervoersmiddelen,
-      verkeersregels en hoe je situaties onderweg correct inschat.
-    </p>
+<h2>Focus van dit thema</h2>
+<p>
+In dit thema leer je hoe je je veilig kan verplaatsen.
+</p>
 
-    <div class="task">
-      <h3>Doelen kort uitgelegd</h3>
-      <ul>
-        <li><strong>Doel 1:</strong> Onderweg herkennen</li>
-        <li><strong>Doel 2:</strong> Verkeersregels</li>
-        <li><strong>Doel 3:</strong> Veilig oversteken</li>
-        <li><strong>Doel 4:</strong> Fietsveiligheid</li>
-        <li><strong>Doel 5:</strong> Verkeersborden</li>
-        <li><strong>Doel 6:</strong> Situaties begrijpen</li>
-        <li><strong>Doel 7:</strong> Openbaar vervoer</li>
-        <li><strong>Doel 8:</strong> Route plannen</li>
-        <li><strong>Doel 9:</strong> Kaart lezen</li>
-        <li><strong>Doel 10:</strong> Toepassen</li>
-        <li><strong>Doel 11:</strong> Oefenen</li>
-        <li><strong>Doel 12:</strong> Herhaling</li>
-      </ul>
-    </div>
+<div class="focus-goals">
+<h3>Focus op doel</h3>
 
-    <div class="focus-goals">
-      <h3>Focus op doel</h3>
+<div class="goal-list">
 
-      <div class="goal-list">
-        <div class="goal-item" data-unit="1">
-          <div class="goal-text">
-            <strong>Doel 1 · Onderweg herkennen</strong>
-            <span>Je herkent manieren van verplaatsen en kan veilige keuzes maken onderweg.</span>
-          </div>
-          <a href="veiligonderweg_unit1.html"><button>Naar doel 1</button></a>
-        </div>
+<div class="goal-item" data-unit="1">
+  <div class="goal-text">
+    <strong>Doel 1 · Onderweg herkennen</strong>
+    <span>Je herkent manieren van verplaatsen.</span>
+  </div>
+  <a href="veiligonderweg_unit1.html"><button>Naar doel 1</button></a>
+</div>
 
-        <div class="goal-item" data-unit="2">
-          <div class="goal-text"><strong>Doel 2 · Verkeersregels</strong><span>Je past basisregels correct toe in herkenbare verkeerssituaties.</span></div>
-          <button disabled>Naar doel 2</button>
-        </div>
-        <div class="goal-item" data-unit="3">
-          <div class="goal-text"><strong>Doel 3 · Veilig oversteken</strong><span>Je beslist waar en wanneer je veilig oversteekt.</span></div>
-          <button disabled>Naar doel 3</button>
-        </div>
-        <div class="goal-item" data-unit="4">
-          <div class="goal-text"><strong>Doel 4 · Fietsveiligheid</strong><span>Je controleert je fiets en past veilig fietsgedrag toe.</span></div>
-          <button disabled>Naar doel 4</button>
-        </div>
-        <div class="goal-item" data-unit="5">
-          <div class="goal-text"><strong>Doel 5 · Verkeersborden</strong><span>Je herkent veelgebruikte verkeersborden en hun betekenis.</span></div>
-          <button disabled>Naar doel 5</button>
-        </div>
-        <div class="goal-item" data-unit="6">
-          <div class="goal-text"><strong>Doel 6 · Situaties begrijpen</strong><span>Je beoordeelt verkeerssituaties met aandacht voor risico en veiligheid.</span></div>
-          <button disabled>Naar doel 6</button>
-        </div>
-        <div class="goal-item" data-unit="7">
-          <div class="goal-text"><strong>Doel 7 · Openbaar vervoer</strong><span>Je gebruikt bus of trein veilig en zelfstandig.</span></div>
-          <button>Naar doel 7</button>
-        </div>
-        <div class="goal-item" data-unit="8">
-          <div class="goal-text"><strong>Doel 8 · Route plannen</strong><span>Je plant een haalbare route naar school of vrije tijd.</span></div>
-          <button disabled>Naar doel 8</button>
-        </div>
-        <div class="goal-item" data-unit="9">
-          <div class="goal-text"><strong>Doel 9 · Kaart lezen</strong><span>Je leest eenvoudige kaarten en oriënteert je onderweg.</span></div>
-          <button disabled>Naar doel 9</button>
-        </div>
-        <div class="goal-item" data-unit="10">
-          <div class="goal-text"><strong>Doel 10 · Toepassen</strong><span>Je combineert je verkeerskennis in realistische opdrachten.</span></div>
-          <button disabled>Naar doel 10</button>
-        </div>
-        <div class="goal-item" data-unit="11">
-          <div class="goal-text"><strong>Doel 11 · Oefenen</strong><span>Je herhaalt belangrijke leerpunten en werkt gericht bij.</span></div>
-          <button disabled>Naar doel 11</button>
-        </div>
-        <div class="goal-item" data-unit="12">
-          <div class="goal-text"><strong>Doel 12 · Herhaling</strong><span>Je rondt het thema af met een overzicht van alle kerninzichten.</span></div>
-          <button disabled>Naar doel 12</button>
-        </div>
-      </div>
-    </div>
+<div class="goal-item" data-unit="7">
+  <div class="goal-text">
+    <strong>Doel 7 · Openbaar vervoer</strong>
+    <span>Je gebruikt bus of trein veilig en zelfstandig.</span>
+  </div>
+  <a href="veiligonderweg_unit7.html"><button>Naar doel 7</button></a>
+</div>
 
-    <div class="task">
-      <h3>Cursus</h3>
-      <p>Lees eerst de cursus van dit hoofdthema voor je met de onderdelen start.</p>
-      <a class="btn-back" href="cursus/hoofdthema5/hoofdthema5.cursus.html">Open cursus</a>
-    </div>
+</div>
+</div>
 
-    <h2>Doelenoverzicht</h2>
+<h2>Doelenoverzicht</h2>
 
-    <div class="unit-grid compact-goals">
+<div class="unit-grid">
 
-      <div class="unit-card">
-        <h4>Doel 1</h4>
-        <p>Onderweg herkennen</p>
-        <p class="status ready">Beschikbaar</p>
-        <a href="veiligonderweg_unit1.html"><button>Start</button></a>
-      </div>
+<div class="unit-card">
+  <h4>Doel 1</h4>
+  <p>Onderweg herkennen</p>
+  <p class="status ready">Beschikbaar</p>
+  <a href="veiligonderweg_unit1.html"><button>Start</button></a>
+</div>
 
-      <div class="unit-card"><h4>Doel 2</h4><p>Verkeersregels</p><p class="status locked">Vergrendeld</p><button disabled>Start</button></div>
-      <div class="unit-card"><h4>Doel 3</h4><p>Veilig oversteken</p><p class="status locked">Vergrendeld</p><button disabled>Start</button></div>
-      <div class="unit-card"><h4>Doel 4</h4><p>Fietsveiligheid</p><p class="status locked">Vergrendeld</p><button disabled>Start</button></div>
-      <div class="unit-card"><h4>Doel 5</h4><p>Verkeersborden</p><p class="status locked">Vergrendeld</p><button disabled>Start</button></div>
-      <div class="unit-card"><h4>Doel 6</h4><p>Situaties begrijpen</p><p class="status locked">Vergrendeld</p><button disabled>Start</button></div>
-      <div class="unit-card"><h4>Doel 7</h4><p>Openbaar vervoer</p><p class="status locked">Vergrendeld</p><button disabled>Start</button></div>
-      <div class="unit-card"><h4>Doel 8</h4><p>Route plannen</p><p class="status locked">Vergrendeld</p><button disabled>Start</button></div>
-      <div class="unit-card"><h4>Doel 9</h4><p>Kaart lezen</p><p class="status locked">Vergrendeld</p><button disabled>Start</button></div>
-      <div class="unit-card"><h4>Doel 10</h4><p>Toepassen</p><p class="status locked">Vergrendeld</p><button disabled>Start</button></div>
-      <div class="unit-card"><h4>Doel 11</h4><p>Oefenen</p><p class="status locked">Vergrendeld</p><button disabled>Start</button></div>
-      <div class="unit-card"><h4>Doel 12</h4><p>Herhaling</p><p class="status locked">Vergrendeld</p><button disabled>Start</button></div>
+<div class="unit-card">
+  <h4>Doel 7</h4>
+  <p>Openbaar vervoer</p>
+  <p class="status ready">Beschikbaar</p>
+  <a href="veiligonderweg_unit7.html"><button>Start</button></a>
+</div>
 
-    </div>
+</div>
 
-    <div class="focus-goals">
-      <h2 class="panel-title">Focus op doel</h2>
+<a class="btn-back" href="index.html">Terug naar thema-overzicht</a>
 
-      <div class="goal-list">
-        <div class="goal-item" data-unit="1">
-          <div class="goal-text">
-            <strong>Doel 1 · Onderweg herkennen</strong>
-            <span>Je herkent manieren van verplaatsen en kan veilige keuzes maken onderweg.</span>
-          </div>
-          <a href="veiligonderweg_unit1.html"><button>Naar doel 1</button></a>
-        </div>
+</section>
 
-        <div class="goal-item" data-unit="2">
-          <div class="goal-text"><strong>Doel 2 · Verkeersregels</strong><span>Je past basisregels correct toe in herkenbare verkeerssituaties.</span></div>
-          <button disabled>Naar doel 2</button>
-        </div>
-        <div class="goal-item" data-unit="3">
-          <div class="goal-text"><strong>Doel 3 · Veilig oversteken</strong><span>Je beslist waar en wanneer je veilig oversteekt.</span></div>
-          <button disabled>Naar doel 3</button>
-        </div>
-        <div class="goal-item" data-unit="4">
-          <div class="goal-text"><strong>Doel 4 · Fietsveiligheid</strong><span>Je controleert je fiets en past veilig fietsgedrag toe.</span></div>
-          <button disabled>Naar doel 4</button>
-        </div>
-        <div class="goal-item" data-unit="5">
-          <div class="goal-text"><strong>Doel 5 · Verkeersborden</strong><span>Je herkent veelgebruikte verkeersborden en hun betekenis.</span></div>
-          <button disabled>Naar doel 5</button>
-        </div>
-        <div class="goal-item" data-unit="6">
-          <div class="goal-text"><strong>Doel 6 · Situaties begrijpen</strong><span>Je beoordeelt verkeerssituaties met aandacht voor risico en veiligheid.</span></div>
-          <button disabled>Naar doel 6</button>
-        </div>
-        <div class="goal-item" data-unit="7">
-          <div class="goal-text"><strong>Doel 7 · Openbaar vervoer</strong><span>Je gebruikt bus of trein veilig en zelfstandig.</span></div>
-          <button>Naar doel 7</button>
-        </div>
-        <div class="goal-item" data-unit="8">
-          <div class="goal-text"><strong>Doel 8 · Route plannen</strong><span>Je plant een haalbare route naar school of vrije tijd.</span></div>
-          <button disabled>Naar doel 8</button>
-        </div>
-        <div class="goal-item" data-unit="9">
-          <div class="goal-text"><strong>Doel 9 · Kaart lezen</strong><span>Je leest eenvoudige kaarten en oriënteert je onderweg.</span></div>
-          <button disabled>Naar doel 9</button>
-        </div>
-        <div class="goal-item" data-unit="10">
-          <div class="goal-text"><strong>Doel 10 · Toepassen</strong><span>Je combineert je verkeerskennis in realistische opdrachten.</span></div>
-          <button disabled>Naar doel 10</button>
-        </div>
-        <div class="goal-item" data-unit="11">
-          <div class="goal-text"><strong>Doel 11 · Oefenen</strong><span>Je herhaalt belangrijke leerpunten en werkt gericht bij.</span></div>
-          <button disabled>Naar doel 11</button>
-        </div>
-        <div class="goal-item" data-unit="12">
-          <div class="goal-text"><strong>Doel 12 · Herhaling</strong><span>Je rondt het thema af met een overzicht van alle kerninzichten.</span></div>
-          <button disabled>Naar doel 12</button>
-        </div>
-      </div>
-    </div>
-
-    
-
-    <a class="btn-back" href="index.html">Terug naar thema-overzicht</a>
-
-  </section>
-
-  <aside class="panel">
-    <h2>Chattie</h2>
-    <iframe class="chat-embed" src="chattie.html?thema=Hoofdthema%205%20Veilig%20Onderweg"></iframe>
-  
-    <div class="aside-card">
-      <h3>Thema in het kort</h3>
-      <p id="asideSummary"></p>
-      <ul id="asideGoals"></ul>
-    </div>
-
-  </aside>
+<aside class="panel">
+  <h2>Chattie</h2>
+  <iframe class="chat-embed" src="chattie.html?thema=Hoofdthema%205%20Veilig%20Onderweg"></iframe>
+</aside>
 
 </main>
-
 
 <script>
 (function () {
@@ -637,18 +250,6 @@
 
   });
 
-  document.querySelectorAll('.goal-item').forEach((goal, index) => {
-
-    const unitNumber = index + 1;
-
-    if (unitNumber === 1) return;
-
-    const prevDone = localStorage.getItem(`thema${themeNumber}unit${unitNumber - 1}_done`);
-
-    if (prevDone === "true") unlock(goal, unitNumber);
-
-  });
-
   function unlock(card, unitNumber) {
 
     const status = card.querySelector('.status');
@@ -664,80 +265,13 @@
     link.href = `veiligonderweg_unit${unitNumber}.html`;
 
     const newButton = document.createElement('button');
-    newButton.textContent = status ? "Start" : `Naar doel ${unitNumber}`;
+    newButton.textContent = "Start";
 
     link.appendChild(newButton);
-    button.replaceWith(link);
+    if (button) button.replaceWith(link);
 
   }
 
-})();
-</script>
-
-
-<script>
-(function () {
-  const summaryEl = document.getElementById('asideSummary');
-  const goalsEl = document.getElementById('asideGoals');
-  if (!summaryEl || !goalsEl) return;
-
-  const focusParagraph = document.querySelector('h2 + p');
-  summaryEl.textContent = (focusParagraph?.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 180) + '...';
-
-  const cards = Array.from(document.querySelectorAll('.unit-grid .unit-card')).slice(0, 3);
-  cards.forEach((card) => {
-    const title = card.querySelector('h4')?.textContent?.trim() || '';
-    const desc = card.querySelector('p:not(.status)')?.textContent?.trim() || '';
-    const li = document.createElement('li');
-    li.textContent = `${title}: ${desc}`;
-    goalsEl.appendChild(li);
-  });
-})();
-</script>
-
-
-<script>
-(function goalBarsInit() {
-  const rows = document.querySelectorAll('.goal-item');
-  rows.forEach((row) => {
-    const link = row.querySelector('a[href]');
-    const btn = row.querySelector('button');
-    let href = '';
-    let locked = false;
-
-    if (link) {
-      href = link.href;
-      link.remove();
-    }
-
-    if (btn) {
-      locked = !!btn.disabled;
-      btn.remove();
-    }
-
-    let cta = row.querySelector('.goal-cta');
-    if (!cta) {
-      cta = document.createElement('span');
-      cta.className = 'goal-cta';
-      row.appendChild(cta);
-    }
-
-    if (href && !locked) {
-      row.classList.add('goal-clickable');
-      cta.textContent = 'Open doel';
-      row.setAttribute('role', 'link');
-      row.tabIndex = 0;
-      row.addEventListener('click', () => { window.location.href = href; });
-      row.addEventListener('keydown', (ev) => {
-        if (ev.key === 'Enter' || ev.key === ' ') {
-          ev.preventDefault();
-          window.location.href = href;
-        }
-      });
-    } else {
-      cta.textContent = 'Vergrendeld';
-    }
-  });
 })();
 </script>
 
