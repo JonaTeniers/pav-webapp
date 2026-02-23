@@ -1,1 +1,371 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+<title>Hoofdthema - Noodgeval</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
+
+<style>
+
+/* ======================
+   NIEUWE THEMA BASIS
+====================== */
+
+:root {
+  --accent: #0f6a9d;
+  --accent-dark: #0d5d8b;
+  --text: #12324b;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Nunito', sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #cfe9ff 0%, #7bb6f0 100%);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+/* achtergrond cirkels */
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::before {
+  width: 520px;
+  height: 520px;
+  background: rgba(255,255,255,0.25);
+  top: -170px;
+  left: -170px;
+  filter: blur(40px);
+}
+
+body::after {
+  width: 420px;
+  height: 420px;
+  background: rgba(0,90,170,0.2);
+  bottom: -130px;
+  right: -130px;
+  filter: blur(34px);
+}
+
+header, main { position: relative; z-index: 1; }
+
+/* ======================
+   HEADER
+====================== */
+
+header {
+  background: linear-gradient(120deg, #0f4a7a, #2d7fbd);
+  color: white;
+  padding: 2rem 1rem;
+  text-align: center;
+  border-bottom-left-radius: 18px;
+  border-bottom-right-radius: 18px;
+  box-shadow: 0 8px 22px rgba(9,43,73,0.28);
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2.2rem;
+}
+
+header p {
+  margin-top: 0.5rem;
+  opacity: 0.95;
+}
+
+/* ======================
+   LAYOUT
+====================== */
+
+main {
+  width: min(1200px, 95%);
+  margin: 1.6rem auto 2.5rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.2rem;
+}
+
+.panel {
+  background: rgba(255,255,255,0.93);
+  border-radius: 14px;
+  padding: 1.3rem;
+  border: 1px solid #c9deef;
+  box-shadow: 0 10px 26px rgba(8,39,66,0.14);
+}
+
+/* ======================
+   CARDS
+====================== */
+
+.section-card {
+  margin-top: 1.2rem;
+  border: 1px solid #bdd9ee;
+  border-radius: 12px;
+  padding: 1rem;
+  background: #f4faff;
+}
+
+.section-card h3 {
+  margin-top: 0;
+}
+
+.unit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 0.9rem;
+  margin-top: 0.8rem;
+}
+
+.unit-card {
+  border: 2px solid #bdd9ee;
+  border-radius: 12px;
+  padding: 0.9rem;
+  background: #f4faff;
+  display: flex;
+  flex-direction: column;
+}
+
+.unit-card h4 { margin: 0 0 0.4rem; }
+
+.status {
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+}
+
+.ready { color: #0f6a9d; }
+.locked { color: #9ca3af; }
+
+button {
+  margin-top: auto;
+  border: none;
+  border-radius: 999px;
+  padding: 0.5rem;
+  font-weight: 700;
+  color: white;
+  background: linear-gradient(90deg, #0f6a9d, #1883b8);
+  cursor: pointer;
+}
+
+button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* ======================
+   OVUR BLOK
+====================== */
+
+.ovur {
+  margin-top: 1.2rem;
+  padding: 1rem;
+  border-radius: 14px;
+  border: 1px solid #a9d0ea;
+  background: linear-gradient(165deg, rgba(235,246,255,0.98), rgba(221,238,252,0.95));
+}
+
+.ovur-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 0.6rem;
+}
+
+.ovur-step {
+  border: 1px solid #b8daef;
+  border-radius: 12px;
+  padding: 0.6rem;
+  background: rgba(245,251,255,0.92);
+}
+
+/* ======================
+   SIDEBAR
+====================== */
+
+.sidebar {
+  background: rgba(6,46,70,0.93);
+  border: 1px solid #2a5e84;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: sticky;
+  top: 1rem;
+}
+
+.sidebar a {
+  text-decoration: none;
+  color: white;
+}
+
+.chat-embed {
+  width: 100%;
+  min-height: 260px;
+  border: none;
+  border-radius: 10px;
+}
+
+/* ====================== */
+
+@media (max-width: 900px) {
+  main { grid-template-columns: 1fr; }
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Hoofdthema — Noodgeval</h1>
+<p>Leer hoe je veilig handelt in een noodsituatie</p>
+</header>
+
+<main>
+
+<section class="panel">
+
+<h2>Focus van dit thema</h2>
+
+<p>
+In dit thema leer je wat je moet doen wanneer er een noodsituatie gebeurt.
+Je ontdekt hoe je risico’s herkent, hulpdiensten contacteert en veilig handelt.
+De oefeningen in deze webapp helpen je om wat je in de les leert toe te passen.
+</p>
+
+<div class="section-card">
+<h3>Waarom is dit belangrijk?</h3>
+<ul>
+<li>Een ongeval kan snel gebeuren</li>
+<li>Jij kan iemand helpen</li>
+<li>Veilig handelen voorkomt erger</li>
+<li>Je leert verantwoordelijkheid nemen</li>
+</ul>
+</div>
+
+<div class="ovur">
+<h3>OVUR-leidraad</h3>
+
+<div class="ovur-grid">
+
+<div class="ovur-step">
+<strong>1. Oriënteren</strong>
+<p>Wat gebeurt er? Is het gevaarlijk?</p>
+</div>
+
+<div class="ovur-step">
+<strong>2. Voorbereiden</strong>
+<p>Wat moet je doen? Wie kan helpen?</p>
+</div>
+
+<div class="ovur-step">
+<strong>3. Uitvoeren</strong>
+<p>Handel veilig en volg de stappen.</p>
+</div>
+
+<div class="ovur-step">
+<strong>4. Reflecteren</strong>
+<p>Wat ging goed? Wat kan beter?</p>
+</div>
+
+</div>
+</div>
+
+<h2>Doelenoverzicht</h2>
+
+<div class="unit-grid">
+
+<div class="unit-card">
+<h4>Doel 1</h4>
+<p>Noodsituaties herkennen</p>
+<p class="status ready">Beschikbaar</p>
+<a href="#"><button>Start</button></a>
+</div>
+
+<div class="unit-card">
+<h4>Doel 2</h4>
+<p>Veilig handelen</p>
+<p class="status locked">Vergrendeld</p>
+<button disabled>Start</button>
+</div>
+
+<div class="unit-card">
+<h4>Doel 3</h4>
+<p>Noodnummer bellen</p>
+<p class="status locked">Vergrendeld</p>
+<button disabled>Start</button>
+</div>
+
+<div class="unit-card">
+<h4>Doel 4</h4>
+<p>Eerste hulp basis</p>
+<p class="status locked">Vergrendeld</p>
+<button disabled>Start</button>
+</div>
+
+<div class="unit-card">
+<h4>Doel 5</h4>
+<p>Brandveiligheid</p>
+<p class="status locked">Vergrendeld</p>
+<button disabled>Start</button>
+</div>
+
+<div class="unit-card">
+<h4>Doel 6</h4>
+<p>Toepassen in situaties</p>
+<p class="status locked">Vergrendeld</p>
+<button disabled>Start</button>
+</div>
+
+</div>
+
+</section>
+
+<aside class="panel sidebar">
+
+<h3>Leerpad</h3>
+
+<div>
+<strong>Oriënteren</strong>
+<p>Bekijk wat je gaat leren.</p>
+</div>
+
+<div>
+<strong>Voorbereiden</strong>
+<p>Leer belangrijke kennis.</p>
+</div>
+
+<div>
+<strong>Uitvoeren</strong>
+<p>Oefen en pas toe.</p>
+</div>
+
+<div>
+<strong>Reflecteren</strong>
+<p>Denk na over wat je leerde.</p>
+</div>
+
+<div>
+<h3>Chattie</h3>
+<p>Heb je een vraag? Ik help je graag.</p>
+<iframe class="chat-embed" src="chattie.html?thema=Noodgeval"></iframe>
+</div>
+
+</aside>
+
+</main>
+
+</body>
+</html>
