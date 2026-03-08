@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Oefenthema – Mechanica & Lassen</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
+  <style>
+    :root { --text:#12324b; --muted:#36556f; --accent:#0f6a9d; --accent-dark:#0d5d8b; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family:'Nunito',sans-serif; min-height:100vh; background:linear-gradient(135deg,#cfe9ff 0%,#7bb6f0 100%); color:var(--text); }
+    header { background:linear-gradient(120deg,#0f4a7a,#2d7fbd); color:#fff; padding:1.8rem 1rem; text-align:center; border-bottom-left-radius:18px; border-bottom-right-radius:18px; box-shadow:0 8px 22px rgba(9,43,73,.28); }
+    main { width:min(1100px,95%); margin:1.5rem auto 2rem; display:grid; grid-template-columns:2fr 1fr; gap:1rem; }
+    .panel { background:rgba(255,255,255,.93); border-radius:14px; padding:1.2rem; border:1px solid #c9deef; box-shadow:0 10px 26px rgba(8,39,66,.14); }
+    .task { margin-top:1rem; border:1px solid #bdd9ee; border-radius:12px; background:#f4faff; padding:1rem; }
+    .goal-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:.8rem; margin-top:.8rem; }
+    .goal-card { border:2px solid #bdd9ee; border-radius:12px; padding:.9rem; background:#f4faff; display:flex; flex-direction:column; }
+    .goal-card h4 { margin:0 0 .4rem; }
+    .goal-card p { margin:0 0 .55rem; color:var(--muted); }
+    .status { font-size:.82rem; font-weight:700; color:var(--accent); margin-bottom:.7rem; }
+    .btn { display:inline-block; text-decoration:none; margin-top:.8rem; background:linear-gradient(90deg,#0f6a9d,#1883b8); color:#fff; padding:.55rem .95rem; border-radius:999px; font-weight:700; }
+    .chat-embed { width:100%; min-height:520px; border:none; border-radius:12px; background:#f3f7ff; }
+    @media (max-width: 900px) { main { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>⚙️ Oefenthema – Mechanica & Lassen</h1>
+    <p>Drie doelen: Wet van Ohm, lassen & verbindingen, meetinstrumenten & materialen.</p>
+  </header>
+
+  <main data-theme-id="8">
+    <section class="panel">
+      <h2>Focus van dit thema</h2>
+      <p>Je oefent techniek met een duidelijke opbouw: eerst elektriciteit, dan las- en verbindingstechnieken, daarna meten en materiaalkeuze.</p>
+
+      <div class="task">
+        <h3>📚 Cursus & video</h3>
+        <a class="btn" href="cursus/hoofdthema8/hoofdthema8.cursus.html">Open cursusdeel</a>
+        <a class="btn" href="https://www.youtube.com/watch?v=2aOKj7IvDQA" target="_blank" rel="noopener noreferrer">Bekijk video Wet van Ohm</a>
+      </div>
+
+      <div class="task">
+        <h3>🎯 Doelen</h3>
+        <div class="goal-grid">
+          <div class="goal-card">
+            <h4>Doel 1 — Wet van Ohm</h4>
+            <p>U, I en R berekenen en interpreteren.</p>
+            <p class="status">Beschikbaar</p>
+            <a class="btn" href="mechanica8doel1.html">Start doel 1</a>
+          </div>
+          <div class="goal-card">
+            <h4>Doel 2 — Lassen en verbindingen</h4>
+            <p>MIG/MAG, beklede elektrode en verbindingstechnieken.</p>
+            <p class="status">Beschikbaar</p>
+            <a class="btn" href="mechanica8doel2.html">Start doel 2</a>
+          </div>
+          <div class="goal-card">
+            <h4>Doel 3 — Meten en materialen</h4>
+            <p>Meetinstrumenten kiezen en materiaalkeuze onderbouwen.</p>
+            <p class="status">Beschikbaar</p>
+            <a class="btn" href="mechanica8doel3.html">Start doel 3</a>
+          </div>
+        </div>
+      </div>
+
+      <a class="btn" href="hoofdthema8.html">← Terug naar hoofdthema 8</a>
+    </section>
+
+    <aside class="panel">
+      <h2>🤖 Chattie</h2>
+      <p style="color: var(--muted);">Vraag hulp over formules, lasprocessen en materiaalkeuze.</p>
+      <iframe class="chat-embed" title="Chattie" src="chattie.html?thema=Thema%208%20Mechanica%20en%20Lassen"></iframe>
+    </aside>
+  </main>
+
+  <script src="./pavo-theme-progress.js"></script>
+</body>
+</html>
