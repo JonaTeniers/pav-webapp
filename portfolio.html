@@ -293,6 +293,7 @@
         </div>
 
         <div class="submission-area">
+            <a href="leerling-dashboard.html" class="ribbon-button" style="text-decoration:none;">📊 Naar mijn dashboard</a>
             <span id="status" style="font-size: 0.8rem; color: #666;">Lokaal opgeslagen</span>
             <button class="btn-submit" onclick="submitToTeacher()">🚀 Werk indienen</button>
         </div>
@@ -382,15 +383,21 @@
             documentMeta.innerText = `Pagina 1 van 1 | ${wordCount} woorden | Nederlands (België)`;
         }
 
+        function getPortfolioStorageKey() {
+            const studentName = (localStorage.getItem("studentName") || "gast").trim().toLowerCase();
+            const studentClass = (localStorage.getItem("studentClass") || "onbekend").trim().toLowerCase();
+            return `pavo_rich_portfolio_${studentName}_${studentClass}`;
+        }
+
         function persistEditor() {
-            localStorage.setItem("pavo_rich_portfolio", editor.innerHTML);
+            localStorage.setItem(getPortfolioStorageKey(), editor.innerHTML);
             status.innerText = "Opslaan...";
             updateDocumentMeta();
             setTimeout(() => { status.innerText = "Lokaal opgeslagen"; }, 800);
         }
 
         // Automatisch laden en opslaan (zoals voorheen)
-        editor.innerHTML = localStorage.getItem("pavo_rich_portfolio") || editor.innerHTML;
+        editor.innerHTML = localStorage.getItem(getPortfolioStorageKey()) || editor.innerHTML;
         updateDocumentMeta();
 
         editor.addEventListener("input", persistEditor);
@@ -400,9 +407,9 @@
         });
 
         async function submitToTeacher() {
-            const name = localStorage.getItem("studentName");
-            const klas = localStorage.getItem("studentClass");
-            if(!name) return alert("Log eerst in!");
+            const name = (localStorage.getItem("studentName") || "").trim();
+            const klas = (localStorage.getItem("studentClass") || "").trim();
+            if(!name || !klas) return alert("Log eerst in via de loginpagina met voornaam + klas.");
 
             try {
                 await db.collection("portfolio").doc(name + "_" + klas).set({
