@@ -217,8 +217,6 @@ td {
     <h2>
         <img src="img/pavomascotte.png" style="width:30px;">
         PAV-O
-    </h2>
-
     <a href="#" class="active">📊 Resultaten</a>
     <a href="theme-manager.html">➕ Maak nieuw thema</a>
     <a href="index.html">🚪 Leerlingomgeving</a>
@@ -257,6 +255,46 @@ td {
         <div id="last-update">--:--</div>
     </div>
 </div>
+
+
+<section class="content-card">
+    <h3>Klasinstellingen voor leerlingdashboard</h3>
+    <p style="margin-top:0;color:#64748b;">Pas per klas realistische opdrachten, weekdoelen, reflectiefocus en portfoliofocus aan.</p>
+    <form id="classPlanForm" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;">
+        <label style="font-weight:700;display:flex;flex-direction:column;gap:6px;">Klas
+            <input id="classPlanKlas" required placeholder="bv. 3STW" style="padding:10px;border:1px solid var(--border);border-radius:8px;" />
+        </label>
+        <label style="font-weight:700;display:flex;flex-direction:column;gap:6px;">Opdrachten (één per lijn)
+            <textarea id="classPlanAssignments" rows="4" placeholder="Maandbudget opstellen&#10;Transportkosten vergelijken" style="padding:10px;border:1px solid var(--border);border-radius:8px;"></textarea>
+        </label>
+        <label style="font-weight:700;display:flex;flex-direction:column;gap:6px;">Weekdoelen (één per lijn)
+            <textarea id="classPlanGoals" rows="4" placeholder="Zelfstandig plannen&#10;Beter samenwerken" style="padding:10px;border:1px solid var(--border);border-radius:8px;"></textarea>
+        </label>
+        <label style="font-weight:700;display:flex;flex-direction:column;gap:6px;">Reflectiefocus
+            <input id="classPlanReflection" placeholder="Wat wil je volgende keer anders doen?" style="padding:10px;border:1px solid var(--border);border-radius:8px;" />
+        </label>
+        <label style="font-weight:700;display:flex;flex-direction:column;gap:6px;">Portfoliofocus
+            <input id="classPlanPortfolio" placeholder="Werkstukken met feedback uploaden" style="padding:10px;border:1px solid var(--border);border-radius:8px;" />
+        </label>
+        <div style="display:flex;align-items:end;gap:8px;">
+            <button type="submit" class="btn">Klasinstellingen opslaan</button>
+        </div>
+    </form>
+
+    <table style="margin-top:15px;">
+      <thead>
+        <tr>
+          <th>Klas</th>
+          <th>Aantal opdrachten</th>
+          <th>Aantal doelen</th>
+          <th>Laatst gewijzigd</th>
+        </tr>
+      </thead>
+      <tbody id="classPlanTableBody">
+        <tr><td colspan="4">Nog geen klasinstellingen geladen.</td></tr>
+      </tbody>
+    </table>
+</section>
 
 <section class="content-card">
     <h3>Recente Scores</h3>
@@ -364,6 +402,7 @@ td {
 <script>
 window.TEACHER_EMAILS = ["jona@pavo.be","kaat@pavo.be"];
 const authSection = document.getElementById('authSection');
+const CLASS_PLAN_COLLECTION = 'class_learning_plans';
 
 function setStatus(message, isError = false) {
     const status = document.getElementById('status');
@@ -390,6 +429,74 @@ function parseDate(value) {
 function formatDate(value) {
     const date = parseDate(value);
     return date ? date.toLocaleString('nl-BE') : '-';
+}
+
+function normalizeClassName(klas) {
+    return String(klas || '').trim().toLowerCase();
+}
+
+function textareaToList(value) {
+    return String(value || '')
+      .split('\n')
+      .map((item) => item.trim())
+      .filter(Boolean);
+}
+
+async function loadClassPlans() {
+    const body = document.getElementById('classPlanTableBody');
+    if (!body) return;
+
+    try {
+        const snapshot = await db.collection(CLASS_PLAN_COLLECTION).limit(100).get();
+        const plans = snapshot.docs
+          .map((doc) => ({ id: doc.id, ...doc.data() }))
+          .sort((a, b) => String(a.klas || a.id).localeCompare(String(b.klas || b.id), 'nl-BE'));
+
+        body.innerHTML = plans.length
+          ? plans.map((plan) => `
+            <tr>
+                <td><strong>${escapeHtml(plan.klas || plan.id)}</strong></td>
+                <td>${Array.isArray(plan.opdrachten) ? plan.opdrachten.length : 0}</td>
+                <td>${Array.isArray(plan.doelen) ? plan.doelen.length : 0}</td>
+                <td>${escapeHtml(formatDate(plan.updatedAt))}</td>
+            </tr>
+          `).join('')
+          : '<tr><td colspan="4">Nog geen klasinstellingen opgeslagen.</td></tr>';
+    } catch (error) {
+        console.error('Kon klasinstellingen niet laden', error);
+        body.innerHTML = '<tr><td colspan="4">Kon klasinstellingen niet laden.</td></tr>';
+    }
+}
+
+async function handleClassPlanSubmit(event) {
+    event.preventDefault();
+    const klasRaw = document.getElementById('classPlanKlas').value.trim();
+    const klasId = normalizeClassName(klasRaw);
+    if (!klasId) {
+        setStatus('Vul een klas in voor klasinstellingen.', true);
+        return;
+    }
+
+    const payload = {
+        klas: klasRaw,
+        opdrachten: textareaToList(document.getElementById('classPlanAssignments').value),
+        doelen: textareaToList(document.getElementById('classPlanGoals').value),
+        reflectieFocus: document.getElementById('classPlanReflection').value.trim(),
+        portfolioFocus: document.getElementById('classPlanPortfolio').value.trim(),
+        updatedBy: firebase.auth().currentUser?.email || 'onbekend',
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    };
+
+    try {
+        await db.collection(CLASS_PLAN_COLLECTION).doc(klasId).set(payload, { merge: true });
+        localStorage.setItem(`pavo_klasplan_${klasId}`, JSON.stringify({ ...payload, updatedAt: new Date().toISOString() }));
+        setStatus(`Klasinstellingen opgeslagen voor ${klasRaw}.`, false);
+        event.target.reset();
+        await loadClassPlans();
+    } catch (error) {
+        console.error('Opslaan klasinstellingen mislukt', error);
+        setStatus('Kon klasinstellingen niet opslaan.', true);
+    }
 }
 
 document.getElementById('teacherLoginForm').onsubmit = async (e) => {
@@ -599,8 +706,12 @@ async function loadDashboardData(){
     document.getElementById('last-update').innerText =
         new Date().toLocaleTimeString('nl-BE',{hour:'2-digit',minute:'2-digit'});
 
+    await loadClassPlans();
     setStatus(`Klaar. ${scores.length} score(s) en ${students.length} leerling(en) geladen.`);
 }
+
+const classPlanForm = document.getElementById('classPlanForm');
+if (classPlanForm) classPlanForm.addEventListener('submit', handleClassPlanSubmit);
 
 firebase.auth().onAuthStateChanged(user=>{
     if(user && window.TEACHER_EMAILS.includes(user.email)){

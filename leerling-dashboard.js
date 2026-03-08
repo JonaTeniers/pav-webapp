@@ -429,6 +429,34 @@
       console.error('Fout bij laden leerlingdashboard:', error);
       setStatus('Kon dashboard niet volledig laden.', true);
     }
+
+    const taak = document.getElementById('collabTask').value.trim();
+    const reacties = document.getElementById('collabComment').value.trim();
+    if (!taak || !reacties) {
+      setStatus('Vul taakverdeling en discussie in.', true);
+      return;
+    }
+
+    const all = getStoredJson(COLLAB_STORAGE_KEY, []);
+    all.unshift({
+      voornaam: profile.voornaam,
+      klas: profile.klas,
+      taak,
+      reacties,
+      datum: new Date().toISOString()
+    });
+    setStoredJson(COLLAB_STORAGE_KEY, all);
+    event.target.reset();
+    renderCollaboration(profile);
+    setStatus('Samenwerkingsnotitie opgeslagen.', false);
+  }
+
+  function initWeekOverviewSkeleton() {
+    const host = document.getElementById('weekOverview');
+    if (!host) return;
+    host.innerHTML = ['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo']
+      .map((day) => `<div class="day"><strong>${day}</strong><div>0 activiteit(en)</div></div>`)
+      .join('');
   }
 
   async function handleReflectionSubmit(event) {
