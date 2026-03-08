@@ -336,6 +336,23 @@ td {
         </tbody>
     </table>
 </section>
+
+<section class="content-card">
+    <h3>Mentorgesprekken & persoonlijke doelen</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Leerling</th>
+                <th>Persoonlijk doel</th>
+                <th>Mentorgesprek</th>
+                <th>Volgende stap</th>
+            </tr>
+        </thead>
+        <tbody id="mentorTableBody">
+            <tr><td colspan="4">Laden...</td></tr>
+        </tbody>
+    </table>
+</section>
 </main>
 
 <!-- FIREBASE -->
@@ -399,12 +416,14 @@ async function loadDashboardData(){
     const studentsBody = document.getElementById('studentsTableBody');
     const reflectionBody = document.getElementById('reflectionTableBody');
     const projectBody = document.getElementById('projectTableBody');
+    const mentorBody = document.getElementById('mentorTableBody');
 
     setStatus('Scores, leerlingen en projecten worden geladen...');
     tbody.innerHTML = '<tr><td colspan="6">Laden...</td></tr>';
     studentsBody.innerHTML = '<tr><td colspan="5">Laden...</td></tr>';
     reflectionBody.innerHTML = '<tr><td colspan="5">Laden...</td></tr>';
     projectBody.innerHTML = '<tr><td colspan="5">Laden...</td></tr>';
+    mentorBody.innerHTML = '<tr><td colspan="4">Laden...</td></tr>';
 
     let snapshot;
     try {
@@ -554,6 +573,24 @@ async function loadDashboardData(){
             </tr>
         `).join('')
       : '<tr><td colspan="5">Geen projecten lokaal gevonden.</td></tr>';
+
+    const mentorRows = students.slice(0, 20).map((student) => ({
+      naam: student.naam,
+      doel: 'Zelfstandiger plannen van opdrachten',
+      gesprek: 'Binnen 2 weken',
+      stap: 'Check-in op maandag + reflectie op vrijdag'
+    }));
+
+    mentorBody.innerHTML = mentorRows.length
+      ? mentorRows.map((row) => `
+            <tr>
+                <td><strong>${escapeHtml(row.naam)}</strong></td>
+                <td>${escapeHtml(row.doel)}</td>
+                <td>${escapeHtml(row.gesprek)}</td>
+                <td>${escapeHtml(row.stap)}</td>
+            </tr>
+        `).join('')
+      : '<tr><td colspan="4">Nog geen mentoritems beschikbaar.</td></tr>';
 
     const avg = recentScores.length ? (total / recentScores.length).toFixed(1) + '%' : '0%';
     document.getElementById('count-total').innerText = scores.length;
