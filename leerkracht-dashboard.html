@@ -11,11 +11,11 @@
 :root {
     --primary: #0b4da2;
     --primary-dark: #083a7a;
-    --bg: #f0f4f8;
+    --bg: #f6f8fb;
     --white: #ffffff;
     --text: #1e293b;
     --border: #e2e8f0;
-    --accent: #10b981;
+    --accent: #fbbf24;
 }
 
 body {
@@ -300,6 +300,42 @@ td {
     <div id="portfolioGrid" class="portfolio-grid"></div>
 </section>
 
+
+<section class="content-card">
+    <h3>Reflecties & vaardigheden</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Leerling</th>
+                <th>Reflecties</th>
+                <th>Samenwerking</th>
+                <th>Probleemoplossend denken</th>
+                <th>Laatste reflectie</th>
+            </tr>
+        </thead>
+        <tbody id="reflectionTableBody">
+            <tr><td colspan="5">Laden...</td></tr>
+        </tbody>
+    </table>
+</section>
+
+<section class="content-card">
+    <h3>Projectopvolging</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Project</th>
+                <th>Leerling</th>
+                <th>Deadline</th>
+                <th>Groep</th>
+                <th>Feedback</th>
+            </tr>
+        </thead>
+        <tbody id="projectTableBody">
+            <tr><td colspan="5">Laden...</td></tr>
+        </tbody>
+    </table>
+</section>
 </main>
 
 <!-- FIREBASE -->
@@ -361,10 +397,14 @@ document.getElementById('teacherLoginForm').onsubmit = async (e) => {
 async function loadDashboardData(){
     const tbody = document.getElementById('scoresTableBody');
     const studentsBody = document.getElementById('studentsTableBody');
+    const reflectionBody = document.getElementById('reflectionTableBody');
+    const projectBody = document.getElementById('projectTableBody');
 
-    setStatus('Scores en leerlingen worden geladen...');
+    setStatus('Scores, leerlingen en projecten worden geladen...');
     tbody.innerHTML = '<tr><td colspan="6">Laden...</td></tr>';
     studentsBody.innerHTML = '<tr><td colspan="5">Laden...</td></tr>';
+    reflectionBody.innerHTML = '<tr><td colspan="5">Laden...</td></tr>';
+    projectBody.innerHTML = '<tr><td colspan="5">Laden...</td></tr>';
 
     let snapshot;
     try {
@@ -454,6 +494,66 @@ async function loadDashboardData(){
             </tr>
         `).join('');
     }
+
+    let reflectionDocs = [];
+    try {
+        const reflectionSnapshot = await db.collection('portfolio_reflecties').limit(250).get();
+        reflectionDocs = reflectionSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    } catch (err) {
+        console.warn('Reflecties konden niet worden geladen.', err);
+    }
+
+    const reflectionMap = new Map();
+    reflectionDocs.forEach((item) => {
+        const key = `${(item.voornaam || '').trim()}__${(item.klas || '').trim()}`;
+        if (!key.startsWith('__')) {
+            const current = reflectionMap.get(key) || { naam: item.voornaam || '-', count: 0, teamwork: 0, problemSolving: 0, latest: null };
+            current.count += 1;
+            const teamworkScore = Math.min(100, 40 + (item.teamwork || '').length);
+            const problemScore = Math.min(100, 40 + (item.nextTime || '').length);
+            current.teamwork = Math.round((current.teamwork + teamworkScore) / 2) || teamworkScore;
+            current.problemSolving = Math.round((current.problemSolving + problemScore) / 2) || problemScore;
+            const created = parseDate(item.createdAt || item.datum);
+            if (created && (!current.latest || created > current.latest)) current.latest = created;
+            reflectionMap.set(key, current);
+        }
+    });
+
+    const reflectionRows = [...reflectionMap.values()].sort((a, b) => b.count - a.count);
+    reflectionBody.innerHTML = reflectionRows.length
+      ? reflectionRows.map((item) => `
+            <tr>
+                <td><strong>${escapeHtml(item.naam)}</strong></td>
+                <td>${item.count}</td>
+                <td>${item.teamwork}%</td>
+                <td>${item.problemSolving}%</td>
+                <td>${escapeHtml(item.latest ? item.latest.toLocaleString('nl-BE') : '-')}</td>
+            </tr>
+        `).join('')
+      : '<tr><td colspan="5">Nog geen reflecties beschikbaar.</td></tr>';
+
+    const localProjects = [];
+    Object.keys(localStorage).forEach((key) => {
+        if (!key.startsWith('pavo_projecten_')) return;
+        try {
+            const items = JSON.parse(localStorage.getItem(key) || '[]');
+            items.forEach((project) => localProjects.push(project));
+        } catch (error) {
+            console.warn('Kon lokaal project niet lezen', error);
+        }
+    });
+
+    projectBody.innerHTML = localProjects.length
+      ? localProjects.slice(0, 25).map((project) => `
+            <tr>
+                <td><strong>${escapeHtml(project.titel || '-')}</strong></td>
+                <td>${escapeHtml((project.groepsleden || [])[0] || '-')}</td>
+                <td>${escapeHtml(project.deadline || '-')}</td>
+                <td>${escapeHtml((project.groepsleden || []).join(', '))}</td>
+                <td>${escapeHtml(project.feedback || '-')}</td>
+            </tr>
+        `).join('')
+      : '<tr><td colspan="5">Geen projecten lokaal gevonden.</td></tr>';
 
     const avg = recentScores.length ? (total / recentScores.length).toFixed(1) + '%' : '0%';
     document.getElementById('count-total').innerText = scores.length;
