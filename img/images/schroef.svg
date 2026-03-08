@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" role="img" aria-label="Poster schroef en verbindingen">
+  <rect width="1200" height="700" fill="#f6f8fb"/>
+  <rect x="20" y="20" width="1160" height="660" rx="18" fill="none" stroke="#5a82b9" stroke-width="10"/>
+  <rect x="90" y="80" width="1020" height="52" rx="12" fill="#5a82b9"/>
+  <text x="600" y="116" font-size="34" text-anchor="middle" fill="white" font-family="Nunito, Arial, sans-serif" font-weight="700">SCHROEF • BOUT • MOER • BORGING</text>
+
+  <rect x="170" y="275" width="830" height="90" rx="16" fill="#b5bcc7"/>
+  <g stroke="#8d95a0" stroke-width="6">
+    <line x1="190" y1="280" x2="980" y2="360"/>
+    <line x1="210" y1="280" x2="1000" y2="360"/>
+    <line x1="230" y1="280" x2="1020" y2="360"/>
+    <line x1="170" y1="320" x2="1000" y2="400"/>
+  </g>
+  <rect x="70" y="245" width="190" height="150" rx="16" fill="#6e7f99"/>
+  <rect x="905" y="225" width="220" height="190" rx="18" fill="#c98560"/>
+  <rect x="955" y="275" width="120" height="90" rx="8" fill="#f6f8fb"/>
+
+  <rect x="90" y="560" width="1020" height="60" rx="14" fill="#5a82b9"/>
+  <text x="600" y="600" font-size="34" text-anchor="middle" fill="white" font-family="Nunito, Arial, sans-serif">LOSNEEMBAAR: schroefdraad • NIET-LOSNEEMBAAR: lassen/lijmen/klinken</text>
+</svg>
