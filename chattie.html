@@ -7,15 +7,15 @@
 <style>
 html, body { height: 100%; }
 :root {
-  --bg1: #CFE3D3;
-  --bg2: #F9F8F4;
+  --bg1: #eef3fb;
+  --bg2: #f8fbff;
   --card: #ffffff;
-  --bot: #eaf7ee;
-  --user: #E7DCC8;
-  --accent: #A9C2A6;
-  --muted: #8B8C89;
-  --chip-bg: #CBBBA0;
-  --chip-text: #3a301a;
+  --bot: #e8f1ff;
+  --user: #fff7d6;
+  --accent: #2563eb;
+  --muted: #64748b;
+  --chip-bg: #eaf1ff;
+  --chip-text: #1e3a8a;
   --status-active-color: #4CAF50;
   --status-escalation-color: #b45309;
 }
@@ -77,7 +77,7 @@ body {
   background: var(--chip-bg);
   border-radius: 12px;
   padding: 8px 10px;
-  border: 1px solid var(--muted);
+  border: 1px solid #cbd8ef;
   cursor: pointer;
   color: var(--chip-text);
   font-weight: 600;
@@ -117,8 +117,11 @@ body {
 <div class="container">
   <div class="chat">
     <div style="display:flex;justify-content:space-between;align-items:center">
-      <strong id="chatTitle">🤖 Chattie</strong>
+      <div><strong id="chatTitle">🤖 Chattie</strong><div class="muted">Je AI-leerbuddy voor zelfstandig en reflectief leren</div></div>
+      <div style="display:flex;gap:8px;align-items:center;">
+      <a href="index.html" class="chip-btn" style="text-decoration:none;">Dashboard</a>
       <button id="howBtn" class="send-btn" style="padding:8px 12px;">Hoe werkt dit?</button>
+    </div>
     </div>
 
     <div id="messages" aria-live="polite"></div>

@@ -9,186 +9,151 @@
 
 <style>
 :root {
-    --blue: #1f6fd6;
-    --blue-dark: #1554a6;
-    --bg: #eef3f8;
+    --blue: #2563eb;
+    --blue-dark: #1d4ed8;
+    --bg: #f6f8fb;
+    --panel: #ffffff;
     --text: #1e293b;
-    --muted: #6b7280;
+    --muted: #64748b;
+    --line: #dce5f2;
+    --accent: #fef3c7;
 }
 
 * { box-sizing: border-box; }
 
 body {
     margin: 0;
-    font-family: 'Nunito', sans-serif;
+    font-family: 'Nunito', 'Segoe UI', sans-serif;
     background: var(--bg);
     color: var(--text);
 }
-
-/* SIDEBAR */
 
 .wrapper { display: flex; }
 
 .sidebar {
     width: 260px;
-    background: white;
+    background: var(--panel);
     height: 100vh;
     position: fixed;
-    border-right: 1px solid #e5eaf1;
+    border-right: 1px solid var(--line);
     padding: 2rem 1.5rem;
 }
 
-.sidebar-header {
-    text-align: center;
-    margin-bottom: 3rem;
-}
-
+.sidebar-header { text-align: center; margin-bottom: 2.2rem; }
 .sidebar-header img { width: 70px; }
-
-.sidebar-header h1 {
-    margin: 0.5rem 0 0 0;
-    color: var(--blue);
-}
+.sidebar-header h1 { margin: 0.5rem 0 0; color: var(--blue); }
 
 .nav-item {
     display: block;
-    padding: 0.7rem 1rem;
-    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
     font-weight: 700;
     text-decoration: none;
     color: var(--text);
+    margin-bottom: 0.3rem;
 }
 
-.nav-item.active {
-    background: var(--blue);
-    color: white;
-}
-
-/* MAIN */
+.nav-item.active { background: #e8f0ff; color: var(--blue-dark); }
 
 .main-content {
     margin-left: 260px;
-    padding: 3rem 3.5rem;
-    max-width: 1400px;   /* belangrijk */
+    padding: 2.2rem 3rem;
+    max-width: 1400px;
     width: calc(100% - 260px);
 }
 
-.welcome-section h2 {
-    font-size: 2.3rem;
-    color: var(--blue);
+.welcome-section h2 { font-size: 2.2rem; color: #1e3a8a; margin: 0 0 0.4rem; }
+.welcome-section p { max-width: 760px; color: var(--muted); margin-top: 0; }
+
+.summary-grid {
+    margin-top: 1.2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.9rem;
 }
 
-/* SECTION TITLES */
+.summary-card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 0.95rem;
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.04);
+}
+
+.summary-card small { color: var(--muted); text-transform: uppercase; font-size: 0.74rem; letter-spacing: 0.04em; }
+.summary-card strong { display: block; font-size: 1.4rem; margin-top: 0.3rem; }
+.summary-card p { margin: 0.3rem 0 0; font-size: 0.88rem; color: var(--muted); }
 
 .section-title {
-    margin-top: 3rem;
+    margin-top: 2.3rem;
     margin-bottom: 1rem;
-    font-size: 1.4rem;
+    font-size: 1.35rem;
     font-weight: 800;
-    color: var(--blue);
+    color: #1e3a8a;
     border-bottom: 2px solid #dbe7ff;
     padding-bottom: 0.4rem;
 }
 
-/* GRID */
-
-.theme-grid {
+.assignment-board {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.6rem;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1rem;
 }
 
-/* Tablet */
-@media (max-width: 1200px) {
-    .theme-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+.assignment-card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 1rem;
 }
 
-/* Mobiel */
-@media (max-width: 700px) {
-    .theme-grid {
-        grid-template-columns: 1fr;
-    }
+.assignment-card .tag {
+    display: inline-block;
+    background: var(--accent);
+    color: #92400e;
+    font-size: 0.74rem;
+    font-weight: 800;
+    border-radius: 999px;
+    padding: 0.25rem 0.6rem;
 }
 
-}
+.assignment-card h4 { margin: 0.6rem 0 0.4rem; font-size: 1rem; }
+.assignment-card p { margin: 0; color: var(--muted); font-size: 0.9rem; }
 
-/* CARD */
+.theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+
+@media (max-width: 1200px) { .theme-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 700px) { .theme-grid { grid-template-columns: 1fr; } }
 
 .thema-card {
     display: block;
     border-radius: 16px;
     overflow: hidden;
     text-decoration: none;
-    background: white;
-    border: 1px solid #e6ebf2;
+    background: var(--panel);
+    border: 1px solid var(--line);
     transition: 0.25s;
 }
 
-.thema-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.08);
-}
+.thema-card:hover { transform: translateY(-5px); box-shadow: 0 14px 26px rgba(15, 23, 42, 0.12); }
+.thema-card-locked { opacity: 0.6; filter: grayscale(0.3); cursor: not-allowed; }
+.thema-card-locked:hover { transform: none; box-shadow: none; }
 
-.thema-card-locked {
-    opacity: 0.6;
-    filter: grayscale(0.3);
-    cursor: not-allowed;
-}
-
-.thema-card-locked:hover {
-    transform: none;
-    box-shadow: none;
-}
-
-.thema-image {
-    height: 220px;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-}
-
+.thema-image { height: 220px; background-size: cover; background-position: center; position: relative; }
 .thema-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top,
-        rgba(0,0,0,0.75),
-        rgba(0,0,0,0.2));
+    background: linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0.2));
     display: flex;
     align-items: flex-end;
     padding: 1rem;
 }
+.thema-title { color: white; font-weight: 800; font-size: 1.16rem; }
+.thema-bottom { padding: 1rem; }
 
-.thema-title {
-    color: white;
-    font-weight: 800;
-    font-size: 1.25rem;
-}
-
-.thema-bottom {
-    padding: 1rem;
-}
-
-.progress-bar {
-    height: 6px;
-    background: #e5e7eb;
-    border-radius: 4px;
-    overflow: hidden;
-    margin-bottom: 0.5rem;
-}
-
-.progress-fill {
-    height: 100%;
-    background: var(--blue);
-}
-
-.progress-text {
-    font-size: 0.85rem;
-    color: var(--muted);
-}
-
-/* FOOTER */
+.progress-bar { height: 6px; background: #e5e7eb; border-radius: 4px; overflow: hidden; margin-bottom: 0.5rem; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, #93c5fd, #2563eb); }
+.progress-text { font-size: 0.85rem; color: var(--muted); }
 
 .footer {
     margin-left: 260px;
@@ -196,10 +161,16 @@ body {
     text-align: center;
     font-size: 0.85rem;
     color: var(--muted);
-    border-top: 1px solid #e6ebf2;
-    background: white;
+    border-top: 1px solid var(--line);
+    background: var(--panel);
 }
 
+@media (max-width: 1024px) {
+  .sidebar { position: static; width: 100%; height: auto; }
+  .wrapper { flex-direction: column; }
+  .main-content { margin-left: 0; width: 100%; padding: 1.2rem; }
+  .footer { margin-left: 0; }
+}
 </style>
 </head>
 
@@ -223,8 +194,55 @@ body {
 
 <div class="welcome-section">
     <h2>Welkom bij PAV-O</h2>
-    <p>Kies een thema en start met leren.</p>
+    <p>Plan zelfstandig je week, werk projectmatig en groei in vaardigheden met opdrachten uit het echte leven.</p>
     <p id="themeAccessStatus" style="color:#b00020;font-weight:700;"></p>
+
+    <div class="summary-grid">
+      <div class="summary-card">
+        <small>Mijn opdrachten</small>
+        <strong>9</strong>
+        <p>4 actief • 5 afgerond</p>
+      </div>
+      <div class="summary-card">
+        <small>Doelen deze week</small>
+        <strong>3 / 5</strong>
+        <p>Blijf focussen op planning en communicatie.</p>
+      </div>
+      <div class="summary-card">
+        <small>Reflectie</small>
+        <strong>Laatste update</strong>
+        <p>"Ik wil volgende keer mijn groep vroeger verdelen."</p>
+      </div>
+      <div class="summary-card">
+        <small>Portfolio</small>
+        <strong>Op schema</strong>
+        <p>Nieuwe uploads in projecten en feedback.</p>
+      </div>
+    </div>
+</div>
+
+<div class="section-title">Realistische PAV-opdrachten</div>
+<div class="assignment-board">
+  <article class="assignment-card">
+    <span class="tag">Dagelijks leven</span>
+    <h4>Maandbudget berekenen</h4>
+    <p>Werk in duo een haalbaar budget uit voor wonen, eten en transport.</p>
+  </article>
+  <article class="assignment-card">
+    <span class="tag">Communicatie</span>
+    <h4>Sollicitatiebrief schrijven</h4>
+    <p>Schrijf een brief op maat van een vacature en geef peer-feedback.</p>
+  </article>
+  <article class="assignment-card">
+    <span class="tag">Mediawijsheid</span>
+    <h4>Fake news analyseren</h4>
+    <p>Gebruik checklists om feiten en manipulatie in nieuwsberichten te vergelijken.</p>
+  </article>
+  <article class="assignment-card">
+    <span class="tag">Rekenen</span>
+    <h4>Transportkosten vergelijken</h4>
+    <p>Vergelijk abonnement, fiets en auto voor een wekelijkse verplaatsing.</p>
+  </article>
 </div>
 
 
