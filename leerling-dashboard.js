@@ -1,17 +1,19 @@
 /**
  * leerling-dashboard.js
  *
- * Doel:
- * - Leerling logt in met voornaam + klas (zonder Firebase auth)
- * - Toont per thema of het al gespeeld is
- * - Als thema gespeeld is: toon unit 1 t.e.m. laatste unit met score/status
- * - Als thema nog niet gespeeld is: toon "Nog niet gespeeld (Start spelen)"
+ * Uitbreiding op bestaande module:
+ * - centrale startpagina met opdrachten, doelen, reflecties, voortgang en feedback
+ * - reflecties bewaren in portfolio + firestore
+ * - project- en vaardigheidsopvolging zonder bestaande scoreflow te verwijderen
  */
 
 (function () {
   const STORAGE_KEY = 'pavo_leerling_profiel';
+  const REFLECTION_STORAGE_KEY = 'pavo_reflecties';
+  const PROJECT_STORAGE_KEY = 'pavo_projecten';
+  const COLLAB_STORAGE_KEY = 'pavo_samenwerking';
+  const CLASS_PLAN_COLLECTION = 'class_learning_plans';
 
-  // Thema-overzicht op basis van huidige webapp-structuur.
   const THEMAS = [
     { id: 1, naam: 'Thema 1', maxUnit: 12, startLink: 'hoofdthema1.html' },
     { id: 2, naam: 'Thema 2', maxUnit: 2, startLink: 'hoofdthema2.html' },
@@ -24,11 +26,19 @@
     { id: 9, naam: 'Thema 9', maxUnit: 8, startLink: 'hoofdthema3.html' }
   ];
 
+  const DEFAULT_SKILLS = [
+    { naam: 'Plannen', waarde: 0 },
+    { naam: 'Samenwerken', waarde: 0 },
+    { naam: 'Communiceren', waarde: 0 },
+    { naam: 'Probleemoplossend denken', waarde: 0 },
+    { naam: 'Kritisch denken', waarde: 0 }
+  ];
+
   function setStatus(text, isError) {
     const el = document.getElementById('status');
     if (!el) return;
     el.textContent = text;
-    el.style.color = isError ? '#b00020' : '#166534';
+    el.style.color = isError ? '#b00020' : '#334155';
   }
 
   function escapeHtml(value) {
@@ -47,18 +57,37 @@
     return new Intl.DateTimeFormat('nl-BE', { dateStyle: 'short', timeStyle: 'short' }).format(date);
   }
 
-  function getStoredProfile() {
+  function timestampToMs(ts) {
+    if (!ts) return 0;
+    if (typeof ts.toDate === 'function') return ts.toDate().getTime();
+    const date = new Date(ts);
+    return Number.isNaN(date.getTime()) ? 0 : date.getTime();
+  }
+
+  function getStoredJson(key, fallback) {
     try {
-      const raw = window.localStorage.getItem(STORAGE_KEY);
-      return raw ? JSON.parse(raw) : null;
+      const raw = window.localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : fallback;
     } catch (error) {
-      console.error('Kon profiel niet lezen:', error);
-      return null;
+      console.error(`Kon localStorage key ${key} niet lezen`, error);
+      return fallback;
     }
   }
 
+  function setStoredJson(key, value) {
+    window.localStorage.setItem(key, JSON.stringify(value));
+  }
+
+  function getStoredProfile() {
+    return getStoredJson(STORAGE_KEY, null);
+  }
+
   function saveProfile(profile) {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(profile));
+    setStoredJson(STORAGE_KEY, profile);
+  }
+
+  function normalizeClassName(klas) {
+    return String(klas || '').trim().toLowerCase();
   }
 
   function extractNumbers(item) {
@@ -80,14 +109,6 @@
     };
   }
 
-  function timestampToMs(ts) {
-    if (!ts) return 0;
-    if (typeof ts.toDate === 'function') return ts.toDate().getTime();
-    const date = new Date(ts);
-    return Number.isNaN(date.getTime()) ? 0 : date.getTime();
-  }
-
-  // Bouw rijen: per thema tonen wat gespeeld is, met unit-detail.
   function buildRows(items) {
     const rows = [];
 
@@ -96,7 +117,6 @@
         .filter((item) => item.themaNummer === thema.id)
         .sort((a, b) => timestampToMs(b.createdAt) - timestampToMs(a.createdAt));
 
-      // Thema nog nooit gespeeld.
       if (!itemsForTheme.length) {
         rows.push({
           thema: thema.naam,
@@ -108,20 +128,6 @@
         return;
       }
 
-      // Thema zonder unit-structuur (Thema 1).
-      if (thema.maxUnit === 0) {
-        const latest = itemsForTheme[0];
-        rows.push({
-          thema: thema.naam,
-          unit: '-',
-          score: latest.score ?? '-',
-          wanneer: formatDate(latest.createdAt),
-          status: 'Gespeeld'
-        });
-        return;
-      }
-
-      // Thema met units: toon unit 1 t.e.m. laatste unit.
       for (let unit = 1; unit <= thema.maxUnit; unit += 1) {
         const itemsForUnit = itemsForTheme
           .filter((item) => item.unitNummer === unit)
@@ -144,7 +150,7 @@
           unit: `Unit ${unit}`,
           score: latest.score ?? '-',
           wanneer: formatDate(latest.createdAt),
-          status: 'Gespeeld'
+          status: '<span class="pill">Gespeeld</span>'
         });
       }
     });
@@ -152,25 +158,11 @@
     return rows;
   }
 
-
-  function renderTotalScore(items) {
-    const totalEl = document.getElementById('studentTotalScore');
-    if (!totalEl) return;
-
-    const total = items.reduce((sum, item) => {
-      const value = Number(item.score);
-      return sum + (Number.isNaN(value) ? 0 : value);
-    }, 0);
-
-    totalEl.innerHTML = `<strong>Totaalscore:</strong> ${total} XP`;
-  }
-
   function renderRows(items) {
     const tbody = document.getElementById('studentScoresTableBody');
     if (!tbody) return;
 
     const rows = buildRows(items);
-
     tbody.innerHTML = rows.map((row) => `
       <tr>
         <td>${escapeHtml(row.thema)}</td>
@@ -180,10 +172,259 @@
         <td>${row.status}</td>
       </tr>
     `).join('');
+
+    document.getElementById('countAssignments').textContent = String(rows.filter((row) => row.score !== '-').length);
+    document.getElementById('portfolioAssignments').textContent = `${rows.filter((row) => row.score !== '-').length} opgeslagen`;
+  }
+
+  function renderTotalScore(items) {
+    const total = items.reduce((sum, item) => {
+      const value = Number(item.score);
+      return sum + (Number.isNaN(value) ? 0 : value);
+    }, 0);
+
+    const el = document.getElementById('studentTotalScore');
+    if (el) el.textContent = `${total} XP`;
+  }
+
+  function renderWeekOverview(items) {
+    const host = document.getElementById('weekOverview');
+    if (!host) return;
+
+    const days = ['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo'];
+    const counts = new Array(7).fill(0);
+
+    items.forEach((item) => {
+      const date = typeof item.createdAt?.toDate === 'function' ? item.createdAt.toDate() : new Date(item.createdAt);
+      if (Number.isNaN(date.getTime())) return;
+      const idx = (date.getDay() + 6) % 7;
+      counts[idx] += 1;
+    });
+
+    host.innerHTML = days.map((day, index) => `
+      <div class="day">
+        <strong>${day}</strong>
+        <div>${counts[index]} activiteit(en)</div>
+      </div>
+    `).join('');
+
+    document.getElementById('countGoals').textContent = String(Math.min(5, counts.reduce((a, b) => a + (b > 0 ? 1 : 0), 0)));
+  }
+
+  function renderSkills(scores, profile) {
+    const container = document.getElementById('skillsContainer');
+    if (!container) return;
+
+    const avgScore = scores.length
+      ? scores.reduce((sum, scoreItem) => sum + (Number(scoreItem.score) || 0), 0) / scores.length
+      : 0;
+
+    const base = Math.max(15, Math.min(100, Math.round(avgScore)));
+    const derivedSkills = DEFAULT_SKILLS.map((skill, index) => ({
+      naam: skill.naam,
+      waarde: Math.max(5, Math.min(100, base - 8 + index * 4))
+    }));
+
+    const localSkills = getStoredJson(`pavo_skills_${profile.voornaam}_${profile.klas}`, null);
+    const finalSkills = Array.isArray(localSkills) && localSkills.length ? localSkills : derivedSkills;
+
+    container.innerHTML = finalSkills.map((skill) => `
+      <div style="margin-bottom:10px;">
+        <div style="display:flex;justify-content:space-between;gap:8px;"><strong>${escapeHtml(skill.naam)}</strong><span>${skill.waarde}%</span></div>
+        <div class="progress-wrap"><div class="progress-bar" style="width:${Math.max(0, Math.min(100, Number(skill.waarde) || 0))}%;"></div></div>
+      </div>
+    `).join('');
+
+    document.getElementById('portfolioSkills').textContent = `${finalSkills.length} bijgehouden`;
+  }
+
+  function getLocalReflections(profile) {
+    const all = getStoredJson(REFLECTION_STORAGE_KEY, []);
+    return all.filter((item) => item.voornaam === profile.voornaam && item.klas === profile.klas);
+  }
+
+  function renderReflections(reflections) {
+    const host = document.getElementById('reflectionList');
+    if (!host) return;
+
+    if (!reflections.length) {
+      host.innerHTML = '<p class="muted">Nog geen reflecties bewaard.</p>';
+      return;
+    }
+
+    host.innerHTML = reflections.slice(0, 4).map((reflection) => `
+      <div class="feedback-item">
+        <strong>${escapeHtml(formatDate(reflection.createdAt || reflection.datum))}</strong>
+        <div><strong>Geleerd:</strong> ${escapeHtml(reflection.learned)}</div>
+        <div><strong>Moeilijk:</strong> ${escapeHtml(reflection.difficult)}</div>
+        <div><strong>Volgende keer:</strong> ${escapeHtml(reflection.nextTime)}</div>
+        <div><strong>Samenwerking:</strong> ${escapeHtml(reflection.teamwork)}</div>
+      </div>
+    `).join('');
+
+    document.getElementById('countReflections').textContent = String(reflections.length);
+    document.getElementById('portfolioReflections').textContent = `${reflections.length} opgeslagen`;
+  }
+
+  function buildDefaultProjects(profile) {
+    return [
+      {
+        titel: 'Maandbudget berekenen',
+        beschrijving: 'Werk met je groep een realistisch budget uit voor een studentenkamer.',
+        leerdoelen: ['Budgetteren', 'Kritisch denken'],
+        taken: ['Inkomsten oplijsten', 'Vaste kosten berekenen', 'Besparingen voorstellen'],
+        deadline: 'Vrijdag',
+        groepsleden: [profile.voornaam, 'Teamlid 1', 'Teamlid 2'],
+        feedback: 'Gebruik duidelijke tabellen en motiveer je keuzes.'
+      },
+      {
+        titel: 'Sollicitatiebrief schrijven',
+        beschrijving: 'Schrijf een sollicitatiebrief en geef peer-feedback in duo.',
+        leerdoelen: ['Communiceren', 'Plannen'],
+        taken: ['Vacature kiezen', 'Brief schrijven', 'Feedbackronde doen'],
+        deadline: 'Volgende week dinsdag',
+        groepsleden: [profile.voornaam, 'Feedbackbuddy'],
+        feedback: 'Focus op een overtuigende en correcte opbouw.'
+      }
+    ];
+  }
+
+  function renderProjects(profile) {
+    const host = document.getElementById('projectContainer');
+    if (!host) return;
+
+    const key = `${PROJECT_STORAGE_KEY}_${profile.voornaam}_${profile.klas}`;
+    const projects = getStoredJson(key, buildDefaultProjects(profile));
+    if (!window.localStorage.getItem(key)) setStoredJson(key, projects);
+
+    host.innerHTML = projects.map((project) => `
+      <div class="project-item">
+        <strong>${escapeHtml(project.titel)}</strong>
+        <p>${escapeHtml(project.beschrijving)}</p>
+        <p><strong>Leerdoelen:</strong> ${escapeHtml((project.leerdoelen || []).join(', '))}</p>
+        <p><strong>Taken:</strong> ${escapeHtml((project.taken || []).join(' • '))}</p>
+        <p><strong>Deadline:</strong> ${escapeHtml(project.deadline)}</p>
+        <p><strong>Groepsleden:</strong> ${escapeHtml((project.groepsleden || []).join(', '))}</p>
+        <p><strong>Feedback leerkracht:</strong> ${escapeHtml(project.feedback)}</p>
+      </div>
+    `).join('');
+
+    document.getElementById('portfolioProjects').textContent = `${projects.length} opgeslagen`;
+  }
+
+  function getCollaborationItems(profile) {
+    const all = getStoredJson(COLLAB_STORAGE_KEY, []);
+    return all.filter((item) => item.voornaam === profile.voornaam && item.klas === profile.klas);
+  }
+
+  function renderCollaboration(profile) {
+    const host = document.getElementById('collaborationList');
+    if (!host) return;
+
+    const items = getCollaborationItems(profile);
+    if (!items.length) {
+      host.innerHTML = '<p>Nog geen samenwerking opgeslagen.</p>';
+      return;
+    }
+
+    host.innerHTML = items.slice(0, 4).map((item) => `
+      <div class="feedback-item">
+        <strong>Taakverdeling</strong>
+        <p style="margin:4px 0;">${escapeHtml(item.taak)}</p>
+        <strong>Discussie</strong>
+        <p style="margin:4px 0;">${escapeHtml(item.reacties)}</p>
+        <small class="muted">${escapeHtml(formatDate(item.datum))}</small>
+      </div>
+    `).join('');
+  }
+
+  function renderFeedback(feedbackItems) {
+    const host = document.getElementById('feedbackContainer');
+    if (!host) return;
+
+    if (!feedbackItems.length) {
+      host.innerHTML = '<p>Geen feedback gevonden. Vraag na je volgende opdracht om feedback.</p>';
+      document.getElementById('countFeedback').textContent = '0';
+      return;
+    }
+
+    host.innerHTML = feedbackItems.slice(0, 4).map((item) => `
+      <div class="feedback-item">
+        <strong>${escapeHtml(item.titel || 'Feedback')}</strong>
+        <p style="margin:6px 0;">${escapeHtml(item.tekst || item.feedback || '')}</p>
+        <small class="muted">${escapeHtml(formatDate(item.createdAt))}</small>
+      </div>
+    `).join('');
+
+    document.getElementById('countFeedback').textContent = String(feedbackItems.length);
+  }
+
+  function renderClassPlan(plan) {
+    const assignmentList = document.getElementById('classAssignmentsList');
+    const goalsList = document.getElementById('classGoalsList');
+    const reflectionFocus = document.getElementById('classReflectionFocus');
+    const portfolioFocus = document.getElementById('classPortfolioFocus');
+
+    const opdrachten = Array.isArray(plan?.opdrachten) ? plan.opdrachten.filter(Boolean) : [];
+    const doelen = Array.isArray(plan?.doelen) ? plan.doelen.filter(Boolean) : [];
+
+    if (assignmentList) {
+      assignmentList.innerHTML = opdrachten.length
+        ? opdrachten.map((item) => `<li>${escapeHtml(item)}</li>`).join('')
+        : '<li>Nog geen klasopdrachten ingesteld.</li>';
+    }
+
+    if (goalsList) {
+      goalsList.innerHTML = doelen.length
+        ? doelen.map((item) => `<li>${escapeHtml(item)}</li>`).join('')
+        : '<li>Nog geen weekdoelen ingesteld.</li>';
+    }
+
+    if (reflectionFocus) reflectionFocus.textContent = plan?.reflectieFocus || 'Nog niet ingesteld.';
+    if (portfolioFocus) portfolioFocus.textContent = plan?.portfolioFocus || 'Nog niet ingesteld.';
+
+    if (opdrachten.length) {
+      document.getElementById('countAssignments').textContent = String(opdrachten.length);
+      document.getElementById('portfolioAssignments').textContent = `${opdrachten.length} klasopdracht(en)`;
+    }
+
+    if (doelen.length) {
+      document.getElementById('countGoals').textContent = String(doelen.length);
+    }
+  }
+
+  async function loadClassPlan(profile) {
+    const classId = normalizeClassName(profile.klas);
+    if (!classId) return null;
+
+    try {
+      const doc = await window.db.collection(CLASS_PLAN_COLLECTION).doc(classId).get();
+      if (!doc.exists) return null;
+      return { id: doc.id, ...doc.data() };
+    } catch (error) {
+      console.warn('Kon klasplan niet ophalen; fallback op lokale data.', error);
+      return getStoredJson(`pavo_klasplan_${classId}`, null);
+    }
+  }
+
+  async function loadStudentFeedback(profile) {
+    try {
+      const snapshot = await window.db
+        .collection('feedback')
+        .where('naam', '==', profile.voornaam)
+        .where('klas', '==', profile.klas)
+        .limit(20)
+        .get();
+
+      return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    } catch (error) {
+      console.warn('Kon feedbackcollectie niet laden, fallback op lokale data.', error);
+      return getStoredJson(`pavo_feedback_${profile.voornaam}_${profile.klas}`, []);
+    }
   }
 
   async function loadStudentScores(profile) {
-    setStatus('Resultaten laden...', false);
+    setStatus('Dashboard laden...', false);
 
     const snapshot = await window.db
       .collection('scores')
@@ -197,7 +438,19 @@
 
     renderRows(items);
     renderTotalScore(items);
-    setStatus(`${items.length} opgeslagen resultaat/resultaten gevonden.`, false);
+    renderWeekOverview(items);
+    renderSkills(items, profile);
+
+    const classPlan = await loadClassPlan(profile);
+    renderClassPlan(classPlan);
+
+    const feedbackItems = await loadStudentFeedback(profile);
+    renderFeedback(feedbackItems);
+    renderProjects(profile);
+    renderReflections(getLocalReflections(profile));
+    renderCollaboration(profile);
+
+    setStatus(`${items.length} resultaten geladen.`, false);
   }
 
   function showActiveProfile(profile) {
@@ -229,17 +482,103 @@
     try {
       await loadStudentScores(profile);
     } catch (error) {
-      console.error('Fout bij laden leerlingresultaten:', error);
-      setStatus('Kon resultaten niet laden.', true);
+      console.error('Fout bij laden leerlingdashboard:', error);
+      setStatus('Kon dashboard niet volledig laden.', true);
     }
   }
 
+  async function handleReflectionSubmit(event) {
+    event.preventDefault();
+    const profile = getStoredProfile();
+    if (!profile) {
+      setStatus('Log eerst in om een reflectie op te slaan.', true);
+      return;
+    }
+
+    const reflection = {
+      voornaam: profile.voornaam,
+      klas: profile.klas,
+      learned: document.getElementById('reflectLearned').value.trim(),
+      difficult: document.getElementById('reflectDifficult').value.trim(),
+      nextTime: document.getElementById('reflectNextTime').value.trim(),
+      teamwork: document.getElementById('reflectTeamwork').value.trim(),
+      datum: new Date().toISOString()
+    };
+
+    if (!reflection.learned || !reflection.difficult || !reflection.nextTime || !reflection.teamwork) {
+      setStatus('Vul alle reflectievragen in.', true);
+      return;
+    }
+
+    const all = getStoredJson(REFLECTION_STORAGE_KEY, []);
+    all.unshift(reflection);
+    setStoredJson(REFLECTION_STORAGE_KEY, all);
+
+    try {
+      await window.db.collection('portfolio_reflecties').add({
+        ...reflection,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    } catch (error) {
+      console.warn('Firestore opslag reflectie mislukt; lokaal opgeslagen.', error);
+    }
+
+    event.target.reset();
+    renderReflections(getLocalReflections(profile));
+    setStatus('Reflectie opgeslagen in je leerlingportfolio.', false);
+  }
+
+  function handleCollaborationSubmit(event) {
+    event.preventDefault();
+    const profile = getStoredProfile();
+    if (!profile) {
+      setStatus('Log eerst in om samenwerking op te slaan.', true);
+      return;
+    }
+
+    const taak = document.getElementById('collabTask').value.trim();
+    const reacties = document.getElementById('collabComment').value.trim();
+    if (!taak || !reacties) {
+      setStatus('Vul taakverdeling en discussie in.', true);
+      return;
+    }
+
+    const all = getStoredJson(COLLAB_STORAGE_KEY, []);
+    all.unshift({
+      voornaam: profile.voornaam,
+      klas: profile.klas,
+      taak,
+      reacties,
+      datum: new Date().toISOString()
+    });
+    setStoredJson(COLLAB_STORAGE_KEY, all);
+    event.target.reset();
+    renderCollaboration(profile);
+    setStatus('Samenwerkingsnotitie opgeslagen.', false);
+  }
+
+  function initWeekOverviewSkeleton() {
+    const host = document.getElementById('weekOverview');
+    if (!host) return;
+    host.innerHTML = ['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo']
+      .map((day) => `<div class="day"><strong>${day}</strong><div>0 activiteit(en)</div></div>`)
+      .join('');
+  }
+
   async function init() {
+    initWeekOverviewSkeleton();
+
     try {
       await window.firebaseReady;
 
       const form = document.getElementById('studentViewLoginForm');
       if (form) form.addEventListener('submit', handleLogin);
+
+      const reflectionForm = document.getElementById('reflectionForm');
+      if (reflectionForm) reflectionForm.addEventListener('submit', handleReflectionSubmit);
+
+      const collaborationForm = document.getElementById('collaborationForm');
+      if (collaborationForm) collaborationForm.addEventListener('submit', handleCollaborationSubmit);
 
       const stored = getStoredProfile();
       showActiveProfile(stored);

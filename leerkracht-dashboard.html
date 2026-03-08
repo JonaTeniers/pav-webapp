@@ -11,11 +11,11 @@
 :root {
     --primary: #0b4da2;
     --primary-dark: #083a7a;
-    --bg: #f0f4f8;
+    --bg: #f6f8fb;
     --white: #ffffff;
     --text: #1e293b;
     --border: #e2e8f0;
-    --accent: #10b981;
+    --accent: #fbbf24;
 }
 
 body {
@@ -258,6 +258,46 @@ td {
     </div>
 </div>
 
+
+<section class="content-card">
+    <h3>Klasinstellingen voor leerlingdashboard</h3>
+    <p style="margin-top:0;color:#64748b;">Pas per klas realistische opdrachten, weekdoelen, reflectiefocus en portfoliofocus aan.</p>
+    <form id="classPlanForm" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;">
+        <label style="font-weight:700;display:flex;flex-direction:column;gap:6px;">Klas
+            <input id="classPlanKlas" required placeholder="bv. 3STW" style="padding:10px;border:1px solid var(--border);border-radius:8px;" />
+        </label>
+        <label style="font-weight:700;display:flex;flex-direction:column;gap:6px;">Opdrachten (één per lijn)
+            <textarea id="classPlanAssignments" rows="4" placeholder="Maandbudget opstellen&#10;Transportkosten vergelijken" style="padding:10px;border:1px solid var(--border);border-radius:8px;"></textarea>
+        </label>
+        <label style="font-weight:700;display:flex;flex-direction:column;gap:6px;">Weekdoelen (één per lijn)
+            <textarea id="classPlanGoals" rows="4" placeholder="Zelfstandig plannen&#10;Beter samenwerken" style="padding:10px;border:1px solid var(--border);border-radius:8px;"></textarea>
+        </label>
+        <label style="font-weight:700;display:flex;flex-direction:column;gap:6px;">Reflectiefocus
+            <input id="classPlanReflection" placeholder="Wat wil je volgende keer anders doen?" style="padding:10px;border:1px solid var(--border);border-radius:8px;" />
+        </label>
+        <label style="font-weight:700;display:flex;flex-direction:column;gap:6px;">Portfoliofocus
+            <input id="classPlanPortfolio" placeholder="Werkstukken met feedback uploaden" style="padding:10px;border:1px solid var(--border);border-radius:8px;" />
+        </label>
+        <div style="display:flex;align-items:end;gap:8px;">
+            <button type="submit" class="btn">Klasinstellingen opslaan</button>
+        </div>
+    </form>
+
+    <table style="margin-top:15px;">
+      <thead>
+        <tr>
+          <th>Klas</th>
+          <th>Aantal opdrachten</th>
+          <th>Aantal doelen</th>
+          <th>Laatst gewijzigd</th>
+        </tr>
+      </thead>
+      <tbody id="classPlanTableBody">
+        <tr><td colspan="4">Nog geen klasinstellingen geladen.</td></tr>
+      </tbody>
+    </table>
+</section>
+
 <section class="content-card">
     <h3>Recente Scores</h3>
     <table>
@@ -300,6 +340,59 @@ td {
     <div id="portfolioGrid" class="portfolio-grid"></div>
 </section>
 
+
+<section class="content-card">
+    <h3>Reflecties & vaardigheden</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Leerling</th>
+                <th>Reflecties</th>
+                <th>Samenwerking</th>
+                <th>Probleemoplossend denken</th>
+                <th>Laatste reflectie</th>
+            </tr>
+        </thead>
+        <tbody id="reflectionTableBody">
+            <tr><td colspan="5">Laden...</td></tr>
+        </tbody>
+    </table>
+</section>
+
+<section class="content-card">
+    <h3>Projectopvolging</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Project</th>
+                <th>Leerling</th>
+                <th>Deadline</th>
+                <th>Groep</th>
+                <th>Feedback</th>
+            </tr>
+        </thead>
+        <tbody id="projectTableBody">
+            <tr><td colspan="5">Laden...</td></tr>
+        </tbody>
+    </table>
+</section>
+
+<section class="content-card">
+    <h3>Mentorgesprekken & persoonlijke doelen</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Leerling</th>
+                <th>Persoonlijk doel</th>
+                <th>Mentorgesprek</th>
+                <th>Volgende stap</th>
+            </tr>
+        </thead>
+        <tbody id="mentorTableBody">
+            <tr><td colspan="4">Laden...</td></tr>
+        </tbody>
+    </table>
+</section>
 </main>
 
 <!-- FIREBASE -->
@@ -311,6 +404,7 @@ td {
 <script>
 window.TEACHER_EMAILS = ["jona@pavo.be","kaat@pavo.be"];
 const authSection = document.getElementById('authSection');
+const CLASS_PLAN_COLLECTION = 'class_learning_plans';
 
 function setStatus(message, isError = false) {
     const status = document.getElementById('status');
@@ -339,6 +433,95 @@ function formatDate(value) {
     return date ? date.toLocaleString('nl-BE') : '-';
 }
 
+function normalizeClassName(klas) {
+    return String(klas || '').trim().toLowerCase();
+}
+
+function textareaToList(value) {
+    return String(value || '')
+      .split('\n')
+      .map((item) => item.trim())
+      .filter(Boolean);
+}
+
+async function loadClassPlans() {
+    const body = document.getElementById('classPlanTableBody');
+    if (!body) return;
+
+    const localPlansMap = new Map();
+    Object.keys(localStorage).forEach((key) => {
+        if (!key.startsWith('pavo_klasplan_')) return;
+        try {
+            const parsed = JSON.parse(localStorage.getItem(key) || '{}');
+            const id = normalizeClassName(parsed.klas || key.replace('pavo_klasplan_', ''));
+            if (id) localPlansMap.set(id, { id, ...parsed });
+        } catch (error) {
+            console.warn('Kon lokaal klasplan niet lezen', error);
+        }
+    });
+
+    let firestorePlans = [];
+    try {
+        const snapshot = await db.collection(CLASS_PLAN_COLLECTION).limit(100).get();
+        firestorePlans = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    } catch (error) {
+        console.warn('Kon klasinstellingen niet uit Firestore laden, toon lokale fallback.', error);
+    }
+
+    firestorePlans.forEach((plan) => {
+        const id = normalizeClassName(plan.klas || plan.id);
+        if (id) localPlansMap.set(id, { ...localPlansMap.get(id), ...plan, id });
+    });
+
+    const plans = [...localPlansMap.values()]
+      .sort((a, b) => String(a.klas || a.id).localeCompare(String(b.klas || b.id), 'nl-BE'));
+
+    body.innerHTML = plans.length
+      ? plans.map((plan) => `
+        <tr>
+            <td><strong>${escapeHtml(plan.klas || plan.id)}</strong></td>
+            <td>${Array.isArray(plan.opdrachten) ? plan.opdrachten.length : 0}</td>
+            <td>${Array.isArray(plan.doelen) ? plan.doelen.length : 0}</td>
+            <td>${escapeHtml(formatDate(plan.updatedAt))}</td>
+        </tr>
+      `).join('')
+      : '<tr><td colspan="4">Nog geen klasinstellingen opgeslagen.</td></tr>';
+}
+
+async function handleClassPlanSubmit(event) {
+    event.preventDefault();
+    const klasRaw = document.getElementById('classPlanKlas').value.trim();
+    const klasId = normalizeClassName(klasRaw);
+    if (!klasId) {
+        setStatus('Vul een klas in voor klasinstellingen.', true);
+        return;
+    }
+
+    const payload = {
+        klas: klasRaw,
+        opdrachten: textareaToList(document.getElementById('classPlanAssignments').value),
+        doelen: textareaToList(document.getElementById('classPlanGoals').value),
+        reflectieFocus: document.getElementById('classPlanReflection').value.trim(),
+        portfolioFocus: document.getElementById('classPlanPortfolio').value.trim(),
+        updatedBy: firebase.auth().currentUser?.email || 'onbekend',
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    };
+
+    const localPayload = { ...payload, updatedAt: new Date().toISOString() };
+    localStorage.setItem(`pavo_klasplan_${klasId}`, JSON.stringify(localPayload));
+
+    try {
+        await db.collection(CLASS_PLAN_COLLECTION).doc(klasId).set(payload, { merge: true });
+        setStatus(`Klasinstellingen opgeslagen voor ${klasRaw}.`, false);
+    } catch (error) {
+        console.error('Opslaan in Firestore mislukt, lokaal bewaard.', error);
+        setStatus(`Firestore niet bereikbaar: klasinstellingen lokaal opgeslagen voor ${klasRaw}.`, true);
+    }
+
+    event.target.reset();
+    await loadClassPlans();
+}
+
 document.getElementById('teacherLoginForm').onsubmit = async (e) => {
     e.preventDefault();
     const email = teacherEmail.value.trim();
@@ -361,10 +544,16 @@ document.getElementById('teacherLoginForm').onsubmit = async (e) => {
 async function loadDashboardData(){
     const tbody = document.getElementById('scoresTableBody');
     const studentsBody = document.getElementById('studentsTableBody');
+    const reflectionBody = document.getElementById('reflectionTableBody');
+    const projectBody = document.getElementById('projectTableBody');
+    const mentorBody = document.getElementById('mentorTableBody');
 
-    setStatus('Scores en leerlingen worden geladen...');
+    setStatus('Scores, leerlingen en projecten worden geladen...');
     tbody.innerHTML = '<tr><td colspan="6">Laden...</td></tr>';
     studentsBody.innerHTML = '<tr><td colspan="5">Laden...</td></tr>';
+    reflectionBody.innerHTML = '<tr><td colspan="5">Laden...</td></tr>';
+    projectBody.innerHTML = '<tr><td colspan="5">Laden...</td></tr>';
+    mentorBody.innerHTML = '<tr><td colspan="4">Laden...</td></tr>';
 
     let snapshot;
     try {
@@ -455,6 +644,84 @@ async function loadDashboardData(){
         `).join('');
     }
 
+    let reflectionDocs = [];
+    try {
+        const reflectionSnapshot = await db.collection('portfolio_reflecties').limit(250).get();
+        reflectionDocs = reflectionSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    } catch (err) {
+        console.warn('Reflecties konden niet worden geladen.', err);
+    }
+
+    const reflectionMap = new Map();
+    reflectionDocs.forEach((item) => {
+        const key = `${(item.voornaam || '').trim()}__${(item.klas || '').trim()}`;
+        if (!key.startsWith('__')) {
+            const current = reflectionMap.get(key) || { naam: item.voornaam || '-', count: 0, teamwork: 0, problemSolving: 0, latest: null };
+            current.count += 1;
+            const teamworkScore = Math.min(100, 40 + (item.teamwork || '').length);
+            const problemScore = Math.min(100, 40 + (item.nextTime || '').length);
+            current.teamwork = Math.round((current.teamwork + teamworkScore) / 2) || teamworkScore;
+            current.problemSolving = Math.round((current.problemSolving + problemScore) / 2) || problemScore;
+            const created = parseDate(item.createdAt || item.datum);
+            if (created && (!current.latest || created > current.latest)) current.latest = created;
+            reflectionMap.set(key, current);
+        }
+    });
+
+    const reflectionRows = [...reflectionMap.values()].sort((a, b) => b.count - a.count);
+    reflectionBody.innerHTML = reflectionRows.length
+      ? reflectionRows.map((item) => `
+            <tr>
+                <td><strong>${escapeHtml(item.naam)}</strong></td>
+                <td>${item.count}</td>
+                <td>${item.teamwork}%</td>
+                <td>${item.problemSolving}%</td>
+                <td>${escapeHtml(item.latest ? item.latest.toLocaleString('nl-BE') : '-')}</td>
+            </tr>
+        `).join('')
+      : '<tr><td colspan="5">Nog geen reflecties beschikbaar.</td></tr>';
+
+    const localProjects = [];
+    Object.keys(localStorage).forEach((key) => {
+        if (!key.startsWith('pavo_projecten_')) return;
+        try {
+            const items = JSON.parse(localStorage.getItem(key) || '[]');
+            items.forEach((project) => localProjects.push(project));
+        } catch (error) {
+            console.warn('Kon lokaal project niet lezen', error);
+        }
+    });
+
+    projectBody.innerHTML = localProjects.length
+      ? localProjects.slice(0, 25).map((project) => `
+            <tr>
+                <td><strong>${escapeHtml(project.titel || '-')}</strong></td>
+                <td>${escapeHtml((project.groepsleden || [])[0] || '-')}</td>
+                <td>${escapeHtml(project.deadline || '-')}</td>
+                <td>${escapeHtml((project.groepsleden || []).join(', '))}</td>
+                <td>${escapeHtml(project.feedback || '-')}</td>
+            </tr>
+        `).join('')
+      : '<tr><td colspan="5">Geen projecten lokaal gevonden.</td></tr>';
+
+    const mentorRows = students.slice(0, 20).map((student) => ({
+      naam: student.naam,
+      doel: 'Zelfstandiger plannen van opdrachten',
+      gesprek: 'Binnen 2 weken',
+      stap: 'Check-in op maandag + reflectie op vrijdag'
+    }));
+
+    mentorBody.innerHTML = mentorRows.length
+      ? mentorRows.map((row) => `
+            <tr>
+                <td><strong>${escapeHtml(row.naam)}</strong></td>
+                <td>${escapeHtml(row.doel)}</td>
+                <td>${escapeHtml(row.gesprek)}</td>
+                <td>${escapeHtml(row.stap)}</td>
+            </tr>
+        `).join('')
+      : '<tr><td colspan="4">Nog geen mentoritems beschikbaar.</td></tr>';
+
     const avg = recentScores.length ? (total / recentScores.length).toFixed(1) + '%' : '0%';
     document.getElementById('count-total').innerText = scores.length;
     document.getElementById('avg-score').innerText = avg;
@@ -462,8 +729,12 @@ async function loadDashboardData(){
     document.getElementById('last-update').innerText =
         new Date().toLocaleTimeString('nl-BE',{hour:'2-digit',minute:'2-digit'});
 
+    await loadClassPlans();
     setStatus(`Klaar. ${scores.length} score(s) en ${students.length} leerling(en) geladen.`);
 }
+
+const classPlanForm = document.getElementById('classPlanForm');
+if (classPlanForm) classPlanForm.addEventListener('submit', handleClassPlanSubmit);
 
 firebase.auth().onAuthStateChanged(user=>{
     if(user && window.TEACHER_EMAILS.includes(user.email)){
