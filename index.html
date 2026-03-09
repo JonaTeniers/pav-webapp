@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PAV-O | Dashboard</title>
@@ -8,169 +9,166 @@
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap" rel="stylesheet">
 
 <style>
-:root {
-    --blue: #2563eb;
-    --blue-dark: #1d4ed8;
-    --bg: #f6f8fb;
-    --panel: #ffffff;
-    --text: #1e293b;
-    --muted: #64748b;
-    --line: #dce5f2;
-    --accent: #fef3c7;
+
+:root{
+--blue:#2563eb;
+--blue-dark:#1d4ed8;
+--bg:#f6f8fb;
+--panel:#ffffff;
+--text:#1e293b;
+--muted:#64748b;
+--line:#dce5f2;
+--accent:#fef3c7;
 }
 
-* { box-sizing: border-box; }
+*{box-sizing:border-box}
 
-body {
-    margin: 0;
-    font-family: 'Nunito', 'Segoe UI', sans-serif;
-    background: var(--bg);
-    color: var(--text);
+body{
+margin:0;
+font-family:'Nunito','Segoe UI',sans-serif;
+background:var(--bg);
+color:var(--text);
 }
 
-.wrapper { display: flex; }
+.wrapper{display:flex}
 
-.sidebar {
-    width: 260px;
-    background: var(--panel);
-    height: 100vh;
-    position: fixed;
-    border-right: 1px solid var(--line);
-    padding: 2rem 1.5rem;
+.sidebar{
+width:260px;
+background:var(--panel);
+height:100vh;
+position:fixed;
+border-right:1px solid var(--line);
+padding:2rem 1.5rem;
 }
 
-.sidebar-header { text-align: center; margin-bottom: 2.2rem; }
-.sidebar-header img { width: 70px; }
-.sidebar-header h1 { margin: 0.5rem 0 0; color: var(--blue); }
+.sidebar-header{text-align:center;margin-bottom:2rem}
+.sidebar-header img{width:70px}
+.sidebar-header h1{margin:0.5rem 0;color:var(--blue)}
 
-.nav-item {
-    display: block;
-    padding: 0.75rem 1rem;
-    border-radius: 12px;
-    font-weight: 700;
-    text-decoration: none;
-    color: var(--text);
-    margin-bottom: 0.3rem;
+.nav-item{
+display:block;
+padding:0.75rem 1rem;
+border-radius:12px;
+font-weight:700;
+text-decoration:none;
+color:var(--text);
+margin-bottom:0.3rem;
 }
 
-.nav-item.active { background: #e8f0ff; color: var(--blue-dark); }
-
-.main-content {
-    margin-left: 260px;
-    padding: 2.2rem 3rem;
-    max-width: 1400px;
-    width: calc(100% - 260px);
+.nav-item.active{
+background:#e8f0ff;
+color:var(--blue-dark)
 }
 
-.welcome-section h2 { font-size: 2.2rem; color: #1e3a8a; margin: 0 0 0.4rem; }
-.welcome-section p { max-width: 760px; color: var(--muted); margin-top: 0; }
-
-.summary-grid {
-    margin-top: 1.2rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 0.9rem;
+.main-content{
+margin-left:260px;
+padding:2.2rem 3rem;
+max-width:1400px;
+width:calc(100% - 260px)
 }
 
-.summary-card {
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 0.95rem;
-    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.04);
+.section-title{
+margin-top:2.3rem;
+margin-bottom:1rem;
+font-size:1.35rem;
+font-weight:800;
+color:#1e3a8a;
+border-bottom:2px solid #dbe7ff;
+padding-bottom:0.4rem
 }
 
-.summary-card small { color: var(--muted); text-transform: uppercase; font-size: 0.74rem; letter-spacing: 0.04em; }
-.summary-card strong { display: block; font-size: 1.4rem; margin-top: 0.3rem; }
-.summary-card p { margin: 0.3rem 0 0; font-size: 0.88rem; color: var(--muted); }
-
-.section-title {
-    margin-top: 2.3rem;
-    margin-bottom: 1rem;
-    font-size: 1.35rem;
-    font-weight: 800;
-    color: #1e3a8a;
-    border-bottom: 2px solid #dbe7ff;
-    padding-bottom: 0.4rem;
+.summary-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:0.9rem
 }
 
-.assignment-board {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-    gap: 1rem;
+.summary-card{
+background:var(--panel);
+border:1px solid var(--line);
+border-radius:14px;
+padding:0.95rem
 }
 
-.assignment-card {
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 1rem;
+.assignment-board{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+gap:1rem
 }
 
-.assignment-card .tag {
-    display: inline-block;
-    background: var(--accent);
-    color: #92400e;
-    font-size: 0.74rem;
-    font-weight: 800;
-    border-radius: 999px;
-    padding: 0.25rem 0.6rem;
+.assignment-card{
+background:var(--panel);
+border:1px solid var(--line);
+border-radius:14px;
+padding:1rem
 }
 
-.assignment-card h4 { margin: 0.6rem 0 0.4rem; font-size: 1rem; }
-.assignment-card p { margin: 0; color: var(--muted); font-size: 0.9rem; }
-
-.theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
-
-@media (max-width: 1200px) { .theme-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 700px) { .theme-grid { grid-template-columns: 1fr; } }
-
-.thema-card {
-    display: block;
-    border-radius: 16px;
-    overflow: hidden;
-    text-decoration: none;
-    background: var(--panel);
-    border: 1px solid var(--line);
-    transition: 0.25s;
+.assignment-card .tag{
+background:var(--accent);
+font-weight:800;
+font-size:0.75rem;
+padding:3px 8px;
+border-radius:999px
 }
 
-.thema-card:hover { transform: translateY(-5px); box-shadow: 0 14px 26px rgba(15, 23, 42, 0.12); }
-.thema-card-locked { opacity: 0.6; filter: grayscale(0.3); cursor: not-allowed; }
-.thema-card-locked:hover { transform: none; box-shadow: none; }
-
-.thema-image { height: 220px; background-size: cover; background-position: center; position: relative; }
-.thema-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0.2));
-    display: flex;
-    align-items: flex-end;
-    padding: 1rem;
-}
-.thema-title { color: white; font-weight: 800; font-size: 1.16rem; }
-.thema-bottom { padding: 1rem; }
-
-.progress-bar { height: 6px; background: #e5e7eb; border-radius: 4px; overflow: hidden; margin-bottom: 0.5rem; }
-.progress-fill { height: 100%; background: linear-gradient(90deg, #93c5fd, #2563eb); }
-.progress-text { font-size: 0.85rem; color: var(--muted); }
-
-.footer {
-    margin-left: 260px;
-    padding: 1.2rem;
-    text-align: center;
-    font-size: 0.85rem;
-    color: var(--muted);
-    border-top: 1px solid var(--line);
-    background: var(--panel);
+.theme-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:1.2rem
 }
 
-@media (max-width: 1024px) {
-  .sidebar { position: static; width: 100%; height: auto; }
-  .wrapper { flex-direction: column; }
-  .main-content { margin-left: 0; width: 100%; padding: 1.2rem; }
-  .footer { margin-left: 0; }
+.thema-card{
+display:block;
+border-radius:16px;
+overflow:hidden;
+text-decoration:none;
+background:var(--panel);
+border:1px solid var(--line);
 }
+
+.thema-image{
+height:220px;
+background-size:cover;
+background-position:center;
+position:relative
+}
+
+.thema-overlay{
+position:absolute;
+inset:0;
+background:linear-gradient(to top,rgba(0,0,0,0.75),rgba(0,0,0,0.2));
+display:flex;
+align-items:flex-end;
+padding:1rem
+}
+
+.thema-title{color:white;font-weight:800;font-size:1.16rem}
+
+.thema-bottom{padding:1rem}
+
+.progress-bar{
+height:6px;
+background:#e5e7eb;
+border-radius:4px;
+overflow:hidden
+}
+
+.progress-fill{
+height:100%;
+background:linear-gradient(90deg,#93c5fd,#2563eb);
+width:0%
+}
+
+.footer{
+margin-left:260px;
+padding:1.2rem;
+text-align:center;
+font-size:0.85rem;
+color:var(--muted);
+border-top:1px solid var(--line);
+background:var(--panel)
+}
+
 </style>
 </head>
 
@@ -179,74 +177,91 @@ body {
 <div class="wrapper">
 
 <div class="sidebar">
-    <div class="sidebar-header">
-        <img src="img/pavomascotte.png">
-        <h1>PAV-O</h1>
-    </div>
 
-    <a href="index.html" class="nav-item active">Dashboard</a>
-    <a href="portfolio.html" class="nav-item">Mijn Portfolio</a>
-    <a href="chattie.html" class="nav-item">Chattie AI</a>
-    <a href="login.html" class="nav-item">Inloggen</a>
+<div class="sidebar-header">
+<img src="img/pavomascotte.png">
+<h1>PAV-O</h1>
+</div>
+
+<a href="index.html" class="nav-item active">Dashboard</a>
+<a href="portfolio.html" class="nav-item">Mijn Portfolio</a>
+<a href="chattie.html" class="nav-item">Chattie AI</a>
+<a href="login.html" class="nav-item">Inloggen</a>
+
 </div>
 
 <div class="main-content">
 
-<div class="welcome-section">
-    <h2>Welkom bij PAV-O</h2>
-    <p>Plan zelfstandig je week, werk projectmatig en groei in vaardigheden met opdrachten uit het echte leven.</p>
-    <p id="themeAccessStatus" style="color:#b00020;font-weight:700;"></p>
+<h2>Welkom bij PAV-O</h2>
+<p>Plan zelfstandig je week, werk projectmatig en groei in vaardigheden met opdrachten uit het echte leven.</p>
 
-    <div class="summary-grid">
-      <div class="summary-card">
-        <small>Mijn opdrachten</small>
-        <strong>9</strong>
-        <p>4 actief • 5 afgerond</p>
-      </div>
-      <div class="summary-card">
-        <small>Doelen deze week</small>
-        <strong>3 / 5</strong>
-        <p>Blijf focussen op planning en communicatie.</p>
-      </div>
-      <div class="summary-card">
-        <small>Reflectie</small>
-        <strong>Laatste update</strong>
-        <p>"Ik wil volgende keer mijn groep vroeger verdelen."</p>
-      </div>
-      <div class="summary-card">
-        <small>Portfolio</small>
-        <strong>Op schema</strong>
-        <p>Nieuwe uploads in projecten en feedback.</p>
-      </div>
-    </div>
+
+<div class="summary-grid">
+
+<div class="summary-card">
+<small>Mijn opdrachten</small>
+<strong>9</strong>
+<p>4 actief • 5 afgerond</p>
 </div>
+
+<div class="summary-card">
+<small>Doelen deze week</small>
+<strong>3 / 5</strong>
+<p>Blijf focussen op planning en communicatie.</p>
+</div>
+
+<div class="summary-card">
+<small>Reflectie</small>
+<strong>Laatste update</strong>
+<p>"Ik wil volgende keer mijn groep vroeger verdelen."</p>
+</div>
+
+<div class="summary-card">
+<small>Portfolio</small>
+<strong>Op schema</strong>
+<p>Nieuwe uploads in projecten en feedback.</p>
+</div>
+
+</div>
+
+
+<div class="section-title">Wat we deze periode leren</div>
+
+<div class="assignment-card">
+<div id="classPlanContent">Klasplanning laden...</div>
+</div>
+
 
 <div class="section-title">Realistische PAV-opdrachten</div>
+
 <div class="assignment-board">
-  <article class="assignment-card">
-    <span class="tag">Dagelijks leven</span>
-    <h4>Maandbudget berekenen</h4>
-    <p>Werk in duo een haalbaar budget uit voor wonen, eten en transport.</p>
-  </article>
-  <article class="assignment-card">
-    <span class="tag">Communicatie</span>
-    <h4>Sollicitatiebrief schrijven</h4>
-    <p>Schrijf een brief op maat van een vacature en geef peer-feedback.</p>
-  </article>
-  <article class="assignment-card">
-    <span class="tag">Mediawijsheid</span>
-    <h4>Fake news analyseren</h4>
-    <p>Gebruik checklists om feiten en manipulatie in nieuwsberichten te vergelijken.</p>
-  </article>
-  <article class="assignment-card">
-    <span class="tag">Rekenen</span>
-    <h4>Transportkosten vergelijken</h4>
-    <p>Vergelijk abonnement, fiets en auto voor een wekelijkse verplaatsing.</p>
-  </article>
+
+<article class="assignment-card">
+<span class="tag">Dagelijks leven</span>
+<h4>Maandbudget berekenen</h4>
+<p>Werk in duo een haalbaar budget uit voor wonen, eten en transport.</p>
+</article>
+
+<article class="assignment-card">
+<span class="tag">Communicatie</span>
+<h4>Sollicitatiebrief schrijven</h4>
+<p>Schrijf een brief op maat van een vacature en geef peer-feedback.</p>
+</article>
+
+<article class="assignment-card">
+<span class="tag">Mediawijsheid</span>
+<h4>Fake news analyseren</h4>
+<p>Gebruik checklists om feiten en manipulatie in nieuwsberichten te vergelijken.</p>
+</article>
+
+<article class="assignment-card">
+<span class="tag">Rekenen</span>
+<h4>Transportkosten vergelijken</h4>
+<p>Vergelijk abonnement, fiets en auto voor een wekelijkse verplaatsing.</p>
+</article>
+
 </div>
 
-
-<!-- ================= HOOFDTHEMA'S ================= -->
 
 <div class="section-title">Hoofdthema’s</div>
 
@@ -256,87 +271,53 @@ body {
 <div class="thema-image" style="background-image:url('img/images/thema1.jpg')">
 <div class="thema-overlay"><div class="thema-title">Hoofdthema 1 – Landschappen</div></div>
 </div>
-<div class="thema-bottom">
-<div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-<div class="progress-text">0% voltooid</div>
-</div>
+<div class="thema-bottom"><div class="progress-bar"><div class="progress-fill"></div></div></div>
 </a>
 
 <a href="hoofdthema2.html" class="thema-card">
 <div class="thema-image" style="background-image:url('img/images/thema2.jpg')">
 <div class="thema-overlay"><div class="thema-title">Hoofdthema 2 – Leven in een biotoop</div></div>
 </div>
-<div class="thema-bottom">
-<div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-<div class="progress-text">0% voltooid</div>
-</div>
+<div class="thema-bottom"><div class="progress-bar"><div class="progress-fill"></div></div></div>
 </a>
 
 <a href="hoofdthema3.html" class="thema-card">
 <div class="thema-image" style="background-image:url('img/images/thema9.jpg')">
 <div class="thema-overlay"><div class="thema-title">Hoofdthema 3 – Belgische geschiedenis</div></div>
 </div>
-<div class="thema-bottom">
-<div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-<div class="progress-text">0% voltooid</div>
-</div>
+<div class="thema-bottom"><div class="progress-bar"><div class="progress-fill"></div></div></div>
 </a>
 
 <a href="hoofdthema4.html" class="thema-card">
 <div class="thema-image" style="background-image:url('img/images/thema10.jpg')">
 <div class="thema-overlay"><div class="thema-title">Hoofdthema 4 – Monsterlijke groene groei</div></div>
 </div>
-<div class="thema-bottom">
-<div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-<div class="progress-text">0% voltooid</div>
-</div>
+<div class="thema-bottom"><div class="progress-bar"><div class="progress-fill"></div></div></div>
 </a>
 
 <a href="hoofdthema5.html" class="thema-card">
 <div class="thema-image" style="background-image:url('img/images/thema11.jpg')">
 <div class="thema-overlay"><div class="thema-title">Hoofdthema 5 – Veilig Onderweg</div></div>
 </div>
-<div class="thema-bottom">
-<div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-<div class="progress-text">0% voltooid</div>
-</div>
+<div class="thema-bottom"><div class="progress-bar"><div class="progress-fill"></div></div></div>
 </a>
 
 <a href="hoofdthema6.html" class="thema-card">
 <div class="thema-image" style="background-image:url('img/images/thema12.jpg')">
-<div class="thema-overlay"><div class="thema-title">Hoofdthema 6 – Sparen </div></div>
+<div class="thema-overlay"><div class="thema-title">Hoofdthema 6 – Sparen</div></div>
 </div>
-<div class="thema-bottom">
-<div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-<div class="progress-text">0% voltooid</div>
-</div>
+<div class="thema-bottom"><div class="progress-bar"><div class="progress-fill"></div></div></div>
 </a>
 
 <a href="hoofdthema7.html" class="thema-card">
 <div class="thema-image" style="background-image:url('img/images/thema13.jpg')">
-<div class="thema-overlay"><div class="thema-title">Hoofdthema 7 – Veiligheid en preventie </div></div>
+<div class="thema-overlay"><div class="thema-title">Hoofdthema 7 – Veiligheid en preventie</div></div>
 </div>
-<div class="thema-bottom">
-<div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-<div class="progress-text">0% voltooid</div>
-</div>
-</a>
-
-<a href="hoofdthema8.html" class="thema-card" data-allowed-classes="3mech,4mech">
-<div class="thema-image" style="background-image:url('https://images.unsplash.com/photo-1581092919535-7146ff1a5902?auto=format&fit=crop&w=1200&q=80')">
-<div class="thema-overlay"><div class="thema-title">Hoofdthema 8 – Mechanica</div></div>
-</div>
-<div class="thema-bottom">
-<div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-<div class="progress-text">Enkel voor klas 3mech en 4mech</div>
-</div>
+<div class="thema-bottom"><div class="progress-bar"><div class="progress-fill"></div></div></div>
 </a>
 
 </div>
 
-
-
-<!-- ================= OEFENTHEMA'S ================= -->
 
 <div class="section-title">Oefenthema’s</div>
 
@@ -344,61 +325,110 @@ body {
 
 <a href="oefenthema1.html" class="thema-card">
 <div class="thema-image" style="background-image:url('img/images/thema3.jpg')">
-<div class="thema-overlay"><div class="thema-title">Oefenthema – Werkwoordstijden</div></div>
+<div class="thema-overlay"><div class="thema-title">Werkwoordstijden</div></div>
 </div>
-<div class="thema-bottom"><div class="progress-text">0% voltooid</div></div>
 </a>
 
 <a href="oefenthema2.html" class="thema-card">
 <div class="thema-image" style="background-image:url('img/images/thema4.jpg')">
-<div class="thema-overlay"><div class="thema-title">Oefenthema – Wiskunde</div></div>
+<div class="thema-overlay"><div class="thema-title">Wiskunde</div></div>
 </div>
-<div class="thema-bottom"><div class="progress-text">0% voltooid</div></div>
 </a>
 
 <a href="oefenthema3.html" class="thema-card">
 <div class="thema-image" style="background-image:url('img/images/thema5.jpg')">
-<div class="thema-overlay"><div class="thema-title">Oefenthema – Fictie & non-fictie</div></div>
+<div class="thema-overlay"><div class="thema-title">Fictie & non-fictie</div></div>
 </div>
-<div class="thema-bottom"><div class="progress-text">0% voltooid</div></div>
 </a>
 
 <a href="oefenthema4.html" class="thema-card">
 <div class="thema-image" style="background-image:url('img/images/thema6.jpg')">
-<div class="thema-overlay"><div class="thema-title">Oefenthema – Schatten</div></div>
+<div class="thema-overlay"><div class="thema-title">Schatten</div></div>
 </div>
-<div class="thema-bottom"><div class="progress-text">0% voltooid</div></div>
 </a>
 
 <a href="oefenthema5.html" class="thema-card">
 <div class="thema-image" style="background-image:url('img/images/thema7.jpg')">
-<div class="thema-overlay"><div class="thema-title">Oefenthema – Communicatie</div></div>
+<div class="thema-overlay"><div class="thema-title">Communicatie</div></div>
 </div>
-<div class="thema-bottom"><div class="progress-text">0% voltooid</div></div>
 </a>
 
 <a href="oefenthema6.html" class="thema-card">
 <div class="thema-image" style="background-image:url('img/images/thema8.jpg')">
-<div class="thema-overlay"><div class="thema-title">Oefenthema – Actualiteit</div></div>
+<div class="thema-overlay"><div class="thema-title">Actualiteit</div></div>
 </div>
-<div class="thema-bottom"><div class="progress-text">0% voltooid</div></div>
 </a>
 
 </div>
 
-
 </div>
 </div>
 
-<footer class="footer">
-© 2026 PAV-O
-</footer>
+<footer class="footer">© 2026 PAV-O</footer>
+
 
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 <script src="./firebase.js"></script>
 <script src="./index-progress.js"></script>
 <script src="./theme-access-control.js"></script>
+
+
+<script>
+
+function escapeHtml(text){
+return String(text||"")
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;");
+}
+
+async function loadClassPlan(){
+
+const klas=localStorage.getItem("studentClass")
+
+if(!klas)return
+
+try{
+
+const doc=await db.collection("class_learning_plans")
+.doc(klas.toLowerCase())
+.get()
+
+if(!doc.exists){
+
+document.getElementById("classPlanContent").innerHTML=
+"Er is nog geen klasplanning ingesteld."
+
+return
+}
+
+const data=doc.data()
+
+document.getElementById("classPlanContent").innerHTML=
+
+"<strong>Opdrachten</strong><ul>"+
+(data.opdrachten||[]).map(o=>"<li>"+escapeHtml(o)+"</li>").join("")+
+"</ul>"+
+
+"<strong>Doelen</strong><ul>"+
+(data.doelen||[]).map(o=>"<li>"+escapeHtml(o)+"</li>").join("")+
+"</ul>"+
+
+"<strong>Reflectie</strong><p>"+escapeHtml(data.reflectieFocus)+"</p>"+
+
+"<strong>Portfoliofocus</strong><p>"+escapeHtml(data.portfolioFocus)+"</p>"
+
+}
+catch(err){
+console.error(err)
+}
+
+}
+
+loadClassPlan()
+
+</script>
 
 </body>
 </html>
