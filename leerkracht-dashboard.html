@@ -217,8 +217,6 @@ td {
     <h2>
         <img src="img/pavomascotte.png" style="width:30px;">
         PAV-O
-    </h2>
-
     <a href="#" class="active">📊 Resultaten</a>
     <a href="theme-manager.html">➕ Maak nieuw thema</a>
     <a href="index.html">🚪 Leerlingomgeving</a>
@@ -448,44 +446,26 @@ async function loadClassPlans() {
     const body = document.getElementById('classPlanTableBody');
     if (!body) return;
 
-    const localPlansMap = new Map();
-    Object.keys(localStorage).forEach((key) => {
-        if (!key.startsWith('pavo_klasplan_')) return;
-        try {
-            const parsed = JSON.parse(localStorage.getItem(key) || '{}');
-            const id = normalizeClassName(parsed.klas || key.replace('pavo_klasplan_', ''));
-            if (id) localPlansMap.set(id, { id, ...parsed });
-        } catch (error) {
-            console.warn('Kon lokaal klasplan niet lezen', error);
-        }
-    });
-
-    let firestorePlans = [];
     try {
         const snapshot = await db.collection(CLASS_PLAN_COLLECTION).limit(100).get();
-        firestorePlans = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        const plans = snapshot.docs
+          .map((doc) => ({ id: doc.id, ...doc.data() }))
+          .sort((a, b) => String(a.klas || a.id).localeCompare(String(b.klas || b.id), 'nl-BE'));
+
+        body.innerHTML = plans.length
+          ? plans.map((plan) => `
+            <tr>
+                <td><strong>${escapeHtml(plan.klas || plan.id)}</strong></td>
+                <td>${Array.isArray(plan.opdrachten) ? plan.opdrachten.length : 0}</td>
+                <td>${Array.isArray(plan.doelen) ? plan.doelen.length : 0}</td>
+                <td>${escapeHtml(formatDate(plan.updatedAt))}</td>
+            </tr>
+          `).join('')
+          : '<tr><td colspan="4">Nog geen klasinstellingen opgeslagen.</td></tr>';
     } catch (error) {
-        console.warn('Kon klasinstellingen niet uit Firestore laden, toon lokale fallback.', error);
+        console.error('Kon klasinstellingen niet laden', error);
+        body.innerHTML = '<tr><td colspan="4">Kon klasinstellingen niet laden.</td></tr>';
     }
-
-    firestorePlans.forEach((plan) => {
-        const id = normalizeClassName(plan.klas || plan.id);
-        if (id) localPlansMap.set(id, { ...localPlansMap.get(id), ...plan, id });
-    });
-
-    const plans = [...localPlansMap.values()]
-      .sort((a, b) => String(a.klas || a.id).localeCompare(String(b.klas || b.id), 'nl-BE'));
-
-    body.innerHTML = plans.length
-      ? plans.map((plan) => `
-        <tr>
-            <td><strong>${escapeHtml(plan.klas || plan.id)}</strong></td>
-            <td>${Array.isArray(plan.opdrachten) ? plan.opdrachten.length : 0}</td>
-            <td>${Array.isArray(plan.doelen) ? plan.doelen.length : 0}</td>
-            <td>${escapeHtml(formatDate(plan.updatedAt))}</td>
-        </tr>
-      `).join('')
-      : '<tr><td colspan="4">Nog geen klasinstellingen opgeslagen.</td></tr>';
 }
 
 async function handleClassPlanSubmit(event) {
@@ -507,20 +487,16 @@ async function handleClassPlanSubmit(event) {
         updatedAt: firebase.firestore.FieldValue.serverTimestamp()
     };
 
-    const localPayload = { ...payload, updatedAt: new Date().toISOString() };
-    localStorage.setItem(`pavo_klasplan_${klasId}`, JSON.stringify(localPayload));
-
     try {
         await db.collection(CLASS_PLAN_COLLECTION).doc(klasId).set(payload, { merge: true });
+        localStorage.setItem(`pavo_klasplan_${klasId}`, JSON.stringify({ ...payload, updatedAt: new Date().toISOString() }));
         setStatus(`Klasinstellingen opgeslagen voor ${klasRaw}.`, false);
+        event.target.reset();
+        await loadClassPlans();
     } catch (error) {
-        console.error('Opslaan in Firestore mislukt, lokaal bewaard.', error);
-        const reason = error?.code ? `${error.code}: ${error.message}` : (error?.message || 'onbekende fout');
-        setStatus(`Firestore niet bereikbaar: klasinstellingen lokaal opgeslagen voor ${klasRaw}. (${reason})`, true);
+        console.error('Opslaan klasinstellingen mislukt', error);
+        setStatus('Kon klasinstellingen niet opslaan.', true);
     }
-
-    event.target.reset();
-    await loadClassPlans();
 }
 
 document.getElementById('teacherLoginForm').onsubmit = async (e) => {

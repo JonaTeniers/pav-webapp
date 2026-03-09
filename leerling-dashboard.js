@@ -12,7 +12,6 @@
   const REFLECTION_STORAGE_KEY = 'pavo_reflecties';
   const PROJECT_STORAGE_KEY = 'pavo_projecten';
   const COLLAB_STORAGE_KEY = 'pavo_samenwerking';
-  const CLASS_PLAN_COLLECTION = 'class_learning_plans';
 
   const THEMAS = [
     { id: 1, naam: 'Thema 1', maxUnit: 12, startLink: 'hoofdthema1.html' },
@@ -84,10 +83,6 @@
 
   function saveProfile(profile) {
     setStoredJson(STORAGE_KEY, profile);
-  }
-
-  function normalizeClassName(klas) {
-    return String(klas || '').trim().toLowerCase();
   }
 
   function extractNumbers(item) {
@@ -359,54 +354,6 @@
     document.getElementById('countFeedback').textContent = String(feedbackItems.length);
   }
 
-  function renderClassPlan(plan) {
-    const assignmentList = document.getElementById('classAssignmentsList');
-    const goalsList = document.getElementById('classGoalsList');
-    const reflectionFocus = document.getElementById('classReflectionFocus');
-    const portfolioFocus = document.getElementById('classPortfolioFocus');
-
-    const opdrachten = Array.isArray(plan?.opdrachten) ? plan.opdrachten.filter(Boolean) : [];
-    const doelen = Array.isArray(plan?.doelen) ? plan.doelen.filter(Boolean) : [];
-
-    if (assignmentList) {
-      assignmentList.innerHTML = opdrachten.length
-        ? opdrachten.map((item) => `<li>${escapeHtml(item)}</li>`).join('')
-        : '<li>Nog geen klasopdrachten ingesteld.</li>';
-    }
-
-    if (goalsList) {
-      goalsList.innerHTML = doelen.length
-        ? doelen.map((item) => `<li>${escapeHtml(item)}</li>`).join('')
-        : '<li>Nog geen weekdoelen ingesteld.</li>';
-    }
-
-    if (reflectionFocus) reflectionFocus.textContent = plan?.reflectieFocus || 'Nog niet ingesteld.';
-    if (portfolioFocus) portfolioFocus.textContent = plan?.portfolioFocus || 'Nog niet ingesteld.';
-
-    if (opdrachten.length) {
-      document.getElementById('countAssignments').textContent = String(opdrachten.length);
-      document.getElementById('portfolioAssignments').textContent = `${opdrachten.length} klasopdracht(en)`;
-    }
-
-    if (doelen.length) {
-      document.getElementById('countGoals').textContent = String(doelen.length);
-    }
-  }
-
-  async function loadClassPlan(profile) {
-    const classId = normalizeClassName(profile.klas);
-    if (!classId) return null;
-
-    try {
-      const doc = await window.db.collection(CLASS_PLAN_COLLECTION).doc(classId).get();
-      if (!doc.exists) return null;
-      return { id: doc.id, ...doc.data() };
-    } catch (error) {
-      console.warn('Kon klasplan niet ophalen; fallback op lokale data.', error);
-      return getStoredJson(`pavo_klasplan_${classId}`, null);
-    }
-  }
-
   async function loadStudentFeedback(profile) {
     try {
       const snapshot = await window.db
@@ -440,9 +387,6 @@
     renderTotalScore(items);
     renderWeekOverview(items);
     renderSkills(items, profile);
-
-    const classPlan = await loadClassPlan(profile);
-    renderClassPlan(classPlan);
 
     const feedbackItems = await loadStudentFeedback(profile);
     renderFeedback(feedbackItems);
@@ -485,6 +429,34 @@
       console.error('Fout bij laden leerlingdashboard:', error);
       setStatus('Kon dashboard niet volledig laden.', true);
     }
+
+    const taak = document.getElementById('collabTask').value.trim();
+    const reacties = document.getElementById('collabComment').value.trim();
+    if (!taak || !reacties) {
+      setStatus('Vul taakverdeling en discussie in.', true);
+      return;
+    }
+
+    const all = getStoredJson(COLLAB_STORAGE_KEY, []);
+    all.unshift({
+      voornaam: profile.voornaam,
+      klas: profile.klas,
+      taak,
+      reacties,
+      datum: new Date().toISOString()
+    });
+    setStoredJson(COLLAB_STORAGE_KEY, all);
+    event.target.reset();
+    renderCollaboration(profile);
+    setStatus('Samenwerkingsnotitie opgeslagen.', false);
+  }
+
+  function initWeekOverviewSkeleton() {
+    const host = document.getElementById('weekOverview');
+    if (!host) return;
+    host.innerHTML = ['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo']
+      .map((day) => `<div class="day"><strong>${day}</strong><div>0 activiteit(en)</div></div>`)
+      .join('');
   }
 
   async function handleReflectionSubmit(event) {
