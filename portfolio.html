@@ -417,7 +417,10 @@
                     content: editor.innerHTML, timestamp: firebase.firestore.FieldValue.serverTimestamp()
                 });
                 alert("✅ Verzonden!");
-            } catch (e) { alert("Fout bij verzenden."); }
+            } catch (e) {
+                const reason = e?.code ? `${e.code}: ${e.message}` : (e?.message || 'onbekende fout');
+                alert(`Fout bij verzenden naar Firestore.\n${reason}`);
+            }
         }
     </script>
 </body>
