@@ -4,6 +4,7 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>PAV-O | Dashboard</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap" rel="stylesheet">
@@ -12,7 +13,6 @@
 
 :root{
 --blue:#2563eb;
---blue-dark:#1d4ed8;
 --bg:#f6f8fb;
 --panel:#ffffff;
 --text:#1e293b;
@@ -21,16 +21,14 @@
 --accent:#fef3c7;
 }
 
-*{box-sizing:border-box}
-
 body{
 margin:0;
-font-family:'Nunito','Segoe UI',sans-serif;
+font-family:'Nunito',sans-serif;
 background:var(--bg);
 color:var(--text);
 }
 
-.wrapper{display:flex}
+.wrapper{display:flex;}
 
 .sidebar{
 width:260px;
@@ -41,96 +39,92 @@ border-right:1px solid var(--line);
 padding:2rem 1.5rem;
 }
 
-.sidebar-header{text-align:center;margin-bottom:2rem}
-.sidebar-header img{width:70px}
-.sidebar-header h1{margin:0.5rem 0;color:var(--blue)}
+.sidebar-header{text-align:center;margin-bottom:2rem;}
+.sidebar-header img{width:70px;}
+.sidebar-header h1{color:var(--blue);}
 
 .nav-item{
 display:block;
-padding:0.75rem 1rem;
-border-radius:12px;
+padding:10px;
 font-weight:700;
 text-decoration:none;
 color:var(--text);
-margin-bottom:0.3rem;
+border-radius:10px;
+margin-bottom:5px;
 }
 
 .nav-item.active{
 background:#e8f0ff;
-color:var(--blue-dark)
 }
 
 .main-content{
 margin-left:260px;
-padding:2.2rem 3rem;
-max-width:1400px;
-width:calc(100% - 260px)
+padding:30px;
 }
 
 .section-title{
-margin-top:2.3rem;
-margin-bottom:1rem;
-font-size:1.35rem;
+margin-top:35px;
+font-size:22px;
 font-weight:800;
 color:#1e3a8a;
 border-bottom:2px solid #dbe7ff;
-padding-bottom:0.4rem
+padding-bottom:5px;
 }
 
 .summary-grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:0.9rem
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:10px;
 }
 
 .summary-card{
-background:var(--panel);
+background:white;
+border-radius:12px;
 border:1px solid var(--line);
-border-radius:14px;
-padding:0.95rem
+padding:15px;
 }
 
 .assignment-board{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-gap:1rem
+gap:15px;
 }
 
 .assignment-card{
-background:var(--panel);
+background:white;
+border-radius:12px;
 border:1px solid var(--line);
-border-radius:14px;
-padding:1rem
+padding:15px;
 }
 
-.assignment-card .tag{
+.tag{
 background:var(--accent);
+padding:4px 10px;
+border-radius:999px;
+font-size:12px;
 font-weight:800;
-font-size:0.75rem;
-padding:3px 8px;
-border-radius:999px
 }
 
 .theme-grid{
 display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:1.2rem
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
 }
 
 .thema-card{
 display:block;
-border-radius:16px;
+border-radius:14px;
 overflow:hidden;
 text-decoration:none;
-background:var(--panel);
+background:white;
 border:1px solid var(--line);
 }
 
 .thema-image{
-height:220px;
+height:180px;
 background-size:cover;
 background-position:center;
-position:relative
+position:relative;
 }
 
 .thema-overlay{
@@ -139,37 +133,40 @@ inset:0;
 background:linear-gradient(to top,rgba(0,0,0,0.75),rgba(0,0,0,0.2));
 display:flex;
 align-items:flex-end;
-padding:1rem
+padding:15px;
 }
 
-.thema-title{color:white;font-weight:800;font-size:1.16rem}
+.thema-title{
+color:white;
+font-weight:800;
+}
 
-.thema-bottom{padding:1rem}
+.thema-bottom{
+padding:12px;
+}
 
 .progress-bar{
 height:6px;
 background:#e5e7eb;
 border-radius:4px;
-overflow:hidden
+overflow:hidden;
 }
 
 .progress-fill{
 height:100%;
 background:linear-gradient(90deg,#93c5fd,#2563eb);
-width:0%
+width:0%;
 }
 
 .footer{
 margin-left:260px;
-padding:1.2rem;
 text-align:center;
-font-size:0.85rem;
+padding:20px;
 color:var(--muted);
-border-top:1px solid var(--line);
-background:var(--panel)
 }
 
 </style>
+
 </head>
 
 <body>
@@ -190,36 +187,34 @@ background:var(--panel)
 
 </div>
 
+
 <div class="main-content">
 
 <h2>Welkom bij PAV-O</h2>
-<p>Plan zelfstandig je week, werk projectmatig en groei in vaardigheden met opdrachten uit het echte leven.</p>
+
+<p>Plan zelfstandig je week en werk projectmatig aan vaardigheden.</p>
 
 
 <div class="summary-grid">
 
 <div class="summary-card">
-<small>Mijn opdrachten</small>
-<strong>9</strong>
-<p>4 actief • 5 afgerond</p>
+<strong>Mijn opdrachten</strong>
+<p>9 totaal</p>
 </div>
 
 <div class="summary-card">
-<small>Doelen deze week</small>
-<strong>3 / 5</strong>
-<p>Blijf focussen op planning en communicatie.</p>
+<strong>Doelen deze week</strong>
+<p>3 / 5</p>
 </div>
 
 <div class="summary-card">
-<small>Reflectie</small>
-<strong>Laatste update</strong>
-<p>"Ik wil volgende keer mijn groep vroeger verdelen."</p>
+<strong>Reflectie</strong>
+<p>Laatste update</p>
 </div>
 
 <div class="summary-card">
-<small>Portfolio</small>
-<strong>Op schema</strong>
-<p>Nieuwe uploads in projecten en feedback.</p>
+<strong>Portfolio</strong>
+<p>Op schema</p>
 </div>
 
 </div>
@@ -228,39 +223,22 @@ background:var(--panel)
 <div class="section-title">Wat we deze periode leren</div>
 
 <div class="assignment-card">
-<div id="classPlanContent">Klasplanning laden...</div>
+
+<div id="classPlanContent">
+Klasplanning laden...
+</div>
+
 </div>
 
 
 <div class="section-title">Realistische PAV-opdrachten</div>
 
-<div class="assignment-board">
+<div id="assignmentBoard" class="assignment-board">
 
-<article class="assignment-card">
-<span class="tag">Dagelijks leven</span>
-<h4>Maandbudget berekenen</h4>
-<p>Werk in duo een haalbaar budget uit voor wonen, eten en transport.</p>
-</article>
-
-<article class="assignment-card">
-<span class="tag">Communicatie</span>
-<h4>Sollicitatiebrief schrijven</h4>
-<p>Schrijf een brief op maat van een vacature en geef peer-feedback.</p>
-</article>
-
-<article class="assignment-card">
-<span class="tag">Mediawijsheid</span>
-<h4>Fake news analyseren</h4>
-<p>Gebruik checklists om feiten en manipulatie in nieuwsberichten te vergelijken.</p>
-</article>
-
-<article class="assignment-card">
-<span class="tag">Rekenen</span>
-<h4>Transportkosten vergelijken</h4>
-<p>Vergelijk abonnement, fiets en auto voor een wekelijkse verplaatsing.</p>
-</article>
+<!-- opdrachten worden hier geladen -->
 
 </div>
+
 
 
 <div class="section-title">Hoofdthema’s</div>
@@ -269,54 +247,54 @@ background:var(--panel)
 
 <a href="hoofdthema1.html" class="thema-card">
 <div class="thema-image" style="background-image:url('img/images/thema1.jpg')">
-<div class="thema-overlay"><div class="thema-title">Hoofdthema 1 – Landschappen</div></div>
+<div class="thema-overlay"><div class="thema-title">Landschappen</div></div>
 </div>
-<div class="thema-bottom"><div class="progress-bar"><div class="progress-fill"></div></div></div>
 </a>
 
 <a href="hoofdthema2.html" class="thema-card">
 <div class="thema-image" style="background-image:url('img/images/thema2.jpg')">
-<div class="thema-overlay"><div class="thema-title">Hoofdthema 2 – Leven in een biotoop</div></div>
+<div class="thema-overlay"><div class="thema-title">Leven in een biotoop</div></div>
 </div>
-<div class="thema-bottom"><div class="progress-bar"><div class="progress-fill"></div></div></div>
 </a>
 
 <a href="hoofdthema3.html" class="thema-card">
 <div class="thema-image" style="background-image:url('img/images/thema9.jpg')">
-<div class="thema-overlay"><div class="thema-title">Hoofdthema 3 – Belgische geschiedenis</div></div>
+<div class="thema-overlay"><div class="thema-title">Belgische geschiedenis</div></div>
 </div>
-<div class="thema-bottom"><div class="progress-bar"><div class="progress-fill"></div></div></div>
 </a>
 
 <a href="hoofdthema4.html" class="thema-card">
 <div class="thema-image" style="background-image:url('img/images/thema10.jpg')">
-<div class="thema-overlay"><div class="thema-title">Hoofdthema 4 – Monsterlijke groene groei</div></div>
+<div class="thema-overlay"><div class="thema-title">Groene groei</div></div>
 </div>
-<div class="thema-bottom"><div class="progress-bar"><div class="progress-fill"></div></div></div>
 </a>
 
 <a href="hoofdthema5.html" class="thema-card">
 <div class="thema-image" style="background-image:url('img/images/thema11.jpg')">
-<div class="thema-overlay"><div class="thema-title">Hoofdthema 5 – Veilig Onderweg</div></div>
+<div class="thema-overlay"><div class="thema-title">Veilig onderweg</div></div>
 </div>
-<div class="thema-bottom"><div class="progress-bar"><div class="progress-fill"></div></div></div>
 </a>
 
 <a href="hoofdthema6.html" class="thema-card">
 <div class="thema-image" style="background-image:url('img/images/thema12.jpg')">
-<div class="thema-overlay"><div class="thema-title">Hoofdthema 6 – Sparen</div></div>
+<div class="thema-overlay"><div class="thema-title">Sparen</div></div>
 </div>
-<div class="thema-bottom"><div class="progress-bar"><div class="progress-fill"></div></div></div>
 </a>
 
 <a href="hoofdthema7.html" class="thema-card">
 <div class="thema-image" style="background-image:url('img/images/thema13.jpg')">
-<div class="thema-overlay"><div class="thema-title">Hoofdthema 7 – Veiligheid en preventie</div></div>
+<div class="thema-overlay"><div class="thema-title">Veiligheid en preventie</div></div>
 </div>
-<div class="thema-bottom"><div class="progress-bar"><div class="progress-fill"></div></div></div>
+</a>
+
+<a href="hoofdthema8.html" class="thema-card">
+<div class="thema-image" style="background-image:url('img/images/themamech.jpg')">
+<div class="thema-overlay"><div class="thema-title">Mechanica</div></div>
+</div>
 </a>
 
 </div>
+
 
 
 <div class="section-title">Oefenthema’s</div>
@@ -361,8 +339,11 @@ background:var(--panel)
 
 </div>
 
+
 </div>
+
 </div>
+
 
 <footer class="footer">© 2026 PAV-O</footer>
 
@@ -373,60 +354,54 @@ background:var(--panel)
 <script src="./index-progress.js"></script>
 <script src="./theme-access-control.js"></script>
 
-
 <script>
 
 function escapeHtml(text){
 return String(text||"")
-.replaceAll("&","&amp;")
 .replaceAll("<","&lt;")
 .replaceAll(">","&gt;");
 }
 
-async function loadClassPlan(){
+async function loadClassContent(){
 
-const klas=localStorage.getItem("studentClass")
+const klas = localStorage.getItem("studentClass")
 
-if(!klas)return
+if(!klas) return
 
-try{
-
-const doc=await db.collection("class_learning_plans")
-.doc(klas.toLowerCase())
+const doc = await db
+.collection("class_learning_plans")
+.doc(klas)
 .get()
 
-if(!doc.exists){
+if(!doc.exists) return
+
+const data = doc.data()
 
 document.getElementById("classPlanContent").innerHTML=
-"Er is nog geen klasplanning ingesteld."
-
-return
-}
-
-const data=doc.data()
-
-document.getElementById("classPlanContent").innerHTML=
-
-"<strong>Opdrachten</strong><ul>"+
-(data.opdrachten||[]).map(o=>"<li>"+escapeHtml(o)+"</li>").join("")+
-"</ul>"+
 
 "<strong>Doelen</strong><ul>"+
-(data.doelen||[]).map(o=>"<li>"+escapeHtml(o)+"</li>").join("")+
+(data.doelen||[]).map(d=>"<li>"+escapeHtml(d)+"</li>").join("")+
 "</ul>"+
 
-"<strong>Reflectie</strong><p>"+escapeHtml(data.reflectieFocus)+"</p>"+
+"<p><b>Reflectie:</b> "+escapeHtml(data.reflectieFocus)+"</p>"+
 
-"<strong>Portfoliofocus</strong><p>"+escapeHtml(data.portfolioFocus)+"</p>"
+"<p><b>Portfolio:</b> "+escapeHtml(data.portfolioFocus)+"</p>"
+
+const board=document.getElementById("assignmentBoard")
+
+board.innerHTML=(data.opdrachten||[]).map(o=>`
+
+<div class="assignment-card">
+<span class="tag">${o.categorie}</span>
+<h4>${o.titel}</h4>
+<p>${o.tekst}</p>
+</div>
+
+`).join("")
 
 }
-catch(err){
-console.error(err)
-}
 
-}
-
-loadClassPlan()
+loadClassContent()
 
 </script>
 
