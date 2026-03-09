@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Klasbeheer</title>
+
+</head>
+
+<body>
+
+<h1>Klasbeheer</h1>
+
+<input id="klas" placeholder="Klas bv 3stw">
+
+<h2>Nieuwe opdracht</h2>
+
+<input id="titel" placeholder="Titel">
+
+<input id="categorie" placeholder="Categorie">
+
+<textarea id="tekst"></textarea>
+
+<button onclick="addAssignment()">Toevoegen</button>
+
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+<script src="firebase.js"></script>
+
+<script>
+
+const db = firebase.firestore()
+
+async function addAssignment(){
+
+const klas = document.getElementById("klas").value
+
+const titel = document.getElementById("titel").value
+
+const categorie = document.getElementById("categorie").value
+
+const tekst = document.getElementById("tekst").value
+
+await db.collection("class_learning_plans")
+.doc(klas)
+.set({
+
+opdrachten: firebase.firestore.FieldValue.arrayUnion({
+titel,
+categorie,
+tekst
+})
+
+},{merge:true})
+
+alert("Opdracht toegevoegd")
+
+}
+
+</script>
+
+</body>
+
+</html>
