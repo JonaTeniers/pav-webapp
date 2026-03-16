@@ -1,95 +1,84 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Leerkracht dashboard - PAV-O</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    :root{--bg:#eff4f8;--card:#fff;--line:#e0e9f0;--text:#1f2933;--muted:#66788a}
-    *{box-sizing:border-box} body{margin:0;font-family:Inter,sans-serif;background:var(--bg);color:var(--text)}
-    .wrap{max-width:1100px;margin:0 auto;padding:20px 16px 100px}
-    .teacher-central{background:linear-gradient(180deg,#e1ebf4,#f6fafc);border:1px solid var(--line);border-radius:18px;padding:16px}
-    .top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
-    .btn{display:inline-block;padding:10px 12px;border-radius:10px;background:#2f4858;color:#fff;text-decoration:none;font-weight:700;border:none;cursor:pointer}
-    .grid{display:grid;grid-template-columns:1.2fr 1fr;gap:14px;margin-top:14px}
-    .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}
-    table{width:100%;border-collapse:collapse}th,td{padding:10px;border-bottom:1px solid #edf2f6;text-align:left}
-    th{font-size:12px;color:#607080;text-transform:uppercase}
-    .warn{background:#fff4f4;border:1px solid #ffd1d1;border-radius:10px;padding:10px;margin-top:10px}
-    .bottom-nav{position:fixed;bottom:0;left:0;right:0;display:grid;grid-template-columns:repeat(5,1fr);gap:8px;padding:10px;background:rgba(255,255,255,.96);border-top:1px solid var(--line)}
-    .bottom-nav a{text-align:center;text-decoration:none;color:#fff;background:#3f5f73;padding:10px 6px;border-radius:10px;font-size:12px;font-weight:700}
-    @media(max-width:900px){.grid{grid-template-columns:1fr}}
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PAV-O | Leerkracht Dashboard</title>
+<style>
+:root{--bg:#f6f8fb;--panel:#fff;--line:#dbe4ef;--text:#1f2b37;--muted:#64748b;--blue:#0b4da2}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,Segoe UI,sans-serif;color:var(--text)}
+.wrap{max-width:1150px;margin:0 auto;padding:20px 16px 90px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+.header{display:flex;align-items:center;gap:12px}.header img{width:58px;height:58px;object-fit:contain}
+.btn{background:var(--blue);color:#fff;border:none;border-radius:8px;padding:9px 12px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block}
+input,select{padding:9px;border:1px solid #c9d5e7;border-radius:8px;width:100%}
+table{width:100%;border-collapse:collapse}th,td{padding:10px;border-bottom:1px solid #e8eef5;text-align:left}th{font-size:.78rem;text-transform:uppercase;color:#5f6f82}
+.top-actions{display:flex;gap:8px;flex-wrap:wrap}
+#dashboardPanel{display:none}
+.bottom-nav{position:fixed;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(5,1fr);gap:8px;background:rgba(255,255,255,.97);border-top:1px solid var(--line);padding:10px}
+.bottom-nav a{background:#3f5f73;color:#fff;text-decoration:none;text-align:center;padding:10px 6px;border-radius:10px;font-size:12px;font-weight:700}
+</style>
 </head>
 <body>
-  <main class="wrap">
-    <section class="teacher-central">
-      <div class="top">
-        <div>
-          <h1 style="margin:0">Leerkracht dashboard (centrale achtergrond)</h1>
-          <p style="margin:6px 0 0;color:var(--muted)">Overzicht van leerlingen, voortgang, opdrachten en reflectie.</p>
-        </div>
-        <div>
-          <a class="btn" href="index.html">← Home</a>
-          <a class="btn" href="theme-manager.html">Thema beheer</a>
-        </div>
-      </div>
+<main class="wrap">
+  <section class="card header">
+    <img src="img/pavomascotte.png" alt="PAVO mascotte">
+    <div>
+      <h1 style="margin:0">Leerkrachtdashboard</h1>
+      <p style="margin:4px 0 0;color:var(--muted)">Scores worden geladen uit oefeningen die leerlingen hebben ingevuld.</p>
+    </div>
+    <a class="btn" href="index.html" style="margin-left:auto">← Home</a>
+  </section>
 
-      <div class="grid">
-        <section class="card">
-          <h2>Tabel voortgang</h2>
-          <table>
-            <thead><tr><th>Leerling naam</th><th>Voortgang %</th><th>Afgeronde opdrachten</th></tr></thead>
-            <tbody id="studentTableBody"></tbody>
-          </table>
-          <h3 style="margin:16px 0 6px">Leerlingen onder 50%</h3>
-          <div id="riskList"></div>
-        </section>
+  <section id="authCard" class="card">
+    <h2>Leerkracht login</h2>
+    <form id="teacherLoginForm" style="display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:end">
+      <label>E-mail<input id="teacherEmail" type="email" required></label>
+      <label>Wachtwoord<input id="teacherPassword" type="password" required></label>
+      <button class="btn" type="submit">Inloggen</button>
+    </form>
+    <p id="status" style="color:var(--muted)">Niet ingelogd.</p>
+  </section>
 
-        <section class="card">
-          <h2>Gemiddelde klasvoortgang</h2>
-          <canvas id="progressChart" height="180"></canvas>
-          <canvas id="barChart" height="180" style="margin-top:12px"></canvas>
-        </section>
-      </div>
+  <section id="dashboardPanel">
+    <div class="card top-actions">
+      <select id="klasFilter"></select>
+      <button id="refreshButton" class="btn" type="button">Vernieuwen</button>
+      <button id="teacherLogoutButton" class="btn" type="button" style="background:#64748b">Uitloggen</button>
+      <a class="btn" href="theme-manager.html">Thema beheer</a>
+    </div>
+
+    <section class="card">
+      <h3>Resultaten (uit oefeningen)</h3>
+      <table>
+        <thead>
+          <tr><th>Leerling</th><th>Klas</th><th>Thema</th><th>Unit</th><th>Score</th><th>Datum</th><th>Bron</th></tr>
+        </thead>
+        <tbody id="scoresTableBody"><tr><td colspan="7">Laden...</td></tr></tbody>
+      </table>
     </section>
 
-    <section class="card" style="margin-top:14px">
-      <h2>Laatste reflecties van leerlingen</h2>
-      <div id="reflectionTable">Nog geen reflecties.</div>
-      <a class="btn" href="leerling-dashboard.html">Naar leerling dashboard</a>
+    <section class="card">
+      <h3>Snellinks naar alle thema's</h3>
+      <p>
+        <a href="hoofdthema1.html">Hoofdthema 1</a> · <a href="hoofdthema2.html">Hoofdthema 2</a> · <a href="hoofdthema3.html">Hoofdthema 3</a> · <a href="hoofdthema4.html">Hoofdthema 4</a> · <a href="hoofdthema5.html">Hoofdthema 5</a> · <a href="hoofdthema6.html">Hoofdthema 6</a>
+      </p>
+      <p>
+        <a href="oefenthema1.html">Oefenthema 1</a> · <a href="oefenthema2.html">Oefenthema 2</a> · <a href="oefenthema3.html">Oefenthema 3</a> · <a href="oefenthema4.html">Oefenthema 4</a> · <a href="oefenthema5.html">Oefenthema 5</a> · <a href="oefenthema6.html">Oefenthema 6</a>
+      </p>
     </section>
-  </main>
+  </section>
+</main>
 
-  <nav class="bottom-nav">
-    <a href="index.html">Home</a>
-    <a href="pav-thema.html?theme=budget">Thema's</a>
-    <a href="leerling-dashboard.html">Mijn voortgang</a>
-    <a href="leerkracht-dashboard.html">Resultaten</a>
-    <a href="portfolio.html">Profiel</a>
-  </nav>
+<nav class="bottom-nav">
+  <a href="index.html">Home</a><a href="thema.html">Thema's</a><a href="leerling-dashboard.html">Mijn voortgang</a><a href="leerkracht-dashboard.html">Resultaten</a><a href="portfolio.html">Profiel</a>
+</nav>
 
-<script>
-const students=[
- {naam:'Amina Janssens',voortgang:80,opdrachten:12},
- {naam:'Youssef El Amrani',voortgang:42,opdrachten:6},
- {naam:'Lotte Peeters',voortgang:88,opdrachten:13},
- {naam:'Noah Vermeulen',voortgang:35,opdrachten:5}
-];
-
-const body=document.getElementById('studentTableBody');
-body.innerHTML=students.map(s=>`<tr><td>${s.naam}</td><td>${s.voortgang}%</td><td>${s.opdrachten}</td></tr>`).join('');
-const risk=students.filter(s=>s.voortgang<50);
-riskList.innerHTML=risk.length?risk.map(s=>`<div class='warn'>${s.naam} · ${s.voortgang}%</div>`).join(''):'Geen leerlingen onder 50%';
-
-const avg=Math.round(students.reduce((a,s)=>a+s.voortgang,0)/students.length);
-new Chart(document.getElementById('progressChart'),{type:'doughnut',data:{labels:['Gemiddelde klasvoortgang','Nog te doen'],datasets:[{data:[avg,100-avg],backgroundColor:['#88a7b8','#e5edf3'],borderWidth:0}]},options:{plugins:{legend:{position:'bottom'}}}});
-new Chart(document.getElementById('barChart'),{type:'bar',data:{labels:students.map(s=>s.naam.split(' ')[0]),datasets:[{label:'Voortgang %',data:students.map(s=>s.voortgang),backgroundColor:'#2f4858'}]},options:{scales:{y:{beginAtZero:true,max:100}}}});
-
-const refs=JSON.parse(localStorage.getItem('pav_reflections')||'[]').slice(-5).reverse();
-reflectionTable.innerHTML=refs.length?refs.map(r=>`<div style='padding:10px;border:1px solid #e6edf3;border-radius:10px;margin-bottom:8px'><strong>${r.theme}</strong> — ${r.antwoord1}<br><small>${new Date(r.updatedAt).toLocaleString('nl-BE')}</small></div>`).join(''):'Nog geen reflecties.';
-</script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+<script>window.TEACHER_EMAILS=["jona@pavo.be","kaat@pavo.be"];</script>
+<script src="./firebase.js"></script>
+<script src="./teacher-dashboard.js"></script>
 </body>
 </html>
