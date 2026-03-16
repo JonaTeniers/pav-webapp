@@ -1,1 +1,66 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="data:," />
+  <title>Mechanica 8 - Doel 4</title>
+  <style>
+    body{font-family:"Segoe UI",sans-serif;background:#eefdfb;padding:2rem;margin:0}
+    h1{text-align:center;color:#0f766e}
+    .top{max-width:760px;margin:0 auto 1rem;display:flex;justify-content:space-between}
+    .top a{text-decoration:none;font-weight:700}
+    .question-box{background:#fff;padding:2rem;margin:1rem auto 2rem;border-radius:12px;max-width:760px;box-shadow:0 2px 12px rgba(0,0,0,.1)}
+    .goal-image{width:100%;max-height:280px;object-fit:cover;border-radius:10px;margin:.8rem 0;border:1px solid #cde}
+    button{background:#0f766e;color:#fff;padding:.5rem 1rem;border:none;border-radius:6px;margin-top:1rem;cursor:pointer}
+    .feedback{margin-top:1rem;font-weight:700;padding:1rem;border-radius:8px}
+    .success{background:#c8e6c9;color:#2e7d32}.error{background:#ffcdd2;color:#c62828}
+    .nav-buttons{margin-top:2rem;text-align:center}.hidden{display:none}.helper{color:#546e7a}
+    .select-input,.text-input{padding:.4rem;width:min(400px,100%)}
+  </style>
+</head>
+<body>
+  <h1>Mechanica — Doel 4: Schroeven, bouten en moeren</h1>
+  <div class="top"><a href="oefenthema8.html">← Terug naar oefenthema</a><a href="#quizBox">Start oefenen</a></div>
 
+  <div class="question-box" id="quizBox">
+    <h2 id="qCount">Vraag 1 van 10</h2>
+    <p class="helper" id="qType"></p>
+    <img id="qImage" class="goal-image" src="img/images/flensmoer.jpg" alt="Mechanica afbeelding vraag" />
+    <div id="questionText"></div>
+    <form id="answerForm"></form>
+    <button type="button" onclick="checkAnswer()">Controleer</button>
+    <div class="feedback" id="feedback"></div>
+    <div class="nav-buttons"><button id="nextBtn" class="hidden" type="button" onclick="nextQuestion()">Volgende vraag →</button></div>
+  </div>
+
+  <div class="question-box hidden" id="endScreen">
+    <h2>Doel voltooid!</h2>
+    <p>Je behaalde <span id="xpScore">0</span> XP.</p>
+    <div class="nav-buttons"><a href="oefenthema8.html"><button type="button">← Terug</button></a> <a href="mechanica8doel5.html"><button type="button">→ Ga naar doel 5</button></a></div>
+  </div>
+
+  <script src="./firebase.js"></script><script src="./pavo-xp-sync.js"></script>
+  <script>
+    const questions=[
+      {type:'mc',typeLabel:'Meerkeuze',image:'img/images/flensmoer.jpg',question:'Wat zie je op de foto?',options:['Flensmoer','Spaanplaatschroef','Zeskantbout'],correctIndex:0},
+      {type:'mc',typeLabel:'Meerkeuze',image:'img/images/spaanplaatschroef.jpg',question:'Kies het juiste type:',options:['Moer','Schroef','Ring'],correctIndex:1},
+      {type:'drag',typeLabel:'Selectie',image:'img/images/zelftapschroef.jpg',question:'Een zelftapschroef is een ...',options:['schroef','bout','moer'],correctValue:'schroef'},
+      {type:'mc',typeLabel:'Meerkeuze',image:'img/images/dopmoer.jpg',question:'De dopmoer hoort bij:',options:['moeren','bouten','sluitringen'],correctIndex:0},
+      {type:'drag',typeLabel:'Selectie',image:'img/images/zeskantbout.jpg',question:'De juiste benaming?',options:['vleugelmoer','zeskantbout','inbuskop'],correctValue:'zeskantbout'},
+      {type:'mc',typeLabel:'Meerkeuze',image:'img/images/inbusbout-met-sluitring.jpg',question:'Inbusbout met sluitring is vooral een ...',options:['bout','schroef','moer'],correctIndex:0},
+      {type:'drag',typeLabel:'Selectie',image:'img/images/zeskantmoer.jpg',question:'Zeskantmoer is een ...',options:['moer','bout','schroef'],correctValue:'moer'},
+      {type:'drag',typeLabel:'Selectie',image:'img/images/vleugelmoer.jpg',question:'Een vleugelmoer draai je meestal vast met ...',options:['de hand','inbussleutel','kruisschroevendraaier'],correctValue:'de hand'},
+      {type:'mc',typeLabel:'Meerkeuze',image:'img/images/inbus-schroefkop.jpg',question:'Welk gereedschap gebruik je bij een inbus schroefkop?',options:['inbussleutel','ringsleutel','platte schroevendraaier'],correctIndex:0},
+      {type:'open',typeLabel:'Open vraag',image:'img/images/zaagsleuf-schroefkop.jpg',question:'Welk gereedschap hoort bij een zaagsleuf schroefkop?',accepted:['platte schroevendraaier','schroevendraaier']}
+    ];
+    let currentQuestion=0,score=0;
+    const n=v=>v.trim().toLowerCase();
+    const render=(o,name)=>o.map((x,i)=>`<label><input type="radio" name="${name}" value="${i}"> ${x}</label><br>`).join('');
+    function loadQuestion(){const q=questions[currentQuestion];qCount.innerText=`Vraag ${currentQuestion+1} van ${questions.length}`;qType.innerText=q.typeLabel;questionText.innerText=q.question;qImage.src=q.image;qImage.alt=q.question;answerForm.innerHTML='';if(q.type==='mc')answerForm.innerHTML=render(q.options,'answer');else if(q.type==='open')answerForm.innerHTML='<input class="text-input" name="answer" />';else answerForm.innerHTML=`<select class="select-input" name="answer">${['Kies...',...q.options].map(x=>`<option value="${x}">${x}</option>`).join('')}</select>`;feedback.innerText='';feedback.className='feedback';nextBtn.classList.add('hidden');}
+    function checkAnswer(){const q=questions[currentQuestion];let ok=false;if(q.type==='mc'){const s=document.querySelector('input[name="answer"]:checked');if(!s)return;ok=Number(s.value)===q.correctIndex;}else if(q.type==='open'){const i=document.querySelector('input[name="answer"]');if(!i||!i.value.trim())return;ok=q.accepted.some(a=>n(a)===n(i.value));}else{const s=document.querySelector('select[name="answer"]');if(!s||s.value==='Kies...')return;ok=n(s.value)===n(q.correctValue);}if(ok){score+=3;feedback.innerText='✅ Juist! +3 XP';feedback.classList.add('success');}else{feedback.innerText='❌ Fout. Geen XP.';feedback.classList.add('error');}nextBtn.classList.remove('hidden');}
+    function nextQuestion(){currentQuestion++;if(currentQuestion<questions.length)loadQuestion();else{localStorage.setItem('mechanica8doel4',score);if(window.pavoSyncScore)window.pavoSyncScore('mechanica8doel4',score);quizBox.classList.add('hidden');endScreen.classList.remove('hidden');xpScore.innerText=score;}}
+    window.onload=loadQuestion;
+  </script>
+</body>
+</html>
