@@ -158,6 +158,7 @@
 
     let docs = [];
     let reflectionDocs = [];
+    let hadError = false;
 
     try {
       // 🔒 VEILIGE QUERY – kan niet blokkeren
@@ -165,18 +166,23 @@
         .collection("scores")
         .limit(500)
         .get();
+      docs = snapshot.docs;
+    } catch (err) {
+      hadError = true;
+      console.error("Firestore fout bij scores:", err);
+      setStatus("Scores gedeeltelijk geladen (geen toegang tot alle data).", true);
+    }
 
+    try {
       const reflectionSnapshot = await window.db
         .collection("score_reflections")
         .limit(500)
         .get();
-
-      docs = snapshot.docs;
       reflectionDocs = reflectionSnapshot.docs;
     } catch (err) {
-      console.error("Firestore fout:", err);
-      setStatus("Fout bij laden van scores.", true);
-      return;
+      hadError = true;
+      console.warn("Firestore fout bij score_reflections:", err);
+      setStatus("Scores geladen zonder reflecties (toegang ontbreekt op reflecties).", true);
     }
 
     allScores = docs.map(doc => ({
@@ -192,14 +198,16 @@
     renderTable("");
     renderCurrentScores();
     renderReflectionTable("");
-    setStatus(`Klaar. ${allScores.length} score(s) en ${allReflections.length} reflectie(s) geladen.`);
+    if (!hadError) {
+      setStatus(`Klaar. ${allScores.length} score(s) en ${allReflections.length} reflectie(s) geladen.`);
+    }
   }
 
   async function handleLogin(e) {
     e.preventDefault();
 
-    const email = teacherEmail.value.trim();
-    const pw = teacherPassword.value;
+    const email = document.getElementById("teacherEmail")?.value?.trim() || "";
+    const pw = document.getElementById("teacherPassword")?.value || "";
 
     if (!window.isTeacherEmail(email)) {
       setStatus("Geen leerkrachtaccount.", true);
@@ -240,6 +248,19 @@
 
     await window.firebaseReady;
 
+    const teacherLoginForm = document.getElementById("teacherLoginForm");
+    const teacherLogoutButton = document.getElementById("teacherLogoutButton");
+    const klasFilter = document.getElementById("klasFilter");
+    const refreshButton = document.getElementById("refreshButton");
+    const teacherEmailInput = document.getElementById("teacherEmail");
+    const teacherPasswordInput = document.getElementById("teacherPassword");
+
+    if (!teacherLoginForm || !teacherLogoutButton || !klasFilter || !refreshButton || !teacherEmailInput || !teacherPasswordInput) {
+      setStatus("Dashboard kon niet correct opstarten.", true);
+      return;
+    }
+
+
     teacherLoginForm.addEventListener("submit", handleLogin);
     teacherLogoutButton.addEventListener("click", handleLogout);
     klasFilter.addEventListener("change", e => {
@@ -270,5 +291,4 @@
 
   init();
 })();
-
 
