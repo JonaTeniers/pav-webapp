@@ -1,409 +1,91 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>PAV-O | Dashboard</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap" rel="stylesheet">
-
-<style>
-
-:root{
---blue:#2563eb;
---bg:#f6f8fb;
---panel:#ffffff;
---text:#1e293b;
---muted:#64748b;
---line:#dce5f2;
---accent:#fef3c7;
-}
-
-body{
-margin:0;
-font-family:'Nunito',sans-serif;
-background:var(--bg);
-color:var(--text);
-}
-
-.wrapper{display:flex;}
-
-.sidebar{
-width:260px;
-background:var(--panel);
-height:100vh;
-position:fixed;
-border-right:1px solid var(--line);
-padding:2rem 1.5rem;
-}
-
-.sidebar-header{text-align:center;margin-bottom:2rem;}
-.sidebar-header img{width:70px;}
-.sidebar-header h1{color:var(--blue);}
-
-.nav-item{
-display:block;
-padding:10px;
-font-weight:700;
-text-decoration:none;
-color:var(--text);
-border-radius:10px;
-margin-bottom:5px;
-}
-
-.nav-item.active{
-background:#e8f0ff;
-}
-
-.main-content{
-margin-left:260px;
-padding:30px;
-}
-
-.section-title{
-margin-top:35px;
-font-size:22px;
-font-weight:800;
-color:#1e3a8a;
-border-bottom:2px solid #dbe7ff;
-padding-bottom:5px;
-}
-
-.summary-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:10px;
-}
-
-.summary-card{
-background:white;
-border-radius:12px;
-border:1px solid var(--line);
-padding:15px;
-}
-
-.assignment-board{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-gap:15px;
-}
-
-.assignment-card{
-background:white;
-border-radius:12px;
-border:1px solid var(--line);
-padding:15px;
-}
-
-.tag{
-background:var(--accent);
-padding:4px 10px;
-border-radius:999px;
-font-size:12px;
-font-weight:800;
-}
-
-.theme-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:20px;
-}
-
-.thema-card{
-display:block;
-border-radius:14px;
-overflow:hidden;
-text-decoration:none;
-background:white;
-border:1px solid var(--line);
-}
-
-.thema-image{
-height:180px;
-background-size:cover;
-background-position:center;
-position:relative;
-}
-
-.thema-overlay{
-position:absolute;
-inset:0;
-background:linear-gradient(to top,rgba(0,0,0,0.75),rgba(0,0,0,0.2));
-display:flex;
-align-items:flex-end;
-padding:15px;
-}
-
-.thema-title{
-color:white;
-font-weight:800;
-}
-
-.thema-bottom{
-padding:12px;
-}
-
-.progress-bar{
-height:6px;
-background:#e5e7eb;
-border-radius:4px;
-overflow:hidden;
-}
-
-.progress-fill{
-height:100%;
-background:linear-gradient(90deg,#93c5fd,#2563eb);
-width:0%;
-}
-
-.footer{
-margin-left:260px;
-text-align:center;
-padding:20px;
-color:var(--muted);
-}
-
-</style>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PAV-O | Homepage</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f4f7f9;--card:#fff;--text:#1f2933;--muted:#6b7a89;--line:#e2eaf0;
+      --budget:#4caf50;--winkelen:#2196f3;--wonen:#ff9800;--transport:#f44336;--tech:#9c27b0;
+    }
+    *{box-sizing:border-box} body{margin:0;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text)}
+    .container{max-width:1100px;margin:0 auto;padding:22px 16px 100px}
+    .hero{background:linear-gradient(180deg,#edf3f7,#f9fcfd);border:1px solid var(--line);border-radius:18px;padding:20px;margin-bottom:20px}
+    .hero h1{margin:0 0 8px}.hero p{margin:0;color:var(--muted)}
+    .quick-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+    .quick-links a{padding:10px 14px;border-radius:11px;background:#2f4858;color:#fff;text-decoration:none;font-weight:700}
+    .section-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:20px 0 10px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+    .card{background:var(--card);border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 10px 20px rgba(26,53,81,.05)}
+    .card img{width:100%;height:130px;object-fit:cover}
+    .card-body{padding:14px}.card h3{margin:0 0 6px}.card p{margin:0 0 10px;color:var(--muted);min-height:52px}
+    .badge{display:inline-block;padding:4px 8px;border-radius:999px;color:#fff;font-size:12px;font-weight:700;margin-bottom:8px}
+    .btn{display:inline-block;padding:10px 12px;border-radius:10px;color:#fff;text-decoration:none;font-weight:700}
+    .legacy{margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px}
+    .legacy ul{margin:8px 0 0;padding-left:18px}
+    .bottom-nav{position:fixed;bottom:0;left:0;right:0;display:grid;grid-template-columns:repeat(5,1fr);gap:8px;padding:10px;background:rgba(255,255,255,.96);border-top:1px solid var(--line)}
+    .bottom-nav a{display:block;text-align:center;text-decoration:none;color:#fff;background:#3f5f73;padding:10px 6px;border-radius:10px;font-size:12px;font-weight:700}
+    @media(min-width:800px){.bottom-nav{max-width:760px;margin:0 auto;border-radius:12px 12px 0 0}}
+  </style>
 </head>
-
 <body>
-
-<div class="wrapper">
-
-<div class="sidebar">
-
-<div class="sidebar-header">
-<img src="img/pavomascotte.png">
-<h1>PAV-O</h1>
-</div>
-
-<a href="index.html" class="nav-item active">Dashboard</a>
-<a href="portfolio.html" class="nav-item">Mijn Portfolio</a>
-<a href="chattie.html" class="nav-item">Chattie AI</a>
-<a href="login.html" class="nav-item">Inloggen</a>
-
-</div>
-
-
-<div class="main-content">
-
-<h2>Welkom bij PAV-O</h2>
-
-<p>Plan zelfstandig je week en werk projectmatig aan vaardigheden.</p>
-
-
-<div class="summary-grid">
-
-<div class="summary-card">
-<strong>Mijn opdrachten</strong>
-<p>9 totaal</p>
-</div>
-
-<div class="summary-card">
-<strong>Doelen deze week</strong>
-<p>3 / 5</p>
-</div>
-
-<div class="summary-card">
-<strong>Reflectie</strong>
-<p>Laatste update</p>
-</div>
-
-<div class="summary-card">
-<strong>Portfolio</strong>
-<p>Op schema</p>
-</div>
-
-</div>
-
-
-<div class="section-title">Wat we deze periode leren</div>
-
-<div class="assignment-card">
-
-<div id="classPlanContent">
-Klasplanning laden...
-</div>
-
-</div>
-
-
-<div class="section-title">Realistische PAV-opdrachten</div>
-
-<div id="assignmentBoard" class="assignment-board">
-
-<!-- opdrachten worden hier geladen -->
-
-</div>
-
-
-
-<div class="section-title">Hoofdthema’s</div>
-
-<div class="theme-grid">
-
-<a href="hoofdthema1.html" class="thema-card">
-<div class="thema-image" style="background-image:url('img/images/thema1.jpg')">
-<div class="thema-overlay"><div class="thema-title">Landschappen</div></div>
-</div>
-</a>
-
-<a href="hoofdthema2.html" class="thema-card">
-<div class="thema-image" style="background-image:url('img/images/thema2.jpg')">
-<div class="thema-overlay"><div class="thema-title">Leven in een biotoop</div></div>
-</div>
-</a>
-
-<a href="hoofdthema3.html" class="thema-card">
-<div class="thema-image" style="background-image:url('img/images/thema9.jpg')">
-<div class="thema-overlay"><div class="thema-title">Belgische geschiedenis</div></div>
-</div>
-</a>
-
-<a href="hoofdthema4.html" class="thema-card">
-<div class="thema-image" style="background-image:url('img/images/thema10.jpg')">
-<div class="thema-overlay"><div class="thema-title">Groene groei</div></div>
-</div>
-</a>
-
-<a href="hoofdthema5.html" class="thema-card">
-<div class="thema-image" style="background-image:url('img/images/thema11.jpg')">
-<div class="thema-overlay"><div class="thema-title">Veilig onderweg</div></div>
-</div>
-</a>
-
-<a href="hoofdthema6.html" class="thema-card">
-<div class="thema-image" style="background-image:url('img/images/thema12.jpg')">
-<div class="thema-overlay"><div class="thema-title">Sparen</div></div>
-</div>
-</a>
-
-<a href="hoofdthema7.html" class="thema-card">
-<div class="thema-image" style="background-image:url('img/images/thema13.jpg')">
-<div class="thema-overlay"><div class="thema-title">Veiligheid en preventie</div></div>
-</div>
-</a>
-
-<a href="hoofdthema8.html" class="thema-card">
-<div class="thema-image" style="background-image:url('img/images/themamech.jpg')">
-<div class="thema-overlay"><div class="thema-title">Mechanica</div></div>
-</div>
-</a>
-
-</div>
-
-
-
-<div class="section-title">Oefenthema’s</div>
-
-<div class="theme-grid">
-
-<a href="oefenthema1.html" class="thema-card">
-<div class="thema-image" style="background-image:url('img/images/thema3.jpg')">
-<div class="thema-overlay"><div class="thema-title">Werkwoordstijden</div></div>
-</div>
-</a>
-
-<a href="oefenthema2.html" class="thema-card">
-<div class="thema-image" style="background-image:url('img/images/thema4.jpg')">
-<div class="thema-overlay"><div class="thema-title">Wiskunde</div></div>
-</div>
-</a>
-
-<a href="oefenthema3.html" class="thema-card">
-<div class="thema-image" style="background-image:url('img/images/thema5.jpg')">
-<div class="thema-overlay"><div class="thema-title">Fictie & non-fictie</div></div>
-</div>
-</a>
-
-<a href="oefenthema4.html" class="thema-card">
-<div class="thema-image" style="background-image:url('img/images/thema6.jpg')">
-<div class="thema-overlay"><div class="thema-title">Schatten</div></div>
-</div>
-</a>
-
-<a href="oefenthema5.html" class="thema-card">
-<div class="thema-image" style="background-image:url('img/images/thema7.jpg')">
-<div class="thema-overlay"><div class="thema-title">Communicatie</div></div>
-</div>
-</a>
-
-<a href="oefenthema6.html" class="thema-card">
-<div class="thema-image" style="background-image:url('img/images/thema8.jpg')">
-<div class="thema-overlay"><div class="thema-title">Actualiteit</div></div>
-</div>
-</a>
-
-</div>
-
-
-</div>
-
-</div>
-
-
-<footer class="footer">© 2026 PAV-O</footer>
-
-
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-<script src="./firebase.js"></script>
-<script src="./index-progress.js"></script>
-<script src="./theme-access-control.js"></script>
-
-<script>
-
-function escapeHtml(text){
-return String(text||"")
-.replaceAll("<","&lt;")
-.replaceAll(">","&gt;");
-}
-
-async function loadClassContent(){
-
-const klas = localStorage.getItem("studentClass")
-
-if(!klas) return
-
-const doc = await db
-.collection("class_learning_plans")
-.doc(klas)
-.get()
-
-if(!doc.exists) return
-
-const data = doc.data()
-
-document.getElementById("classPlanContent").innerHTML=
-
-"<strong>Doelen</strong><ul>"+
-(data.doelen||[]).map(d=>"<li>"+escapeHtml(d)+"</li>").join("")+
-"</ul>"+
-
-"<p><b>Reflectie:</b> "+escapeHtml(data.reflectieFocus)+"</p>"+
-
-"<p><b>Portfolio:</b> "+escapeHtml(data.portfolioFocus)+"</p>"
-
-const board=document.getElementById("assignmentBoard")
-
-board.innerHTML=(data.opdrachten||[]).map(o=>`
-
-<div class="assignment-card">
-<span class="tag">${o.categorie}</span>
-<h4>${o.titel}</h4>
-<p>${o.tekst}</p>
-</div>
-
-`).join("")
-
-}
-
-loadClassContent()
-
-</script>
-
+  <main class="container">
+    <section class="hero">
+      <h1>PAV Leren · Scandinavisch, duidelijk en mobiel</h1>
+      <p>Werk zelfstandig met thema's, opdrachten, reflectie en badges. Het leerkrachtdashboard blijft de centrale achtergrond voor opvolging.</p>
+      <div class="quick-links">
+        <a href="leerling-dashboard.html">Leerling dashboard</a>
+        <a href="leerkracht-dashboard.html">Leerkracht dashboard</a>
+        <a href="theme-manager.html">Bestaande themabeheer pagina</a>
+      </div>
+    </section>
+
+    <div class="section-head">
+      <h2>Homepage · Thema kaarten</h2>
+      <small style="color:#6b7a89">5 kern-thema's</small>
+    </div>
+
+    <section class="grid">
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1565514020179-026b92b84bb6?w=800" alt="Budget">
+        <div class="card-body"><span class="badge" style="background:var(--budget)">💶 Budget & Geld</span><h3>Budget & Geld</h3><p>Leer plannen, sparen en slimme keuzes maken.</p><a class="btn" style="background:var(--budget)" href="pav-thema.html?theme=budget">Start thema</a></div>
+      </article>
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=800" alt="Winkelen">
+        <div class="card-body"><span class="badge" style="background:var(--winkelen)">🛍️ Winkelen</span><h3>Winkelen</h3><p>Vergelijk prijzen en ken je rechten als consument.</p><a class="btn" style="background:var(--winkelen)" href="pav-thema.html?theme=winkelen">Start thema</a></div>
+      </article>
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?w=800" alt="Wonen">
+        <div class="card-body"><span class="badge" style="background:var(--wonen)">🏠 Wonen</span><h3>Wonen</h3><p>Inzicht in huur, energie en praktisch wonen.</p><a class="btn" style="background:var(--wonen)" href="pav-thema.html?theme=wonen">Start thema</a></div>
+      </article>
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1494412574643-ff42f89fcb66?w=800" alt="Transport">
+        <div class="card-body"><span class="badge" style="background:var(--transport)">🚌 Transport</span><h3>Transport</h3><p>Kies veilige en duurzame verplaatsingen.</p><a class="btn" style="background:var(--transport)" href="pav-thema.html?theme=transport">Start thema</a></div>
+      </article>
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=800" alt="Technologie">
+        <div class="card-body"><span class="badge" style="background:var(--tech)">💻 Technologie</span><h3>Technologie</h3><p>Gebruik digitale tools veilig en bewust.</p><a class="btn" style="background:var(--tech)" href="pav-thema.html?theme=technologie">Start thema</a></div>
+      </article>
+    </section>
+
+    <section class="legacy">
+      <strong>Links met bestaande app-pagina's</strong>
+      <ul>
+        <li><a href="hoofdthema6.html">Bestaand thema: Sparen</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="chattie.html">Chattie AI</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <a href="index.html">Home</a>
+    <a href="pav-thema.html?theme=budget">Thema's</a>
+    <a href="leerling-dashboard.html">Mijn voortgang</a>
+    <a href="leerkracht-dashboard.html">Resultaten</a>
+    <a href="portfolio.html">Profiel</a>
+  </nav>
 </body>
 </html>
