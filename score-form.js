@@ -41,6 +41,18 @@
     };
   }
 
+
+  function saveScoreLocal(payload) {
+    let all = [];
+    try {
+      all = JSON.parse(localStorage.getItem('pavo_scores_local') || '[]');
+    } catch {
+      all = [];
+    }
+    all.unshift(payload);
+    localStorage.setItem('pavo_scores_local', JSON.stringify(all.slice(0, 500)));
+  }
+
   function saveReflectionLocal(payload) {
     let all = [];
     try {
@@ -110,11 +122,6 @@
   async function handleScoreSubmit(e) {
     e.preventDefault();
 
-    if (!window.db) {
-      setStatus("Firebase niet geladen.", true);
-      return;
-    }
-
     const profile = getProfile();
     if (!profile?.voornaam || !profile?.klas) {
       setStatus("Log eerst in via de startpagina.", true);
@@ -139,19 +146,34 @@
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
     };
 
+    saveScoreLocal({
+      ...data,
+      createdAt: new Date().toISOString()
+    });
+
     try {
-      await window.db.collection('scores').add(data);
-      setStatus("Score opgeslagen ✔", false);
+      if (window.db) {
+        await window.db.collection('scores').add(data);
+        setStatus("Score opgeslagen ✔", false);
+      } else {
+        setStatus("Offline opgeslagen op dit toestel.", true);
+      }
       e.target.reset();
       renderPostScoreReflection(scoreValue);
     } catch (err) {
       console.error(err);
-      setStatus("Opslaan mislukt.", true);
+      setStatus("Online opslaan mislukt, lokaal bewaard.", true);
+      e.target.reset();
+      renderPostScoreReflection(scoreValue);
     }
   }
 
   async function init() {
-    await window.firebaseReady;
+    try {
+      await window.firebaseReady;
+    } catch (error) {
+      console.warn('Firebase niet beschikbaar in score-form, lokale opslag blijft werken.', error);
+    }
 
     const form = document.getElementById('scoreForm');
     if (!form) return;
