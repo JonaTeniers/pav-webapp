@@ -510,6 +510,7 @@ document.getElementById('teacherLoginForm').onsubmit = async (e) => {
     }
 
     try {
+        await window.firebaseReady;
         await firebase.auth().signInWithEmailAndPassword(email, pass);
         authSection.style.display = 'none';
         loadDashboardData();
@@ -519,6 +520,8 @@ document.getElementById('teacherLoginForm').onsubmit = async (e) => {
 };
 
 async function loadDashboardData(){
+    await window.firebaseReady;
+
     const tbody = document.getElementById('scoresTableBody');
     const studentsBody = document.getElementById('studentsTableBody');
     const reflectionBody = document.getElementById('reflectionTableBody');
@@ -713,8 +716,9 @@ async function loadDashboardData(){
 const classPlanForm = document.getElementById('classPlanForm');
 if (classPlanForm) classPlanForm.addEventListener('submit', handleClassPlanSubmit);
 
-firebase.auth().onAuthStateChanged(user=>{
+firebase.auth().onAuthStateChanged(async (user) => {
     if(user && window.TEACHER_EMAILS.includes(user.email)){
+        await window.firebaseReady;
         authSection.style.display='none';
         loadDashboardData();
     }

@@ -4,72 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="data:," />
-  <title>Thema 4 - Doel 12 (Toets en herhaling)</title>
+  <title>Thema 4 - Doel 11 (Procenten)</title>
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #e3f2fd;
-      padding: 2rem;
-      margin: 0;
-    }
+    body { font-family: 'Segoe UI', sans-serif; background: #e3f2fd; padding: 2rem; margin: 0; }
     h1 { text-align: center; color: #1565c0; }
-    .question-box {
-      background: white;
-      padding: 2rem;
-      margin: 2rem auto;
-      border-radius: 12px;
-      max-width: 720px;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-    }
-    button {
-      background: #1565c0;
-      color: white;
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: 6px;
-      margin-top: 1rem;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-    .feedback {
-      margin-top: 1rem;
-      font-weight: bold;
-      padding: 1rem;
-      border-radius: 8px;
-    }
+    .question-box { background: white; padding: 2rem; margin: 2rem auto; border-radius: 12px; max-width: 720px; box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1); }
+    button { background: #1565c0; color: white; padding: 0.5rem 1rem; border: none; border-radius: 6px; margin-top: 1rem; cursor: pointer; font-size: 1rem; }
+    .feedback { margin-top: 1rem; font-weight: bold; padding: 1rem; border-radius: 8px; }
     .success { background-color: #c8e6c9; color: #2e7d32; }
     .error { background-color: #ffcdd2; color: #c62828; }
     .nav-buttons { margin-top: 2rem; text-align: center; }
     .hidden { display: none; }
     .helper { color: #546e7a; font-size: 0.95rem; }
     .select-input, .text-input { padding: 0.4rem; font-size: 1rem; }
-  </style>
-  <style>
-    .unit-header {
-      max-width: 720px;
-      margin: 0 auto 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-    }
-    .unit-header a {
-      text-decoration: none;
-      font-weight: 700;
-    }
-    .back-link {
-      color: #455a64;
-    }
-    .start-link {
-      background: #1565c0;
-      color: white;
-      padding: 0.4rem 0.9rem;
-      border-radius: 999px;
-    }
+    .unit-header { max-width: 720px; margin: 0 auto 1.5rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .unit-header a { text-decoration: none; font-weight: 700; }
+    .back-link { color: #455a64; }
+    .start-link { background: #1565c0; color: white; padding: 0.4rem 0.9rem; border-radius: 999px; }
   </style>
 </head>
 <body>
-  <h1>Thema 4 - Doel 12: Toets en herhaling</h1>
+  <h1>Thema 4 - Doel 11: Procenten</h1>
   <div class="unit-header">
     <a class="back-link" href="oefenthema2.html">← Terug naar thema</a>
     <a class="start-link" href="#quizBox">Start oefenen</a>
@@ -87,24 +42,35 @@
   </div>
   <div class="question-box hidden" id="endScreen">
     <h2>Doel voltooid!</h2>
-    <p class="next-info">Je hebt het laatste doel van dit blok afgerond.</p>
+    <p class="next-info">Goed gewerkt. Rond nu af met de herhaling (doel 12).</p>
     <p>Je behaalde <span id="xpScore">0</span> XP.</p>
     <div class="nav-buttons">
       <a href="oefenthema2.html"><button type="button">← Terug naar thema</button></a>
-      <a href="oefenthema2.html"><button type="button">→ Terug naar thema</button></a>
+      <a href="thema4unit10.html"><button type="button">→ Naar herhaling</button></a>
     </div>
   </div>
-    <script src="./firebase.js"></script>
+
+  <script src="./firebase.js"></script>
   <script src="./pavo-xp-sync.js"></script>
-<script>
-    const questions = [{"type": "open", "typeLabel": "Open vraag", "question": "Bereken de omtrek van een rechthoek van 7 cm bij 5 cm.", "accepted": ["24", "24 cm", "24cm"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Oppervlakte van driehoek basis 6 cm hoogte 4 cm?", "options": ["12 cm²", "24 cm²", "10 cm²"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies de juiste formule bij de cirkel.", "options": ["π × r × r", "2 × (l + b)", "basis × hoogte"], "correctValue": "π × r × r"}, {"type": "open", "typeLabel": "Open vraag", "question": "Omtrek van een cirkel met diameter 8 cm (π=3,14).", "accepted": ["25,12", "25.12", "25,12 cm", "25.12 cm"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke eenheid hoort bij omtrek?", "options": ["cm", "cm²", "cm³"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies de juiste maat: rechthoek 9 cm bij 4 cm, oppervlakte =", "options": ["36 cm²", "26 cm²", "13 cm²"], "correctValue": "36 cm²"}, {"type": "open", "typeLabel": "Open vraag", "question": "Bereken oppervlakte van een vierkant met zijde 8 cm.", "accepted": ["64", "64 cm2", "64 cm²", "64cm2", "64cm²"]}, {"type": "mc", "typeLabel": "Meerkeuze", "question": "Welke stap mis je bij samengestelde figuren?", "options": ["opdelen in stukken", "delen door 2", "formule omtrek cirkel"], "correctIndex": 0}, {"type": "drag", "typeLabel": "Sleepoefening", "question": "Kies de juiste omtrek: 4+7+6+5.", "options": ["22", "24", "20"], "correctValue": "22"}, {"type": "open", "typeLabel": "Open vraag", "question": "Reflecteer: welke strategie helpt jou bij moeilijke sommen?", "accepted": ["oefenen", "stappen opschrijven", "stappen", "schatten", "schema maken"]}];
+  <script>
+    const questions = [
+      {"type":"mc","typeLabel":"Meerkeuze","question":"Welke breuk hoort bij 25%?","options":["1/2","1/4","3/4"],"correctIndex":1},
+      {"type":"open","typeLabel":"Open vraag","question":"Hoeveel is 10% van 80?","accepted":["8"]},
+      {"type":"drag","typeLabel":"Sleepoefening","question":"Kies de juiste koppeling.","options":["50% = 1/2","50% = 1/5","50% = 2/5"],"correctValue":"50% = 1/2"},
+      {"type":"mc","typeLabel":"Meerkeuze","question":"In een klas van 20 leerlingen is 40% afwezig. Hoeveel leerlingen zijn afwezig?","options":["8","6","4"],"correctIndex":0},
+      {"type":"open","typeLabel":"Open vraag","question":"Zet 75% om naar een breuk (vereenvoudigd).","accepted":["3/4"]},
+      {"type":"drag","typeLabel":"Sleepoefening","question":"Welke uitspraak klopt over korting?","options":["20% korting op 50 euro is 10 euro korting","20% korting op 50 euro is 20 euro korting","20% korting op 50 euro is 5 euro korting"],"correctValue":"20% korting op 50 euro is 10 euro korting"},
+      {"type":"mc","typeLabel":"Meerkeuze","question":"Wat is 5% van 200?","options":["5","10","20"],"correctIndex":1},
+      {"type":"open","typeLabel":"Open vraag","question":"100% van 36 is ...","accepted":["36"]},
+      {"type":"drag","typeLabel":"Sleepoefening","question":"Kies het juiste percentage voor de helft.","options":["50%","15%","5%"],"correctValue":"50%"},
+      {"type":"open","typeLabel":"Open vraag","question":"Reflectie: waar kom je procenten vaak tegen?","accepted":["korting","winkel","resultaten","grafieken","nieuws","statistiek"]}
+    ];
+
     let currentQuestion = 0;
     let score = 0;
 
     function renderOptions(options, name) {
-      return options.map((opt, index) => (
-        `<label><input type="radio" name="${name}" value="${index}"> ${opt}</label><br>`
-      )).join('');
+      return options.map((opt, index) => (`<label><input type="radio" name="${name}" value="${index}"> ${opt}</label><br>`)).join('');
     }
 
     function loadQuestion() {
@@ -114,11 +80,9 @@
       document.getElementById('questionText').innerText = q.question;
       const form = document.getElementById('answerForm');
       form.innerHTML = '';
-      if (q.type === 'mc') {
-        form.innerHTML = renderOptions(q.options, 'answer');
-      } else if (q.type === 'open') {
-        form.innerHTML = `<input class="text-input" type="text" name="answer" placeholder="Typ je antwoord...">`;
-      } else if (q.type === 'drag') {
+      if (q.type === 'mc') form.innerHTML = renderOptions(q.options, 'answer');
+      else if (q.type === 'open') form.innerHTML = `<input class="text-input" type="text" name="answer" placeholder="Typ je antwoord...">`;
+      else if (q.type === 'drag') {
         const options = ['Kies...', ...q.options];
         form.innerHTML = `<select class="select-input" name="answer">${options.map((opt) => `<option value="${opt}">${opt}</option>`).join('')}</select>`;
       }
@@ -127,9 +91,7 @@
       document.getElementById('nextBtn').classList.add('hidden');
     }
 
-    function normalize(value) {
-      return value.trim().toLowerCase();
-    }
+    function normalize(value) { return value.trim().toLowerCase(); }
 
     function checkAnswer() {
       const q = questions[currentQuestion];
@@ -166,8 +128,8 @@
       if (currentQuestion < questions.length) {
         loadQuestion();
       } else {
-        localStorage.setItem('thema4unit10', score);
-        if (window.pavoSyncScore) window.pavoSyncScore('thema4unit10', score);
+        localStorage.setItem('thema4unit12', score);
+        if (window.pavoSyncScore) window.pavoSyncScore('thema4unit12', score);
         document.getElementById('quizBox').classList.add('hidden');
         document.getElementById('endScreen').classList.remove('hidden');
         document.getElementById('xpScore').innerText = score;

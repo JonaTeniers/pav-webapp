@@ -7,7 +7,8 @@
     hoofdthema3: { key: 'thema9', totalGoals: 8 },
     hoofdthema4: { key: 'thema11', totalGoals: 2 },
     hoofdthema5: { key: 'thema5', totalGoals: 7 },
-    hoofdthema6: { key: 'thema12', totalGoals: 1 }
+    hoofdthema6: { key: 'thema12', totalGoals: 1 },
+    hoofdthema8: { key: 'thema8', totalGoals: 7 }
   };
 
   function getProfile() {
