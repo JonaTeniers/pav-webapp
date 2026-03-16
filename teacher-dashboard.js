@@ -5,6 +5,7 @@
 
 (function () {
   let allScores = [];
+  let allReflections = [];
 
   function setStatus(message, isError = false) {
     const el = document.getElementById("status");
@@ -88,10 +89,47 @@
     `).join("");
   }
 
+
+
+  function renderReflectionTable(klas = "") {
+    const tbody = document.getElementById("reflectionAnswerTableBody");
+    if (!tbody) return;
+
+    const data = klas
+      ? allReflections.filter((r) => r.klas === klas)
+      : allReflections;
+
+    if (!data.length) {
+      tbody.innerHTML = `<tr><td colspan="8">Nog geen reflecties bij scores.</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = data
+      .sort((a, b) => {
+        const ad = typeof a.createdAt?.toDate === 'function' ? a.createdAt.toDate().getTime() : new Date(a.createdAt || 0).getTime();
+        const bd = typeof b.createdAt?.toDate === 'function' ? b.createdAt.toDate().getTime() : new Date(b.createdAt || 0).getTime();
+        return bd - ad;
+      })
+      .slice(0, 150)
+      .map((item) => `
+        <tr>
+          <td>${escapeHtml(item.naam)}</td>
+          <td>${escapeHtml(item.klas)}</td>
+          <td>${escapeHtml(item.thema)}</td>
+          <td>${escapeHtml(item.unit)}</td>
+          <td>${escapeHtml(item.score)}</td>
+          <td>${escapeHtml(item.antwoord1 || '-')}</td>
+          <td>${escapeHtml(item.antwoord2 || '-')}</td>
+          <td>${escapeHtml(item.antwoord3 || '-')}</td>
+        </tr>
+      `).join("");
+  }
+
   async function loadScores() {
     setStatus("Scores worden geladen…");
 
     let docs = [];
+    let reflectionDocs = [];
 
     try {
       // 🔒 VEILIGE QUERY – kan niet blokkeren
@@ -100,7 +138,13 @@
         .limit(500)
         .get();
 
+      const reflectionSnapshot = await window.db
+        .collection("score_reflections")
+        .limit(500)
+        .get();
+
       docs = snapshot.docs;
+      reflectionDocs = reflectionSnapshot.docs;
     } catch (err) {
       console.error("Firestore fout:", err);
       setStatus("Fout bij laden van scores.", true);
@@ -111,10 +155,15 @@
       id: doc.id,
       ...doc.data()
     }));
+    allReflections = reflectionDocs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
 
     populateClassFilter();
     renderTable("");
-    setStatus(`Klaar. ${allScores.length} score(s) geladen.`);
+    renderReflectionTable("");
+    setStatus(`Klaar. ${allScores.length} score(s) en ${allReflections.length} reflectie(s) geladen.`);
   }
 
   async function handleLogin(e) {
@@ -145,7 +194,10 @@
 
     teacherLoginForm.addEventListener("submit", handleLogin);
     teacherLogoutButton.addEventListener("click", handleLogout);
-    klasFilter.addEventListener("change", e => renderTable(e.target.value));
+    klasFilter.addEventListener("change", e => {
+      renderTable(e.target.value);
+      renderReflectionTable(e.target.value);
+    });
     refreshButton.addEventListener("click", loadScores);
 
     window.auth.onAuthStateChanged(user => {

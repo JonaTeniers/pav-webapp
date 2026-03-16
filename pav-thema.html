@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PAV Thema module</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#f4f7f9;--card:#fff;--line:#e2eaf0;--text:#1f2933;--muted:#66788a}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,sans-serif;background:var(--bg);color:var(--text)}
+    .wrap{max-width:1050px;margin:0 auto;padding:20px 16px 90px}
+    .hero,.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}.hero-top{display:flex;align-items:center;gap:12px}.mascotte{width:52px;height:52px;object-fit:contain}
+    .hero h1{margin:0 0 6px}.hero p{margin:0;color:var(--muted)}
+    .grid{display:grid;grid-template-columns:1.2fr 1fr;gap:14px}.assignment{border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px}
+    .tag{display:inline-block;border-radius:999px;padding:4px 8px;background:#edf2f7;font-size:12px;font-weight:700}
+    textarea,input{width:100%;padding:10px;border:1px solid #cfd9e2;border-radius:10px;font:inherit}
+    label{font-weight:700;font-size:14px;display:block;margin-bottom:8px}
+    button,a.btn{border:none;border-radius:10px;padding:10px 12px;color:#fff;font-weight:700;text-decoration:none;display:inline-block;cursor:pointer}
+    .links a{display:block;margin:5px 0;color:#0f4d8a}
+    @media(max-width:880px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero" id="hero"></section>
+
+    <div class="grid">
+      <section class="panel">
+        <h2>Thema module</h2>
+        <p id="uitleg"></p>
+        <h3>Praktisch scenario</h3>
+        <p id="scenario"></p>
+
+        <div class="links">
+          <strong>Koppeling met bestaande pagina's</strong>
+          <a href="thema.html">Bestaande dynamische thema-pagina</a>
+          <a href="hoofdthema6.html">Bestaand hoofdthema (Sparen)</a>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Opdrachten</h2>
+        <div id="assignments"></div>
+      </section>
+    </div>
+
+    <section class="panel">
+      <h2>Reflectievragen na opdracht</h2>
+      <form id="reflectionForm">
+        <label>Wat heb je geleerd?<textarea id="a1" required></textarea></label>
+        <label>Wat vond je moeilijk?<textarea id="a2" required></textarea></label>
+        <label>Wat zou je volgende keer anders doen?<textarea id="a3" required></textarea></label>
+        <button id="saveBtn" type="submit">Reflectie opslaan (zichtbaar voor leerkracht)</button>
+      </form>
+      <p id="saveMsg"></p>
+    </section>
+
+    <a class="btn" style="background:#2f4858" href="leerling-dashboard.html">Ga naar mijn voortgang</a>
+  </main>
+
+<script>
+const themes={
+  budget:{title:'Budget & Geld',color:'#4caf50',icon:'💶',uitleg:'Je leert een budget opstellen, keuzes maken en sparen.',scenario:'Je hebt €100 budget. Wat koop je?'},
+  winkelen:{title:'Winkelen',color:'#2196f3',icon:'🛍️',uitleg:'Je vergelijkt aanbiedingen en leert consumentengedrag.',scenario:'Waar koop je dezelfde producten het voordeligst?'},
+  wonen:{title:'Wonen',color:'#ff9800',icon:'🏠',uitleg:'Je bekijkt huur, energie, internet en woonkosten.',scenario:'Verdeel een maandbudget over huur en vaste kosten.'},
+  transport:{title:'Transport',color:'#f44336',icon:'🚌',uitleg:'Je plant veilige en duurzame verplaatsingen.',scenario:'Welke vervoerskeuze is het goedkoopst voor een week?'},
+  technologie:{title:'Technologie',color:'#9c27b0',icon:'💻',uitleg:'Je leert digitale veiligheid en verantwoord mediagebruik.',scenario:'Welke keuzes maken je online account veiliger?'}
+};
+const opdrachten=[
+ {type:'meerkeuze',titel:'Quizvraag',vraag:'Wat is de beste keuze binnen jouw budget?'},
+ {type:'berekening',titel:'Rekenvraag',vraag:'Bereken 20% korting op €75.'},
+ {type:'scenario',titel:'Praktijk',vraag:'Beschrijf je plan en motiveer je keuze.'}
+];
+const q=new URLSearchParams(location.search).get('theme')||'budget';
+const theme=themes[q]||themes.budget;
+
+document.getElementById('hero').innerHTML=`<div class="hero-top"><img class="mascotte" src="img/pavomascotte.png" alt="PAVO mascotte"><div><h1>${theme.icon} ${theme.title}</h1><p>Interactieve vragen, opdrachten en reflectie in duidelijke stappen.</p></div></div>`;
+document.getElementById('hero').style.borderTop='6px solid '+theme.color;
+document.getElementById('uitleg').textContent=theme.uitleg;
+document.getElementById('scenario').textContent=theme.scenario;
+
+const assignmentHtml=opdrachten.map((o,i)=>`<div class='assignment'><span class='tag'>${o.type}</span><h4>${o.titel}</h4><p>${o.vraag}</p><button style='background:${theme.color}' onclick='markDone(${i})'>Opdracht afronden</button></div>`).join('');
+document.getElementById('assignments').innerHTML=assignmentHtml;
+
+function markDone(i){
+  const key='pav_progress_'+q;
+  const current=JSON.parse(localStorage.getItem(key)||'{"done":0,"score":0}');
+  current.done=Math.min(3,current.done+1); current.score=Math.min(100,current.score+35);
+  localStorage.setItem(key,JSON.stringify(current));
+  alert('Opdracht afgerond. Vergeet je reflectie niet!');
+}
+
+reflectionForm.onsubmit=(e)=>{
+  e.preventDefault();
+  const data={antwoord1:a1.value.trim(),antwoord2:a2.value.trim(),antwoord3:a3.value.trim(),theme:q,updatedAt:new Date().toISOString()};
+  const list=JSON.parse(localStorage.getItem('pav_reflections')||'[]');
+  list.push(data);
+  localStorage.setItem('pav_reflections',JSON.stringify(list));
+  saveMsg.textContent='Reflectie opgeslagen.';
+  saveMsg.style.color='#166534';
+  reflectionForm.reset();
+};
+</script>
+</body>
+</html>

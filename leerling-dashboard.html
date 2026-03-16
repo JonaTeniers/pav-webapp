@@ -5,228 +5,110 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Leerlingdashboard - PAV-O</title>
   <style>
-    :root {
-      --bg: #f6f8fb;
-      --card: #ffffff;
-      --muted: #64748b;
-      --text: #1e293b;
-      --line: #dde4ef;
-      --blue: #c9ddff;
-      --blue-strong: #3b82f6;
-      --yellow: #fff4cc;
-      --green: #dff6e7;
-    }
-
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: "Inter", "Segoe UI", Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.45;
-    }
-
-    .wrapper { max-width: 1180px; margin: 26px auto 48px; padding: 0 18px; }
-    h1, h2, h3 { margin-top: 0; }
-    .top-link { color: #334155; text-decoration: none; font-weight: 600; }
-
-    .card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 16px;
-      box-shadow: 0 6px 14px rgba(15, 23, 42, 0.04);
-      margin-bottom: 14px;
-    }
-
-    .row { display:flex; flex-wrap:wrap; gap:10px; align-items:end; }
-    label { display:flex; flex-direction:column; gap:6px; font-weight:700; font-size:0.92rem; }
-    input, textarea, select {
-      min-width: 200px;
-      padding: 10px 12px;
-      border: 1px solid #c8d4e6;
-      border-radius: 10px;
-      font: inherit;
-      background: white;
-    }
-    textarea { min-height: 80px; width: 100%; resize: vertical; }
-    .btn {
-      padding: 10px 14px;
-      border: none;
-      border-radius: 10px;
-      background: #1d4ed8;
-      color: white;
-      cursor: pointer;
-      font-weight: 700;
-    }
-
-    .overview-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-
-    .mini-stat {
-      background: white;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 12px;
-    }
-    .mini-stat small { color: var(--muted); font-weight: 600; display:block; }
-    .mini-stat strong { font-size: 1.45rem; }
-
-    .week-strip {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 8px;
-    }
-    .day {
-      background: #f8fafc;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: 8px;
-      text-align: center;
-      font-size: 0.82rem;
-    }
-
-    .progress-wrap {
-      height: 10px;
-      border-radius: 999px;
-      background: #e2e8f0;
-      overflow: hidden;
-      margin-top: 6px;
-    }
-    .progress-bar { height: 100%; background: linear-gradient(90deg, #93c5fd, #3b82f6); }
-
-    .columns {
-      display:grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 14px;
-    }
-
-    table { width:100%; border-collapse: collapse; }
-    th, td { text-align:left; padding:10px; border-bottom:1px solid #e6edf7; vertical-align: top; }
-    th { background:#eef4ff; color:#1d4ed8; font-size:.85rem; text-transform: uppercase; letter-spacing: .02em; }
-
-    .pill { display:inline-block; border-radius: 999px; padding:4px 9px; background: var(--green); font-weight: 700; font-size: .8rem; }
-    .feedback-item, .project-item {
-      border: 1px solid var(--line);
-      border-left: 4px solid #93c5fd;
-      background: #f8fbff;
-      border-radius: 10px;
-      padding: 10px;
-      margin-bottom: 8px;
-    }
-
-    .portfolio-sections { display:grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; }
-    .portfolio-card { background:#fbfdff; border: 1px solid var(--line); border-radius: 12px; padding: 10px; }
-    .muted { color: var(--muted); }
-
-    @media (max-width: 900px) {
-      .columns { grid-template-columns: 1fr; }
-      .week-strip { grid-template-columns: repeat(4, 1fr); }
-    }
+    :root{--bg:#f6f8fb;--card:#fff;--line:#dbe4ef;--text:#1f2b37;--muted:#64748b;--blue:#1d4ed8}
+    *{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,sans-serif;background:var(--bg);color:var(--text)}
+    .wrap{max-width:1150px;margin:0 auto;padding:20px 16px 90px}
+    .head{display:flex;align-items:center;gap:12px}.head img{width:56px;height:56px;object-fit:contain}
+    .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+    .grid{display:grid;grid-template-columns:2fr 1fr;gap:12px}
+    table{width:100%;border-collapse:collapse}th,td{padding:10px;border-bottom:1px solid #e8eef5;text-align:left}th{font-size:.8rem;text-transform:uppercase;color:#5f6f82}
+    .pill{display:inline-block;padding:4px 9px;border-radius:999px;background:#dcfce7;font-weight:700}
+    .progress-wrap{height:10px;background:#e2e8f0;border-radius:99px;overflow:hidden}.progress-bar{height:100%;background:linear-gradient(90deg,#93c5fd,#3b82f6)}
+    .theme-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}.theme-links a{background:#f8fbff;border:1px solid var(--line);padding:8px;border-radius:10px;text-decoration:none;color:#0f2f59;font-weight:600}
+    input,textarea{width:100%;padding:9px;border:1px solid #c9d5e7;border-radius:8px}label{font-weight:700;font-size:.9rem}
+    .btn{background:var(--blue);color:#fff;border:none;border-radius:9px;padding:9px 12px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block}
+    .muted{color:var(--muted)}
+    .bottom-nav{position:fixed;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(5,1fr);gap:8px;background:rgba(255,255,255,.97);border-top:1px solid var(--line);padding:10px}
+    .bottom-nav a{background:#3f5f73;color:#fff;text-decoration:none;text-align:center;padding:10px 6px;border-radius:10px;font-size:12px;font-weight:700}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
-  <main class="wrapper">
-    <p><a class="top-link" href="index.html">← Terug naar thema-overzicht</a></p>
-    <h1>Leerlingdashboard</h1>
+  <main class="wrap">
+    <div class="head card">
+      <img src="img/pavomascotte.png" alt="PAVO mascotte">
+      <div>
+        <h1 style="margin:0">Leerlingdashboard</h1>
+        <p class="muted" style="margin:4px 0 0">Scores komen uit de oefeningen die je effectief maakte.</p>
+      </div>
+      <a class="btn" href="index.html" style="margin-left:auto">← Home</a>
+    </div>
 
     <section class="card">
-      <p>Log in met <strong>voornaam + klas</strong> om je leerpad, projecten, reflecties en vaardigheden te bekijken.</p>
-      <form id="studentViewLoginForm" class="row">
-        <label>Voornaam <input id="viewVoornaam" type="text" required /></label>
-        <label>Klas <input id="viewKlas" type="text" required /></label>
-        <button class="btn" type="submit">Mijn dashboard openen</button>
+      <form id="studentViewLoginForm" style="display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:end">
+        <label>Voornaam<input id="viewVoornaam" required></label>
+        <label>Klas<input id="viewKlas" required></label>
+        <button class="btn" type="submit">Dashboard openen</button>
       </form>
       <p id="activeProfile"></p>
       <p id="status" class="muted">Wacht op login...</p>
     </section>
 
-    <section class="overview-grid">
-      <div class="mini-stat"><small>Mijn opdrachten</small><strong id="countAssignments">0</strong></div>
-      <div class="mini-stat"><small>Mijn doelen deze week</small><strong id="countGoals">0</strong></div>
-      <div class="mini-stat"><small>Mijn reflecties</small><strong id="countReflections">0</strong></div>
-      <div class="mini-stat"><small>Feedback van leerkracht</small><strong id="countFeedback">0</strong></div>
-      <div class="mini-stat"><small>Totaalscore</small><strong id="studentTotalScore">0 XP</strong></div>
-    </section>
-
-    <section class="card">
-      <h2>Weekoverzicht</h2>
-      <div id="weekOverview" class="week-strip"></div>
-    </section>
-
-    <div class="columns">
-      <section class="card">
+    <section class="grid">
+      <div class="card">
         <h2>Mijn voortgang en opdrachten</h2>
         <table>
-          <thead>
-            <tr>
-              <th>Thema</th>
-              <th>Unit</th>
-              <th>Score</th>
-              <th>Wanneer</th>
-              <th>Status / Actie</th>
-            </tr>
-          </thead>
-          <tbody id="studentScoresTableBody">
-            <tr><td colspan="5">Nog geen resultaten geladen.</td></tr>
-          </tbody>
+          <thead><tr><th>Thema</th><th>Unit</th><th>Score</th><th>Wanneer</th><th>Status / Actie</th></tr></thead>
+          <tbody id="studentScoresTableBody"><tr><td colspan="5">Nog geen resultaten geladen.</td></tr></tbody>
         </table>
-      </section>
+      </div>
+      <div>
+        <div class="card"><small class="muted">Mijn opdrachten</small><h3 id="countAssignments">0</h3></div>
+        <div class="card"><small class="muted">Mijn doelen</small><h3 id="countGoals">0</h3></div>
+        <div class="card"><small class="muted">Reflecties</small><h3 id="countReflections">0</h3></div>
+        <div class="card"><small class="muted">Feedback</small><h3 id="countFeedback">0</h3></div>
+        <div class="card"><small class="muted">Totaalscore</small><h3 id="studentTotalScore">0 XP</h3></div>
+      </div>
+    </section>
 
-      <section class="card">
-        <h2>Vaardigheden</h2>
-        <div id="skillsContainer">Nog geen vaardigheidsdata.</div>
-        <h3 style="margin-top:16px;">Feedback van de leerkracht</h3>
-        <div id="feedbackContainer" class="muted">Nog geen feedback geladen.</div>
-      </section>
-    </div>
-
-    <div class="columns">
-      <section class="card">
-        <h2>Reflectie na leren</h2>
-        <p class="muted">Reflecteer na een opdracht of project. Je antwoorden worden in je portfolio bewaard.</p>
-        <form id="reflectionForm">
-          <label>Wat heb ik geleerd?<textarea id="reflectLearned" required></textarea></label>
-          <label>Wat vond ik moeilijk?<textarea id="reflectDifficult" required></textarea></label>
-          <label>Wat zou ik volgende keer anders doen?<textarea id="reflectNextTime" required></textarea></label>
-          <label>Hoe verliep de samenwerking?<textarea id="reflectTeamwork" required></textarea></label>
-          <button class="btn" type="submit">Reflectie opslaan</button>
-        </form>
-        <div id="reflectionList" style="margin-top:10px;"></div>
-      </section>
-
-      <section class="card">
-        <h2>Projectmodule</h2>
-        <div id="projectContainer" class="muted">Nog geen projecten geladen.</div>
-        <h3 style="margin-top:18px;">Samenwerking</h3>
-        <form id="collaborationForm">
-          <label>Taakverdeling binnen groep<textarea id="collabTask" placeholder="Wie doet wat?"></textarea></label>
-          <label>Reactie of discussiepunt<textarea id="collabComment" placeholder="Korte update voor je groep"></textarea></label>
-          <button class="btn" type="submit">Samenwerking opslaan</button>
-        </form>
-        <div id="collaborationList" class="muted" style="margin-top:10px;"></div>
-      </section>
-    </div>
+    <section class="card"><h3>Weekoverzicht</h3><div id="weekOverview" style="display:grid;grid-template-columns:repeat(7,1fr);gap:8px"></div></section>
+    <section class="card"><h3>Vaardigheden</h3><div id="skillsContainer">Nog geen vaardigheidsdata.</div></section>
+    <section class="card"><h3>Feedback</h3><div id="feedbackContainer">Nog geen feedback.</div></section>
+    <section class="card"><h3>Projecten</h3><div id="projectContainer">Nog geen projecten.</div></section>
+    <section class="card"><h3>Reflecties</h3><div id="reflectionList">Nog geen reflecties.</div></section>
+    <section class="card"><h3>Samenwerking</h3><div id="collaborationList">Nog geen notities.</div></section>
 
     <section class="card">
-      <h2>Leerlingportfolio</h2>
-      <div class="portfolio-sections">
-        <div class="portfolio-card"><strong>Projecten</strong><p id="portfolioProjects" class="muted">0 opgeslagen</p></div>
-        <div class="portfolio-card"><strong>Opdrachten</strong><p id="portfolioAssignments" class="muted">0 opgeslagen</p></div>
-        <div class="portfolio-card"><strong>Reflecties</strong><p id="portfolioReflections" class="muted">0 opgeslagen</p></div>
-        <div class="portfolio-card"><strong>Vaardigheden</strong><p id="portfolioSkills" class="muted">0 bijgehouden</p></div>
+      <h3>Nieuwe reflectie</h3>
+      <form id="reflectionForm" style="display:grid;gap:8px">
+        <label>Wat heb je geleerd?<textarea id="reflectLearned" required></textarea></label>
+        <label>Wat vond je moeilijk?<textarea id="reflectDifficult" required></textarea></label>
+        <label>Wat doe je volgende keer anders?<textarea id="reflectNextTime" required></textarea></label>
+        <label>Samenwerking<textarea id="reflectTeamwork" required></textarea></label>
+        <button class="btn" type="submit">Reflectie opslaan</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h3>Samenwerkingsnotitie</h3>
+      <form id="collaborationForm" style="display:grid;gap:8px">
+        <label>Taakverdeling<input id="collabTask" required></label>
+        <label>Bespreking<textarea id="collabComment" required></textarea></label>
+        <button class="btn" type="submit">Opslaan</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h3>Alle thema's zichtbaar</h3>
+      <div class="theme-links">
+        <a href="hoofdthema1.html">Hoofdthema 1</a><a href="hoofdthema2.html">Hoofdthema 2</a><a href="hoofdthema3.html">Hoofdthema 3</a><a href="hoofdthema4.html">Hoofdthema 4</a><a href="hoofdthema5.html">Hoofdthema 5</a><a href="hoofdthema6.html">Hoofdthema 6</a>
+        <a href="oefenthema1.html">Oefenthema 1</a><a href="oefenthema2.html">Oefenthema 2</a><a href="oefenthema3.html">Oefenthema 3</a><a href="oefenthema4.html">Oefenthema 4</a><a href="oefenthema5.html">Oefenthema 5</a><a href="oefenthema6.html">Oefenthema 6</a>
       </div>
-      <p><a href="portfolio.html">Open uitgebreid portfolio ✍️</a></p>
-      <p class="muted">Privacy: gegevens worden enkel voor onderwijsdoelen verwerkt (GDPR) en blijven binnen je schoolomgeving.</p>
+    </section>
+
+    <section class="card" style="display:none">
+      <span id="portfolioAssignments">0 opgeslagen</span>
+      <span id="portfolioProjects"></span>
+      <span id="portfolioReflections"></span>
+      <span id="portfolioSkills"></span>
     </section>
   </main>
 
+  <nav class="bottom-nav">
+    <a href="index.html">Home</a><a href="thema.html">Thema's</a><a href="leerling-dashboard.html">Mijn voortgang</a><a href="leerkracht-dashboard.html">Resultaten</a><a href="portfolio.html">Profiel</a>
+  </nav>
+
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
   <script src="./firebase.js"></script>
   <script src="./leerling-dashboard.js"></script>
