@@ -91,6 +91,34 @@
 
 
 
+
+  function renderCurrentScores() {
+    const host = document.getElementById('currentScoresList');
+    if (!host) return;
+
+    if (!allScores.length) {
+      host.textContent = 'Nog geen recente scores.';
+      return;
+    }
+
+    const latest = [...allScores]
+      .sort((a, b) => {
+        const ad = typeof a.createdAt?.toDate === 'function' ? a.createdAt.toDate().getTime() : new Date(a.createdAt || 0).getTime();
+        const bd = typeof b.createdAt?.toDate === 'function' ? b.createdAt.toDate().getTime() : new Date(b.createdAt || 0).getTime();
+        return bd - ad;
+      })
+      .slice(0, 10);
+
+    host.innerHTML = latest.map((item) => `
+      <div style="padding:6px 0;border-bottom:1px solid #e8eef5;">
+        <strong>${escapeHtml(item.naam)}</strong> (${escapeHtml(item.klas)}) ·
+        ${escapeHtml(item.thema)} ${escapeHtml(item.unit)} ·
+        <strong>${escapeHtml(item.score)}</strong> ·
+        <span class="muted">${escapeHtml(formatDate(item.createdAt))}</span>
+      </div>
+    `).join('');
+  }
+
   function renderReflectionTable(klas = "") {
     const tbody = document.getElementById("reflectionAnswerTableBody");
     if (!tbody) return;
@@ -162,6 +190,7 @@
 
     populateClassFilter();
     renderTable("");
+    renderCurrentScores();
     renderReflectionTable("");
     setStatus(`Klaar. ${allScores.length} score(s) en ${allReflections.length} reflectie(s) geladen.`);
   }
@@ -186,10 +215,29 @@
 
   async function handleLogout() {
     await window.auth.signOut();
-    setStatus("Uitgelogd.");
+    window.localStorage.removeItem("role");
+    window.location.href = "login.html";
+  }
+
+
+  function ensureTeacherAccess() {
+    const role = String(window.localStorage.getItem('role') || '').toLowerCase();
+    if (role === 'student') {
+      window.location.href = 'leerling-dashboard.html';
+      return false;
+    }
+
+    if (role !== 'teacher') {
+      window.location.href = 'login.html';
+      return false;
+    }
+
+    return true;
   }
 
   async function init() {
+    if (!ensureTeacherAccess()) return;
+
     await window.firebaseReady;
 
     teacherLoginForm.addEventListener("submit", handleLogin);
@@ -213,6 +261,7 @@
         return;
       }
 
+      window.localStorage.setItem("role", "teacher");
       showDashboard();
       setStatus(`Ingelogd als ${user.email}`);
       loadScores();

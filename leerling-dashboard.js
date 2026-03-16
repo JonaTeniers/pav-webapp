@@ -81,6 +81,27 @@
     return getStoredJson(STORAGE_KEY, null);
   }
 
+  function getRole() {
+    return String(window.localStorage.getItem('role') || '').toLowerCase();
+  }
+
+  function ensureStudentAccess() {
+    const role = getRole();
+    const profile = getStoredProfile();
+
+    if (role === 'teacher') {
+      window.location.href = 'leerkracht-dashboard.html';
+      return false;
+    }
+
+    if (role !== 'student' || !profile?.voornaam || !profile?.klas) {
+      window.location.href = 'login.html';
+      return false;
+    }
+
+    return true;
+  }
+
   function saveProfile(profile) {
     setStoredJson(STORAGE_KEY, profile);
   }
@@ -421,6 +442,7 @@
 
     const profile = { voornaam, klas, loggedInAt: new Date().toISOString() };
     saveProfile(profile);
+    window.localStorage.setItem('role', 'student');
     showActiveProfile(profile);
 
     try {
@@ -429,34 +451,6 @@
       console.error('Fout bij laden leerlingdashboard:', error);
       setStatus('Kon dashboard niet volledig laden.', true);
     }
-
-    const taak = document.getElementById('collabTask').value.trim();
-    const reacties = document.getElementById('collabComment').value.trim();
-    if (!taak || !reacties) {
-      setStatus('Vul taakverdeling en discussie in.', true);
-      return;
-    }
-
-    const all = getStoredJson(COLLAB_STORAGE_KEY, []);
-    all.unshift({
-      voornaam: profile.voornaam,
-      klas: profile.klas,
-      taak,
-      reacties,
-      datum: new Date().toISOString()
-    });
-    setStoredJson(COLLAB_STORAGE_KEY, all);
-    event.target.reset();
-    renderCollaboration(profile);
-    setStatus('Samenwerkingsnotitie opgeslagen.', false);
-  }
-
-  function initWeekOverviewSkeleton() {
-    const host = document.getElementById('weekOverview');
-    if (!host) return;
-    host.innerHTML = ['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo']
-      .map((day) => `<div class="day"><strong>${day}</strong><div>0 activiteit(en)</div></div>`)
-      .join('');
   }
 
   async function handleReflectionSubmit(event) {
@@ -538,6 +532,8 @@
   }
 
   async function init() {
+    if (!ensureStudentAccess()) return;
+
     initWeekOverviewSkeleton();
 
     try {
