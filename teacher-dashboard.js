@@ -91,6 +91,34 @@
 
 
 
+
+  function renderCurrentScores() {
+    const host = document.getElementById('currentScoresList');
+    if (!host) return;
+
+    if (!allScores.length) {
+      host.textContent = 'Nog geen recente scores.';
+      return;
+    }
+
+    const latest = [...allScores]
+      .sort((a, b) => {
+        const ad = typeof a.createdAt?.toDate === 'function' ? a.createdAt.toDate().getTime() : new Date(a.createdAt || 0).getTime();
+        const bd = typeof b.createdAt?.toDate === 'function' ? b.createdAt.toDate().getTime() : new Date(b.createdAt || 0).getTime();
+        return bd - ad;
+      })
+      .slice(0, 10);
+
+    host.innerHTML = latest.map((item) => `
+      <div style="padding:6px 0;border-bottom:1px solid #e8eef5;">
+        <strong>${escapeHtml(item.naam)}</strong> (${escapeHtml(item.klas)}) ·
+        ${escapeHtml(item.thema)} ${escapeHtml(item.unit)} ·
+        <strong>${escapeHtml(item.score)}</strong> ·
+        <span class="muted">${escapeHtml(formatDate(item.createdAt))}</span>
+      </div>
+    `).join('');
+  }
+
   function renderReflectionTable(klas = "") {
     const tbody = document.getElementById("reflectionAnswerTableBody");
     if (!tbody) return;
@@ -130,6 +158,7 @@
 
     let docs = [];
     let reflectionDocs = [];
+    let hadError = false;
 
     try {
       // 🔒 VEILIGE QUERY – kan niet blokkeren
@@ -137,18 +166,23 @@
         .collection("scores")
         .limit(500)
         .get();
+      docs = snapshot.docs;
+    } catch (err) {
+      hadError = true;
+      console.error("Firestore fout bij scores:", err);
+      setStatus("Scores gedeeltelijk geladen (geen toegang tot alle data).", true);
+    }
 
+    try {
       const reflectionSnapshot = await window.db
         .collection("score_reflections")
         .limit(500)
         .get();
-
-      docs = snapshot.docs;
       reflectionDocs = reflectionSnapshot.docs;
     } catch (err) {
-      console.error("Firestore fout:", err);
-      setStatus("Fout bij laden van scores.", true);
-      return;
+      hadError = true;
+      console.warn("Firestore fout bij score_reflections:", err);
+      setStatus("Scores geladen zonder reflecties (toegang ontbreekt op reflecties).", true);
     }
 
     allScores = docs.map(doc => ({
@@ -162,15 +196,18 @@
 
     populateClassFilter();
     renderTable("");
+    renderCurrentScores();
     renderReflectionTable("");
-    setStatus(`Klaar. ${allScores.length} score(s) en ${allReflections.length} reflectie(s) geladen.`);
+    if (!hadError) {
+      setStatus(`Klaar. ${allScores.length} score(s) en ${allReflections.length} reflectie(s) geladen.`);
+    }
   }
 
   async function handleLogin(e) {
     e.preventDefault();
 
-    const email = teacherEmail.value.trim();
-    const pw = teacherPassword.value;
+    const email = document.getElementById("teacherEmail")?.value?.trim() || "";
+    const pw = document.getElementById("teacherPassword")?.value || "";
 
     if (!window.isTeacherEmail(email)) {
       setStatus("Geen leerkrachtaccount.", true);
@@ -186,11 +223,43 @@
 
   async function handleLogout() {
     await window.auth.signOut();
-    setStatus("Uitgelogd.");
+    window.localStorage.removeItem("role");
+    window.location.href = "login.html";
+  }
+
+
+  function ensureTeacherAccess() {
+    const role = String(window.localStorage.getItem('role') || '').toLowerCase();
+    if (role === 'student') {
+      window.location.href = 'leerling-dashboard.html';
+      return false;
+    }
+
+    if (role !== 'teacher') {
+      window.location.href = 'login.html';
+      return false;
+    }
+
+    return true;
   }
 
   async function init() {
+    if (!ensureTeacherAccess()) return;
+
     await window.firebaseReady;
+
+    const teacherLoginForm = document.getElementById("teacherLoginForm");
+    const teacherLogoutButton = document.getElementById("teacherLogoutButton");
+    const klasFilter = document.getElementById("klasFilter");
+    const refreshButton = document.getElementById("refreshButton");
+    const teacherEmailInput = document.getElementById("teacherEmail");
+    const teacherPasswordInput = document.getElementById("teacherPassword");
+
+    if (!teacherLoginForm || !teacherLogoutButton || !klasFilter || !refreshButton || !teacherEmailInput || !teacherPasswordInput) {
+      setStatus("Dashboard kon niet correct opstarten.", true);
+      return;
+    }
+
 
     teacherLoginForm.addEventListener("submit", handleLogin);
     teacherLogoutButton.addEventListener("click", handleLogout);
@@ -213,6 +282,7 @@
         return;
       }
 
+      window.localStorage.setItem("role", "teacher");
       showDashboard();
       setStatus(`Ingelogd als ${user.email}`);
       loadScores();
@@ -221,5 +291,4 @@
 
   init();
 })();
-
 
