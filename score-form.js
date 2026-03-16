@@ -29,6 +29,84 @@
     };
   }
 
+
+
+  function inferThemaUnitFromPath() {
+    const page = window.location.pathname.toLowerCase();
+    const thema = page.match(/thema\d+/);
+    const unit = page.match(/unit\d+/);
+    return {
+      thema: thema ? thema[0] : null,
+      unit: unit ? unit[0] : null
+    };
+  }
+
+  function saveReflectionLocal(payload) {
+    let all = [];
+    try {
+      all = JSON.parse(localStorage.getItem('pavo_score_reflections') || '[]');
+    } catch {
+      all = [];
+    }
+    all.unshift(payload);
+    localStorage.setItem('pavo_score_reflections', JSON.stringify(all));
+  }
+
+  async function saveReflectionBoth(payload) {
+    saveReflectionLocal(payload);
+    if (!window.db) return;
+    try {
+      await window.db.collection('score_reflections').add({
+        ...payload,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    } catch (error) {
+      console.warn('Opslaan reflectie in Firestore mislukt; lokaal bewaard.', error);
+    }
+  }
+
+  function renderPostScoreReflection(scoreValue) {
+    if (document.getElementById('postScoreReflectionForm')) return;
+
+    const host = document.getElementById('scoreForm')?.parentElement || document.body;
+    const box = document.createElement('section');
+    box.style.marginTop = '12px';
+    box.innerHTML = `
+      <h3>Reflectievragen na opdracht</h3>
+      <form id="postScoreReflectionForm" style="display:grid;gap:8px;">
+        <label>Wat heb je geleerd?<textarea id="postReflect1" required></textarea></label>
+        <label>Wat vond je moeilijk?<textarea id="postReflect2" required></textarea></label>
+        <label>Wat zou je volgende keer anders doen?<textarea id="postReflect3" required></textarea></label>
+        <button type="submit">Reflectie opslaan</button>
+      </form>
+      <p id="postReflectStatus"></p>
+    `;
+    host.appendChild(box);
+
+    document.getElementById('postScoreReflectionForm')?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const profile = getProfile();
+      if (!profile?.voornaam || !profile?.klas) return;
+      const inferred = inferThemaUnitFromPath();
+      const payload = {
+        naam: profile.voornaam,
+        klas: profile.klas,
+        thema: inferred.thema,
+        unit: inferred.unit,
+        score: scoreValue,
+        bronPagina: window.location.pathname,
+        antwoord1: document.getElementById('postReflect1')?.value?.trim() || '',
+        antwoord2: document.getElementById('postReflect2')?.value?.trim() || '',
+        antwoord3: document.getElementById('postReflect3')?.value?.trim() || ''
+      };
+      if (!payload.antwoord1 || !payload.antwoord2 || !payload.antwoord3) return;
+      await saveReflectionBoth(payload);
+      const status = document.getElementById('postReflectStatus');
+      if (status) status.textContent = '✅ Reflectie opgeslagen voor leerkracht.';
+      event.target.reset();
+    });
+  }
+
   async function handleScoreSubmit(e) {
     e.preventDefault();
 
@@ -65,6 +143,7 @@
       await window.db.collection('scores').add(data);
       setStatus("Score opgeslagen ✔", false);
       e.target.reset();
+      renderPostScoreReflection(scoreValue);
     } catch (err) {
       console.error(err);
       setStatus("Opslaan mislukt.", true);

@@ -154,6 +154,122 @@
     return null;
   }
 
+
+
+  const PROFILE_KEY = 'pavo_leerling_profiel';
+  const REFLECTIONS_KEY = 'pavo_score_reflections';
+
+  function getStudentProfile() {
+    try {
+      const raw = localStorage.getItem(PROFILE_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function inferThemaUnitFromPath() {
+    const page = window.location.pathname.toLowerCase();
+    const thema = page.match(/thema\d+/);
+    const unit = page.match(/unit\d+/);
+    return {
+      thema: thema ? thema[0] : null,
+      unit: unit ? unit[0] : null
+    };
+  }
+
+  function disableUnitUntilLogin() {
+    const profile = getStudentProfile();
+    if (profile?.voornaam && profile?.klas) return true;
+
+    const quizBox = document.getElementById('quizBox') || document.querySelector('main');
+    if (quizBox && !document.getElementById('loginRequiredBox')) {
+      const info = document.createElement('div');
+      info.id = 'loginRequiredBox';
+      info.className = 'feedback error';
+      info.style.marginBottom = '0.8rem';
+      info.textContent = 'Log eerst in als leerling (voornaam + klas) via het leerlingdashboard om dit doel te spelen en score op te slaan.';
+      quizBox.prepend(info);
+    }
+
+    document.querySelectorAll('input, textarea, select, button').forEach((el) => {
+      if (el.closest('.nav-buttons')) return;
+      el.disabled = true;
+    });
+    return false;
+  }
+
+  function saveReflectionLocal(payload) {
+    let all = [];
+    try {
+      all = JSON.parse(localStorage.getItem(REFLECTIONS_KEY) || '[]');
+    } catch {
+      all = [];
+    }
+    all.unshift(payload);
+    localStorage.setItem(REFLECTIONS_KEY, JSON.stringify(all));
+  }
+
+  async function saveReflectionBoth(payload) {
+    saveReflectionLocal(payload);
+    if (!window.db) return;
+    try {
+      await window.db.collection('score_reflections').add({
+        ...payload,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    } catch (error) {
+      console.warn('Opslaan score_reflections in Firestore mislukt, lokaal bewaard.', error);
+    }
+  }
+
+  function renderReflectionAfterScore(container, context) {
+    if (!container || document.getElementById('postScoreReflectionForm')) return;
+
+    const box = document.createElement('section');
+    box.className = 'question-item';
+    box.innerHTML = `
+      <h3>Reflectie direct na je score</h3>
+      <p class="helper">Deze reflectie hoort bij dit doel en wordt zichtbaar voor de leerkracht.</p>
+      <form id="postScoreReflectionForm" style="display:grid;gap:8px;">
+        <label>Wat heb je geleerd?<textarea id="postReflect1" required></textarea></label>
+        <label>Wat vond je moeilijk?<textarea id="postReflect2" required></textarea></label>
+        <label>Wat zou je volgende keer anders doen?<textarea id="postReflect3" required></textarea></label>
+        <button type="submit">Reflectie opslaan</button>
+      </form>
+      <div id="postReflectionStatus" class="feedback"></div>
+    `;
+    container.appendChild(box);
+
+    document.getElementById('postScoreReflectionForm')?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const profile = getStudentProfile();
+      if (!profile?.voornaam || !profile?.klas) return;
+
+      const payload = {
+        naam: profile.voornaam,
+        klas: profile.klas,
+        thema: context.thema,
+        unit: context.unit,
+        score: context.score,
+        bronPagina: window.location.pathname,
+        antwoord1: document.getElementById('postReflect1')?.value?.trim() || '',
+        antwoord2: document.getElementById('postReflect2')?.value?.trim() || '',
+        antwoord3: document.getElementById('postReflect3')?.value?.trim() || ''
+      };
+
+      if (!payload.antwoord1 || !payload.antwoord2 || !payload.antwoord3) return;
+
+      await saveReflectionBoth(payload);
+      const status = document.getElementById('postReflectionStatus');
+      if (status) {
+        status.textContent = '✅ Reflectie opgeslagen voor leerkracht.';
+        status.className = 'feedback success';
+      }
+      event.target.reset();
+    });
+  }
+
   function isCorrectAnswer(question, value) {
     if (question.type === 'mc') {
       return Number(value) === Number(question.correctIndex);
@@ -331,6 +447,13 @@
         : `Opdrachten opgeslagen. Je kan verder met reflectie en afronding.`;
       summary.className = 'feedback success';
 
+      const inferred = inferThemaUnitFromPath();
+      renderReflectionAfterScore(summary.parentElement, {
+        thema: inferred.thema,
+        unit: inferred.unit,
+        score: totalScore
+      });
+
       const xp = document.getElementById('xpScore');
       if (xp) xp.textContent = String(totalScore);
       const endScreen = document.getElementById('endScreen');
@@ -447,6 +570,8 @@
   function setupAllInOneUnitMode() {
     applyUnitThemeRefresh();
     harmonizeGoalLabels();
+    const canPlay = disableUnitUntilLogin();
+    if (!canPlay) return;
     buildAllQuestionsView();
   }
 
