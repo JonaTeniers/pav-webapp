@@ -240,9 +240,33 @@ const KNOWLEDGE = {
   "hoofdthema 2": "Hoofdthema 2 focust op levende natuur: organismen, ecosystemen, voedselketens en aanpassingen aan de omgeving.",
   "hoofdthema 3": "Hoofdthema 3 gaat over geschiedenis en historisch redeneren: oorzaken, gevolgen en veranderingen doorheen de tijd.",
   "hoofdthema 4": "Hoofdthema 4 verkent duurzame groei, innovatie en de impact van menselijke keuzes op natuur en samenleving.",
+  "hoofdthema 5": "Hoofdthema 5 draait om veilig onderweg zijn: verkeersinzicht, risico herkennen en verantwoord handelen in het verkeer.",
+  "hoofdthema 6": "Hoofdthema 6 gaat over slim omgaan met geld: inkomsten en uitgaven plannen, sparen en bewuste financiële keuzes maken.",
+  "hoofdthema 7": "Hoofdthema 7 focust op veiligheid en preventie bij noodgevallen: snel inschatten, correct reageren en hulpdiensten contacteren.",
+  "hoofdthema 8": "Hoofdthema 8 combineert mechanica en lassen: je past technische begrippen toe zoals meten, verbinden en veilig werken.",
   "thema 1 landschappen": "In Thema 1 onderzoek je soorten landschappen zoals stedelijk, landelijk, industrieel en toeristisch.",
   "thema 2 levende natuur": "In Thema 2 leer je hoe levende natuur werkt via begrippen zoals organisme, ecosysteem en voedselketen.",
-  "thema 9 geschiedenis": "In Thema 9 analyseer je sleutelmomenten uit de geschiedenis en koppel je bronnen aan oorzaak en gevolg."
+  "thema 5 veilig onderweg": "In Thema 5 oefen je verkeersregels, risico-inschatting en veilig gedrag als voetganger, fietser of passagier.",
+  "thema 6 sparen": "In Thema 6 leer je een budget opstellen, vaste en variabele kosten herkennen en spaardoelen plannen.",
+  "thema 7 noodgeval": "In Thema 7 oefen je wat je doet bij brand, ongeval of medische nood: rustig blijven, signaleren en correct hulp inroepen.",
+  "thema 8 mechanica en lassen": "In Thema 8 werk je rond technische vaardigheden zoals meten, verbindingstechnieken, lassen en veilig materiaalgebruik.",
+  "thema 9 geschiedenis": "In Thema 9 analyseer je sleutelmomenten uit de geschiedenis en koppel je bronnen aan oorzaak en gevolg.",
+  "voorrangsregel": "De voorrangsregel bepaalt wie eerst mag rijden op een kruispunt als er geen verkeerslichten of borden zijn.",
+  "defensief rijden": "Defensief rijden betekent dat je vooruitkijkt, risico's inschat en je gedrag aanpast om ongevallen te vermijden.",
+  "dode hoek": "De dode hoek is een zone rond een voertuig die de bestuurder niet rechtstreeks kan zien in spiegels of door ramen.",
+  "budget": "Een budget is een overzicht van je verwachte inkomsten en uitgaven voor een bepaalde periode.",
+  "vaste kosten": "Vaste kosten zijn uitgaven die regelmatig terugkeren en meestal hetzelfde blijven, zoals huur of abonnementen.",
+  "variabele kosten": "Variabele kosten zijn uitgaven die kunnen schommelen, zoals boodschappen, hobby's of vrijetijdsbesteding.",
+  "spaardoel": "Een spaardoel is een concreet bedrag dat je tegen een bepaalde datum wil opzijzetten voor iets dat je nodig hebt of wil.",
+  "noodsituatie": "Een noodsituatie is een plots gevaarlijke situatie waarbij snel en juist handelen nodig is om schade te beperken.",
+  "ehbo": "EHBO staat voor eerste hulp bij ongevallen: de eerste zorg die je geeft tot professionele hulp overneemt.",
+  "112": "112 is het Europese noodnummer voor dringende hulp van ambulance, brandweer of politie.",
+  "wet van ohm": "De wet van Ohm beschrijft het verband tussen spanning, stroom en weerstand: U = I × R.",
+  "spanning": "Spanning (volt) is het elektrische potentiaalverschil dat stroom door een kring kan laten lopen.",
+  "stroomsterkte": "Stroomsterkte (ampère) is de hoeveelheid elektrische lading die per seconde door een geleider loopt.",
+  "weerstand": "Weerstand (ohm) drukt uit hoe sterk een materiaal de elektrische stroom tegenwerkt.",
+  "buigstraal": "De buigstraal is de minimale straal waarmee je materiaal kan plooien zonder schade of vervorming.",
+  "additive manufacturing": "Additive manufacturing is een productietechniek waarbij onderdelen laag per laag worden opgebouwd, zoals bij 3D-printing."
 
 };
 const CANONICAL_KNOWLEDGE = JSON.parse(JSON.stringify(KNOWLEDGE));
@@ -348,8 +372,16 @@ const ASSIGNMENTS = {
   "hoofdthema 2": "Maak een mini-poster van een voedselketen met producent en drie consumenten.",
   "hoofdthema 3": "Kies één historische gebeurtenis en noteer oorzaak, gevolg en waarom dit vandaag nog relevant is.",
   "hoofdthema 4": "Bedenk twee duurzame keuzes voor school of thuis en leg per keuze het voordeel uit.",
+  "hoofdthema 5": "Beschrijf een verkeerssituatie op weg naar school en leg uit hoe jij daar veilig handelt.",
+  "hoofdthema 6": "Maak een eenvoudig weekbudget met minstens drie inkomsten- en drie uitgavenposten.",
+  "hoofdthema 7": "Werk een noodscenario uit (brand of ongeval) met drie concrete stappen die jij meteen zou nemen.",
+  "hoofdthema 8": "Kies een technisch proces uit mechanica of lassen en leg stap voor stap uit hoe je veilig werkt.",
   "thema 1 landschappen": "Vergelijk een stedelijk en landelijk landschap met drie duidelijke verschillen.",
   "thema 2 levende natuur": "Observeer een organisme in je omgeving en noteer twee aanpassingen aan de leefomgeving.",
+  "thema 5 veilig onderweg": "Noem drie risico's voor fietsers in jouw buurt en geef per risico een preventieve maatregel.",
+  "thema 6 sparen": "Formuleer een spaardoel voor de komende maand en bereken hoeveel je wekelijks opzij moet zetten.",
+  "thema 7 noodgeval": "Schrijf een kort belscript voor 112 met de essentiële informatie die je moet doorgeven.",
+  "thema 8 mechanica en lassen": "Gebruik de wet van Ohm in een rekenvoorbeeld: bereken één onbekende grootheid uit U, I en R.",
   "thema 9 geschiedenis": "Kies één persoon uit Thema 9 en leg in 4 zinnen uit welke impact die had op de samenleving."
 
 };
@@ -374,6 +406,26 @@ const THEME_PROFILES = [
     keywords: ["hoofdthema 4", "groene groei", "monsterlijke groene groei"],
     welcome: "🌱 Welkom in Hoofdthema 4: monsterlijke groene groei! Wist je dat kleine duurzame keuzes van veel mensen samen een grote impact op klimaat en milieu maken?",
     prompts: ["leg uit: energieverbruik van ai", "leg uit: ethiek", "leg uit: ecosysteem"]
+  },
+  {
+    keywords: ["hoofdthema 5", "thema 5", "veilig onderweg", "verkeer"],
+    welcome: "🚦 Welkom in Hoofdthema 5: veilig onderweg! Wist je dat risico's in het verkeer vaak al seconden op voorhand voorspelbaar zijn als je defensief kijkt?",
+    prompts: ["leg uit: voorrangsregel", "leg uit: dode hoek", "leg uit: defensief rijden"]
+  },
+  {
+    keywords: ["hoofdthema 6", "thema 6", "sparen", "budget"],
+    welcome: "💶 Welkom in Hoofdthema 6: sparen! Wist je dat een klein vast spaarbedrag per week op een jaar een verrassend groot verschil kan maken?",
+    prompts: ["leg uit: budget", "leg uit: vaste kosten", "leg uit: spaardoel"]
+  },
+  {
+    keywords: ["hoofdthema 7", "thema 7", "noodgeval", "veiligheid"],
+    welcome: "🆘 Welkom in Hoofdthema 7: noodgeval! Wist je dat rustig en duidelijk communiceren bij 112 levens kan redden?",
+    prompts: ["leg uit: noodsituatie", "leg uit: ehbo", "leg uit: 112"]
+  },
+  {
+    keywords: ["hoofdthema 8", "thema 8", "mechanica", "lassen"],
+    welcome: "⚙️ Welkom in Hoofdthema 8: mechanica en lassen! Wist je dat kleine meetfouten in techniek grote gevolgen kunnen hebben voor veiligheid en kwaliteit?",
+    prompts: ["leg uit: wet van ohm", "leg uit: weerstand", "leg uit: additive manufacturing"]
   }
 ];
 
