@@ -186,6 +186,14 @@ button:hover{
 
 (function redirectIfAlreadyLoggedIn(){
   try {
+    const requestedRole = new URLSearchParams(window.location.search).get('role');
+    const forcedRole = String(requestedRole || '').toLowerCase();
+
+    if (forcedRole === 'student' || forcedRole === 'teacher') {
+      localStorage.setItem('role', forcedRole);
+      return;
+    }
+
     const role = String(localStorage.getItem('role') || '').toLowerCase();
     const rawProfile = localStorage.getItem('pavo_leerling_profiel');
     const profile = rawProfile ? JSON.parse(rawProfile) : null;
