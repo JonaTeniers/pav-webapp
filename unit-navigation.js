@@ -295,6 +295,20 @@
     return false;
   }
 
+  function getMcOptions(question) {
+    if (!Array.isArray(question?.options)) return [];
+    if (Array.isArray(question._shuffledOptions)) return question._shuffledOptions;
+
+    const shuffled = question.options.map((text, originalIndex) => ({ text, originalIndex }));
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+
+    question._shuffledOptions = shuffled;
+    return shuffled;
+  }
+
   function collectQuestionsFromExistingFlow() {
     const qCountEl = document.getElementById('qCount');
     const qTypeEl = document.getElementById('qType');
@@ -359,7 +373,9 @@
       if (!hasQuestionArray) {
         inputHtml = q.answerHtml || `<input class="text-input" type="text" name="q-${index}" placeholder="Typ je antwoord...">`;
       } else if (q.type === 'mc') {
-        inputHtml = (q.options || []).map((opt, i) => `<label><input type="radio" name="q-${index}" value="${i}"> ${opt}</label>`).join('');
+        inputHtml = getMcOptions(q)
+          .map((opt) => `<label><input type="radio" name="q-${index}" value="${opt.originalIndex}"> ${opt.text}</label>`)
+          .join('');
       } else if (q.type === 'drag') {
         const options = ['Kies...', ...(q.options || [])];
         inputHtml = `<select class="select-input" name="q-${index}">${options.map((opt) => `<option value="${opt}">${opt}</option>`).join('')}</select>`;
