@@ -28,9 +28,10 @@
     <div>
       <h1 style="margin:0">Welkom bij PAV-O</h1>
       <p style="margin:6px 0 0;color:var(--muted)">Update op de bestaande omgeving: thema's blijven zichtbaar en dashboards tonen echte oefenscores.</p>
+      <p id="studentWelcomeHome" style="margin:6px 0 0;font-weight:700;color:#166534;display:none"></p>
       <div class="quick">
-        <a href="leerling-dashboard.html">Leerlingdashboard</a>
-        <a href="leerkracht-dashboard.html">Leerkrachtdashboard</a>
+        <a href="login.html">Leerlingdashboard</a>
+        <a href="login.html">Leerkrachtdashboard</a>
         <a href="portfolio.html">Portfolio</a>
       </div>
     </div>
@@ -64,8 +65,32 @@
 </div>
 
 <nav class="bottom-nav">
-  <a href="index.html">Home</a><a href="thema.html">Thema's</a><a href="leerling-dashboard.html">Mijn voortgang</a><a href="leerkracht-dashboard.html">Resultaten</a><a href="portfolio.html">Profiel</a>
+  <a href="index.html">Home</a><a href="thema.html">Thema's</a><a href="login.html">Mijn voortgang</a><a href="login.html">Resultaten</a><a href="portfolio.html">Profiel</a>
 </nav>
+
+
+<script>
+(function showLoggedInStudentWelcome(){
+  try {
+    const role = String(localStorage.getItem('role') || '').toLowerCase();
+    const rawProfile = localStorage.getItem('pavo_leerling_profiel');
+    const profile = rawProfile ? JSON.parse(rawProfile) : null;
+    const welcomeEl = document.getElementById('studentWelcomeHome');
+
+    if (!welcomeEl) return;
+
+    if (role === 'student' && profile?.voornaam && profile?.klas) {
+      welcomeEl.style.display = 'block';
+      welcomeEl.textContent = `Welkom: ${profile.voornaam} (${profile.klas})`;
+      return;
+    }
+
+    welcomeEl.style.display = 'none';
+  } catch (error) {
+    console.warn('Kon leerlingwelkom op home niet tonen:', error);
+  }
+})();
+</script>
 
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>

@@ -42,11 +42,11 @@
 
   function escapeHtml(value) {
     return String(value ?? '-')
-      .replaceAll('&', '&amp;')
-      .replaceAll('<', '&lt;')
-      .replaceAll('>', '&gt;')
-      .replaceAll('"', '&quot;')
-      .replaceAll("'", '&#39;');
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
   }
 
   function formatDate(timestampValue) {
@@ -79,6 +79,35 @@
 
   function getStoredProfile() {
     return getStoredJson(STORAGE_KEY, null);
+  }
+
+  function getRole() {
+    return String(window.localStorage.getItem('role') || '').toLowerCase();
+  }
+
+  function ensureStudentAccess() {
+    const role = getRole();
+    const profile = getStoredProfile();
+
+    if (role === 'teacher') {
+      window.location.href = 'leerkracht-dashboard.html';
+      return false;
+    }
+
+    if (role !== 'student' || !profile?.voornaam || !profile?.klas) {
+      window.location.href = 'login.html';
+      return false;
+    }
+
+    return true;
+  }
+
+
+  function getLocalScores(profile) {
+    const all = getStoredJson('pavo_scores_local', []);
+    return all
+      .filter((item) => item.naam === profile.voornaam && item.klas === profile.klas)
+      .map((item) => ({ ...item, ...extractNumbers(item) }));
   }
 
   function saveProfile(profile) {
@@ -373,15 +402,39 @@
   async function loadStudentScores(profile) {
     setStatus('Dashboard laden...', false);
 
-    const snapshot = await window.db
-      .collection('scores')
-      .where('naam', '==', profile.voornaam)
-      .where('klas', '==', profile.klas)
-      .get();
+    let items = [];
+    let hadRemoteError = false;
 
-    const items = snapshot.docs
-      .map((doc) => ({ id: doc.id, ...doc.data() }))
-      .map((item) => ({ ...item, ...extractNumbers(item) }));
+    if (!window.db) {
+      items = getLocalScores(profile);
+      renderRows(items);
+      renderTotalScore(items);
+      renderWeekOverview(items);
+      renderSkills(items, profile);
+      renderFeedback([]);
+      renderProjects(profile);
+      renderReflections(getLocalReflections(profile));
+      renderCollaboration(profile);
+      setStatus('Offline modus: lokale resultaten geladen.', true);
+      return;
+    }
+
+    try {
+      const snapshot = await window.db
+        .collection('scores')
+        .where('naam', '==', profile.voornaam)
+        .where('klas', '==', profile.klas)
+        .get();
+
+      items = snapshot.docs
+        .map((doc) => ({ id: doc.id, ...doc.data() }))
+        .map((item) => ({ ...item, ...extractNumbers(item) }));
+    } catch (error) {
+      console.warn('Kon Firestore scores niet laden, fallback op lokaal.', error);
+      items = getLocalScores(profile);
+      hadRemoteError = true;
+      setStatus('Scores geladen zonder Firestore (controleer rechten/verbinding).', true);
+    }
 
     renderRows(items);
     renderTotalScore(items);
@@ -394,8 +447,11 @@
     renderReflections(getLocalReflections(profile));
     renderCollaboration(profile);
 
-    setStatus(`${items.length} resultaten geladen.`, false);
+    if (!hadRemoteError) {
+      setStatus(`${items.length} resultaten geladen.`, false);
+    }
   }
+
 
   function showActiveProfile(profile) {
     const el = document.getElementById('activeProfile');
@@ -421,6 +477,7 @@
 
     const profile = { voornaam, klas, loggedInAt: new Date().toISOString() };
     saveProfile(profile);
+    window.localStorage.setItem('role', 'student');
     showActiveProfile(profile);
 
     try {
@@ -429,34 +486,6 @@
       console.error('Fout bij laden leerlingdashboard:', error);
       setStatus('Kon dashboard niet volledig laden.', true);
     }
-
-    const taak = document.getElementById('collabTask').value.trim();
-    const reacties = document.getElementById('collabComment').value.trim();
-    if (!taak || !reacties) {
-      setStatus('Vul taakverdeling en discussie in.', true);
-      return;
-    }
-
-    const all = getStoredJson(COLLAB_STORAGE_KEY, []);
-    all.unshift({
-      voornaam: profile.voornaam,
-      klas: profile.klas,
-      taak,
-      reacties,
-      datum: new Date().toISOString()
-    });
-    setStoredJson(COLLAB_STORAGE_KEY, all);
-    event.target.reset();
-    renderCollaboration(profile);
-    setStatus('Samenwerkingsnotitie opgeslagen.', false);
-  }
-
-  function initWeekOverviewSkeleton() {
-    const host = document.getElementById('weekOverview');
-    if (!host) return;
-    host.innerHTML = ['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo']
-      .map((day) => `<div class="day"><strong>${day}</strong><div>0 activiteit(en)</div></div>`)
-      .join('');
   }
 
   async function handleReflectionSubmit(event) {
@@ -538,33 +567,41 @@
   }
 
   async function init() {
+    if (!ensureStudentAccess()) return;
+
     initWeekOverviewSkeleton();
+
+    const form = document.getElementById('studentViewLoginForm');
+    if (form) form.addEventListener('submit', handleLogin);
+
+    const reflectionForm = document.getElementById('reflectionForm');
+    if (reflectionForm) reflectionForm.addEventListener('submit', handleReflectionSubmit);
+
+    const collaborationForm = document.getElementById('collaborationForm');
+    if (collaborationForm) collaborationForm.addEventListener('submit', handleCollaborationSubmit);
 
     try {
       await window.firebaseReady;
-
-      const form = document.getElementById('studentViewLoginForm');
-      if (form) form.addEventListener('submit', handleLogin);
-
-      const reflectionForm = document.getElementById('reflectionForm');
-      if (reflectionForm) reflectionForm.addEventListener('submit', handleReflectionSubmit);
-
-      const collaborationForm = document.getElementById('collaborationForm');
-      if (collaborationForm) collaborationForm.addEventListener('submit', handleCollaborationSubmit);
-
-      const stored = getStoredProfile();
-      showActiveProfile(stored);
-
-      if (stored) {
-        document.getElementById('viewVoornaam').value = stored.voornaam || '';
-        document.getElementById('viewKlas').value = stored.klas || '';
-        await loadStudentScores(stored);
-      }
     } catch (error) {
-      console.error('Init-fout leerling-dashboard:', error);
-      setStatus('Kon dashboard niet opstarten.', true);
+      console.warn('Firebase niet volledig beschikbaar, ga verder in lokale modus.', error);
+      setStatus('Dashboard gestart in lokale modus.', true);
+    }
+
+    const stored = getStoredProfile();
+    showActiveProfile(stored);
+
+    if (stored) {
+      document.getElementById('viewVoornaam').value = stored.voornaam || '';
+      document.getElementById('viewKlas').value = stored.klas || '';
+      try {
+        await loadStudentScores(stored);
+      } catch (error) {
+        console.error('Fout bij laden leerlingdashboard:', error);
+        setStatus('Kon scores niet laden.', true);
+      }
     }
   }
+
 
   init();
 })();
