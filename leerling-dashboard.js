@@ -105,9 +105,50 @@
 
   function getLocalScores(profile) {
     const all = getStoredJson('pavo_scores_local', []);
-    return all
-      .filter((item) => item.naam === profile.voornaam && item.klas === profile.klas)
+    const profileNaam = String(profile?.voornaam || '').trim().toLowerCase();
+    const profileKlas = String(profile?.klas || '').trim().toLowerCase();
+
+    const structuredLocal = all
+      .filter((item) => {
+        const itemNaam = String(item?.naam || '').trim().toLowerCase();
+        const itemKlas = String(item?.klas || '').trim().toLowerCase();
+        return itemNaam === profileNaam && itemKlas === profileKlas;
+      })
       .map((item) => ({ ...item, ...extractNumbers(item) }));
+
+    const legacyLocal = [];
+    for (let index = 0; index < window.localStorage.length; index += 1) {
+      const key = window.localStorage.key(index);
+      if (!key || !/thema\d+[_-]?unit\d+|mechanica\d+doel\d+|landschappen[_-]?unit\d+|veiligonderweg[_-]?unit\d+/i.test(key)) {
+        continue;
+      }
+
+      const rawValue = window.localStorage.getItem(key);
+      const score = Number(rawValue);
+      if (!Number.isFinite(score)) continue;
+
+      legacyLocal.push({
+        naam: profile.voornaam,
+        klas: profile.klas,
+        score,
+        bronStorageKey: key,
+        bronPagina: key,
+        createdAt: null,
+        ...extractNumbers({ bronStorageKey: key, bronPagina: key })
+      });
+    }
+
+    const keyForScore = (item) => `${item.themaNummer || 'x'}-${item.unitNummer || 'x'}-${Number(item.score) || 0}`;
+    const seen = new Set(structuredLocal.map(keyForScore));
+
+    legacyLocal.forEach((item) => {
+      const dedupeKey = keyForScore(item);
+      if (seen.has(dedupeKey)) return;
+      structuredLocal.push(item);
+      seen.add(dedupeKey);
+    });
+
+    return structuredLocal;
   }
 
   function saveProfile(profile) {
