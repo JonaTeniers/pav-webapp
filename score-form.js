@@ -80,7 +80,8 @@
   function renderPostScoreReflection(scoreValue) {
     if (document.getElementById('postScoreReflectionForm')) return;
 
-    const host = document.getElementById('scoreForm')?.parentElement || document.body;
+    const formHost = document.getElementById('scoreForm');
+    const host = (formHost && formHost.parentElement) || document.body;
     const box = document.createElement('section');
     box.style.marginTop = '12px';
     box.innerHTML = `
@@ -95,10 +96,13 @@
     `;
     host.appendChild(box);
 
-    document.getElementById('postScoreReflectionForm')?.addEventListener('submit', async (event) => {
+    const postForm = document.getElementById('postScoreReflectionForm');
+    if (!postForm) return;
+
+    postForm.addEventListener('submit', async (event) => {
       event.preventDefault();
       const profile = getProfile();
-      if (!profile?.voornaam || !profile?.klas) return;
+      if (!profile || !profile.voornaam || !profile.klas) return;
       const inferred = inferThemaUnitFromPath();
       const payload = {
         naam: profile.voornaam,
@@ -107,9 +111,9 @@
         unit: inferred.unit,
         score: scoreValue,
         bronPagina: window.location.pathname,
-        antwoord1: document.getElementById('postReflect1')?.value?.trim() || '',
-        antwoord2: document.getElementById('postReflect2')?.value?.trim() || '',
-        antwoord3: document.getElementById('postReflect3')?.value?.trim() || ''
+        antwoord1: ((document.getElementById('postReflect1') || {}).value || '').trim(),
+        antwoord2: ((document.getElementById('postReflect2') || {}).value || '').trim(),
+        antwoord3: ((document.getElementById('postReflect3') || {}).value || '' ).trim()
       };
       if (!payload.antwoord1 || !payload.antwoord2 || !payload.antwoord3) return;
       await saveReflectionBoth(payload);
@@ -123,12 +127,13 @@
     e.preventDefault();
 
     const profile = getProfile();
-    if (!profile?.voornaam || !profile?.klas) {
+    if (!profile || !profile.voornaam || !profile.klas) {
       setStatus("Log eerst in via de startpagina.", true);
       return;
     }
 
-    const scoreValue = Number(document.getElementById('score')?.value);
+    const scoreInput = document.getElementById('score');
+    const scoreValue = Number(scoreInput ? scoreInput.value : NaN);
     if (Number.isNaN(scoreValue)) {
       setStatus("Ongeldige score.", true);
       return;

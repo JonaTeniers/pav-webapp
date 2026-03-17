@@ -78,7 +78,7 @@
 
     if (!welcomeEl) return;
 
-    if (role === 'student' && profile?.voornaam && profile?.klas) {
+    if (role === 'student' && profile && profile.voornaam && profile.klas) {
       welcomeEl.style.display = 'block';
       welcomeEl.textContent = `Welkom: ${profile.voornaam} (${profile.klas})`;
       return;

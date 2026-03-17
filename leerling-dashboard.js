@@ -94,7 +94,7 @@
       return false;
     }
 
-    if (role !== 'student' || !profile?.voornaam || !profile?.klas) {
+    if (role !== 'student' || !profile || !profile.voornaam || !profile.klas) {
       window.location.href = 'login.html';
       return false;
     }
@@ -219,7 +219,7 @@
     const counts = new Array(7).fill(0);
 
     items.forEach((item) => {
-      const date = typeof item.createdAt?.toDate === 'function' ? item.createdAt.toDate() : new Date(item.createdAt);
+      const date = item.createdAt && typeof item.createdAt.toDate === 'function' ? item.createdAt.toDate() : new Date(item.createdAt);
       if (Number.isNaN(date.getTime())) return;
       const idx = (date.getDay() + 6) % 7;
       counts[idx] += 1;
@@ -467,8 +467,10 @@
   async function handleLogin(event) {
     event.preventDefault();
 
-    const voornaam = document.getElementById('viewVoornaam')?.value?.trim();
-    const klas = document.getElementById('viewKlas')?.value?.trim();
+    const voornaamInput = document.getElementById('viewVoornaam');
+    const voornaam = voornaamInput && voornaamInput.value ? voornaamInput.value.trim() : '';
+    const klasInput = document.getElementById('viewKlas');
+    const klas = klasInput && klasInput.value ? klasInput.value.trim() : '';
 
     if (!voornaam || !klas) {
       setStatus('Vul voornaam en klas in.', true);

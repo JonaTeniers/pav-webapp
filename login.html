@@ -190,7 +190,7 @@ button:hover{
     const rawProfile = localStorage.getItem('pavo_leerling_profiel');
     const profile = rawProfile ? JSON.parse(rawProfile) : null;
 
-    if (role === 'student' && profile?.voornaam && profile?.klas) {
+    if (role === 'student' && profile && profile.voornaam && profile.klas) {
       window.location.replace('leerling-dashboard.html');
       return;
     }
