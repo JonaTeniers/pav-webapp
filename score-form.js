@@ -41,6 +41,18 @@
     };
   }
 
+
+  function saveScoreLocal(payload) {
+    let all = [];
+    try {
+      all = JSON.parse(localStorage.getItem('pavo_scores_local') || '[]');
+    } catch {
+      all = [];
+    }
+    all.unshift(payload);
+    localStorage.setItem('pavo_scores_local', JSON.stringify(all.slice(0, 500)));
+  }
+
   function saveReflectionLocal(payload) {
     let all = [];
     try {
@@ -68,7 +80,8 @@
   function renderPostScoreReflection(scoreValue) {
     if (document.getElementById('postScoreReflectionForm')) return;
 
-    const host = document.getElementById('scoreForm')?.parentElement || document.body;
+    const formHost = document.getElementById('scoreForm');
+    const host = (formHost && formHost.parentElement) || document.body;
     const box = document.createElement('section');
     box.style.marginTop = '12px';
     box.innerHTML = `
@@ -83,10 +96,13 @@
     `;
     host.appendChild(box);
 
-    document.getElementById('postScoreReflectionForm')?.addEventListener('submit', async (event) => {
+    const postForm = document.getElementById('postScoreReflectionForm');
+    if (!postForm) return;
+
+    postForm.addEventListener('submit', async (event) => {
       event.preventDefault();
       const profile = getProfile();
-      if (!profile?.voornaam || !profile?.klas) return;
+      if (!profile || !profile.voornaam || !profile.klas) return;
       const inferred = inferThemaUnitFromPath();
       const payload = {
         naam: profile.voornaam,
@@ -95,9 +111,9 @@
         unit: inferred.unit,
         score: scoreValue,
         bronPagina: window.location.pathname,
-        antwoord1: document.getElementById('postReflect1')?.value?.trim() || '',
-        antwoord2: document.getElementById('postReflect2')?.value?.trim() || '',
-        antwoord3: document.getElementById('postReflect3')?.value?.trim() || ''
+        antwoord1: ((document.getElementById('postReflect1') || {}).value || '').trim(),
+        antwoord2: ((document.getElementById('postReflect2') || {}).value || '').trim(),
+        antwoord3: ((document.getElementById('postReflect3') || {}).value || '' ).trim()
       };
       if (!payload.antwoord1 || !payload.antwoord2 || !payload.antwoord3) return;
       await saveReflectionBoth(payload);
@@ -110,18 +126,14 @@
   async function handleScoreSubmit(e) {
     e.preventDefault();
 
-    if (!window.db) {
-      setStatus("Firebase niet geladen.", true);
-      return;
-    }
-
     const profile = getProfile();
-    if (!profile?.voornaam || !profile?.klas) {
+    if (!profile || !profile.voornaam || !profile.klas) {
       setStatus("Log eerst in via de startpagina.", true);
       return;
     }
 
-    const scoreValue = Number(document.getElementById('score')?.value);
+    const scoreInput = document.getElementById('score');
+    const scoreValue = Number(scoreInput ? scoreInput.value : NaN);
     if (Number.isNaN(scoreValue)) {
       setStatus("Ongeldige score.", true);
       return;
@@ -139,19 +151,34 @@
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
     };
 
+    saveScoreLocal({
+      ...data,
+      createdAt: new Date().toISOString()
+    });
+
     try {
-      await window.db.collection('scores').add(data);
-      setStatus("Score opgeslagen ✔", false);
+      if (window.db) {
+        await window.db.collection('scores').add(data);
+        setStatus("Score opgeslagen ✔", false);
+      } else {
+        setStatus("Offline opgeslagen op dit toestel.", true);
+      }
       e.target.reset();
       renderPostScoreReflection(scoreValue);
     } catch (err) {
       console.error(err);
-      setStatus("Opslaan mislukt.", true);
+      setStatus("Online opslaan mislukt, lokaal bewaard.", true);
+      e.target.reset();
+      renderPostScoreReflection(scoreValue);
     }
   }
 
   async function init() {
-    await window.firebaseReady;
+    try {
+      await window.firebaseReady;
+    } catch (error) {
+      console.warn('Firebase niet beschikbaar in score-form, lokale opslag blijft werken.', error);
+    }
 
     const form = document.getElementById('scoreForm');
     if (!form) return;
