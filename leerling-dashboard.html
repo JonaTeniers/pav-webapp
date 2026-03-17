@@ -1,29 +1,58 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Leerling dashboard - PAV-O</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leerling Dashboard</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
   <style>
-    :root{--bg:#f6f8fb;--card:#fff;--line:#dbe4ef;--text:#1f2b37;--muted:#64748b;--blue:#1d4ed8}
-    *{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,sans-serif;background:var(--bg);color:var(--text)}
-    .wrap{max-width:1150px;margin:0 auto;padding:20px 16px 90px}
-    .head{display:flex;align-items:center;gap:12px}.head img{width:56px;height:56px;object-fit:contain}
-    .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
-    .grid{display:grid;grid-template-columns:2fr 1fr;gap:12px}
-    table{width:100%;border-collapse:collapse}th,td{padding:10px;border-bottom:1px solid #e8eef5;text-align:left}th{font-size:.8rem;text-transform:uppercase;color:#5f6f82}
-    .pill{display:inline-block;padding:4px 9px;border-radius:999px;background:#dcfce7;font-weight:700}
-    .progress-wrap{height:10px;background:#e2e8f0;border-radius:99px;overflow:hidden}.progress-bar{height:100%;background:linear-gradient(90deg,#93c5fd,#3b82f6)}
-    .theme-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}.theme-links a{background:#f8fbff;border:1px solid var(--line);padding:8px;border-radius:10px;text-decoration:none;color:#0f2f59;font-weight:600}
-    input,textarea{width:100%;padding:9px;border:1px solid #c9d5e7;border-radius:8px}label{font-weight:700;font-size:.9rem}
-    .btn{background:var(--blue);color:#fff;border:none;border-radius:9px;padding:9px 12px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block}
-    .muted{color:var(--muted)}
-    .bottom-nav{position:fixed;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(5,1fr);gap:8px;background:rgba(255,255,255,.97);border-top:1px solid var(--line);padding:10px}
-    .bottom-nav a{background:#3f5f73;color:#fff;text-decoration:none;text-align:center;padding:10px 6px;border-radius:10px;font-size:12px;font-weight:700}
-    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+    body {
+      font-family: Inter, sans-serif;
+      margin: 0;
+      background: #f6f8fb;
+    }
+
+    .wrap {
+      max-width: 1100px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+    }
+
+    .btn {
+      background: #1d4ed8;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .muted {
+      color: #64748b;
+    }
   </style>
 </head>
+
 <body>
   <main class="wrap">
     <div class="head card">
