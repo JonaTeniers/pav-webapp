@@ -29,8 +29,8 @@
       <h1 style="margin:0">Welkom bij PAV-O</h1>
       <p style="margin:6px 0 0;color:var(--muted)">Update op de bestaande omgeving: thema's blijven zichtbaar en dashboards tonen echte oefenscores.</p>
       <div class="quick">
-        <a href="leerling-dashboard.html">Leerlingdashboard</a>
-        <a href="leerkracht-dashboard.html">Leerkrachtdashboard</a>
+        <a href="login.html">Leerlingdashboard</a>
+        <a href="login.html">Leerkrachtdashboard</a>
         <a href="portfolio.html">Portfolio</a>
       </div>
     </div>
@@ -64,8 +64,30 @@
 </div>
 
 <nav class="bottom-nav">
-  <a href="index.html">Home</a><a href="thema.html">Thema's</a><a href="leerling-dashboard.html">Mijn voortgang</a><a href="leerkracht-dashboard.html">Resultaten</a><a href="portfolio.html">Profiel</a>
+  <a href="index.html">Home</a><a href="thema.html">Thema's</a><a href="login.html">Mijn voortgang</a><a href="login.html">Resultaten</a><a href="portfolio.html">Profiel</a>
 </nav>
+
+
+<script>
+(function keepLoggedInUsersOnDashboard(){
+  try {
+    const role = String(localStorage.getItem('role') || '').toLowerCase();
+    const rawProfile = localStorage.getItem('pavo_leerling_profiel');
+    const profile = rawProfile ? JSON.parse(rawProfile) : null;
+
+    if (role === 'student' && profile?.voornaam && profile?.klas) {
+      window.location.replace('leerling-dashboard.html');
+      return;
+    }
+
+    if (role === 'teacher') {
+      window.location.replace('leerkracht-dashboard.html');
+    }
+  } catch (error) {
+    console.warn('Kon sessie-redirect op index niet uitvoeren:', error);
+  }
+})();
+</script>
 
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
