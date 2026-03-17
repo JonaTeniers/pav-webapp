@@ -54,139 +54,93 @@
 </head>
 
 <body>
+  <main class="wrap">
+    <div class="head card">
+      <img src="img/pavomascotte.png" alt="PAVO mascotte">
+      <div>
+        <h1 style="margin:0">Leerlingdashboard</h1>
+        <p class="muted" style="margin:4px 0 0">Scores komen uit de oefeningen die je effectief maakte.</p>
+      </div>
+      <a class="btn" href="index.html" style="margin-left:auto">← Home</a>
+    </div>
 
-<div class="wrap">
+    <section class="card">
+      <form id="studentViewLoginForm" style="display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:end">
+        <label>Voornaam<input id="viewVoornaam" required></label>
+        <label>Klas<input id="viewKlas" required></label>
+        <button class="btn" type="submit">Dashboard openen</button>
+      </form>
+      <p id="activeProfile"></p>
+      <p id="status" class="muted">Wacht op login...</p>
+    </section>
 
-  <!-- LOGIN -->
-  <div class="card">
-    <h2>Login leerling</h2>
-    <form id="loginForm">
-      <input id="naam" placeholder="Voornaam" required>
-      <input id="klas" placeholder="Klas" required>
-      <button class="btn">Open dashboard</button>
-    </form>
-    <p id="status" class="muted">Wacht op login...</p>
-    <p id="activeUser"></p>
-  </div>
+    <section class="grid">
+      <div class="card">
+        <h2>Mijn voortgang en opdrachten</h2>
+        <table>
+          <thead><tr><th>Thema</th><th>Unit</th><th>Score</th><th>Wanneer</th><th>Status / Actie</th></tr></thead>
+          <tbody id="studentScoresTableBody"><tr><td colspan="5">Nog geen resultaten geladen.</td></tr></tbody>
+        </table>
+      </div>
+      <div>
+        <div class="card"><small class="muted">Mijn opdrachten</small><h3 id="countAssignments">0</h3></div>
+        <div class="card"><small class="muted">Mijn doelen</small><h3 id="countGoals">0</h3></div>
+        <div class="card"><small class="muted">Reflecties</small><h3 id="countReflections">0</h3></div>
+        <div class="card"><small class="muted">Feedback</small><h3 id="countFeedback">0</h3></div>
+        <div class="card"><small class="muted">Totaalscore</small><h3 id="studentTotalScore">0 XP</h3></div>
+      </div>
+    </section>
 
-  <!-- STATS -->
-  <div class="card">
-    <h3>Totaal XP</h3>
-    <h1 id="xp">0</h1>
-    <p>Aantal opdrachten: <span id="aantal">0</span></p>
-  </div>
+    <section class="card"><h3>Weekoverzicht</h3><div id="weekOverview" style="display:grid;grid-template-columns:repeat(7,1fr);gap:8px"></div></section>
+    <section class="card"><h3>Vaardigheden</h3><div id="skillsContainer">Nog geen vaardigheidsdata.</div></section>
+    <section class="card"><h3>Feedback</h3><div id="feedbackContainer">Nog geen feedback.</div></section>
+    <section class="card"><h3>Projecten</h3><div id="projectContainer">Nog geen projecten.</div></section>
+    <section class="card"><h3>Reflecties</h3><div id="reflectionList">Nog geen reflecties.</div></section>
+    <section class="card"><h3>Samenwerking</h3><div id="collaborationList">Nog geen notities.</div></section>
 
-  <!-- TABEL -->
-  <div class="card">
-    <h2>Mijn resultaten</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Thema</th>
-          <th>Unit</th>
-          <th>Score</th>
-          <th>Datum</th>
-          <th>Actie</th>
-        </tr>
-      </thead>
-      <tbody id="tabel">
-        <tr><td colspan="5">Nog geen data</td></tr>
-      </tbody>
-    </table>
-  </div>
+    <section class="card">
+      <h3>Nieuwe reflectie</h3>
+      <form id="reflectionForm" style="display:grid;gap:8px">
+        <label>Wat heb je geleerd?<textarea id="reflectLearned" required></textarea></label>
+        <label>Wat vond je moeilijk?<textarea id="reflectDifficult" required></textarea></label>
+        <label>Wat doe je volgende keer anders?<textarea id="reflectNextTime" required></textarea></label>
+        <label>Samenwerking<textarea id="reflectTeamwork" required></textarea></label>
+        <button class="btn" type="submit">Reflectie opslaan</button>
+      </form>
+    </section>
 
-</div>
+    <section class="card">
+      <h3>Samenwerkingsnotitie</h3>
+      <form id="collaborationForm" style="display:grid;gap:8px">
+        <label>Taakverdeling<input id="collabTask" required></label>
+        <label>Bespreking<textarea id="collabComment" required></textarea></label>
+        <button class="btn" type="submit">Opslaan</button>
+      </form>
+    </section>
 
-<!-- FIREBASE -->
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <section class="card">
+      <h3>Alle thema's zichtbaar</h3>
+      <div class="theme-links">
+        <a href="hoofdthema1.html">Hoofdthema 1</a><a href="hoofdthema2.html">Hoofdthema 2</a><a href="hoofdthema3.html">Hoofdthema 3</a><a href="hoofdthema4.html">Hoofdthema 4</a><a href="hoofdthema5.html">Hoofdthema 5</a><a href="hoofdthema6.html">Hoofdthema 6</a>
+        <a href="oefenthema1.html">Oefenthema 1</a><a href="oefenthema2.html">Oefenthema 2</a><a href="oefenthema3.html">Oefenthema 3</a><a href="oefenthema4.html">Oefenthema 4</a><a href="oefenthema5.html">Oefenthema 5</a><a href="oefenthema6.html">Oefenthema 6</a>
+      </div>
+    </section>
 
-<!-- JOUW CONFIG -->
-<script src="./firebase.js"></script>
+    <section class="card" style="display:none">
+      <span id="portfolioAssignments">0 opgeslagen</span>
+      <span id="portfolioProjects"></span>
+      <span id="portfolioReflections"></span>
+      <span id="portfolioSkills"></span>
+    </section>
+  </main>
 
-<!-- SCRIPT -->
-<script>
-const db = firebase.firestore();
+  <nav class="bottom-nav">
+    <a href="index.html">Home</a><a href="thema.html">Thema's</a><a href="leerling-dashboard.html">Mijn voortgang</a><a href="login.html">Resultaten</a><a href="portfolio.html">Profiel</a>
+  </nav>
 
-let currentUser = null;
-
-// LOGIN
-document.getElementById("loginForm").addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  const naam = document.getElementById("naam").value.trim().toLowerCase();
-  const klas = document.getElementById("klas").value.trim().toLowerCase();
-
-  currentUser = { naam, klas };
-
-  document.getElementById("activeUser").innerText =
-    "👤 " + naam + " (" + klas + ")";
-
-  document.getElementById("status").innerText = "Dashboard laden...";
-
-  loadData();
-});
-
-
-// DATA LADEN
-function loadData() {
-
-  db.collection("scores")
-    .where("naam", "==", currentUser.naam)
-    .where("klas", "==", currentUser.klas)
-    .orderBy("createdAt", "desc")
-    .onSnapshot(snapshot => {
-
-      const tabel = document.getElementById("tabel");
-      tabel.innerHTML = "";
-
-      let totaalXP = 0;
-      let aantal = 0;
-
-      if (snapshot.empty) {
-        tabel.innerHTML = `<tr><td colspan="5">Geen resultaten</td></tr>`;
-        return;
-      }
-
-      snapshot.forEach(doc => {
-        const d = doc.data();
-
-        totaalXP += d.score;
-        aantal++;
-
-        tabel.innerHTML += `
-          <tr>
-            <td>${d.thema}</td>
-            <td>${d.unit}</td>
-            <td>${d.score}</td>
-            <td>${formatDate(d.createdAt)}</td>
-            <td>
-              <a class="btn" href="${d.bronPagina}">
-                Open
-              </a>
-            </td>
-          </tr>
-        `;
-      });
-
-      document.getElementById("xp").innerText = totaalXP;
-      document.getElementById("aantal").innerText = aantal;
-
-      document.getElementById("status").innerText =
-        "✅ Dashboard geladen";
-    });
-}
-
-
-// DATUM FORMAT
-function formatDate(ts) {
-  if (!ts) return "-";
-  const d = ts.toDate();
-  return d.toLocaleDateString("nl-BE") + " " +
-         d.toLocaleTimeString("nl-BE", {hour: '2-digit', minute: '2-digit'});
-}
-</script>
-
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="./firebase.js"></script>
+  <script src="./leerling-dashboard.js"></script>
 </body>
 </html>
