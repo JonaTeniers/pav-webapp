@@ -122,6 +122,18 @@
         margin-top: 0.45rem;
       }
 
+      .smart-support {
+        border-left: 6px solid #e57373;
+      }
+
+      .smart-growth {
+        border-left: 6px solid #ffb74d;
+      }
+
+      .smart-challenge {
+        border-left: 6px solid #4db6ac;
+      }
+
       .question-item label {
         display: block;
         padding: 0.3rem 0.2rem;
@@ -268,6 +280,64 @@
       }
       event.target.reset();
     });
+  }
+
+  function buildSmartAdvice(context) {
+    const maxScore = Math.max(1, Number(context?.maxScore) || 1);
+    const score = Math.max(0, Number(context?.score) || 0);
+    const ratio = score / maxScore;
+
+    if (ratio < 0.5) {
+      return {
+        level: 'support',
+        title: '🧭 Slim leeradvies: eerst je basis versterken',
+        text: 'Dit doel lijkt nog moeilijk. Werk stap voor stap: herbekijk de theorie, maak het doel opnieuw en bespreek fouten met je leerkracht.',
+        actionLabel: '🔁 Herstart dit doel',
+        badge: 'Basisversterking'
+      };
+    }
+
+    if (ratio < 0.8) {
+      return {
+        level: 'growth',
+        title: '📈 Slim leeradvies: opbouw en verdieping',
+        text: 'Je bent goed op weg. Oefen nog gericht op je foutjes en probeer daarna een extra oefening in hetzelfde thema.',
+        actionLabel: '🎯 Oefen dit doel opnieuw',
+        badge: 'Gerichte groei'
+      };
+    }
+
+    return {
+      level: 'challenge',
+      title: '🚀 Slim leeradvies: klaar voor extra uitdaging',
+      text: 'Sterk gewerkt! Je beheerst dit doel goed. Ga nu verder met extra oefeningen of met het volgende doel in dit thema.',
+      actionLabel: '➡️ Ga naar extra oefenkansen',
+      badge: 'Uitdaging'
+    };
+  }
+
+  function renderSmartDifferentiation(container, context) {
+    if (!container || document.getElementById('smartDifferentiationBox')) return;
+
+    const advice = buildSmartAdvice(context);
+    const scoreText = `${context.score}/${context.maxScore} XP`;
+    const retryLink = window.location.pathname.split('/').pop() || 'index.html';
+    const nextLink = context.nextUnitFile || context.themeFile || retryLink;
+    const primaryLink = advice.level === 'challenge' ? nextLink : retryLink;
+
+    const box = document.createElement('section');
+    box.id = 'smartDifferentiationBox';
+    box.className = `question-item smart-${advice.level}`;
+    box.innerHTML = `
+      <h3>${advice.title}</h3>
+      <p class="helper"><strong>Niveau:</strong> ${advice.badge} · <strong>Score:</strong> ${scoreText}</p>
+      <p>${advice.text}</p>
+      <div class="nav-buttons">
+        <a href="${primaryLink}"><button type="button">${advice.actionLabel}</button></a>
+        <a href="${context.themeFile || retryLink}"><button type="button">📚 Terug naar thema-overzicht</button></a>
+      </div>
+    `;
+    container.appendChild(box);
   }
 
   function isCorrectAnswer(question, value) {
@@ -440,6 +510,7 @@
     document.getElementById('finishAllBtn')?.addEventListener('click', () => {
       totalScore = 0;
       const items = Array.from(list.querySelectorAll('.question-item'));
+      const maxScore = renderQuestions.length * 3;
       const checked = hasQuestionArray
         ? items.filter((item) => item.dataset.correct === '1').length
         : items.length;
@@ -464,10 +535,17 @@
       summary.className = 'feedback success';
 
       const inferred = inferThemaUnitFromPath();
+      const navContext = parseUnitContext() || {};
       renderReflectionAfterScore(summary.parentElement, {
         thema: inferred.thema,
         unit: inferred.unit,
         score: totalScore
+      });
+      renderSmartDifferentiation(summary.parentElement, {
+        score: totalScore,
+        maxScore,
+        themeFile: navContext.themeFile,
+        nextUnitFile: navContext.nextUnitFile
       });
 
       const xp = document.getElementById('xpScore');
