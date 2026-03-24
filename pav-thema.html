@@ -120,21 +120,14 @@
     }
 
     .img-box img {
-      width: 100%;
-      max-height: 220px;
+      width: min(100%, 420px);
+      max-height: 260px;
       object-fit: contain;
       border-radius: 8px;
     }
 
-    .img-box-left img {
-      margin-right: auto;
-      max-width: 64%;
-    }
-
-    .img-box-right img {
-      margin-left: auto;
-      max-width: 64%;
-    }
+    .img-box-left img { margin-right: auto; }
+    .img-box-right img { margin-left: auto; }
 
     .highlight {
       background: #fef08a;
@@ -261,7 +254,7 @@
     </div>
 
     <section class="panel">
-      <h2>Doelen in dit thema</h2>
+      <h2>Opdrachten van dit doel</h2>
       <div id="assignments"></div>
     </section>
 
@@ -269,44 +262,6 @@
   </main>
 
 <script>
-const themes = {
-  budget: {
-    title: 'Budget & Geld',
-    color: '#16a34a',
-    icon: '💶',
-    uitleg: 'Je leert budgetteren, plannen en kiezen met echte kassabonnen en facturen.',
-    scenario: 'Je bent met vrienden op stap en moet slim omgaan met je budget.'
-  },
-  nederlands: {
-    title: 'Nederlands in context',
-    color: '#2563eb',
-    icon: '📝',
-    uitleg: 'Je begrijpt woorden op een factuur en leert duidelijk uitleggen wat ze betekenen.',
-    scenario: 'Je helpt thuis met post en legt uit wat op een factuur staat.'
-  },
-  aardrijkskunde: {
-    title: 'Aardrijkskunde & kaarten',
-    color: '#0891b2',
-    icon: '🗺️',
-    uitleg: 'Je oefent met België, Europa en de wereldkaart in praktische opdrachten.',
-    scenario: 'Je plant een reisroute en duidt landen op de kaart aan.'
-  },
-  geschiedenis: {
-    title: 'Geschiedenis in context',
-    color: '#7c3aed',
-    icon: '🏛️',
-    uitleg: 'Je onderzoekt historische gebeurtenissen met kaarten, context en betekenis.',
-    scenario: 'Je legt uit wat veranderde in tijd en plaats en waarom dat belangrijk was.'
-  },
-  'praktische-vaardigheden': {
-    title: 'Praktische vaardigheden',
-    color: '#f59e0b',
-    icon: '🧰',
-    uitleg: 'Je oefent doelgericht op functionele taken uit het dagelijks leven.',
-    scenario: 'Je lost realistische situaties op met duidelijke stappen en keuzes.'
-  }
-};
-
 const opdrachten = [
   {
     id: 'kassabon-supermarkt',
@@ -339,7 +294,7 @@ const opdrachten = [
     antwoorden: ['subtotaal', 'btw', 'totaal', 'vervaldatum'],
     correcteOplossing: 'Subtotaal €100,00 - BTW €21,00 - Totaal €121,00 - Vervaldatum 15/04/2026.',
     feedback: 'BTW = percentage van subtotaal. Totaal = subtotaal + BTW.',
-    image: 'img/factuur.svg'
+    image: 'img/factuur.png'
   },
   {
     id: 'btw-berekening',
@@ -350,7 +305,7 @@ const opdrachten = [
     antwoorden: ['btwLos', 'totaalLos'],
     correcteOplossing: 'BTW = 21% van 100 = 21. Totaal = 100 + 21 = €121.',
     feedback: 'Formule: subtotaal × 0,21 = BTW. Daarna optellen voor totaal.',
-    image: 'img/factuur.svg'
+    image: 'img/factuur.png'
   },
   {
     id: 'restaurant-groep',
@@ -372,7 +327,7 @@ const opdrachten = [
     antwoorden: ['factuurnummer', 'klant', 'btwBetekenis', 'schrijfopdracht'],
     correcteOplossing: 'Factuurnummer = unieke code van factuur. Klant = persoon/bedrijf dat moet betalen. BTW = belasting over de toegevoegde waarde.',
     feedback: 'Gebruik je eigen woorden en verwijs naar gegevens op de factuur.',
-    image: 'img/factuur.svg'
+    image: 'img/factuur.png'
   },
   {
     id: 'kaart-opdracht',
@@ -383,7 +338,7 @@ const opdrachten = [
     antwoorden: ['belgie', 'europa', 'wereld'],
     correcteOplossing: 'België ligt in West-Europa. Italië ligt in Zuid-Europa. Brazilië ligt in Zuid-Amerika.',
     feedback: 'Kijk naar continent, vorm en ligging op de kaart.',
-    image: 'img/wereldkaart-opdracht.svg'
+    image: 'img/wereldkaart-opdracht.jpg'
   },
   {
     id: 'geschiedenis-kaart',
@@ -394,7 +349,7 @@ const opdrachten = [
     antwoorden: ['locatie', 'context'],
     correcteOplossing: 'Locatie: België. Context: industriële groei in 19e eeuw veranderde werk en leven in steden.',
     feedback: 'Denk aan plaats + tijd + wat er veranderde voor mensen.',
-    image: 'img/kaart-belgie-context.svg'
+    image: 'img/kaart-belgie-context.jpg'
   },
   {
     id: 'dragdrop-categorie',
@@ -409,15 +364,13 @@ const opdrachten = [
   }
 ];
 
-const q = new URLSearchParams(location.search).get('theme') || 'budget';
-const theme = themes[q] || themes.budget;
-const activeOpdrachten = opdrachten.filter(opdracht => opdracht.thema === q);
+const activeOpdrachten = opdrachten;
 
 const hero = document.getElementById('hero');
-hero.innerHTML = `<div class="hero-top"><img class="mascotte" src="img/pavomascotte.png" alt="PAVO mascotte"><div><h1>${theme.icon} ${theme.title}</h1><p>Eenvoudig, visueel, stap-voor-stap en met directe feedback.</p></div></div>`;
-hero.style.borderTop = '6px solid ' + theme.color;
-document.getElementById('uitleg').textContent = theme.uitleg;
-document.getElementById('scenario').textContent = theme.scenario;
+hero.innerHTML = `<div class="hero-top"><img class="mascotte" src="img/pavomascotte.png" alt="PAVO mascotte"><div><h1>Doelenoverzicht</h1><p>Werk doel per doel af in dezelfde vaste werkwijze met directe feedback.</p></div></div>`;
+hero.style.borderTop = '6px solid #0f766e';
+document.getElementById('uitleg').textContent = 'Alle opdrachten staan hieronder als doelen met een uniforme, professionele layout.';
+document.getElementById('scenario').textContent = 'Lees telkens de opdrachtinformatie, los de vragen op en controleer meteen je antwoord.';
 
 const stripMoney = (value) => parseFloat(String(value).replace(',', '.').replace(/[^0-9.-]/g, ''));
 const norm = (value) => String(value || '').trim().toLowerCase();
@@ -730,7 +683,7 @@ opdrachten.forEach((opdracht, index) => {
 });
 
 function saveProgress(id, solved) {
-  const key = 'pav_progress_' + q;
+  const key = 'pav_doelen_progress';
   const current = JSON.parse(localStorage.getItem(key) || '{"done":{},"score":0}');
   if (solved) current.done[id] = true;
   const total = activeOpdrachten.length || 1;
@@ -743,7 +696,7 @@ function saveProgress(id, solved) {
 }
 
 function renderProgress() {
-  const key = 'pav_progress_' + q;
+  const key = 'pav_doelen_progress';
   const current = JSON.parse(localStorage.getItem(key) || '{"done":{},"score":0}');
   const total = activeOpdrachten.length;
   const doneCount = Object.keys(current.done).filter(doneId =>
