@@ -1,0 +1,19 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='1000' height='560' viewBox='0 0 1000 560'>
+  <rect width='1000' height='560' fill='#eef2ff'/>
+  <text x='40' y='55' font-family='Arial' font-size='34' font-weight='700' fill='#312e81'>België kaart + historische context</text>
+  <text x='40' y='88' font-family='Arial' font-size='20' fill='#4338ca'>Gebruik atlas + kaart om context in de 19e eeuw te plaatsen.</text>
+
+  <rect x='40' y='115' width='600' height='390' rx='14' fill='#ffffff' stroke='#c7d2fe' stroke-width='2'/>
+  <path d='M260 240 L320 185 L405 205 L450 255 L435 330 L350 365 L275 340 L230 290 Z' fill='#a5b4fc' stroke='#3730a3' stroke-width='3'/>
+  <text x='305' y='285' font-family='Arial' font-size='28' font-weight='700' fill='#1e1b4b'>BELGIË</text>
+
+  <circle cx='332' cy='245' r='8' fill='#dc2626'/>
+  <text x='347' y='250' font-family='Arial' font-size='18' fill='#7f1d1d'>Brussel</text>
+
+  <rect x='670' y='115' width='290' height='390' rx='14' fill='#ffffff' stroke='#c7d2fe' stroke-width='2'/>
+  <text x='688' y='155' font-family='Arial' font-size='22' font-weight='700' fill='#1e1b4b'>Contextvragen</text>
+  <text x='688' y='190' font-family='Arial' font-size='18' fill='#334155'>• In welk land ligt deze kaart?</text>
+  <text x='688' y='225' font-family='Arial' font-size='18' fill='#334155'>• Wat veranderde in de 19e eeuw?</text>
+  <text x='688' y='260' font-family='Arial' font-size='18' fill='#334155'>• Welke rol hadden steden/fabrieken?</text>
+  <text x='688' y='315' font-family='Arial' font-size='18' fill='#4338ca'>Atlas-tip: vergelijk met Europa-kaart</text>
+</svg>

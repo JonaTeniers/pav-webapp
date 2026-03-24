@@ -344,11 +344,11 @@ const opdrachten = [
     type: 'kaart',
     thema: 'aardrijkskunde',
     titel: 'Kaarten: België, Europa, wereld',
-    vraag: 'Duid het juiste land aan per kaartcontext.',
+    vraag: 'Duid het juiste land aan per kaartcontext. Gebruik de wereldkaart hieronder of je atlas.',
     antwoorden: ['belgie', 'europa', 'wereld'],
     correcteOplossing: 'België ligt in West-Europa. Italië ligt in Zuid-Europa. Brazilië ligt in Zuid-Amerika.',
     feedback: 'Kijk naar continent, vorm en ligging op de kaart.',
-    image: 'img/kaart-pav.svg'
+    image: 'img/wereldkaart-opdracht.svg'
   },
   {
     id: 'geschiedenis-kaart',
@@ -359,7 +359,7 @@ const opdrachten = [
     antwoorden: ['locatie', 'context'],
     correcteOplossing: 'Locatie: België. Context: industriële groei in 19e eeuw veranderde werk en leven in steden.',
     feedback: 'Denk aan plaats + tijd + wat er veranderde voor mensen.',
-    image: 'img/kaart-pav.svg'
+    image: 'img/kaart-belgie-context.svg'
   },
   {
     id: 'dragdrop-categorie',
@@ -449,10 +449,10 @@ function renderContext(opdracht) {
     </p>`;
   }
   if (opdracht.id === 'kaart-opdracht') {
-    return '<p>Kies per vraag het juiste land op basis van kaartcontext.</p>';
+    return '<p>Gebruik de <strong>wereldkaart</strong> hieronder. Twijfel je? Neem je atlas erbij en controleer continent + ligging.</p>';
   }
   if (opdracht.id === 'geschiedenis-kaart') {
-    return '<p>Context: 19e eeuw, sterke groei van steden en fabrieken in België. Koppel dit aan de juiste kaartkeuze en uitleg.</p>';
+    return '<p>Gebruik de kaart van België en je atlas: koppel plaats + tijd + context (19e eeuw, industrialisering).</p>';
   }
   return '';
 }
@@ -534,68 +534,156 @@ function isClose(value, expected, tolerance = 0.03) {
   return Math.abs(value - expected) <= tolerance;
 }
 
+function euro(value) {
+  return `€${Number(value).toFixed(2).replace('.', ',')}`;
+}
+
+function detailsHtml(rows) {
+  if (!rows.length) return '';
+  const items = rows.map((row) => {
+    const icon = row.correct ? '✅' : '❌';
+    return `<li>${icon} <strong>${row.label}</strong>: jouw antwoord <em>${row.actual}</em> · correct: <strong>${row.expected}</strong></li>`;
+  }).join('');
+  return `<ul class="summary-list">${items}</ul>`;
+}
+
 function checkOpdracht(id) {
   const opdracht = opdrachten.find(o => o.id === id);
   const feedback = document.getElementById('feedback-' + id);
   let ok = false;
   let extra = '';
+  const rows = [];
 
   if (id === 'kassabon-supermarkt') {
     const totaal = stripMoney(document.getElementById(`${id}-totaal`).value);
     const aantal = stripMoney(document.getElementById(`${id}-aantal`).value);
     const duurste = norm(document.getElementById(`${id}-duurste`).value);
     const wissel = stripMoney(document.getElementById(`${id}-wisselgeld`).value);
-    ok = isClose(totaal, 26.79) && aantal === 6 && duurste.includes('was') && isClose(wissel, 23.21);
+    const totaalOk = isClose(totaal, 26.79);
+    const aantalOk = aantal === 6;
+    const duursteOk = duurste.includes('was');
+    const wisselOk = isClose(wissel, 23.21);
+    rows.push(
+      { label: 'Totaal', actual: isNaN(totaal) ? 'leeg' : euro(totaal), expected: euro(26.79), correct: totaalOk },
+      { label: 'Aantal artikelen', actual: isNaN(aantal) ? 'leeg' : String(aantal), expected: '6', correct: aantalOk },
+      { label: 'Duurste product', actual: duurste || 'leeg', expected: 'wasmiddel', correct: duursteOk },
+      { label: 'Wisselgeld', actual: isNaN(wissel) ? 'leeg' : euro(wissel), expected: euro(23.21), correct: wisselOk }
+    );
+    ok = totaalOk && aantalOk && duursteOk && wisselOk;
   } else if (id === 'budget-check') {
     const kan = norm(document.getElementById(`${id}-kanBetalen`).value);
     const over = stripMoney(document.getElementById(`${id}-over`).value);
-    ok = kan === 'ja' && isClose(over, 3.21);
+    const kanOk = kan === 'ja';
+    const overOk = isClose(over, 3.21);
+    rows.push(
+      { label: 'Kan je betalen?', actual: kan || 'leeg', expected: 'ja', correct: kanOk },
+      { label: 'Overblijvend bedrag', actual: isNaN(over) ? 'leeg' : euro(over), expected: euro(3.21), correct: overOk }
+    );
+    ok = kanOk && overOk;
   } else if (id === 'factuur-lezen') {
     const sub = stripMoney(document.getElementById(`${id}-subtotaal`).value);
     const btw = stripMoney(document.getElementById(`${id}-btw`).value);
     const totaal = stripMoney(document.getElementById(`${id}-totaal`).value);
     const datum = norm(document.getElementById(`${id}-vervaldatum`).value);
-    ok = isClose(sub, 100) && isClose(btw, 21) && isClose(totaal, 121) && (datum === '15/04/2026' || datum === '15-04-2026');
+    const subOk = isClose(sub, 100);
+    const btwOk = isClose(btw, 21);
+    const totaalOk = isClose(totaal, 121);
+    const datumOk = (datum === '15/04/2026' || datum === '15-04-2026');
+    rows.push(
+      { label: 'Subtotaal', actual: isNaN(sub) ? 'leeg' : euro(sub), expected: euro(100), correct: subOk },
+      { label: 'BTW', actual: isNaN(btw) ? 'leeg' : euro(btw), expected: euro(21), correct: btwOk },
+      { label: 'Totaal', actual: isNaN(totaal) ? 'leeg' : euro(totaal), expected: euro(121), correct: totaalOk },
+      { label: 'Vervaldatum', actual: datum || 'leeg', expected: '15/04/2026', correct: datumOk }
+    );
+    ok = subOk && btwOk && totaalOk && datumOk;
   } else if (id === 'btw-berekening') {
     const btw = stripMoney(document.getElementById(`${id}-btwLos`).value);
     const totaal = stripMoney(document.getElementById(`${id}-totaalLos`).value);
-    ok = isClose(btw, 21) && isClose(totaal, 121);
+    const btwOk = isClose(btw, 21);
+    const totaalOk = isClose(totaal, 121);
+    rows.push(
+      { label: 'BTW (21% van 100)', actual: isNaN(btw) ? 'leeg' : euro(btw), expected: euro(21), correct: btwOk },
+      { label: 'Totaalbedrag', actual: isNaN(totaal) ? 'leeg' : euro(totaal), expected: euro(121), correct: totaalOk }
+    );
+    ok = btwOk && totaalOk;
     extra = '<br><strong>Stap-voor-stap:</strong> 100 × 0,21 = 21, daarna 100 + 21 = 121.';
   } else if (id === 'restaurant-groep') {
     const sub = stripMoney(document.getElementById(`${id}-subrest`).value);
     const tax = stripMoney(document.getElementById(`${id}-taxrest`).value);
     const tot = stripMoney(document.getElementById(`${id}-totrest`).value);
     const can = norm(document.getElementById(`${id}-kan200`).value);
-    ok = isClose(sub, 138) && isClose(tax, 16.56, 0.05) && isClose(tot, 154.56, 0.05) && can === 'ja';
+    const subOk = isClose(sub, 138);
+    const taxOk = isClose(tax, 16.56, 0.05);
+    const totOk = isClose(tot, 154.56, 0.05);
+    const canOk = can === 'ja';
+    rows.push(
+      { label: 'Subtotaal', actual: isNaN(sub) ? 'leeg' : euro(sub), expected: euro(138), correct: subOk },
+      { label: 'Belasting', actual: isNaN(tax) ? 'leeg' : euro(tax), expected: euro(16.56), correct: taxOk },
+      { label: 'Totaal', actual: isNaN(tot) ? 'leeg' : euro(tot), expected: euro(154.56), correct: totOk },
+      { label: 'Kan je betalen met €200?', actual: can || 'leeg', expected: 'ja', correct: canOk }
+    );
+    ok = subOk && taxOk && totOk && canOk;
   } else if (id === 'nederlands-factuur') {
     const fact = norm(document.getElementById(`${id}-factuurnummer`).value);
     const klant = norm(document.getElementById(`${id}-klant`).value);
     const btw = norm(document.getElementById(`${id}-btwBetekenis`).value);
     const schrijf = norm(document.getElementById(`${id}-schrijfopdracht`).value);
-    ok = (fact.includes('code') || fact.includes('nummer')) && klant.includes('sara') && (btw.includes('belasting') || btw.includes('toegevoegde')) && schrijf.length > 20;
+    const factOk = (fact.includes('code') || fact.includes('nummer'));
+    const klantOk = klant.includes('sara');
+    const btwOk = (btw.includes('belasting') || btw.includes('toegevoegde'));
+    const schrijfOk = schrijf.length > 20;
+    rows.push(
+      { label: 'Betekenis factuurnummer', actual: fact || 'leeg', expected: 'unieke code/nummer', correct: factOk },
+      { label: 'Wie is de klant?', actual: klant || 'leeg', expected: 'Sara Peeters', correct: klantOk },
+      { label: 'Betekenis BTW', actual: btw || 'leeg', expected: 'belasting op toegevoegde waarde', correct: btwOk },
+      { label: 'Schrijfopdracht', actual: schrijf ? 'ingevuld' : 'leeg', expected: 'minstens 1 duidelijke uitlegzin', correct: schrijfOk }
+    );
+    ok = factOk && klantOk && btwOk && schrijfOk;
   } else if (id === 'kaart-opdracht') {
     const b = norm(document.getElementById(`${id}-belgie`).value);
     const e = norm(document.getElementById(`${id}-europa`).value);
     const w = norm(document.getElementById(`${id}-wereld`).value);
-    ok = b === 'belgië' && e === 'italië' && w === 'brazilië';
+    const bOk = b === 'belgië';
+    const eOk = e === 'italië';
+    const wOk = w === 'brazilië';
+    rows.push(
+      { label: 'West-Europa / Brussel', actual: b || 'leeg', expected: 'België', correct: bOk },
+      { label: 'Laarsvorm in Zuid-Europa', actual: e || 'leeg', expected: 'Italië', correct: eOk },
+      { label: 'Groot land in Zuid-Amerika', actual: w || 'leeg', expected: 'Brazilië', correct: wOk }
+    );
+    ok = bOk && eOk && wOk;
   } else if (id === 'geschiedenis-kaart') {
     const locatie = norm(document.getElementById(`${id}-locatie`).value);
     const context = norm(document.getElementById(`${id}-context`).value);
-    ok = locatie === 'belgië' && context.includes('industriële groei');
+    const locatieOk = locatie === 'belgië';
+    const contextOk = context.includes('industriële groei');
+    rows.push(
+      { label: 'Locatie', actual: locatie || 'leeg', expected: 'België', correct: locatieOk },
+      { label: 'Historische context', actual: context || 'leeg', expected: 'Industriële groei veranderde werk en leven in steden', correct: contextOk }
+    );
+    ok = locatieOk && contextOk;
   } else if (id === 'dragdrop-categorie') {
     const brood = norm(document.getElementById(`${id}-brood`).value);
     const bus = norm(document.getElementById(`${id}-busabonnement`).value);
     const kop = norm(document.getElementById(`${id}-koptelefoon`).value);
-    ok = brood === 'eten' && bus === 'transport' && kop === 'technologie';
+    const broodOk = brood === 'eten';
+    const busOk = bus === 'transport';
+    const kopOk = kop === 'technologie';
+    rows.push(
+      { label: 'Brood', actual: brood || 'leeg', expected: 'eten', correct: broodOk },
+      { label: 'Busabonnement', actual: bus || 'leeg', expected: 'transport', correct: busOk },
+      { label: 'Koptelefoon', actual: kop || 'leeg', expected: 'technologie', correct: kopOk }
+    );
+    ok = broodOk && busOk && kopOk;
   }
 
   if (ok) {
     feedback.className = 'feedback ok';
-    feedback.innerHTML = `✅ Goed gedaan! ${opdracht.correcteOplossing}${extra}`;
+    feedback.innerHTML = `✅ Goed gedaan! ${opdracht.correcteOplossing}${detailsHtml(rows)}${extra}`;
     saveProgress(id, true);
   } else {
     feedback.className = 'feedback bad';
-    feedback.innerHTML = `⚠️ Nog niet juist. ${opdracht.feedback}${extra}`;
+    feedback.innerHTML = `⚠️ Nog niet juist. ${opdracht.feedback}${detailsHtml(rows)}${extra}`;
     saveProgress(id, false);
   }
 }

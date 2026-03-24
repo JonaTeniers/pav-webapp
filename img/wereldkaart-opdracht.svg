@@ -1,0 +1,36 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='1000' height='560' viewBox='0 0 1000 560'>
+  <rect width='1000' height='560' fill='#e0f2fe'/>
+  <text x='40' y='50' font-family='Arial' font-size='34' font-weight='700' fill='#0c4a6e'>Wereldkaart-opdracht</text>
+  <text x='40' y='82' font-family='Arial' font-size='20' fill='#075985'>Tip: gebruik ook je atlas om landen exact te lokaliseren.</text>
+
+  <rect x='35' y='105' width='930' height='410' rx='16' fill='#f8fafc' stroke='#93c5fd' stroke-width='2'/>
+
+  <!-- Vereenvoudigde continenten -->
+  <path d='M120 230 L220 170 L290 205 L300 250 L230 290 L140 275 Z' fill='#86efac' stroke='#16a34a'/>
+  <text x='165' y='310' font-family='Arial' font-size='18' fill='#14532d'>Noord-Amerika</text>
+
+  <path d='M285 300 L340 320 L330 390 L295 450 L250 410 L260 350 Z' fill='#86efac' stroke='#16a34a'/>
+  <text x='235' y='475' font-family='Arial' font-size='18' fill='#14532d'>Zuid-Amerika</text>
+
+  <path d='M430 180 L490 165 L525 190 L508 220 L450 228 L420 205 Z' fill='#bbf7d0' stroke='#16a34a'/>
+  <text x='430' y='250' font-family='Arial' font-size='18' fill='#14532d'>Europa</text>
+
+  <path d='M470 240 L530 265 L515 350 L468 405 L430 355 L440 285 Z' fill='#bbf7d0' stroke='#16a34a'/>
+  <text x='445' y='430' font-family='Arial' font-size='18' fill='#14532d'>Afrika</text>
+
+  <path d='M560 185 L690 160 L795 205 L785 285 L690 305 L575 260 Z' fill='#86efac' stroke='#16a34a'/>
+  <text x='645' y='330' font-family='Arial' font-size='18' fill='#14532d'>Azië</text>
+
+  <path d='M775 360 L840 380 L815 430 L750 410 Z' fill='#86efac' stroke='#16a34a'/>
+  <text x='730' y='455' font-family='Arial' font-size='18' fill='#14532d'>Australië</text>
+
+  <!-- Markeringen voor opdracht -->
+  <circle cx='470' cy='205' r='10' fill='#facc15' stroke='#a16207' stroke-width='2'/>
+  <text x='486' y='210' font-family='Arial' font-size='16' font-weight='700' fill='#7c2d12'>België-regio</text>
+
+  <circle cx='640' cy='245' r='10' fill='#facc15' stroke='#a16207' stroke-width='2'/>
+  <text x='657' y='250' font-family='Arial' font-size='16' font-weight='700' fill='#7c2d12'>Italië-regio</text>
+
+  <circle cx='300' cy='355' r='10' fill='#facc15' stroke='#a16207' stroke-width='2'/>
+  <text x='317' y='360' font-family='Arial' font-size='16' font-weight='700' fill='#7c2d12'>Brazilië-regio</text>
+</svg>
