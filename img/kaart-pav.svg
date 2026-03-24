@@ -1,0 +1,20 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='900' height='520' viewBox='0 0 900 520'>
+  <rect width='900' height='520' fill='#f0f9ff'/>
+  <text x='40' y='55' font-family='Arial' font-size='30' font-weight='700' fill='#0c4a6e'>Kaartopdracht: België, Europa en Wereld</text>
+  <rect x='40' y='90' width='250' height='170' rx='12' fill='#e0f2fe' stroke='#7dd3fc'/>
+  <text x='60' y='125' font-family='Arial' font-size='22' fill='#075985'>België (West-Europa)</text>
+  <circle cx='150' cy='180' r='34' fill='#facc15' opacity='0.7'/>
+  <text x='132' y='186' font-family='Arial' font-size='20' font-weight='700' fill='#111827'>BE</text>
+
+  <rect x='325' y='90' width='250' height='170' rx='12' fill='#dcfce7' stroke='#86efac'/>
+  <text x='345' y='125' font-family='Arial' font-size='22' fill='#14532d'>Europa</text>
+  <path d='M430 205 c20 -40 45 -40 60 0 c-20 15 -40 20 -60 0z' fill='#16a34a'/>
+  <text x='390' y='240' font-family='Arial' font-size='18' fill='#14532d'>Italië = laarsvorm</text>
+
+  <rect x='610' y='90' width='250' height='170' rx='12' fill='#ede9fe' stroke='#c4b5fd'/>
+  <text x='630' y='125' font-family='Arial' font-size='22' fill='#5b21b6'>Wereld</text>
+  <ellipse cx='735' cy='185' rx='55' ry='40' fill='#a78bfa'/>
+  <text x='695' y='190' font-family='Arial' font-size='18' fill='#4c1d95'>Brazilië</text>
+
+  <text x='40' y='320' font-family='Arial' font-size='22' fill='#334155'>Tip: let op ligging, vorm en continent.</text>
+</svg>

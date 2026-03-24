@@ -1,0 +1,17 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='900' height='520' viewBox='0 0 900 520'>
+  <rect width='900' height='520' fill='#fff7ed'/>
+  <rect x='90' y='40' width='720' height='440' rx='16' fill='white' stroke='#fed7aa' stroke-width='3'/>
+  <text x='130' y='90' font-family='Arial' font-size='30' font-weight='700' fill='#7c2d12'>RESTAURANT REKENING</text>
+  <text x='130' y='130' font-family='Arial' font-size='20' fill='#334155'>Noor: pasta 18 + water 3</text>
+  <text x='130' y='160' font-family='Arial' font-size='20' fill='#334155'>Aziz: steak 26 + cola 4</text>
+  <text x='130' y='190' font-family='Arial' font-size='20' fill='#334155'>Mila: salade 16 + sap 4</text>
+  <text x='130' y='220' font-family='Arial' font-size='20' fill='#334155'>Jens: burger 22 + dessert 12 + water 3</text>
+  <line x1='130' y1='245' x2='770' y2='245' stroke='#cbd5e1'/>
+  <text x='130' y='285' font-family='Arial' font-size='24' fill='#0f172a'>Subtotaal</text>
+  <text x='680' y='285' font-family='Arial' font-size='24' fill='#0f172a'>€138,00</text>
+  <rect x='125' y='300' width='650' height='46' rx='8' fill='#fef3c7'/>
+  <text x='140' y='330' font-family='Arial' font-size='24' font-weight='700' fill='#92400e'>Belasting 12%</text>
+  <text x='670' y='330' font-family='Arial' font-size='24' font-weight='700' fill='#92400e'>€16,56</text>
+  <text x='130' y='380' font-family='Arial' font-size='28' font-weight='700' fill='#7c2d12'>Totaal €154,56</text>
+  <text x='130' y='420' font-family='Arial' font-size='20' fill='#334155'>Scenario: met €200 kan je betalen en hou je €45,44 over.</text>
+</svg>
