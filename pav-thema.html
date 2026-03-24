@@ -72,6 +72,27 @@
       background: #fff;
     }
 
+    .goal-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .goal-label {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #0f766e;
+      background: #ccfbf1;
+      border: 1px solid #99f6e4;
+      border-radius: 999px;
+      padding: 4px 10px;
+    }
+
     .theme-chip {
       display: inline-flex;
       align-items: center;
@@ -111,6 +132,16 @@
       max-height: 220px;
       object-fit: contain;
       border-radius: 8px;
+    }
+
+    .img-box-left img {
+      margin-right: auto;
+      max-width: 64%;
+    }
+
+    .img-box-right img {
+      margin-left: auto;
+      max-width: 64%;
     }
 
     .highlight {
@@ -196,10 +227,25 @@
       padding-top: 10px;
     }
 
+    .task-context {
+      margin: 10px 0;
+      padding: 10px 12px;
+      border: 1px dashed #cbd5e1;
+      border-radius: 10px;
+      background: #f8fafc;
+    }
+
+    .task-context strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
     @media (max-width: 900px) {
       .grid { grid-template-columns: 1fr; }
       .hero h1 { font-size: 1.35rem; }
       .btn, button { width: 100%; text-align: center; }
+      .img-box-left img,
+      .img-box-right img { max-width: 100%; }
     }
   </style>
 </head>
@@ -399,17 +445,30 @@ const stripMoney = (value) => parseFloat(String(value).replace(',', '.').replace
 const norm = (value) => String(value || '').trim().toLowerCase();
 
 function assignmentCard(opdracht) {
+  const imagePosition = opdracht.imagePosition || 'center';
+  const imageBoxClass = imagePosition === 'left'
+    ? 'img-box img-box-left'
+    : imagePosition === 'right'
+      ? 'img-box img-box-right'
+      : 'img-box';
+
   return `
     <article class="assignment" id="card-${opdracht.id}">
-      <span class="theme-chip chip-${opdracht.thema}">📌 ${themeLabel[opdracht.thema] || opdracht.thema}</span>
+      <div class="goal-meta">
+        <span class="goal-label">Doel ${opdracht.volgorde}</span>
+        <span class="theme-chip chip-${opdracht.thema}">📌 ${themeLabel[opdracht.thema] || opdracht.thema}</span>
+      </div>
       <h3>${opdracht.titel}</h3>
       <p>${opdracht.vraag}</p>
 
-      <div class="img-box">
+      <div class="${imageBoxClass}">
         <img src="${opdracht.image}" alt="Afbeelding bij ${opdracht.titel}">
       </div>
 
-      ${renderContext(opdracht)}
+      <div class="task-context">
+        <strong>Opdrachtinformatie</strong>
+        ${renderContext(opdracht)}
+      </div>
 
       <ol class="steps">
         <li>Lees de opdracht en markeer de <span class="highlight">belangrijke info</span>.</li>
@@ -454,7 +513,7 @@ function renderContext(opdracht) {
   if (opdracht.id === 'geschiedenis-kaart') {
     return '<p>Gebruik de kaart van België en je atlas: koppel plaats + tijd + context (19e eeuw, industrialisering).</p>';
   }
-  return '';
+  return '<p>Gebruik de vraag, de afbeelding en je berekening om stap voor stap tot het juiste antwoord te komen.</p>';
 }
 
 function renderInputs(opdracht) {
@@ -687,6 +746,10 @@ function checkOpdracht(id) {
     saveProgress(id, false);
   }
 }
+
+opdrachten.forEach((opdracht, index) => {
+  opdracht.volgorde = index + 1;
+});
 
 function saveProgress(id, solved) {
   const key = 'pav_progress_' + q;
