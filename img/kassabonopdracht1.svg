@@ -1,0 +1,17 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='900' height='520' viewBox='0 0 900 520'>
+  <rect width='900' height='520' fill='#ecfeff'/>
+  <rect x='250' y='20' width='400' height='480' rx='18' fill='white' stroke='#bae6fd' stroke-width='3'/>
+  <text x='285' y='65' font-family='Courier New' font-size='26' font-weight='700' fill='#0c4a6e'>SUPERMARKT BON</text>
+  <text x='285' y='100' font-family='Courier New' font-size='20' fill='#0f172a'>melk           1,29</text>
+  <text x='285' y='130' font-family='Courier New' font-size='20' fill='#0f172a'>brood          2,35</text>
+  <text x='285' y='160' font-family='Courier New' font-size='20' fill='#0f172a'>pasta          1,99</text>
+  <text x='285' y='190' font-family='Courier New' font-size='20' fill='#0f172a'>tomatensaus    2,49</text>
+  <rect x='280' y='203' width='335' height='32' rx='6' fill='#fef08a'/>
+  <text x='285' y='225' font-family='Courier New' font-size='20' font-weight='700' fill='#854d0e'>wasmiddel      8,99</text>
+  <text x='285' y='255' font-family='Courier New' font-size='20' fill='#0f172a'>appels         3,69</text>
+  <line x1='280' y1='280' x2='620' y2='280' stroke='#0f172a' stroke-dasharray='4 4'/>
+  <rect x='278' y='290' width='340' height='38' rx='8' fill='#fde68a'/>
+  <text x='285' y='318' font-family='Courier New' font-size='24' font-weight='700' fill='#7c2d12'>TOTAAL        26,79</text>
+  <text x='285' y='355' font-family='Courier New' font-size='18' fill='#334155'>Betaald met: 50,00</text>
+  <text x='285' y='385' font-family='Courier New' font-size='18' fill='#334155'>Wisselgeld: 23,21</text>
+</svg>
