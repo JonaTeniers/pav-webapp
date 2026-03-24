@@ -6,18 +6,201 @@
   <title>PAV Thema module</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
-    :root{--bg:#f4f7f9;--card:#fff;--line:#e2eaf0;--text:#1f2933;--muted:#66788a}
-    *{box-sizing:border-box} body{margin:0;font-family:Inter,sans-serif;background:var(--bg);color:var(--text)}
-    .wrap{max-width:1050px;margin:0 auto;padding:20px 16px 90px}
-    .hero,.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}.hero-top{display:flex;align-items:center;gap:12px}.mascotte{width:52px;height:52px;object-fit:contain}
-    .hero h1{margin:0 0 6px}.hero p{margin:0;color:var(--muted)}
-    .grid{display:grid;grid-template-columns:1.2fr 1fr;gap:14px}.assignment{border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px}
-    .tag{display:inline-block;border-radius:999px;padding:4px 8px;background:#edf2f7;font-size:12px;font-weight:700}
-    textarea,input{width:100%;padding:10px;border:1px solid #cfd9e2;border-radius:10px;font:inherit}
-    label{font-weight:700;font-size:14px;display:block;margin-bottom:8px}
-    button,a.btn{border:none;border-radius:10px;padding:10px 12px;color:#fff;font-weight:700;text-decoration:none;display:inline-block;cursor:pointer}
-    .links a{display:block;margin:5px 0;color:#0f4d8a}
-    @media(max-width:880px){.grid{grid-template-columns:1fr}}
+    :root {
+      --bg: #f4f7f9;
+      --card: #ffffff;
+      --line: #dbe6ee;
+      --text: #1f2933;
+      --muted: #66788a;
+      --ok: #166534;
+      --ok-bg: #dcfce7;
+      --bad: #991b1b;
+      --bad-bg: #fee2e2;
+      --budget: #16a34a;
+      --nl: #2563eb;
+      --aard: #0891b2;
+      --gesch: #7c3aed;
+      --praktijk: #f59e0b;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px 14px 90px;
+    }
+
+    .hero, .panel {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+    }
+
+    .hero-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .mascotte { width: 52px; height: 52px; object-fit: contain; }
+
+    .hero h1 { margin: 0 0 4px; font-size: 1.6rem; }
+    .hero p { margin: 0; color: var(--muted); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.7fr 1fr;
+      gap: 14px;
+    }
+
+    .assignment {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 12px;
+      background: #fff;
+    }
+
+    .theme-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 999px;
+      padding: 4px 10px;
+      margin-bottom: 8px;
+      border: 1px solid transparent;
+    }
+
+    .chip-budget { background: #dcfce7; color: #166534; border-color: #86efac; }
+    .chip-nederlands { background: #dbeafe; color: #1d4ed8; border-color: #93c5fd; }
+    .chip-aardrijkskunde { background: #cffafe; color: #155e75; border-color: #67e8f9; }
+    .chip-geschiedenis { background: #ede9fe; color: #5b21b6; border-color: #c4b5fd; }
+    .chip-praktische-vaardigheden { background: #ffedd5; color: #9a3412; border-color: #fdba74; }
+
+    h2, h3, h4 { margin: 0 0 10px; }
+
+    .assignment p {
+      margin: 8px 0;
+      line-height: 1.45;
+    }
+
+    .img-box {
+      margin: 10px 0;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #f8fafc;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .img-box img {
+      width: 100%;
+      max-height: 220px;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    .highlight {
+      background: #fef08a;
+      padding: 1px 5px;
+      border-radius: 6px;
+      font-weight: 700;
+    }
+
+    .steps {
+      margin: 0 0 10px;
+      padding-left: 18px;
+      color: #334155;
+    }
+
+    .steps li { margin-bottom: 5px; }
+
+    .field { margin-bottom: 10px; }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 10px;
+      font: inherit;
+      background: #fff;
+    }
+
+    .btn, button {
+      border: none;
+      border-radius: 12px;
+      padding: 11px 14px;
+      color: #fff;
+      background: #0f766e;
+      font-weight: 800;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 8px;
+    }
+
+    .btn:hover, button:hover { filter: brightness(0.95); }
+
+    .feedback {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 10px;
+      font-weight: 600;
+      display: none;
+    }
+
+    .ok { background: var(--ok-bg); color: var(--ok); display: block; }
+    .bad { background: var(--bad-bg); color: var(--bad); display: block; }
+
+    .summary-list { margin: 8px 0 0; padding-left: 18px; }
+
+    .drag-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
+    }
+
+    .drag-grid .field { margin-bottom: 0; }
+
+    .stat {
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 12px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .reflectie {
+      border-top: 1px dashed #cbd5e1;
+      margin-top: 10px;
+      padding-top: 10px;
+    }
+
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 1.35rem; }
+      .btn, button { width: 100%; text-align: center; }
+    }
   </style>
 </head>
 <body>
@@ -31,75 +214,421 @@
         <h3>Praktisch scenario</h3>
         <p id="scenario"></p>
 
+        <div class="stat">
+          <strong>Voortgang:</strong> <span id="progressText">0/0 opdrachten voltooid</span><br>
+          <strong>Score:</strong> <span id="scoreText">0%</span>
+        </div>
+
         <div class="links">
           <strong>Koppeling met bestaande pagina's</strong>
-          <a href="thema.html">Bestaande dynamische thema-pagina</a>
-          <a href="hoofdthema6.html">Bestaand hoofdthema (Sparen)</a>
+          <p><a href="thema.html">Bestaande dynamische thema-pagina</a></p>
+          <p><a href="hoofdthema6.html">Bestaand hoofdthema (Sparen)</a></p>
         </div>
       </section>
 
       <section class="panel">
-        <h2>Opdrachten</h2>
-        <div id="assignments"></div>
+        <h2>Automatische structuur</h2>
+        <ul class="summary-list">
+          <li><strong>type</strong> (kassabon, factuur, kaart, drag & drop...)</li>
+          <li><strong>vraag</strong> met duidelijke taal</li>
+          <li><strong>antwoorden</strong> die leerling invult of kiest</li>
+          <li><strong>correcte oplossing</strong> met berekening</li>
+          <li><strong>feedback</strong> direct na indienen</li>
+          <li><strong>thema</strong> automatisch gekoppeld</li>
+        </ul>
       </section>
     </div>
 
     <section class="panel">
-      <h2>Reflectievragen na opdracht</h2>
-      <form id="reflectionForm">
-        <label>Wat heb je geleerd?<textarea id="a1" required></textarea></label>
-        <label>Wat vond je moeilijk?<textarea id="a2" required></textarea></label>
-        <label>Wat zou je volgende keer anders doen?<textarea id="a3" required></textarea></label>
-        <button id="saveBtn" type="submit">Reflectie opslaan (zichtbaar voor leerkracht)</button>
-      </form>
-      <p id="saveMsg"></p>
+      <h2>Leerlinggerichte opdrachten</h2>
+      <div id="assignments"></div>
     </section>
 
     <a class="btn" style="background:#2f4858" href="leerling-dashboard.html">Ga naar mijn voortgang</a>
   </main>
 
 <script>
-const themes={
-  budget:{title:'Budget & Geld',color:'#4caf50',icon:'💶',uitleg:'Je leert een budget opstellen, keuzes maken en sparen.',scenario:'Je hebt €100 budget. Wat koop je?'},
-  winkelen:{title:'Winkelen',color:'#2196f3',icon:'🛍️',uitleg:'Je vergelijkt aanbiedingen en leert consumentengedrag.',scenario:'Waar koop je dezelfde producten het voordeligst?'},
-  wonen:{title:'Wonen',color:'#ff9800',icon:'🏠',uitleg:'Je bekijkt huur, energie, internet en woonkosten.',scenario:'Verdeel een maandbudget over huur en vaste kosten.'},
-  transport:{title:'Transport',color:'#f44336',icon:'🚌',uitleg:'Je plant veilige en duurzame verplaatsingen.',scenario:'Welke vervoerskeuze is het goedkoopst voor een week?'},
-  technologie:{title:'Technologie',color:'#9c27b0',icon:'💻',uitleg:'Je leert digitale veiligheid en verantwoord mediagebruik.',scenario:'Welke keuzes maken je online account veiliger?'}
+const themes = {
+  budget: {
+    title: 'Budget & Geld',
+    color: '#16a34a',
+    icon: '💶',
+    uitleg: 'Je leert budgetteren, plannen en kiezen met echte kassabonnen en facturen.',
+    scenario: 'Je bent met vrienden op stap en moet slim omgaan met je budget.'
+  },
+  nederlands: {
+    title: 'Nederlands in context',
+    color: '#2563eb',
+    icon: '📝',
+    uitleg: 'Je begrijpt woorden op een factuur en leert duidelijk uitleggen wat ze betekenen.',
+    scenario: 'Je helpt thuis met post en legt uit wat op een factuur staat.'
+  },
+  aardrijkskunde: {
+    title: 'Aardrijkskunde & kaarten',
+    color: '#0891b2',
+    icon: '🗺️',
+    uitleg: 'Je oefent met België, Europa en de wereldkaart in praktische opdrachten.',
+    scenario: 'Je plant een reisroute en duidt landen op de kaart aan.'
+  }
 };
-const opdrachten=[
- {type:'meerkeuze',titel:'Quizvraag',vraag:'Wat is de beste keuze binnen jouw budget?'},
- {type:'berekening',titel:'Rekenvraag',vraag:'Bereken 20% korting op €75.'},
- {type:'scenario',titel:'Praktijk',vraag:'Beschrijf je plan en motiveer je keuze.'}
+
+const opdrachten = [
+  {
+    id: 'kassabon-supermarkt',
+    type: 'kassabon',
+    thema: 'budget',
+    titel: 'Kassabon supermarkt lezen',
+    vraag: 'Bekijk de kassabon. Bereken het totaal, tel de artikelen, zoek het duurste product en bereken wisselgeld bij €50.',
+    antwoorden: ['totaal', 'aantal', 'duurste', 'wisselgeld'],
+    correcteOplossing: 'Totaal €26,79 - 6 artikelen - duurste product: wasmiddel (€8,99) - wisselgeld €23,21.',
+    feedback: 'Kijk naar de gemarkeerde bedragen: eerst totaal lezen, dan prijzen vergelijken, dan wisselgeld berekenen.',
+    image: 'img/kassabonopdracht1.svg'
+  },
+  {
+    id: 'budget-check',
+    type: 'budgetteren',
+    thema: 'budget',
+    titel: 'Budget: kan je dit betalen?',
+    vraag: 'Je hebt €30. De kassabon is €26,79. Kan je betalen? Hoeveel hou je over?',
+    antwoorden: ['kanBetalen', 'over'],
+    correcteOplossing: 'Ja, je kan betalen. €30 - €26,79 = €3,21 over.',
+    feedback: 'Gebruik altijd de formule budget - kostprijs.',
+    image: 'img/kassabonopdracht1.svg'
+  },
+  {
+    id: 'factuur-lezen',
+    type: 'factuur',
+    thema: 'praktische-vaardigheden',
+    titel: 'Factuur analyseren',
+    vraag: 'Lees de factuur en vul subtotaal, BTW, totaal en vervaldatum in.',
+    antwoorden: ['subtotaal', 'btw', 'totaal', 'vervaldatum'],
+    correcteOplossing: 'Subtotaal €100,00 - BTW €21,00 - Totaal €121,00 - Vervaldatum 15/04/2026.',
+    feedback: 'BTW = percentage van subtotaal. Totaal = subtotaal + BTW.',
+    image: 'img/factuur.svg'
+  },
+  {
+    id: 'btw-berekening',
+    type: 'berekening',
+    thema: 'budget',
+    titel: 'BTW berekenen (21%)',
+    vraag: 'Subtotaal €100. Bereken de BTW en het totaalbedrag stap voor stap.',
+    antwoorden: ['btwLos', 'totaalLos'],
+    correcteOplossing: 'BTW = 21% van 100 = 21. Totaal = 100 + 21 = €121.',
+    feedback: 'Formule: subtotaal × 0,21 = BTW. Daarna optellen voor totaal.',
+    image: 'img/factuur.svg'
+  },
+  {
+    id: 'restaurant-groep',
+    type: 'restaurantbon',
+    thema: 'budget',
+    titel: 'Restaurantbon: vrienden delen de rekening',
+    vraag: '4 vrienden aten samen. Bereken totaal, belasting, subtotaal en of €200 genoeg is.',
+    antwoorden: ['subrest', 'taxrest', 'totrest', 'kan200'],
+    correcteOplossing: 'Subtotaal €138,00 - Belasting €16,56 (12%) - Totaal €154,56 - €200 is genoeg.',
+    feedback: 'Controleer eerst subtotaal van alle consumpties, dan belasting, daarna totaal.',
+    image: 'img/rekening-restaurant.svg'
+  },
+  {
+    id: 'nederlands-factuur',
+    type: 'taal',
+    thema: 'nederlands',
+    titel: 'Nederlands: woorden op een factuur',
+    vraag: 'Wat betekent factuurnummer, wie is de klant en wat betekent BTW?',
+    antwoorden: ['factuurnummer', 'klant', 'btwBetekenis', 'schrijfopdracht'],
+    correcteOplossing: 'Factuurnummer = unieke code van factuur. Klant = persoon/bedrijf dat moet betalen. BTW = belasting over de toegevoegde waarde.',
+    feedback: 'Gebruik je eigen woorden en verwijs naar gegevens op de factuur.',
+    image: 'img/factuur.svg'
+  },
+  {
+    id: 'kaart-opdracht',
+    type: 'kaart',
+    thema: 'aardrijkskunde',
+    titel: 'Kaarten: België, Europa, wereld',
+    vraag: 'Duid het juiste land aan per kaartcontext.',
+    antwoorden: ['belgie', 'europa', 'wereld'],
+    correcteOplossing: 'België ligt in West-Europa. Italië ligt in Zuid-Europa. Brazilië ligt in Zuid-Amerika.',
+    feedback: 'Kijk naar continent, vorm en ligging op de kaart.',
+    image: 'img/kaart-pav.svg'
+  },
+  {
+    id: 'geschiedenis-kaart',
+    type: 'kaart-context',
+    thema: 'geschiedenis',
+    titel: 'Geschiedenis: kaart + context',
+    vraag: 'Koppel de juiste historische context aan de kaartlocatie.',
+    antwoorden: ['locatie', 'context'],
+    correcteOplossing: 'Locatie: België. Context: industriële groei in 19e eeuw veranderde werk en leven in steden.',
+    feedback: 'Denk aan plaats + tijd + wat er veranderde voor mensen.',
+    image: 'img/kaart-pav.svg'
+  },
+  {
+    id: 'dragdrop-categorie',
+    type: 'drag-drop',
+    thema: 'praktische-vaardigheden',
+    titel: 'Sleep producten naar categorie',
+    vraag: 'Kies voor elk product de juiste categorie: eten, transport of technologie.',
+    antwoorden: ['brood', 'busabonnement', 'koptelefoon'],
+    correcteOplossing: 'Brood → eten, busabonnement → transport, koptelefoon → technologie.',
+    feedback: 'Denk aan waar je het product voor gebruikt in het dagelijks leven.',
+    image: 'img/kassabonopdracht1.svg'
+  }
 ];
-const q=new URLSearchParams(location.search).get('theme')||'budget';
-const theme=themes[q]||themes.budget;
 
-document.getElementById('hero').innerHTML=`<div class="hero-top"><img class="mascotte" src="img/pavomascotte.png" alt="PAVO mascotte"><div><h1>${theme.icon} ${theme.title}</h1><p>Interactieve vragen, opdrachten en reflectie in duidelijke stappen.</p></div></div>`;
-document.getElementById('hero').style.borderTop='6px solid '+theme.color;
-document.getElementById('uitleg').textContent=theme.uitleg;
-document.getElementById('scenario').textContent=theme.scenario;
+const q = new URLSearchParams(location.search).get('theme') || 'budget';
+const focus = new URLSearchParams(location.search).get('focus') || 'all';
+const theme = themes[q] || themes.budget;
+const activeOpdrachten = focus === 'all'
+  ? opdrachten
+  : opdrachten.filter(opdracht => opdracht.thema === focus);
 
-const assignmentHtml=opdrachten.map((o,i)=>`<div class='assignment'><span class='tag'>${o.type}</span><h4>${o.titel}</h4><p>${o.vraag}</p><button style='background:${theme.color}' onclick='markDone(${i})'>Opdracht afronden</button></div>`).join('');
-document.getElementById('assignments').innerHTML=assignmentHtml;
+const hero = document.getElementById('hero');
+hero.innerHTML = `<div class="hero-top"><img class="mascotte" src="img/pavomascotte.png" alt="PAVO mascotte"><div><h1>${theme.icon} ${theme.title}</h1><p>Eenvoudig, visueel, stap-voor-stap en met directe feedback.</p></div></div>`;
+hero.style.borderTop = '6px solid ' + theme.color;
+document.getElementById('uitleg').textContent = theme.uitleg;
+document.getElementById('scenario').textContent = theme.scenario;
 
-function markDone(i){
-  const key='pav_progress_'+q;
-  const current=JSON.parse(localStorage.getItem(key)||'{"done":0,"score":0}');
-  current.done=Math.min(3,current.done+1); current.score=Math.min(100,current.score+35);
-  localStorage.setItem(key,JSON.stringify(current));
-  alert('Opdracht afgerond. Vergeet je reflectie niet!');
+const themeLabel = {
+  budget: 'Budget',
+  nederlands: 'Nederlands',
+  aardrijkskunde: 'Aardrijkskunde',
+  geschiedenis: 'Geschiedenis',
+  'praktische-vaardigheden': 'Praktische vaardigheden'
+};
+
+const stripMoney = (value) => parseFloat(String(value).replace(',', '.').replace(/[^0-9.-]/g, ''));
+const norm = (value) => String(value || '').trim().toLowerCase();
+
+function assignmentCard(opdracht) {
+  return `
+    <article class="assignment" id="card-${opdracht.id}">
+      <span class="theme-chip chip-${opdracht.thema}">📌 ${themeLabel[opdracht.thema] || opdracht.thema}</span>
+      <h3>${opdracht.titel}</h3>
+      <p>${opdracht.vraag}</p>
+
+      <div class="img-box">
+        <img src="${opdracht.image}" alt="Afbeelding bij ${opdracht.titel}">
+      </div>
+
+      ${renderContext(opdracht)}
+
+      <ol class="steps">
+        <li>Lees de opdracht en markeer de <span class="highlight">belangrijke info</span>.</li>
+        <li>Reken of kies je antwoord.</li>
+        <li>Klik op <strong>Controleer</strong> voor directe feedback.</li>
+      </ol>
+
+      ${renderInputs(opdracht)}
+
+      <button onclick="checkOpdracht('${opdracht.id}')">Controleer</button>
+      <div class="feedback" id="feedback-${opdracht.id}"></div>
+
+      <div class="reflectie">
+        <label for="reflectie-${opdracht.id}">Reflectie: wat heb je geleerd?</label>
+        <textarea id="reflectie-${opdracht.id}" rows="2" placeholder="Bijvoorbeeld: ik kan nu BTW berekenen."></textarea>
+      </div>
+    </article>
+  `;
 }
 
-reflectionForm.onsubmit=(e)=>{
-  e.preventDefault();
-  const data={antwoord1:a1.value.trim(),antwoord2:a2.value.trim(),antwoord3:a3.value.trim(),theme:q,updatedAt:new Date().toISOString()};
-  const list=JSON.parse(localStorage.getItem('pav_reflections')||'[]');
-  list.push(data);
-  localStorage.setItem('pav_reflections',JSON.stringify(list));
-  saveMsg.textContent='Reflectie opgeslagen.';
-  saveMsg.style.color='#166534';
-  reflectionForm.reset();
-};
+function renderContext(opdracht) {
+  if (opdracht.id === 'kassabon-supermarkt') {
+    return `<p>
+      Producten: melk €1,29 - brood €2,35 - pasta €1,99 - tomatensaus €2,49 - wasmiddel <span class="highlight">€8,99</span> - appels €3,69.<br>
+      <strong>Totaal:</strong> <span class="highlight">€26,79</span>.
+    </p>`;
+  }
+  if (opdracht.id === 'restaurant-groep') {
+    return `<p>
+      Noor: pasta €18 + water €3. Aziz: steak €26 + cola €4. Mila: salade €16 + sap €4. Jens: burger €22 + dessert €12 + water €3.<br>
+      <strong>Belasting restaurant:</strong> <span class="highlight">12%</span>.
+    </p>`;
+  }
+  if (opdracht.id === 'factuur-lezen' || opdracht.id === 'nederlands-factuur') {
+    return `<p>
+      Factuurnummer: F-2026-0412 · Klant: Sara Peeters · Subtotaal <span class="highlight">€100,00</span> · BTW <span class="highlight">21%</span> · Totaal €121,00 · Vervaldatum: <span class="highlight">15/04/2026</span>.
+    </p>`;
+  }
+  if (opdracht.id === 'kaart-opdracht') {
+    return '<p>Kies per vraag het juiste land op basis van kaartcontext.</p>';
+  }
+  if (opdracht.id === 'geschiedenis-kaart') {
+    return '<p>Context: 19e eeuw, sterke groei van steden en fabrieken in België. Koppel dit aan de juiste kaartkeuze en uitleg.</p>';
+  }
+  return '';
+}
+
+function renderInputs(opdracht) {
+  const f = (id, label, placeholder = '') => `<div class="field"><label for="${opdracht.id}-${id}">${label}</label><input id="${opdracht.id}-${id}" placeholder="${placeholder}"></div>`;
+
+  if (opdracht.id === 'kassabon-supermarkt') {
+    return [
+      f('totaal', 'Hoeveel moet betaald worden?', '26,79'),
+      f('aantal', 'Hoeveel artikelen zijn gekocht?', '6'),
+      f('duurste', 'Wat is het duurste product?', 'wasmiddel'),
+      f('wisselgeld', 'Wisselgeld bij betaling met €50?', '23,21')
+    ].join('');
+  }
+  if (opdracht.id === 'budget-check') {
+    return `
+      <div class="field"><label for="${opdracht.id}-kanBetalen">Kan je betalen?</label>
+        <select id="${opdracht.id}-kanBetalen"><option>kies...</option><option>ja</option><option>nee</option></select>
+      </div>
+      ${f('over', 'Hoeveel geld hou je over?', '3,21')}
+    `;
+  }
+  if (opdracht.id === 'factuur-lezen') {
+    return [
+      f('subtotaal', 'Wat is het subtotaal?', '100'),
+      f('btw', 'Hoeveel bedraagt de BTW?', '21'),
+      f('totaal', 'Wat is het totaalbedrag?', '121'),
+      f('vervaldatum', 'Wat is de vervaldatum?', '15/04/2026')
+    ].join('');
+  }
+  if (opdracht.id === 'btw-berekening') {
+    return [
+      f('btwLos', 'Hoeveel is 21% van 100?', '21'),
+      f('totaalLos', 'Wat is het totaalbedrag?', '121')
+    ].join('');
+  }
+  if (opdracht.id === 'restaurant-groep') {
+    return [
+      f('subrest', 'Wat is het subtotaal?', '138'),
+      f('taxrest', 'Wat is de belasting?', '16,56'),
+      f('totrest', 'Wat is het totaal?', '154,56'),
+      `<div class="field"><label for="${opdracht.id}-kan200">Je hebt €200: kan je betalen?</label>
+        <select id="${opdracht.id}-kan200"><option>kies...</option><option>ja</option><option>nee</option></select>
+      </div>`
+    ].join('');
+  }
+  if (opdracht.id === 'nederlands-factuur') {
+    return `
+      ${f('factuurnummer', 'Wat betekent “factuurnummer”?', 'unieke code')}
+      ${f('klant', 'Wie is de klant?', 'Sara Peeters')}
+      ${f('btwBetekenis', 'Wat betekent “BTW”?', 'belasting op...')}
+      <div class="field"><label for="${opdracht.id}-schrijfopdracht">Schrijfopdracht: “Leg uit wat een factuur is.”</label><textarea id="${opdracht.id}-schrijfopdracht" rows="3"></textarea></div>
+    `;
+  }
+  if (opdracht.id === 'kaart-opdracht') {
+    return `
+      <div class="field"><label>Welk land is dit? “Hoofdstad Brussel, in West-Europa”</label><select id="${opdracht.id}-belgie"><option>kies...</option><option>België</option><option>Nederland</option><option>Frankrijk</option></select></div>
+      <div class="field"><label>Welk land ligt in Zuid-Europa in de vorm van een laars?</label><select id="${opdracht.id}-europa"><option>kies...</option><option>Italië</option><option>Zweden</option><option>Polen</option></select></div>
+      <div class="field"><label>Welk land ligt in Zuid-Amerika en is heel groot?</label><select id="${opdracht.id}-wereld"><option>kies...</option><option>Brazilië</option><option>Canada</option><option>Japan</option></select></div>
+    `;
+  }
+  if (opdracht.id === 'geschiedenis-kaart') {
+    return `
+      <div class="field"><label>Welke locatie hoort bij dit verhaal?</label><select id="${opdracht.id}-locatie"><option>kies...</option><option>België</option><option>Australië</option><option>Japan</option></select></div>
+      <div class="field"><label>Welke context past het best?</label><select id="${opdracht.id}-context"><option>kies...</option><option>Industriële groei veranderde werk en leven in steden</option><option>Alles bleef hetzelfde op het platteland</option><option>Er waren nog geen fabrieken</option></select></div>
+    `;
+  }
+  return `
+    <div class="drag-grid">
+      <div class="field"><label>Brood</label><select id="${opdracht.id}-brood"><option>kies...</option><option>eten</option><option>transport</option><option>technologie</option></select></div>
+      <div class="field"><label>Busabonnement</label><select id="${opdracht.id}-busabonnement"><option>kies...</option><option>eten</option><option>transport</option><option>technologie</option></select></div>
+      <div class="field"><label>Koptelefoon</label><select id="${opdracht.id}-koptelefoon"><option>kies...</option><option>eten</option><option>transport</option><option>technologie</option></select></div>
+    </div>
+  `;
+}
+
+function isClose(value, expected, tolerance = 0.03) {
+  return Math.abs(value - expected) <= tolerance;
+}
+
+function checkOpdracht(id) {
+  const opdracht = opdrachten.find(o => o.id === id);
+  const feedback = document.getElementById('feedback-' + id);
+  let ok = false;
+  let extra = '';
+
+  if (id === 'kassabon-supermarkt') {
+    const totaal = stripMoney(document.getElementById(`${id}-totaal`).value);
+    const aantal = stripMoney(document.getElementById(`${id}-aantal`).value);
+    const duurste = norm(document.getElementById(`${id}-duurste`).value);
+    const wissel = stripMoney(document.getElementById(`${id}-wisselgeld`).value);
+    ok = isClose(totaal, 26.79) && aantal === 6 && duurste.includes('was') && isClose(wissel, 23.21);
+  } else if (id === 'budget-check') {
+    const kan = norm(document.getElementById(`${id}-kanBetalen`).value);
+    const over = stripMoney(document.getElementById(`${id}-over`).value);
+    ok = kan === 'ja' && isClose(over, 3.21);
+  } else if (id === 'factuur-lezen') {
+    const sub = stripMoney(document.getElementById(`${id}-subtotaal`).value);
+    const btw = stripMoney(document.getElementById(`${id}-btw`).value);
+    const totaal = stripMoney(document.getElementById(`${id}-totaal`).value);
+    const datum = norm(document.getElementById(`${id}-vervaldatum`).value);
+    ok = isClose(sub, 100) && isClose(btw, 21) && isClose(totaal, 121) && (datum === '15/04/2026' || datum === '15-04-2026');
+  } else if (id === 'btw-berekening') {
+    const btw = stripMoney(document.getElementById(`${id}-btwLos`).value);
+    const totaal = stripMoney(document.getElementById(`${id}-totaalLos`).value);
+    ok = isClose(btw, 21) && isClose(totaal, 121);
+    extra = '<br><strong>Stap-voor-stap:</strong> 100 × 0,21 = 21, daarna 100 + 21 = 121.';
+  } else if (id === 'restaurant-groep') {
+    const sub = stripMoney(document.getElementById(`${id}-subrest`).value);
+    const tax = stripMoney(document.getElementById(`${id}-taxrest`).value);
+    const tot = stripMoney(document.getElementById(`${id}-totrest`).value);
+    const can = norm(document.getElementById(`${id}-kan200`).value);
+    ok = isClose(sub, 138) && isClose(tax, 16.56, 0.05) && isClose(tot, 154.56, 0.05) && can === 'ja';
+  } else if (id === 'nederlands-factuur') {
+    const fact = norm(document.getElementById(`${id}-factuurnummer`).value);
+    const klant = norm(document.getElementById(`${id}-klant`).value);
+    const btw = norm(document.getElementById(`${id}-btwBetekenis`).value);
+    const schrijf = norm(document.getElementById(`${id}-schrijfopdracht`).value);
+    ok = (fact.includes('code') || fact.includes('nummer')) && klant.includes('sara') && (btw.includes('belasting') || btw.includes('toegevoegde')) && schrijf.length > 20;
+  } else if (id === 'kaart-opdracht') {
+    const b = norm(document.getElementById(`${id}-belgie`).value);
+    const e = norm(document.getElementById(`${id}-europa`).value);
+    const w = norm(document.getElementById(`${id}-wereld`).value);
+    ok = b === 'belgië' && e === 'italië' && w === 'brazilië';
+  } else if (id === 'geschiedenis-kaart') {
+    const locatie = norm(document.getElementById(`${id}-locatie`).value);
+    const context = norm(document.getElementById(`${id}-context`).value);
+    ok = locatie === 'belgië' && context.includes('industriële groei');
+  } else if (id === 'dragdrop-categorie') {
+    const brood = norm(document.getElementById(`${id}-brood`).value);
+    const bus = norm(document.getElementById(`${id}-busabonnement`).value);
+    const kop = norm(document.getElementById(`${id}-koptelefoon`).value);
+    ok = brood === 'eten' && bus === 'transport' && kop === 'technologie';
+  }
+
+  if (ok) {
+    feedback.className = 'feedback ok';
+    feedback.innerHTML = `✅ Goed gedaan! ${opdracht.correcteOplossing}${extra}`;
+    saveProgress(id, true);
+  } else {
+    feedback.className = 'feedback bad';
+    feedback.innerHTML = `⚠️ Nog niet juist. ${opdracht.feedback}${extra}`;
+    saveProgress(id, false);
+  }
+}
+
+function saveProgress(id, solved) {
+  const key = 'pav_progress_' + q;
+  const current = JSON.parse(localStorage.getItem(key) || '{"done":{},"score":0}');
+  if (solved) current.done[id] = true;
+  const total = activeOpdrachten.length || 1;
+  const doneCount = Object.keys(current.done).filter(doneId =>
+    activeOpdrachten.some(opdracht => opdracht.id === doneId)
+  ).length;
+  current.score = Math.round((doneCount / total) * 100);
+  localStorage.setItem(key, JSON.stringify(current));
+  renderProgress();
+}
+
+function renderProgress() {
+  const key = 'pav_progress_' + q;
+  const current = JSON.parse(localStorage.getItem(key) || '{"done":{},"score":0}');
+  const total = activeOpdrachten.length;
+  const doneCount = Object.keys(current.done).filter(doneId =>
+    activeOpdrachten.some(opdracht => opdracht.id === doneId)
+  ).length;
+  document.getElementById('progressText').textContent = `${doneCount}/${total} opdrachten voltooid`;
+  const score = total ? Math.round((doneCount / total) * 100) : 0;
+  document.getElementById('scoreText').textContent = `${score}%`;
+}
+
+document.getElementById('assignments').innerHTML = activeOpdrachten.length
+  ? activeOpdrachten.map(assignmentCard).join('')
+  : '<p>Geen opdrachten gevonden voor deze focus.</p>';
+renderProgress();
 </script>
 </body>
 </html>
