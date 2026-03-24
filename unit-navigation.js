@@ -63,6 +63,19 @@
         background: rgba(255,255,255,0.95) !important;
         border: 1px solid #c8ddf0;
         box-shadow: 0 8px 18px rgba(10, 47, 78, 0.12);
+        border-radius: 16px;
+      }
+
+      #quizBox,
+      #endScreen {
+        max-width: 980px;
+        margin: 1rem auto;
+        padding: 1.6rem;
+      }
+
+      #quizBox > h2 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
       }
 
       h1, h2, h3 {
@@ -101,8 +114,8 @@
       .question-item {
         border: 1px solid #c8ddf0;
         border-radius: 10px;
-        padding: 0.8rem;
-        background: #f6fbff;
+        padding: 1rem;
+        background: #f4f8fc;
       }
 
       .question-item h3 {
@@ -136,7 +149,21 @@
 
       .question-item label {
         display: block;
-        padding: 0.3rem 0.2rem;
+        padding: 0.4rem 0.2rem;
+      }
+
+      .question-item img,
+      .question-box img,
+      .card img {
+        width: min(100%, 420px);
+        max-height: 260px;
+        object-fit: contain;
+        display: block;
+        margin: 0.65rem auto;
+        border: 1px solid #c8ddf0;
+        border-radius: 10px;
+        padding: 8px;
+        background: #f8fbff;
       }
 
       .nav-buttons {
@@ -149,6 +176,14 @@
   function harmonizeGoalLabels() {
     document.querySelectorAll('header h1, header p').forEach((el) => {
       el.textContent = el.textContent.replace(/\bUnit\b/g, 'Doel');
+    });
+
+    document.querySelectorAll('h1').forEach((el) => {
+      const cleaned = el.textContent
+        .replace(/thema\s*\d+\s*[-–]\s*/i, '')
+        .replace(/\bunit\b/gi, 'Doel')
+        .trim();
+      if (cleaned) el.textContent = cleaned;
     });
   }
 
