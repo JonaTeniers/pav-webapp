@@ -58,11 +58,7 @@
     .hero h1 { margin: 0 0 4px; font-size: 1.6rem; }
     .hero p { margin: 0; color: var(--muted); }
 
-    .grid {
-      display: grid;
-      grid-template-columns: 1.7fr 1fr;
-      gap: 14px;
-    }
+    .grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
 
     .assignment {
       border: 1px solid var(--line);
@@ -93,7 +89,7 @@
       padding: 4px 10px;
     }
 
-    .theme-chip {
+    .goal-chip {
       display: inline-flex;
       align-items: center;
       gap: 6px;
@@ -105,11 +101,7 @@
       border: 1px solid transparent;
     }
 
-    .chip-budget { background: #dcfce7; color: #166534; border-color: #86efac; }
-    .chip-nederlands { background: #dbeafe; color: #1d4ed8; border-color: #93c5fd; }
-    .chip-aardrijkskunde { background: #cffafe; color: #155e75; border-color: #67e8f9; }
-    .chip-geschiedenis { background: #ede9fe; color: #5b21b6; border-color: #c4b5fd; }
-    .chip-praktische-vaardigheden { background: #ffedd5; color: #9a3412; border-color: #fdba74; }
+    .goal-chip { background: #ecfeff; color: #155e75; border-color: #a5f3fc; }
 
     h2, h3, h4 { margin: 0 0 10px; }
 
@@ -255,7 +247,7 @@
 
     <div class="grid">
       <section class="panel">
-        <h2>Thema module</h2>
+        <h2>Doelenoverzicht</h2>
         <p id="uitleg"></p>
         <h3>Praktisch scenario</h3>
         <p id="scenario"></p>
@@ -265,28 +257,11 @@
           <strong>Score:</strong> <span id="scoreText">0%</span>
         </div>
 
-        <div class="links">
-          <strong>Koppeling met bestaande pagina's</strong>
-          <p><a href="thema.html">Bestaande dynamische thema-pagina</a></p>
-          <p><a href="hoofdthema6.html">Bestaand hoofdthema (Sparen)</a></p>
-        </div>
-      </section>
-
-      <section class="panel">
-        <h2>Automatische structuur</h2>
-        <ul class="summary-list">
-          <li><strong>type</strong> (kassabon, factuur, kaart, drag & drop...)</li>
-          <li><strong>vraag</strong> met duidelijke taal</li>
-          <li><strong>antwoorden</strong> die leerling invult of kiest</li>
-          <li><strong>correcte oplossing</strong> met berekening</li>
-          <li><strong>feedback</strong> direct na indienen</li>
-          <li><strong>thema</strong> automatisch gekoppeld</li>
-        </ul>
       </section>
     </div>
 
     <section class="panel">
-      <h2>Leerlinggerichte opdrachten</h2>
+      <h2>Doelen in dit thema</h2>
       <div id="assignments"></div>
     </section>
 
@@ -315,6 +290,20 @@ const themes = {
     icon: '🗺️',
     uitleg: 'Je oefent met België, Europa en de wereldkaart in praktische opdrachten.',
     scenario: 'Je plant een reisroute en duidt landen op de kaart aan.'
+  },
+  geschiedenis: {
+    title: 'Geschiedenis in context',
+    color: '#7c3aed',
+    icon: '🏛️',
+    uitleg: 'Je onderzoekt historische gebeurtenissen met kaarten, context en betekenis.',
+    scenario: 'Je legt uit wat veranderde in tijd en plaats en waarom dat belangrijk was.'
+  },
+  'praktische-vaardigheden': {
+    title: 'Praktische vaardigheden',
+    color: '#f59e0b',
+    icon: '🧰',
+    uitleg: 'Je oefent doelgericht op functionele taken uit het dagelijks leven.',
+    scenario: 'Je lost realistische situaties op met duidelijke stappen en keuzes.'
   }
 };
 
@@ -421,25 +410,14 @@ const opdrachten = [
 ];
 
 const q = new URLSearchParams(location.search).get('theme') || 'budget';
-const focus = new URLSearchParams(location.search).get('focus') || 'all';
 const theme = themes[q] || themes.budget;
-const activeOpdrachten = focus === 'all'
-  ? opdrachten
-  : opdrachten.filter(opdracht => opdracht.thema === focus);
+const activeOpdrachten = opdrachten.filter(opdracht => opdracht.thema === q);
 
 const hero = document.getElementById('hero');
 hero.innerHTML = `<div class="hero-top"><img class="mascotte" src="img/pavomascotte.png" alt="PAVO mascotte"><div><h1>${theme.icon} ${theme.title}</h1><p>Eenvoudig, visueel, stap-voor-stap en met directe feedback.</p></div></div>`;
 hero.style.borderTop = '6px solid ' + theme.color;
 document.getElementById('uitleg').textContent = theme.uitleg;
 document.getElementById('scenario').textContent = theme.scenario;
-
-const themeLabel = {
-  budget: 'Budget',
-  nederlands: 'Nederlands',
-  aardrijkskunde: 'Aardrijkskunde',
-  geschiedenis: 'Geschiedenis',
-  'praktische-vaardigheden': 'Praktische vaardigheden'
-};
 
 const stripMoney = (value) => parseFloat(String(value).replace(',', '.').replace(/[^0-9.-]/g, ''));
 const norm = (value) => String(value || '').trim().toLowerCase();
@@ -456,7 +434,7 @@ function assignmentCard(opdracht) {
     <article class="assignment" id="card-${opdracht.id}">
       <div class="goal-meta">
         <span class="goal-label">Doel ${opdracht.volgorde}</span>
-        <span class="theme-chip chip-${opdracht.thema}">📌 ${themeLabel[opdracht.thema] || opdracht.thema}</span>
+        <span class="goal-chip">🧩 ${opdracht.type}</span>
       </div>
       <h3>${opdracht.titel}</h3>
       <p>${opdracht.vraag}</p>
