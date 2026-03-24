@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thema Wiskunde - Tabellen en grafieken</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --panel: #ffffff;
+      --accent: #2563eb;
+      --accent-dark: #1d4ed8;
+      --ok: #166534;
+      --error: #b91c1c;
+      --text: #1f2937;
+      --muted: #4b5563;
+      --border: #dbe1ea;
+      --soft: #eff6ff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Segoe UI", Arial, sans-serif;
+      line-height: 1.45;
+    }
+
+    header {
+      background: linear-gradient(120deg, #3b82f6, #2563eb);
+      color: #fff;
+      padding: 1.6rem 1rem;
+      text-align: center;
+    }
+
+    main {
+      max-width: 980px;
+      margin: 1.4rem auto 2rem;
+      padding: 0 1rem;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+    }
+
+    .tip {
+      background: #fef9c3;
+      border-left: 5px solid #ca8a04;
+      padding: 0.75rem 0.9rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      color: #713f12;
+      font-weight: 600;
+    }
+
+    h2 {
+      margin-top: 0;
+      color: #1e3a8a;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0.8rem 0 0.5rem;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 0.55rem;
+      text-align: center;
+    }
+
+    th {
+      background: var(--soft);
+    }
+
+    input[type="number"],
+    input[type="text"] {
+      width: 100%;
+      padding: 0.45rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 0.98rem;
+    }
+
+    .btn {
+      border: none;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      padding: 0.55rem 0.9rem;
+      border-radius: 999px;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      margin-right: 0.4rem;
+    }
+
+    .btn:hover { background: var(--accent-dark); }
+
+    .feedback {
+      margin-top: 0.6rem;
+      font-weight: 700;
+      min-height: 1.2rem;
+    }
+
+    .feedback.ok { color: var(--ok); }
+    .feedback.error { color: var(--error); }
+
+    .question {
+      margin-bottom: 0.7rem;
+      background: #f8fafc;
+      border-radius: 10px;
+      padding: 0.7rem;
+      border: 1px solid var(--border);
+    }
+
+    .question label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    canvas {
+      max-width: 100%;
+      margin-top: 0.8rem;
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 0.3rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Thema Wiskunde: Tabellen en grafieken</h1>
+    <p>Doelgroep: leerlingen secundair onderwijs (12–16 jaar)</p>
+  </header>
+
+  <main>
+    <div class="tip">Tip: bekijk de screenshots van het werkboek goed.</div>
+
+    <section class="card">
+      <h2>Oefening 1: Tabel invullen</h2>
+      <p>Vul de tabel aan met het aantal verkochte broodjes per maand.</p>
+
+      <table>
+        <thead>
+          <tr><th>Maand</th><th>Aantal broodjes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Januari</td><td><input id="tabel-januari" type="number" min="0" /></td></tr>
+          <tr><td>Februari</td><td><input id="tabel-februari" type="number" min="0" /></td></tr>
+          <tr><td>Maart</td><td><input id="tabel-maart" type="number" min="0" /></td></tr>
+          <tr><td>April</td><td><input id="tabel-april" type="number" min="0" /></td></tr>
+        </tbody>
+      </table>
+
+      <button class="btn" id="controleerTabelBtn">Controleer antwoorden</button>
+      <p id="feedbackTabel" class="feedback" aria-live="polite"></p>
+    </section>
+
+    <section class="card">
+      <h2>Oefening 2: Grafiek maken uit tabel</h2>
+      <p>Vul de waarden in en klik op <strong>Maak grafiek</strong>. De grafiek wordt automatisch getekend.</p>
+
+      <table>
+        <thead>
+          <tr><th>Maand</th><th>Waarde</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Januari</td><td><input id="grafiek-januari" type="number" min="0" /></td></tr>
+          <tr><td>Februari</td><td><input id="grafiek-februari" type="number" min="0" /></td></tr>
+          <tr><td>Maart</td><td><input id="grafiek-maart" type="number" min="0" /></td></tr>
+          <tr><td>April</td><td><input id="grafiek-april" type="number" min="0" /></td></tr>
+        </tbody>
+      </table>
+
+      <button class="btn" id="maakGrafiekBtn">Maak grafiek</button>
+      <p id="feedbackGrafiekMaken" class="feedback" aria-live="polite"></p>
+      <canvas id="maakGrafiekCanvas" height="120"></canvas>
+    </section>
+
+    <section class="card">
+      <h2>Oefening 3: Grafiek aflezen en interpreteren</h2>
+      <p>Lees de grafiek en beantwoord de vragen. Klik daarna op <strong>Controleer antwoorden</strong>.</p>
+
+      <canvas id="afleesGrafiekCanvas" height="120"></canvas>
+
+      <div class="question">
+        <label for="antwoordMaart">Wat is de waarde in maart?</label>
+        <input id="antwoordMaart" type="number" min="0" />
+      </div>
+
+      <div class="question">
+        <label for="antwoordHoogst">Welke maand is het hoogst? (januari/februari/maart/april)</label>
+        <input id="antwoordHoogst" type="text" placeholder="Bijv. maart" />
+      </div>
+
+      <button class="btn" id="controleerAflezenBtn">Controleer antwoorden</button>
+      <p id="feedbackAflezen" class="feedback" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <script>
+    // Antwoordmodel voor oefening 1 (tabel invullen)
+    const juisteTabelWaarden = {
+      januari: 12,
+      februari: 18,
+      maart: 15,
+      april: 21
+    };
+
+    const maanden = ["Januari", "Februari", "Maart", "April"];
+    let dynamischeGrafiek = null;
+
+    // Vaste gegevens voor oefening 3 (grafiek aflezen)
+    const afleesData = [8, 14, 20, 16];
+
+    function parseGetal(inputId) {
+      const waarde = Number(document.getElementById(inputId).value);
+      return Number.isFinite(waarde) ? waarde : NaN;
+    }
+
+    function toonFeedback(elementId, bericht, isCorrect) {
+      const feedbackElement = document.getElementById(elementId);
+      feedbackElement.textContent = bericht;
+      feedbackElement.className = `feedback ${isCorrect ? "ok" : "error"}`;
+    }
+
+    document.getElementById("controleerTabelBtn").addEventListener("click", () => {
+      const ingevuld = {
+        januari: parseGetal("tabel-januari"),
+        februari: parseGetal("tabel-februari"),
+        maart: parseGetal("tabel-maart"),
+        april: parseGetal("tabel-april")
+      };
+
+      const allesIngevuld = Object.values(ingevuld).every((waarde) => !Number.isNaN(waarde));
+      if (!allesIngevuld) {
+        toonFeedback("feedbackTabel", "Vul eerst alle vakjes in.", false);
+        return;
+      }
+
+      const correct = Object.keys(juisteTabelWaarden).every((maand) => ingevuld[maand] === juisteTabelWaarden[maand]);
+      toonFeedback(
+        "feedbackTabel",
+        correct ? "Goed gedaan! Alle waarden zijn correct." : "Niet alles is correct. Kijk je tabel nog eens na.",
+        correct
+      );
+    });
+
+    document.getElementById("maakGrafiekBtn").addEventListener("click", () => {
+      const waarden = [
+        parseGetal("grafiek-januari"),
+        parseGetal("grafiek-februari"),
+        parseGetal("grafiek-maart"),
+        parseGetal("grafiek-april")
+      ];
+
+      if (waarden.some((waarde) => Number.isNaN(waarde))) {
+        toonFeedback("feedbackGrafiekMaken", "Vul eerst alle waarden in voordat je de grafiek maakt.", false);
+        return;
+      }
+
+      const canvas = document.getElementById("maakGrafiekCanvas");
+      const context = canvas.getContext("2d");
+
+      if (dynamischeGrafiek) {
+        dynamischeGrafiek.destroy();
+      }
+
+      dynamischeGrafiek = new Chart(context, {
+        type: "bar",
+        data: {
+          labels: maanden,
+          datasets: [{
+            label: "Aantal items",
+            data: waarden,
+            backgroundColor: "rgba(37, 99, 235, 0.7)",
+            borderColor: "rgba(30, 64, 175, 1)",
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: "Verkoop per maand"
+            },
+            legend: {
+              display: true
+            }
+          },
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: "Maand"
+              }
+            },
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: "Aantal"
+              }
+            }
+          }
+        }
+      });
+
+      toonFeedback("feedbackGrafiekMaken", "De grafiek is getekend. Goed bezig!", true);
+    });
+
+    function tekenAfleesGrafiek() {
+      const context = document.getElementById("afleesGrafiekCanvas").getContext("2d");
+
+      new Chart(context, {
+        type: "line",
+        data: {
+          labels: maanden,
+          datasets: [{
+            label: "Aantal leerlingen in de sportclub",
+            data: afleesData,
+            borderColor: "rgba(220, 38, 38, 1)",
+            backgroundColor: "rgba(248, 113, 113, 0.2)",
+            fill: true,
+            tension: 0.25,
+            pointRadius: 4,
+            pointBackgroundColor: "rgba(153, 27, 27, 1)"
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: "Evolutie sportclub leden"
+            }
+          },
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: "Maand"
+              }
+            },
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: "Aantal leerlingen"
+              }
+            }
+          }
+        }
+      });
+    }
+
+    document.getElementById("controleerAflezenBtn").addEventListener("click", () => {
+      const antwoordMaart = parseGetal("antwoordMaart");
+      const antwoordHoogst = document.getElementById("antwoordHoogst").value.trim().toLowerCase();
+
+      if (Number.isNaN(antwoordMaart) || !antwoordHoogst) {
+        toonFeedback("feedbackAflezen", "Beantwoord beide vragen voordat je controleert.", false);
+        return;
+      }
+
+      const maartCorrect = antwoordMaart === 20;
+      const hoogstCorrect = antwoordHoogst === "maart";
+      const allesCorrect = maartCorrect && hoogstCorrect;
+
+      toonFeedback(
+        "feedbackAflezen",
+        allesCorrect
+          ? "Top! Je leest de grafiek correct af."
+          : "Nog niet helemaal juist. Tip: kijk goed naar het hoogste punt en de waarde bij maart.",
+        allesCorrect
+      );
+    });
+
+    tekenAfleesGrafiek();
+  </script>
+</body>
+</html>
