@@ -58,11 +58,7 @@
     .hero h1 { margin: 0 0 4px; font-size: 1.6rem; }
     .hero p { margin: 0; color: var(--muted); }
 
-    .grid {
-      display: grid;
-      grid-template-columns: 1.7fr 1fr;
-      gap: 14px;
-    }
+    .grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
 
     .assignment {
       border: 1px solid var(--line);
@@ -72,7 +68,28 @@
       background: #fff;
     }
 
-    .theme-chip {
+    .goal-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .goal-label {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #0f766e;
+      background: #ccfbf1;
+      border: 1px solid #99f6e4;
+      border-radius: 999px;
+      padding: 4px 10px;
+    }
+
+    .goal-chip {
       display: inline-flex;
       align-items: center;
       gap: 6px;
@@ -84,11 +101,7 @@
       border: 1px solid transparent;
     }
 
-    .chip-budget { background: #dcfce7; color: #166534; border-color: #86efac; }
-    .chip-nederlands { background: #dbeafe; color: #1d4ed8; border-color: #93c5fd; }
-    .chip-aardrijkskunde { background: #cffafe; color: #155e75; border-color: #67e8f9; }
-    .chip-geschiedenis { background: #ede9fe; color: #5b21b6; border-color: #c4b5fd; }
-    .chip-praktische-vaardigheden { background: #ffedd5; color: #9a3412; border-color: #fdba74; }
+    .goal-chip { background: #ecfeff; color: #155e75; border-color: #a5f3fc; }
 
     h2, h3, h4 { margin: 0 0 10px; }
 
@@ -111,6 +124,16 @@
       max-height: 220px;
       object-fit: contain;
       border-radius: 8px;
+    }
+
+    .img-box-left img {
+      margin-right: auto;
+      max-width: 64%;
+    }
+
+    .img-box-right img {
+      margin-left: auto;
+      max-width: 64%;
     }
 
     .highlight {
@@ -196,10 +219,25 @@
       padding-top: 10px;
     }
 
+    .task-context {
+      margin: 10px 0;
+      padding: 10px 12px;
+      border: 1px dashed #cbd5e1;
+      border-radius: 10px;
+      background: #f8fafc;
+    }
+
+    .task-context strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
     @media (max-width: 900px) {
       .grid { grid-template-columns: 1fr; }
       .hero h1 { font-size: 1.35rem; }
       .btn, button { width: 100%; text-align: center; }
+      .img-box-left img,
+      .img-box-right img { max-width: 100%; }
     }
   </style>
 </head>
@@ -209,7 +247,7 @@
 
     <div class="grid">
       <section class="panel">
-        <h2>Thema module</h2>
+        <h2>Doelenoverzicht</h2>
         <p id="uitleg"></p>
         <h3>Praktisch scenario</h3>
         <p id="scenario"></p>
@@ -219,28 +257,11 @@
           <strong>Score:</strong> <span id="scoreText">0%</span>
         </div>
 
-        <div class="links">
-          <strong>Koppeling met bestaande pagina's</strong>
-          <p><a href="thema.html">Bestaande dynamische thema-pagina</a></p>
-          <p><a href="hoofdthema6.html">Bestaand hoofdthema (Sparen)</a></p>
-        </div>
-      </section>
-
-      <section class="panel">
-        <h2>Automatische structuur</h2>
-        <ul class="summary-list">
-          <li><strong>type</strong> (kassabon, factuur, kaart, drag & drop...)</li>
-          <li><strong>vraag</strong> met duidelijke taal</li>
-          <li><strong>antwoorden</strong> die leerling invult of kiest</li>
-          <li><strong>correcte oplossing</strong> met berekening</li>
-          <li><strong>feedback</strong> direct na indienen</li>
-          <li><strong>thema</strong> automatisch gekoppeld</li>
-        </ul>
       </section>
     </div>
 
     <section class="panel">
-      <h2>Leerlinggerichte opdrachten</h2>
+      <h2>Doelen in dit thema</h2>
       <div id="assignments"></div>
     </section>
 
@@ -269,6 +290,20 @@ const themes = {
     icon: '🗺️',
     uitleg: 'Je oefent met België, Europa en de wereldkaart in praktische opdrachten.',
     scenario: 'Je plant een reisroute en duidt landen op de kaart aan.'
+  },
+  geschiedenis: {
+    title: 'Geschiedenis in context',
+    color: '#7c3aed',
+    icon: '🏛️',
+    uitleg: 'Je onderzoekt historische gebeurtenissen met kaarten, context en betekenis.',
+    scenario: 'Je legt uit wat veranderde in tijd en plaats en waarom dat belangrijk was.'
+  },
+  'praktische-vaardigheden': {
+    title: 'Praktische vaardigheden',
+    color: '#f59e0b',
+    icon: '🧰',
+    uitleg: 'Je oefent doelgericht op functionele taken uit het dagelijks leven.',
+    scenario: 'Je lost realistische situaties op met duidelijke stappen en keuzes.'
   }
 };
 
@@ -375,11 +410,8 @@ const opdrachten = [
 ];
 
 const q = new URLSearchParams(location.search).get('theme') || 'budget';
-const focus = new URLSearchParams(location.search).get('focus') || 'all';
 const theme = themes[q] || themes.budget;
-const activeOpdrachten = focus === 'all'
-  ? opdrachten
-  : opdrachten.filter(opdracht => opdracht.thema === focus);
+const activeOpdrachten = opdrachten.filter(opdracht => opdracht.thema === q);
 
 const hero = document.getElementById('hero');
 hero.innerHTML = `<div class="hero-top"><img class="mascotte" src="img/pavomascotte.png" alt="PAVO mascotte"><div><h1>${theme.icon} ${theme.title}</h1><p>Eenvoudig, visueel, stap-voor-stap en met directe feedback.</p></div></div>`;
@@ -387,29 +419,34 @@ hero.style.borderTop = '6px solid ' + theme.color;
 document.getElementById('uitleg').textContent = theme.uitleg;
 document.getElementById('scenario').textContent = theme.scenario;
 
-const themeLabel = {
-  budget: 'Budget',
-  nederlands: 'Nederlands',
-  aardrijkskunde: 'Aardrijkskunde',
-  geschiedenis: 'Geschiedenis',
-  'praktische-vaardigheden': 'Praktische vaardigheden'
-};
-
 const stripMoney = (value) => parseFloat(String(value).replace(',', '.').replace(/[^0-9.-]/g, ''));
 const norm = (value) => String(value || '').trim().toLowerCase();
 
 function assignmentCard(opdracht) {
+  const imagePosition = opdracht.imagePosition || 'center';
+  const imageBoxClass = imagePosition === 'left'
+    ? 'img-box img-box-left'
+    : imagePosition === 'right'
+      ? 'img-box img-box-right'
+      : 'img-box';
+
   return `
     <article class="assignment" id="card-${opdracht.id}">
-      <span class="theme-chip chip-${opdracht.thema}">📌 ${themeLabel[opdracht.thema] || opdracht.thema}</span>
+      <div class="goal-meta">
+        <span class="goal-label">Doel ${opdracht.volgorde}</span>
+        <span class="goal-chip">🧩 ${opdracht.type}</span>
+      </div>
       <h3>${opdracht.titel}</h3>
       <p>${opdracht.vraag}</p>
 
-      <div class="img-box">
+      <div class="${imageBoxClass}">
         <img src="${opdracht.image}" alt="Afbeelding bij ${opdracht.titel}">
       </div>
 
-      ${renderContext(opdracht)}
+      <div class="task-context">
+        <strong>Opdrachtinformatie</strong>
+        ${renderContext(opdracht)}
+      </div>
 
       <ol class="steps">
         <li>Lees de opdracht en markeer de <span class="highlight">belangrijke info</span>.</li>
@@ -454,7 +491,7 @@ function renderContext(opdracht) {
   if (opdracht.id === 'geschiedenis-kaart') {
     return '<p>Gebruik de kaart van België en je atlas: koppel plaats + tijd + context (19e eeuw, industrialisering).</p>';
   }
-  return '';
+  return '<p>Gebruik de vraag, de afbeelding en je berekening om stap voor stap tot het juiste antwoord te komen.</p>';
 }
 
 function renderInputs(opdracht) {
@@ -687,6 +724,10 @@ function checkOpdracht(id) {
     saveProgress(id, false);
   }
 }
+
+opdrachten.forEach((opdracht, index) => {
+  opdracht.volgorde = index + 1;
+});
 
 function saveProgress(id, solved) {
   const key = 'pav_progress_' + q;
