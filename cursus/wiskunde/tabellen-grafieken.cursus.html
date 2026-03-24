@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thema Wiskunde - Tabellen en grafieken</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #e3f2fd;
+      padding: 1.2rem;
+      margin: 0;
+      color: #123;
+    }
+
+    h1 {
+      text-align: center;
+      color: #1565c0;
+      margin-bottom: 0.4rem;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #355;
+      margin-bottom: 1rem;
+    }
+
+    .question-box {
+      background: white;
+      padding: 1.2rem;
+      margin: 1rem auto;
+      border-radius: 12px;
+      max-width: 900px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .tip {
+      background: #fff7cc;
+      border-left: 5px solid #c79b00;
+      color: #7a5c00;
+      padding: 0.8rem;
+      border-radius: 8px;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+    }
+
+    .level-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 0.5rem;
+      margin-top: 0.7rem;
+    }
+
+    .chip {
+      background: #f1f8ff;
+      border: 1px solid #b7daf9;
+      border-radius: 8px;
+      padding: 0.45rem 0.6rem;
+      font-weight: 700;
+      color: #0f4f8f;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0.6rem 0;
+    }
+
+    th,
+    td {
+      border: 1px solid #cfe4f8;
+      padding: 0.52rem;
+      text-align: center;
+    }
+
+    th {
+      background: #f1f8ff;
+    }
+
+    input,
+    select {
+      width: 100%;
+      max-width: 250px;
+      padding: 0.42rem;
+      border: 1px solid #b7cde4;
+      border-radius: 6px;
+      font-size: 0.98rem;
+    }
+
+    button {
+      background: #1565c0;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 6px;
+      margin-top: 0.6rem;
+      margin-right: 0.4rem;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    button:hover {
+      background: #12539c;
+    }
+
+    .feedback {
+      margin-top: 0.65rem;
+      font-weight: bold;
+      padding: 0.7rem;
+      border-radius: 8px;
+      min-height: 1.1rem;
+    }
+
+    .success {
+      background: #c8e6c9;
+      color: #2e7d32;
+    }
+
+    .error {
+      background: #ffcdd2;
+      color: #c62828;
+    }
+
+    .helper {
+      color: #546e7a;
+      font-size: 0.95rem;
+    }
+
+    .scenario {
+      background: #f8fbff;
+      border: 1px dashed #aac9e7;
+      padding: 0.7rem;
+      border-radius: 8px;
+      margin: 0.45rem 0;
+    }
+
+    canvas {
+      width: 100%;
+      max-width: 860px;
+      background: white;
+      border: 1px solid #d9e6f2;
+      border-radius: 8px;
+      padding: 0.25rem;
+      margin-top: 0.6rem;
+    }
+
+    @media (max-width: 700px) {
+      button {
+        width: 100%;
+        margin-right: 0;
+      }
+
+      input,
+      select {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Thema Wiskunde: Tabellen en Grafiekenlab</h1>
+  <p class="subtitle">Speelbaar opgebouwd zoals de andere doelen, met differentiatie voor 12–16 jaar.</p>
+
+  <div class="question-box">
+    <div class="tip">Tip: bekijk de screenshots van het werkboek goed voor de opbouw van lijn-, staaf-, cirkel- en strookdiagrammen.</div>
+    <h2>Didactische opbouw + automatische differentiatie</h2>
+    <p class="helper">Het programma verhoogt of verlaagt automatisch het niveau op basis van je antwoorden: <strong>Basis → Verdieping → Uitdaging</strong>.</p>
+    <div class="level-strip">
+      <div class="chip">Niveau: <span id="niveau">Basis</span></div>
+      <div class="chip">Streak: <span id="streak">0</span></div>
+      <div class="chip">XP: <span id="xp">0</span></div>
+    </div>
+  </div>
+
+  <section class="question-box" id="oef1">
+    <h2>Oefening 1: Tabel invullen</h2>
+    <p>Vul de aantallen correct in en klik op <strong>Controleer antwoorden</strong>.</p>
+    <table>
+      <thead><tr><th>Maand</th><th>Aantal</th></tr></thead>
+      <tbody>
+        <tr><td>Januari</td><td><input id="tab_jan" type="number" min="0" /></td></tr>
+        <tr><td>Februari</td><td><input id="tab_feb" type="number" min="0" /></td></tr>
+        <tr><td>Maart</td><td><input id="tab_mrt" type="number" min="0" /></td></tr>
+        <tr><td>April</td><td><input id="tab_apr" type="number" min="0" /></td></tr>
+      </tbody>
+    </table>
+    <button id="checkTableBtn">Controleer antwoorden</button>
+    <div id="fbTable" class="feedback"></div>
+  </section>
+
+  <section class="question-box" id="oef2">
+    <h2>Oefening 2: Grafiek maken uit tabel</h2>
+    <p>Kies een diagramtype en laat de grafiek automatisch tekenen.</p>
+
+    <table>
+      <thead><tr><th>Categorie</th><th>Waarde</th></tr></thead>
+      <tbody>
+        <tr><td>Januari</td><td><input id="mk_jan" type="number" min="0" /></td></tr>
+        <tr><td>Februari</td><td><input id="mk_feb" type="number" min="0" /></td></tr>
+        <tr><td>Maart</td><td><input id="mk_mrt" type="number" min="0" /></td></tr>
+        <tr><td>April</td><td><input id="mk_apr" type="number" min="0" /></td></tr>
+      </tbody>
+    </table>
+
+    <label for="grafiekType"><strong>Diagramtype</strong></label>
+    <select id="grafiekType">
+      <option value="line">Lijndiagram</option>
+      <option value="bar">Staafdiagram</option>
+      <option value="pie">Cirkeldiagram</option>
+      <option value="strook">Strookdiagram (100%)</option>
+    </select>
+    <br>
+    <button id="drawBtn">Maak grafiek</button>
+    <div id="fbDraw" class="feedback"></div>
+    <canvas id="drawCanvas" height="120"></canvas>
+  </section>
+
+  <section class="question-box" id="oef3">
+    <h2>Oefening 3: Grafiek aflezen</h2>
+    <p>Lees de grafiek en geef de juiste antwoorden.</p>
+    <canvas id="readCanvas" height="120"></canvas>
+
+    <p><strong>Vraag 1:</strong> Wat is de waarde in <span id="vraagMaand">maart</span>?</p>
+    <input id="ansValue" type="number" min="0" />
+
+    <p><strong>Vraag 2:</strong> Welke maand is het hoogst?</p>
+    <input id="ansHighest" type="text" placeholder="bijv. april" />
+    <br>
+    <button id="checkReadBtn">Controleer antwoorden</button>
+    <button id="newReadBtn">Nieuwe grafiek</button>
+    <div id="fbRead" class="feedback"></div>
+  </section>
+
+  <section class="question-box" id="oef4">
+    <h2>Oefening 4: Kies het juiste diagramtype</h2>
+    <p>Voor elke situatie kies je het best passende diagram.</p>
+
+    <div class="scenario">
+      <p><strong>Situatie A:</strong> Je wil de evolutie van temperatuur over 6 maanden tonen.</p>
+      <select id="scenarioA">
+        <option value="">Kies...</option>
+        <option value="line">Lijndiagram</option>
+        <option value="bar">Staafdiagram</option>
+        <option value="pie">Cirkeldiagram</option>
+        <option value="strook">Strookdiagram</option>
+      </select>
+    </div>
+
+    <div class="scenario">
+      <p><strong>Situatie B:</strong> Je wil een verdeling van budget in percentages tonen.</p>
+      <select id="scenarioB">
+        <option value="">Kies...</option>
+        <option value="line">Lijndiagram</option>
+        <option value="bar">Staafdiagram</option>
+        <option value="pie">Cirkeldiagram</option>
+        <option value="strook">Strookdiagram</option>
+      </select>
+    </div>
+
+    <div class="scenario">
+      <p><strong>Situatie C:</strong> Je wil categorieën met aantallen vergelijken.</p>
+      <select id="scenarioC">
+        <option value="">Kies...</option>
+        <option value="line">Lijndiagram</option>
+        <option value="bar">Staafdiagram</option>
+        <option value="pie">Cirkeldiagram</option>
+        <option value="strook">Strookdiagram</option>
+      </select>
+    </div>
+
+    <button id="checkTypeBtn">Controleer antwoorden</button>
+    <div id="fbType" class="feedback"></div>
+  </section>
+
+  <section class="question-box" id="oef5">
+    <h2>Oefening 5: Differentiatie-challenge</h2>
+    <p class="helper">Je krijgt automatisch vragen op jouw niveau. Bij goede antwoorden stijgt je niveau.</p>
+
+    <p><strong id="challengeTitle">Challenge vraag</strong></p>
+    <div id="challengeVraag" class="scenario"></div>
+    <input id="challengeAnswer" type="text" placeholder="Typ je antwoord" />
+    <br>
+    <button id="checkChallengeBtn">Controleer challenge</button>
+    <button id="nextChallengeBtn">Volgende challenge</button>
+    <div id="fbChallenge" class="feedback"></div>
+  </section>
+
+  <script>
+    // Globale leerstatus voor automatische differentiatie
+    const leerStatus = { niveau: 'basis', streak: 0, xp: 0 };
+
+    let drawChart = null;
+    let readChart = null;
+    let readVraag = null;
+    let challenge = null;
+
+    function updateStatus() {
+      const labels = { basis: 'Basis', verdieping: 'Verdieping', uitdaging: 'Uitdaging' };
+      document.getElementById('niveau').textContent = labels[leerStatus.niveau];
+      document.getElementById('streak').textContent = String(leerStatus.streak);
+      document.getElementById('xp').textContent = String(leerStatus.xp);
+    }
+
+    function updateDifferentiatie(isCorrect) {
+      if (isCorrect) {
+        leerStatus.streak += 1;
+        leerStatus.xp += 3;
+      } else {
+        leerStatus.streak = 0;
+        leerStatus.xp = Math.max(0, leerStatus.xp - 1);
+      }
+
+      if (leerStatus.xp >= 30 && leerStatus.streak >= 2) {
+        leerStatus.niveau = 'uitdaging';
+      } else if (leerStatus.xp >= 12) {
+        leerStatus.niveau = 'verdieping';
+      } else {
+        leerStatus.niveau = 'basis';
+      }
+
+      updateStatus();
+    }
+
+    function setFeedback(id, message, ok) {
+      const el = document.getElementById(id);
+      el.textContent = message;
+      el.className = `feedback ${ok ? 'success' : 'error'}`;
+    }
+
+    // Oefening 1 - tabel
+    const tabelCorrect = { jan: 10, feb: 14, mrt: 18, apr: 16 };
+
+    document.getElementById('checkTableBtn').addEventListener('click', () => {
+      const jan = Number(document.getElementById('tab_jan').value);
+      const feb = Number(document.getElementById('tab_feb').value);
+      const mrt = Number(document.getElementById('tab_mrt').value);
+      const apr = Number(document.getElementById('tab_apr').value);
+
+      const allesIngevuld = [jan, feb, mrt, apr].every((v) => Number.isFinite(v));
+      if (!allesIngevuld) {
+        setFeedback('fbTable', 'Vul eerst alle vakjes in.', false);
+        return;
+      }
+
+      const correct = jan === tabelCorrect.jan && feb === tabelCorrect.feb && mrt === tabelCorrect.mrt && apr === tabelCorrect.apr;
+      setFeedback('fbTable', correct ? '✅ Correct ingevuld!' : '❌ Nog niet juist, probeer opnieuw.', correct);
+      updateDifferentiatie(correct);
+    });
+
+    // Hulpfunctie kleuren
+    function kleuren(n) {
+      const base = ['#1565c0', '#26a69a', '#f9a825', '#ef5350', '#8e24aa', '#5c6bc0'];
+      return Array.from({ length: n }, (_, i) => base[i % base.length]);
+    }
+
+    // Oefening 2 - grafiek maken
+    document.getElementById('drawBtn').addEventListener('click', () => {
+      const labels = ['Januari', 'Februari', 'Maart', 'April'];
+      const values = [
+        Number(document.getElementById('mk_jan').value),
+        Number(document.getElementById('mk_feb').value),
+        Number(document.getElementById('mk_mrt').value),
+        Number(document.getElementById('mk_apr').value)
+      ];
+      const type = document.getElementById('grafiekType').value;
+
+      if (values.some((v) => !Number.isFinite(v))) {
+        setFeedback('fbDraw', 'Vul eerst alle waarden in.', false);
+        return;
+      }
+
+      const ctx = document.getElementById('drawCanvas').getContext('2d');
+      if (drawChart) drawChart.destroy();
+
+      let config;
+
+      if (type === 'pie') {
+        config = {
+          type: 'pie',
+          data: {
+            labels,
+            datasets: [{ data: values, backgroundColor: kleuren(labels.length) }]
+          },
+          options: { plugins: { title: { display: true, text: 'Cirkeldiagram: verdeling' } } }
+        };
+      } else if (type === 'line') {
+        config = {
+          type: 'line',
+          data: {
+            labels,
+            datasets: [{ label: 'Waarde', data: values, borderColor: '#1565c0', backgroundColor: 'rgba(21,101,192,0.2)', fill: true, tension: 0.2 }]
+          },
+          options: {
+            plugins: { title: { display: true, text: 'Lijndiagram: evolutie' } },
+            scales: {
+              x: { title: { display: true, text: 'Maand' } },
+              y: { beginAtZero: true, title: { display: true, text: 'Waarde' } }
+            }
+          }
+        };
+      } else if (type === 'strook') {
+        const totaal = values.reduce((a, b) => a + b, 0);
+        const percentages = totaal === 0 ? [0, 0, 0, 0] : values.map((v) => Number(((v / totaal) * 100).toFixed(1)));
+        config = {
+          type: 'bar',
+          data: {
+            labels: ['100% strook'],
+            datasets: labels.map((label, i) => ({ label, data: [percentages[i]], backgroundColor: kleuren(labels.length)[i] }))
+          },
+          options: {
+            indexAxis: 'y',
+            plugins: { title: { display: true, text: 'Strookdiagram (100%)' } },
+            scales: {
+              x: { stacked: true, max: 100, title: { display: true, text: 'Percentage (%)' } },
+              y: { stacked: true, title: { display: true, text: 'Strook' } }
+            }
+          }
+        };
+      } else {
+        config = {
+          type: 'bar',
+          data: {
+            labels,
+            datasets: [{ label: 'Waarde', data: values, backgroundColor: 'rgba(21,101,192,0.75)' }]
+          },
+          options: {
+            plugins: { title: { display: true, text: 'Staafdiagram: vergelijking' } },
+            scales: {
+              x: { title: { display: true, text: 'Maand' } },
+              y: { beginAtZero: true, title: { display: true, text: 'Waarde' } }
+            }
+          }
+        };
+      }
+
+      drawChart = new Chart(ctx, config);
+      setFeedback('fbDraw', '✅ Grafiek gemaakt!', true);
+      updateDifferentiatie(true);
+    });
+
+    // Oefening 3 - grafiek aflezen
+    function maakReadVraag() {
+      if (leerStatus.niveau === 'uitdaging') {
+        return { type: 'line', labels: ['jan', 'feb', 'mrt', 'apr', 'mei', 'jun'], data: [8, 12, 10, 15, 17, 14], ask: 'mei' };
+      }
+      if (leerStatus.niveau === 'verdieping') {
+        return { type: 'bar', labels: ['jan', 'feb', 'mrt', 'apr', 'mei'], data: [7, 9, 13, 11, 10], ask: 'mrt' };
+      }
+      return { type: 'bar', labels: ['jan', 'feb', 'mrt', 'apr'], data: [6, 8, 12, 9], ask: 'mrt' };
+    }
+
+    function renderReadChart() {
+      readVraag = maakReadVraag();
+      document.getElementById('vraagMaand').textContent = readVraag.ask;
+      const ctx = document.getElementById('readCanvas').getContext('2d');
+      if (readChart) readChart.destroy();
+
+      readChart = new Chart(ctx, {
+        type: readVraag.type,
+        data: {
+          labels: readVraag.labels,
+          datasets: [{ label: 'Aantal', data: readVraag.data, borderColor: '#1565c0', backgroundColor: 'rgba(21,101,192,0.5)', fill: readVraag.type === 'line', tension: 0.25 }]
+        },
+        options: {
+          plugins: { title: { display: true, text: `Afleesopdracht (${leerStatus.niveau})` } },
+          scales: {
+            x: { title: { display: true, text: 'Maand' } },
+            y: { beginAtZero: true, title: { display: true, text: 'Waarde' } }
+          }
+        }
+      });
+    }
+
+    document.getElementById('checkReadBtn').addEventListener('click', () => {
+      const value = Number(document.getElementById('ansValue').value);
+      const highest = document.getElementById('ansHighest').value.trim().toLowerCase();
+
+      if (!Number.isFinite(value) || !highest) {
+        setFeedback('fbRead', 'Vul beide antwoorden in.', false);
+        return;
+      }
+
+      const idx = readVraag.labels.indexOf(readVraag.ask);
+      const juisteWaarde = readVraag.data[idx];
+      const max = Math.max(...readVraag.data);
+      const hoogsteMaand = readVraag.labels[readVraag.data.indexOf(max)];
+
+      const correct = value === juisteWaarde && highest === hoogsteMaand;
+      setFeedback('fbRead', correct ? '✅ Correct afgelezen!' : `❌ Niet juist. Hoogste maand is ${hoogsteMaand}.`, correct);
+      updateDifferentiatie(correct);
+      renderReadChart();
+    });
+
+    document.getElementById('newReadBtn').addEventListener('click', () => {
+      renderReadChart();
+      setFeedback('fbRead', 'Nieuwe afleesvraag geladen.', true);
+    });
+
+    // Oefening 4 - diagramtype kiezen
+    document.getElementById('checkTypeBtn').addEventListener('click', () => {
+      const a = document.getElementById('scenarioA').value;
+      const b = document.getElementById('scenarioB').value;
+      const c = document.getElementById('scenarioC').value;
+
+      if (!a || !b || !c) {
+        setFeedback('fbType', 'Kies voor elke situatie een diagramtype.', false);
+        return;
+      }
+
+      const correct = a === 'line' && b === 'pie' && c === 'bar';
+      setFeedback('fbType', correct ? '✅ Sterk! Je kiest de juiste diagramtypes.' : '❌ Herbekijk waarvoor elk diagramtype gebruikt wordt.', correct);
+      updateDifferentiatie(correct);
+    });
+
+    // Oefening 5 - differentiatie challenge
+    const challengePools = {
+      basis: [
+        { q: 'Welke grafiek toont evolutie door de tijd het best?', a: 'lijndiagram' },
+        { q: 'Welke grafiek toont delen van een geheel?', a: 'cirkeldiagram' }
+      ],
+      verdieping: [
+        { q: 'In een strookdiagram staat de totale strook gelijk aan ... ?', a: '100%' },
+        { q: 'Welk diagram gebruik je voor vergelijking tussen categorieën?', a: 'staafdiagram' }
+      ],
+      uitdaging: [
+        { q: 'Je wil evolutie én vergelijking in één grafiek. Beste keuze?', a: 'lijndiagram' },
+        { q: 'Welke as toont meestal categorieën in een klassiek staafdiagram?', a: 'x-as' }
+      ]
+    };
+
+    function pickChallenge() {
+      const pool = challengePools[leerStatus.niveau];
+      const i = Math.floor(Math.random() * pool.length);
+      challenge = pool[i];
+      document.getElementById('challengeTitle').textContent = `Challenge (${leerStatus.niveau})`;
+      document.getElementById('challengeVraag').textContent = challenge.q;
+      document.getElementById('challengeAnswer').value = '';
+    }
+
+    document.getElementById('checkChallengeBtn').addEventListener('click', () => {
+      const ans = document.getElementById('challengeAnswer').value.trim().toLowerCase();
+      if (!ans) {
+        setFeedback('fbChallenge', 'Typ eerst een antwoord.', false);
+        return;
+      }
+      const correct = ans === challenge.a;
+      setFeedback('fbChallenge', correct ? '✅ Correct challenge-antwoord!' : `❌ Niet juist. Correct antwoord: ${challenge.a}`, correct);
+      updateDifferentiatie(correct);
+      pickChallenge();
+    });
+
+    document.getElementById('nextChallengeBtn').addEventListener('click', () => {
+      pickChallenge();
+      setFeedback('fbChallenge', 'Nieuwe challenge geladen.', true);
+    });
+
+    updateStatus();
+    renderReadChart();
+    pickChallenge();
+  </script>
+</body>
+</html>
