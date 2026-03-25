@@ -3,256 +3,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Oefenthema – Werkwoordstijden</title>
-
-  <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
-
-  <style>
-    :root {
-      --bg: #f8fafc;
-      --panel: #ffffff;
-      --accent: #0f766e;
-      --accent-dark: #0b5f58;
-      --text: #1f2937;
-      --muted: #4b5563;
-      --border-soft: #dbe5ef;
-      --soft-bg: #f0fdfa;
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      font-family: 'Nunito', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-    }
-
-    header {
-      background: #14b8a6;
-      color: white;
-      padding: 1.8rem 1rem;
-      text-align: center;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 2.1rem;
-    }
-
-    header p {
-      margin: 0.6rem 0 0;
-      opacity: 0.95;
-    }
-
-    main {
-      width: min(1100px, 95%);
-      margin: 1.6rem auto 2.5rem;
-    }
-
-    .panel {
-      background: var(--panel);
-      border-radius: 14px;
-      padding: 1.4rem;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
-    }
-
-    .task {
-      margin-top: 1.4rem;
-      border-top: 1px solid var(--border-soft);
-      padding-top: 1.4rem;
-    }
-
-    .panel h2 {
-      margin-top: 0;
-    }
-
-    .info-box {
-      background: var(--soft-bg);
-      border-left: 5px solid var(--accent);
-      border-radius: 12px;
-      padding: 1rem 1.2rem;
-      margin: 1.4rem 0;
-      color: var(--muted);
-      line-height: 1.45;
-    }
-
-    /* CURSUS */
-    .cursus-box {
-      margin: 2rem 0;
-      padding: 1.4rem;
-      background: var(--soft-bg);
-      border-radius: 14px;
-      border: 1px solid #bce7e1;
-    }
-
-    .cursus-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.8rem;
-      margin-top: 1rem;
-    }
-
-    .cursus-btn {
-      padding: 0.5rem 1.2rem;
-      border-radius: 999px;
-      font-weight: 700;
-      text-decoration: none;
-      color: white;
-      background: var(--accent);
-    }
-
-    .cursus-btn:hover {
-      background: var(--accent-dark);
-    }
-
-    /* SUBTHEMA */
-    .subtheme-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1rem;
-      margin-top: 1.2rem;
-    }
-
-    .subtheme-card {
-      background: var(--soft-bg);
-      border-radius: 14px;
-      border: 2px solid #bce7e1;
-      padding: 1.2rem;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .subtheme-card h3 {
-      margin: 0 0 0.4rem;
-    }
-
-    .subtheme-card p {
-      margin: 0 0 0.8rem;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    .subtheme-card a {
-      margin-top: auto;
-      align-self: flex-start;
-      text-decoration: none;
-      font-weight: 700;
-      color: white;
-      background: var(--accent);
-      padding: 0.45rem 0.9rem;
-      border-radius: 999px;
-    }
-
-    .subtheme-card a:hover {
-      background: var(--accent-dark);
-    }
-
-    .subtheme-card.combined {
-      border-style: dashed;
-    }
-
-    .btn-back {
-      display: inline-block;
-      margin-top: 2rem;
-      text-decoration: none;
-      background: var(--accent);
-      color: white;
-      padding: 0.5rem 0.9rem;
-      border-radius: 999px;
-      font-weight: 700;
-    }
-
-    .btn-back:hover {
-      background: var(--accent-dark);
-    }
-  </style>
+  <title>PAV Thema</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="theme-page.css" />
 </head>
-
-<body>
-
-<header>
-  <h1>Oefenthema – Werkwoordstijden</h1>
-  <p>Leren schrijven en vertellen in het heden en het verleden</p>
-</header>
-
-<main>
-  <section class="panel">
-
-    <h2>Focus van dit thema</h2>
-    <p>
-      In dit thema leer je werken met werkwoordstijden.
-      Je ontdekt wanneer je spreekt over wat nu gebeurt
-      en wanneer je vertelt over wat al gebeurd is.
-    </p>
-
-    <section class="cursus-box">
-      <h2>Cursus – Werkwoordstijden</h2>
-      <p>
-        Wil je de uitleg nog eens rustig bekijken?
-        Hier vind je de volledige cursus van dit thema.
-      </p>
-
-      <div class="cursus-buttons">
-        <a class="cursus-btn"
-           href="./cursus/thema3/thema3-cursus.html">
-          Cursus bekijken
-        </a>
-      </div>
-    </section>
-
-    <div class="info-box">
-      <strong>Kapstok</strong><br>
-      Stel jezelf altijd deze vraag:
-      <ul>
-        <li>Gebeurt het nu? Dan gebruik je de tegenwoordige tijd.</li>
-        <li>Is het al gebeurd? Dan gebruik je de verleden tijd.</li>
-      </ul>
-    </div>
-
-    <h2>Subthema’s</h2>
-
-    <div class="subtheme-grid">
-      <div class="subtheme-card">
-        <h3>Thema 3.1 – Tegenwoordige tijd</h3>
-        <p>Je leert hoe je zinnen maakt over wat nu gebeurt.</p>
-        <a href="thema3_1.html">Start</a>
-      </div>
-
-      <div class="subtheme-card">
-        <h3>Thema 3.2 – Verleden tijd</h3>
-        <p>Je leert vertellen over wat vroeger gebeurde.</p>
-        <a href="thema3_2.html">Start</a>
-      </div>
-    </div>
-
-    <div class="task">
-      <h2>Alles samen oefenen</h2>
-
-      <div class="info-box">
-        Wil je eerst nog apart oefenen?
-        Ga dan terug naar de subthema’s hierboven.
-        Klaar om alles samen te oefenen?
-        Start dan hieronder.
-      </div>
-
-      <div class="subtheme-grid">
-        <div class="subtheme-card combined">
-          <h3>Werkwoordstijden – Alles samen</h3>
-          <p>
-            Oefen tegenwoordige tijd, verleden tijd
-            en de dt-regel door elkaar.
-          </p>
-          <a href="thema3_all_unit1.html">Start gecombineerde oefening</a>
+<body data-theme-id="oefenthema1">
+  <div class="theme-shell">
+    <main class="theme-main">
+      <section class="theme-header">
+        <h1 class="theme-title" id="themeTitle">Thema</h1>
+        <div class="progress-meta">
+          <span>Voortgang</span>
+          <strong id="progressPercent">0%</strong>
         </div>
-      </div>
-    </div>
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      </section>
 
-    <a href="index.html" class="btn-back">Terug naar thema-overzicht</a>
+      <section>
+        <h2>Metro leerlijn</h2>
+        <div class="metro-line" id="metroLine"></div>
+      </section>
 
-  </section>
-</main>
+      <section>
+        <h2>Doelen overzicht</h2>
+        <div class="goals-overview" id="goalsOverview"></div>
+      </section>
 
+      <section class="assignment-view" id="assignmentView"></section>
+    </main>
+
+    <aside class="theme-side">
+      <h2 class="ovur-title">OVUR per doel</h2>
+      <div class="ovur-grid" id="ovurGrid"></div>
+    </aside>
+  </div>
+
+  <script src="theme-page.js"></script>
 </body>
 </html>
