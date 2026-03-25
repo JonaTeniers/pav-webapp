@@ -3,94 +3,178 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thema 1 – Doel 6: Atlasopdracht met werkblad</title>
+  <title>Atlasoefeningen – Gecombineerd</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+
   <style>
-    body { font-family: 'Segoe UI', sans-serif; background: #eef3fb; margin: 0; padding: 2rem; color: #1f2937; }
-    .page { max-width: 900px; margin: 0 auto; }
-    h1 { text-align: center; color: #1a237e; }
-    .card { background: #fff; border-radius: 14px; padding: 1.25rem; margin-bottom: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,.08); }
-    .instruction { background: #e8eaf6; border-left: 5px solid #1a237e; padding: .9rem; border-radius: 8px; margin-bottom: .9rem; }
-    label { display: block; margin: .45rem 0; }
-    input[type="text"], textarea { width: 100%; padding: .6rem; border: 1px solid #cbd5e1; border-radius: 8px; margin-top: .35rem; }
-    button { background: #1a237e; color: #fff; border: none; border-radius: 8px; padding: .65rem 1rem; cursor: pointer; margin-top: .8rem; }
-    .feedback { margin-top: .6rem; font-weight: 700; }
-    .success { color: #2e7d32; }
-    .error { color: #b91c1c; }
-    .nav { display: flex; justify-content: center; gap: .7rem; margin-top: 1.5rem; }
-    .nav a { text-decoration: none; }
+    body { margin:0; font-family:'Nunito',sans-serif; background:#eef3fb; color:#1f2937; }
+    header { background:#1a237e; color:#fff; text-align:center; padding:1.2rem; }
+    main { width:min(960px,95%); margin:1.2rem auto; }
+    .card { background:#fff; border-radius:14px; padding:1.2rem; margin-bottom:1rem; box-shadow:0 6px 16px rgba(0,0,0,.08); }
+    label { display:block; margin:.5rem 0; }
+    button { background:#1a237e; color:#fff; border:none; border-radius:8px; padding:.6rem 1rem; cursor:pointer; }
+    .feedback { margin-top:.6rem; font-weight:700; }
+    .success { color:#2e7d32; }
+    .error { color:#b91c1c; }
+    .hidden { display:none; }
+    input, textarea, select { width:100%; padding:.6rem; border-radius:8px; border:1px solid #cbd5e1; }
   </style>
 </head>
+
 <body>
-  <div class="page">
-    <h1>Thema 1 – Doel 6: Atlasopdracht met werkblad</h1>
 
-    <div class="card">
-      <div class="instruction">
-        Gebruik je atlas en werkblad. Zoek de juiste kaart, lees de legende en noteer je antwoorden op het werkblad.
-      </div>
-      <p><strong>Oefening 1:</strong> Welke kaart gebruik je om hoogteverschillen en reliëf te bestuderen?</p>
-      <label><input type="radio" name="q1" value="politiek"> Politieke kaart</label>
-      <label><input type="radio" name="q1" value="fysisch"> Fysische kaart</label>
-      <label><input type="radio" name="q1" value="klimaat"> Klimaatkaart</label>
-      <button onclick="checkQ1()">Controleer oefening 1</button>
-      <div id="fb1" class="feedback"></div>
-    </div>
+<header>
+  <h1>Atlasoefeningen</h1>
+  <p>Werken met kaartvaardigheden</p>
+</header>
 
-    <div class="card">
-      <p><strong>Oefening 2:</strong> Schrijf de titel van de atlaskaart die je koos op je werkblad en noteer hieronder een voorbeeld van een kaartteken uit de legende.</p>
-      <input id="q2" type="text" placeholder="Bijv. driehoek = berg" />
-      <button onclick="checkQ2()">Controleer oefening 2</button>
-      <div id="fb2" class="feedback"></div>
-    </div>
+<main>
 
-    <div class="card">
-      <p><strong>Oefening 3:</strong> In welke richting ligt Frankrijk ten opzichte van België?</p>
-      <label><input type="radio" name="q3" value="noord"> Noord</label>
-      <label><input type="radio" name="q3" value="zuid"> Zuid</label>
-      <label><input type="radio" name="q3" value="oost"> Oost</label>
-      <button onclick="checkQ3()">Controleer oefening 3</button>
-      <div id="fb3" class="feedback"></div>
-    </div>
+<!-- DEEL 1: BASISVAARDIGHEDEN -->
+<div class="card">
+  <h2>Deel 1: Basisvaardigheden</h2>
 
-    <div class="card">
-      <p><strong>Oefening 4:</strong> Reflectie: hoe hielp de atlas jou om het werkblad in te vullen?</p>
-      <textarea id="q4" rows="4" placeholder="Schrijf 2 à 3 zinnen."></textarea>
-      <button onclick="checkQ4()">Controleer oefening 4</button>
-      <div id="fb4" class="feedback"></div>
-    </div>
+  <p><strong>1. Welke kaart gebruik je voor reliëf?</strong></p>
+  <label><input type="radio" name="q1" value="politiek"> Politieke kaart</label>
+  <label><input type="radio" name="q1" value="fysisch"> Fysische kaart</label>
+  <label><input type="radio" name="q1" value="klimaat"> Klimaatkaart</label>
+  <button onclick="checkQ1()">Controleer</button>
+  <div id="fb1" class="feedback"></div>
 
-    <div class="nav">
-      <a href="thema1unit5.html"><button>← Vorig doel</button></a>
-      <a href="hoofdthema1.html"><button>Terug naar thema</button></a>
-    </div>
-  </div>
+  <p><strong>2. Geef een voorbeeld van een kaartteken</strong></p>
+  <input id="q2" type="text">
+  <button onclick="checkQ2()">Controleer</button>
+  <div id="fb2" class="feedback"></div>
 
-  <script>
-    function setFeedback(id, ok, good, bad) {
-      const el = document.getElementById(id);
-      el.textContent = ok ? good : bad;
-      el.className = `feedback ${ok ? 'success' : 'error'}`;
-    }
+  <p><strong>3. In welke richting ligt Frankrijk t.o.v. België?</strong></p>
+  <label><input type="radio" name="q3" value="noord"> Noord</label>
+  <label><input type="radio" name="q3" value="zuid"> Zuid</label>
+  <label><input type="radio" name="q3" value="oost"> Oost</label>
+  <button onclick="checkQ3()">Controleer</button>
+  <div id="fb3" class="feedback"></div>
+</div>
 
-    function checkQ1() {
-      const answer = document.querySelector('input[name="q1"]:checked')?.value;
-      setFeedback('fb1', answer === 'fysisch', 'Juist! Een fysische kaart toont reliëf en hoogte.', 'Nog niet juist. Gebruik de kaart voor reliëf en hoogte.');
-    }
+<!-- DEEL 2: QUIZ -->
+<div class="card" id="quizBox">
+  <h2 id="qCount"></h2>
+  <p id="questionText"></p>
+  <form id="answerForm"></form>
+  <button onclick="checkAnswer()">Controleer</button>
+  <div id="feedback" class="feedback"></div>
+  <button id="nextBtn" class="hidden" onclick="nextQuestion()">Volgende →</button>
+</div>
 
-    function checkQ2() {
-      const value = document.getElementById('q2').value.trim();
-      setFeedback('fb2', value.length >= 4, 'Goed! Je noteerde een bruikbaar kaartteken.', 'Vul een concreet kaartteken uit de legende in.');
-    }
+<!-- REFLECTIE -->
+<div class="card hidden" id="reflectieBox">
+  <h2>Reflectie</h2>
 
-    function checkQ3() {
-      const answer = document.querySelector('input[name="q3"]:checked')?.value;
-      setFeedback('fb3', answer === 'zuid', 'Correct! Frankrijk ligt ten zuiden van België.', 'Kijk nog eens op de atlas naar de ligging van België en Frankrijk.');
-    }
+  <p><strong>Bastogne:</strong> Ligt dit in Belgische Luxemburg of Groothertogdom?</p>
+  <textarea id="vraag4"></textarea>
 
-    function checkQ4() {
-      const value = document.getElementById('q4').value.trim();
-      setFeedback('fb4', value.split(/\s+/).filter(Boolean).length >= 8, 'Mooi! Je reflectie is duidelijk.', 'Schrijf minstens 2 korte zinnen over hoe de atlas hielp.');
-    }
-  </script>
+  <p><strong>Wat is een reliëfkaart?</strong></p>
+  <textarea id="vraag5"></textarea>
+
+  <button onclick="bewaarReflectie()">Bewaar</button>
+  <p id="reflectieFeedback"></p>
+</div>
+
+<!-- EINDE -->
+<div class="card hidden" id="endScreen">
+  <h2>Klaar!</h2>
+  <p>Score: <span id="xpScore"></span> XP</p>
+</div>
+
+</main>
+
+<script>
+// ================= BASISVRAGEN =================
+
+function setFeedback(id, ok, good, bad) {
+  const el = document.getElementById(id);
+  el.textContent = ok ? good : bad;
+  el.className = `feedback ${ok ? 'success' : 'error'}`;
+}
+
+function checkQ1() {
+  const val = document.querySelector('input[name="q1"]:checked')?.value;
+  setFeedback('fb1', val === 'fysisch', 'Juist!', 'Niet juist.');
+}
+
+function checkQ2() {
+  const val = document.getElementById('q2').value.trim();
+  setFeedback('fb2', val.length > 3, 'Goed!', 'Geef een duidelijk voorbeeld.');
+}
+
+function checkQ3() {
+  const val = document.querySelector('input[name="q3"]:checked')?.value;
+  setFeedback('fb3', val === 'zuid', 'Correct!', 'Kijk opnieuw op de kaart.');
+}
+
+// ================= QUIZ =================
+
+const questions = [
+  { question: "Buurlanden van België?", accepted: ["nederland","frankrijk","duitsland","luxemburg"] },
+  { question: "Hoofdstad van Noorwegen?", accepted: ["oslo"] },
+  { question: "Hoofdstad van Polen?", accepted: ["warschau"] },
+  { question: "Welke landen doorkruist opa Marcel naar Zweden?", accepted: ["duitsland","denemarken"] },
+  { question: "Noem 2 steden tussen Tienen en Oostende", accepted: ["brussel","gent","brugge"] }
+];
+
+let currentQuestion = 0;
+let score = 0;
+
+function loadQuestion() {
+  const q = questions[currentQuestion];
+  document.getElementById('qCount').innerText = `Vraag ${currentQuestion+1}/${questions.length}`;
+  document.getElementById('questionText').innerText = q.question;
+  document.getElementById('answerForm').innerHTML = `<input id="answer">`;
+  document.getElementById('feedback').innerText = '';
+  document.getElementById('nextBtn').classList.add('hidden');
+}
+
+function normalize(v){ return v.toLowerCase().trim(); }
+
+function checkAnswer(){
+  const input = document.getElementById('answer').value;
+  if(!input) return;
+
+  const correct = questions[currentQuestion].accepted.some(a =>
+    normalize(input).includes(a)
+  );
+
+  const fb = document.getElementById('feedback');
+
+  if(correct){
+    score += 3;
+    fb.innerText = "✅ Juist!";
+    fb.className = "feedback success";
+  } else {
+    fb.innerText = "❌ Probeer opnieuw";
+    fb.className = "feedback error";
+  }
+
+  document.getElementById('nextBtn').classList.remove('hidden');
+}
+
+function nextQuestion(){
+  currentQuestion++;
+  if(currentQuestion < questions.length){
+    loadQuestion();
+  } else {
+    document.getElementById('quizBox').classList.add('hidden');
+    document.getElementById('reflectieBox').classList.remove('hidden');
+    document.getElementById('endScreen').classList.remove('hidden');
+    document.getElementById('xpScore').innerText = score;
+  }
+}
+
+function bewaarReflectie(){
+  document.getElementById('reflectieFeedback').innerText = "✅ Opgeslagen!";
+}
+
+window.onload = loadQuestion;
+</script>
+
 </body>
 </html>
