@@ -590,7 +590,50 @@
     });
   }
 
-  function findThemeBackLink() {
+  
+  function inferThemeFileFromFilename(filename) {
+    const map = [
+      [/^thema1unit\d+\.html$/i, 'hoofdthema1.html'],
+      [/^thema2unit\d+\.html$/i, 'hoofdthema2.html'],
+      [/^thema9unit\d+\.html$/i, 'hoofdthema3.html'],
+      [/^monsterunit\d+\.html$/i, 'hoofdthema4.html'],
+      [/^veiligonderweg_unit\d+\.html$/i, 'hoofdthema5.html'],
+      [/^thema11unit\d+\.html$/i, 'hoofdthema6.html'],
+      [/^mechanica8doel\d+\.html$/i, 'hoofdthema8.html'],
+      [/^thema3_1(?:_unit\d+)?\.html$/i, 'oefenthema1.html'],
+      [/^thema3_2(?:_unit\d+)?\.html$/i, 'oefenthema1.html'],
+      [/^thema3_all_unit\d+\.html$/i, 'oefenthema1.html'],
+      [/^thema4unit\d+\.html$/i, 'oefenthema2.html'],
+      [/^thema5unit\d+\.html$/i, 'oefenthema3.html'],
+      [/^thema6unit\d+\.html$/i, 'oefenthema4.html'],
+      [/^thema7unit\d+\.html$/i, 'oefenthema5.html'],
+      [/^thema8unit\d+\.html$/i, 'oefenthema6.html']
+    ];
+
+    const hit = map.find(([pattern]) => pattern.test(filename));
+    return hit ? hit[1] : null;
+  }
+
+  function syncExistingThemeLinks(themeFile) {
+    if (!themeFile) return;
+
+    document.querySelectorAll('a[href]').forEach((link) => {
+      const txt = (link.textContent || '').toLowerCase();
+      const childBtn = link.querySelector('button');
+      const btnTxt = (childBtn?.textContent || '').toLowerCase();
+      if (txt.includes('terug naar thema') || btnTxt.includes('terug naar thema') || link.classList.contains('back-link')) {
+        link.setAttribute('href', themeFile);
+      }
+    });
+
+    if (typeof window.goTheme === 'function') {
+      window.goTheme = () => {
+        window.location.href = themeFile;
+      };
+    }
+  }
+function findThemeBackLink() {
+    const filename = window.location.pathname.split('/').pop() || '';
     const links = Array.from(document.querySelectorAll('a[href]'));
     const withLabel = links.find((link) => /terug naar thema/i.test(link.textContent || ''));
     if (withLabel) return withLabel.getAttribute('href');
@@ -598,7 +641,7 @@
     const backLink = document.querySelector('.back-link[href]');
     if (backLink) return backLink.getAttribute('href');
 
-    return null;
+    return inferThemeFileFromFilename(filename);
   }
 
   function inferNextUnitFile(filename) {
@@ -675,6 +718,7 @@
     const context = parseUnitContext();
     if (!context) return;
 
+    syncExistingThemeLinks(context.themeFile);
     navContainer.innerHTML = '';
 
     // TERUG NAAR THEMA
@@ -699,6 +743,7 @@
   function setupAllInOneUnitMode() {
     applyUnitThemeRefresh();
     harmonizeGoalLabels();
+    syncExistingThemeLinks(inferThemeFileFromFilename(window.location.pathname.split('/').pop() || ''));
     const canPlay = disableUnitUntilLogin();
     if (!canPlay) return;
     buildAllQuestionsView();
