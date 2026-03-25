@@ -103,7 +103,7 @@ body {
 }
 
 .stop {
-  min-width: 190px;
+  min-width: 118px;
   border: 0;
   background: transparent;
   text-align: left;
@@ -144,10 +144,10 @@ body {
 .stop.development .node { border-style: dashed; }
 
 .stop-content { margin-top: 0.55rem; padding-right: 0.5rem; }
-.stop-title { font-weight: 700; font-size: 0.9rem; line-height: 1.35; }
+.stop-title { font-weight: 700; font-size: 0.8rem; line-height: 1.35; }
 .stop-labels { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.35rem; }
 .stop-label {
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   background: #edf3f9;
   border: 1px solid #d3e0ec;
   border-radius: 999px;

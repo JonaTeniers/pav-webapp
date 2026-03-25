@@ -29,7 +29,14 @@ const THEME_CONFIG = {
       { id: 'thema1unit2', title: 'Doel 2 · Kaart van Europa lezen', href: 'thema1unit2.html', themes: ['landschappen', 'belgische_geschiedenis'] },
       { id: 'thema1unit3', title: 'Doel 3 · Landschappen vergelijken', href: 'thema1unit3.html', themes: ['landschappen'] },
       { id: 'thema1unit4', title: 'Doel 4 · Mens en landschap', href: 'thema1unit4.html', themes: ['landschappen'] },
-      { id: 'thema1unit5', title: 'Doel 5 · Toepassen in context', href: 'thema1unit5.html', themes: ['landschappen'] }
+      { id: 'thema1unit5', title: 'Doel 5 · Toepassen in context', href: 'thema1unit5.html', themes: ['landschappen'] },
+      { id: 'landschap_d6', title: 'Doel 6 · Verdieping landschap', development: true, themes: ['landschappen'] },
+      { id: 'landschap_d7', title: 'Doel 7 · Landschap en klimaat', development: true, themes: ['landschappen'] },
+      { id: 'landschap_d8', title: 'Doel 8 · Kaartvaardigheid extra', development: true, themes: ['landschappen'] },
+      { id: 'landschap_d9', title: 'Doel 9 · Infrastructuur analyseren', development: true, themes: ['landschappen'] },
+      { id: 'landschap_d10', title: 'Doel 10 · Menselijke impact', development: true, themes: ['landschappen'] },
+      { id: 'landschap_d11', title: 'Doel 11 · Oefenreeks', development: true, themes: ['landschappen'] },
+      { id: 'landschap_d12', title: 'Doel 12 · Eindreflectie', development: true, themes: ['landschappen'] }
     ]
   },
   hoofdthema2: {
@@ -43,12 +50,17 @@ const THEME_CONFIG = {
   hoofdthema3: {
     title: 'Hoofdthema 3 – Belgische geschiedenis',
     key: 'belgische_geschiedenis',
-    goals: Array.from({ length: 8 }, (_, i) => ({
-      id: `thema9unit${i + 1}`,
-      title: `Doel ${i + 1} · Belgische geschiedenis`,
-      href: `thema9unit${i + 1}.html`,
-      themes: i === 7 ? ['belgische_geschiedenis', 'landschappen'] : ['belgische_geschiedenis']
-    }))
+    goals: [
+      { id: 'thema9unit1', title: 'Napoleon en gelijke regels', href: 'thema9unit1.html', themes: ['belgische_geschiedenis'] },
+      { id: 'thema9unit2', title: 'Vrijheden en grondrechten', href: 'thema9unit2.html', themes: ['belgische_geschiedenis'] },
+      { id: 'thema9unit3', title: 'Eerste treinrit en modernisering', href: 'thema9unit3.html', themes: ['belgische_geschiedenis'] },
+      { id: 'thema9unit4', title: 'Emilie Claeys en sociale rechten', href: 'thema9unit4.html', themes: ['belgische_geschiedenis'] },
+      { id: 'thema9unit5', title: 'Dossinkazerne: herinneren en begrijpen', href: 'thema9unit5.html', themes: ['belgische_geschiedenis'] },
+      { id: 'thema9unit6', title: 'De euro en Europa vandaag', href: 'thema9unit6.html', themes: ['belgische_geschiedenis'] },
+      { id: 'thema9unit7', title: 'Brabantse Omwenteling en Boerenkrijg', href: 'thema9unit7.html', themes: ['belgische_geschiedenis'] },
+      { id: 'thema9unit8', title: 'Belgische Revolutie: oorzaken en gevolgen', href: 'thema9unit8.html', themes: ['belgische_geschiedenis', 'landschappen'] },
+      { id: 'belg_d9', title: 'Doel 9 · Synthese Belgische geschiedenis', development: true, themes: ['belgische_geschiedenis'] }
+    ]
   },
   hoofdthema4: {
     title: 'Hoofdthema 4 – Monsterlijke groene groei',
@@ -111,12 +123,20 @@ const THEME_CONFIG = {
   oefenthema2: {
     title: 'Oefenthema 2 – Wiskunde',
     key: 'wiskunde',
-    goals: [1,2,3,4,5,6,7,8,9,11,12,10].map((n, i) => ({
-      id: `thema4unit${n}`,
-      title: `Doel ${i + 1} · Wiskunde`,
-      href: `thema4unit${n}.html`,
-      themes: n === 12 ? ['wiskunde', 'sparen'] : ['wiskunde']
-    }))
+    goals: [
+      { id: 'thema4unit1', title: 'Basis omtrek', href: 'thema4unit1.html', themes: ['wiskunde'] },
+      { id: 'thema4unit2', title: 'Basis oppervlakte', href: 'thema4unit2.html', themes: ['wiskunde'] },
+      { id: 'thema4unit3', title: 'Driehoeken', href: 'thema4unit3.html', themes: ['wiskunde'] },
+      { id: 'thema4unit4', title: 'Samengestelde figuren', href: 'thema4unit4.html', themes: ['wiskunde'] },
+      { id: 'thema4unit5', title: 'Cirkels', href: 'thema4unit5.html', themes: ['wiskunde'] },
+      { id: 'thema4unit6', title: 'Omtrek en oppervlakte in context', href: 'thema4unit6.html', themes: ['wiskunde'] },
+      { id: 'thema4unit7', title: 'Omtrek van polygonen', href: 'thema4unit7.html', themes: ['wiskunde'] },
+      { id: 'thema4unit8', title: 'Oppervlakte met rooster', href: 'thema4unit8.html', themes: ['wiskunde'] },
+      { id: 'thema4unit9', title: 'Vermenigvuldigingsstrategieën', href: 'thema4unit9.html', themes: ['wiskunde'] },
+      { id: 'thema4unit11', title: 'Breuken: basis en bewerkingen', href: 'thema4unit11.html', themes: ['wiskunde'] },
+      { id: 'thema4unit12', title: 'Procenten in context', href: 'thema4unit12.html', themes: ['wiskunde', 'sparen'] },
+      { id: 'thema4unit10', title: 'Toets en herhaling', href: 'thema4unit10.html', themes: ['wiskunde'] }
+    ]
   },
   oefenthema3: {
     title: 'Oefenthema 3 – Fictie en non-fictie',
@@ -163,12 +183,25 @@ function softColor(hex) {
   return `color-mix(in srgb, ${hex} 16%, white)`;
 }
 
+function getProgressStorageKey() {
+  try {
+    const raw = localStorage.getItem('pavo_leerling_profiel');
+    const profile = raw ? JSON.parse(raw) : null;
+    if (profile?.voornaam && profile?.klas) {
+      return `pavProgressV2_${String(profile.voornaam).toLowerCase()}_${String(profile.klas).toLowerCase()}`;
+    }
+  } catch (error) {
+    console.warn('Kon leerlingprofiel niet lezen voor voortgangssleutel.', error);
+  }
+  return 'pavProgressV2';
+}
+
 function getStoredProgress() {
-  return JSON.parse(localStorage.getItem('pavProgressV2') || '{}');
+  return JSON.parse(localStorage.getItem(getProgressStorageKey()) || '{}');
 }
 
 function setStoredProgress(progress) {
-  localStorage.setItem('pavProgressV2', JSON.stringify(progress));
+  localStorage.setItem(getProgressStorageKey(), JSON.stringify(progress));
 }
 
 function getGoalStatus(goals) {
