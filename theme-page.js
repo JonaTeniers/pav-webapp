@@ -20,6 +20,24 @@ const SHARED_OVUR = [
   'Evalueer wat goed ging en wat je volgende stap is.'
 ];
 
+
+const THEME_META = {
+  hoofdthema1: { infoTitle: 'Oriëntatie: Landschappen', infoText: 'Werk met kaarten, vergelijk foto\'s en bouw van observatie naar analyse. Focus op mens en omgeving.', courseHref: 'cursus/hoofdthema1/hoofdthema1.cursus.html' },
+  hoofdthema2: { infoTitle: 'Oriëntatie: Levende natuur', infoText: 'Bestudeer levende systemen stap voor stap: waarnemen, verklaren en toepassen in context.', courseHref: 'cursus/hoofdthema2/hoofdthema2.cursus.html' },
+  hoofdthema3: { infoTitle: 'Tijdlijn België', infoText: 'Plaats gebeurtenissen op de tijdlijn: Napoleon → grondrechten → modernisering → revolutie.', courseHref: 'cursus/hoofdthema3/hoofdthema3.cursus.html' },
+  hoofdthema4: { infoTitle: 'Groene groei in context', infoText: 'Koppel theorie over planten en duurzaamheid aan concrete situaties uit het dagelijks leven.', courseHref: 'cursus/thema4/thema4.cursus.html' },
+  hoofdthema5: { infoTitle: 'Veilig onderweg', infoText: 'Werk van observatie naar gedrag: herkennen, inschatten, kiezen en veilig handelen.', courseHref: '#' },
+  hoofdthema6: { infoTitle: 'Sparen en budgetteren', infoText: 'Begrijp inkomsten/uitgaven en oefen met realistische budgetkeuzes voor leerlingen.', courseHref: '#' },
+  hoofdthema7: { infoTitle: 'Veiligheid en preventie', infoText: 'Kies in noodsituaties een correcte aanpak en communiceer duidelijk.', courseHref: '#' },
+  hoofdthema8: { infoTitle: 'Mechanica en lassen', infoText: 'Volg een technische leerlijn: meten, monteren, veilig werken en afwerken.', courseHref: 'cursus/hoofdthema8/hoofdthema8.cursus.html' },
+  oefenthema1: { infoTitle: 'Werkwoordstijden', infoText: 'Gebruik de juiste tijdsvorm in context en reflecteer op taalkeuzes.', courseHref: 'cursus/thema3/thema3_cursus.html' },
+  oefenthema2: { infoTitle: 'Wiskunde oefenlijn', infoText: 'Werk van basis omtrek naar breuken en procenten. Houd je eigen voortgang bij.', courseHref: 'cursus/wiskunde/breuken-procenten.cursus.html' },
+  oefenthema3: { infoTitle: 'Fictie en non-fictie', infoText: 'Herken tekstdoel, bronsoort en betrouwbaarheid van informatie.', courseHref: 'cursus/thema5/thema5.cursus.html' },
+  oefenthema4: { infoTitle: 'Schatten', infoText: 'Schat slim, controleer je aanpak en vergelijk met exacte uitkomsten.', courseHref: 'cursus/wiskunde/tabellen-grafieken.cursus.html' },
+  oefenthema5: { infoTitle: 'Communiceren', infoText: 'Werk leerlinggericht: duidelijk formuleren, feedback verwerken en opnieuw proberen.', courseHref: '#' },
+  oefenthema6: { infoTitle: 'Actualiteit', infoText: 'Lees actuele info kritisch en onderbouw je mening met betrouwbare bronnen.', courseHref: '#' }
+};
+
 const THEME_CONFIG = {
   hoofdthema1: {
     title: 'Hoofdthema 1 – Landschappen',
@@ -223,6 +241,21 @@ function renderThemePage(themeId) {
   document.documentElement.style.setProperty('--theme-soft', softColor(color));
   document.getElementById('themeTitle').textContent = config.title;
   document.title = `${config.title} | PAV`;
+
+  const meta = THEME_META[themeId] || {};
+  const infoTitleEl = document.getElementById('themeInfoTitle');
+  const infoTextEl = document.getElementById('themeInfoText');
+  const courseButtonEl = document.getElementById('courseButton');
+  if (infoTitleEl) infoTitleEl.textContent = meta.infoTitle || 'Thema-info';
+  if (infoTextEl) infoTextEl.textContent = meta.infoText || 'Hier vind je context en tips voor dit thema.';
+  if (courseButtonEl) {
+    if (meta.courseHref && meta.courseHref !== '#') {
+      courseButtonEl.href = meta.courseHref;
+      courseButtonEl.style.display = 'inline-block';
+    } else {
+      courseButtonEl.style.display = 'none';
+    }
+  }
 
   const metro = document.getElementById('metroLine');
   const overview = document.getElementById('goalsOverview');
