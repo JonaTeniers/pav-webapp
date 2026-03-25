@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thema – Atlasoefeningen</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
+  <style>
+    body { margin:0; font-family:'Nunito',sans-serif; background:#f5f3ff; color:#1f2937; }
+    header { background:#2563eb; color:#fff; text-align:center; padding:1.2rem; }
+    main { width:min(960px,95%); margin:1.2rem auto 2rem; }
+    .card { background:#fff; border-radius:14px; box-shadow:0 6px 16px rgba(0,0,0,.08); padding:1.1rem; margin-bottom:1rem; }
+    .question-box { background:#fff; border-radius:14px; box-shadow:0 6px 16px rgba(0,0,0,.08); padding:1.1rem; }
+    label { display:block; margin:.5rem 0; }
+    button { border:none; background:#1d4ed8; color:#fff; border-radius:8px; padding:.6rem 1rem; font-weight:700; cursor:pointer; }
+    button:hover { background:#1e40af; }
+    .feedback { margin-top:.75rem; font-weight:700; }
+    .success { color:#047857; }
+    .error { color:#b91c1c; }
+    .hidden { display:none; }
+    .text-input, textarea { width:100%; border:1px solid #93c5fd; border-radius:8px; padding:.55rem; }
+    textarea { min-height:100px; margin-top:.5rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Atlasoefeningen</h1>
+    <p>Werken met kaartkennis</p>
+  </header>
+
+  <main>
+    <section class="question-box" id="quizBox">
+      <h2 id="qCount"></h2>
+      <p id="questionText"></p>
+      <form id="answerForm"></form>
+      <button type="button" onclick="checkAnswer()">Controleer</button>
+      <div class="feedback" id="feedback"></div>
+      <button id="nextBtn" class="hidden" onclick="nextQuestion()">Volgende →</button>
+    </section>
+
+    <section class="question-box hidden" id="reflectieBox">
+      <h2>✍️ Opdracht 4 & 5</h2>
+
+      <p><strong>Opdracht 4:</strong> Ligt Bastogne in de Belgische provincie Luxemburg of in het Groothertogdom Luxemburg?</p>
+      <textarea id="vraag4"></textarea>
+
+      <p><strong>Opdracht 5:</strong> Wat is een reliëfkaart?</p>
+      <textarea id="vraag5"></textarea>
+
+      <button onclick="bewaarReflectie()">Bewaar</button>
+      <p id="reflectieFeedback"></p>
+    </section>
+
+    <section class="question-box hidden" id="endScreen">
+      <h2>Klaar!</h2>
+      <p>Score: <span id="xpScore"></span> XP</p>
+    </section>
+  </main>
+
+<script>
+const questions = [
+  {
+    type: "open",
+    question: "Wat zijn de buurlanden van Zweden?",
+    accepted: ["noorwegen", "finland"]
+  },
+  {
+    type: "open",
+    question: "Wat zijn de buurlanden van België?",
+    accepted: ["nederland", "frankrijk", "duitsland", "luxemburg"]
+  },
+  {
+    type: "open",
+    question: "Wat is de hoofdstad van Noorwegen?",
+    accepted: ["oslo"]
+  },
+  {
+    type: "open",
+    question: "Wat is de hoofdstad van Polen?",
+    accepted: ["warschau"]
+  },
+  {
+    type: "open",
+    question: "Welke landen rijdt opa Marcel door van België naar Zweden (via Denemarken)?",
+    accepted: ["duitsland", "denemarken"]
+  },
+  {
+    type: "open",
+    question: "Van Tienen naar Oostende met de trein: noem minstens 2 steden onderweg.",
+    accepted: ["brussel", "gent", "brugge"]
+  }
+];
+
+let currentQuestion = 0;
+let score = 0;
+
+function loadQuestion() {
+  const q = questions[currentQuestion];
+  document.getElementById('qCount').innerText = `Vraag ${currentQuestion + 1} van ${questions.length}`;
+  document.getElementById('questionText').innerText = q.question;
+  document.getElementById('answerForm').innerHTML =
+    `<input class="text-input" type="text" id="answer">`;
+  document.getElementById('feedback').innerText = '';
+  document.getElementById('nextBtn').classList.add('hidden');
+}
+
+function normalize(v) {
+  return v.toLowerCase().trim();
+}
+
+function checkAnswer() {
+  const input = document.getElementById('answer').value;
+  if (!input) return;
+
+  const correct = questions[currentQuestion].accepted.some(a =>
+    normalize(input).includes(a)
+  );
+
+  const feedback = document.getElementById('feedback');
+
+  if (correct) {
+    score += 3;
+    feedback.innerText = "✅ Juist!";
+    feedback.className = "feedback success";
+  } else {
+    feedback.innerText = "❌ Probeer opnieuw (gebruik atlas)";
+    feedback.className = "feedback error";
+  }
+
+  document.getElementById('nextBtn').classList.remove('hidden');
+}
+
+function nextQuestion() {
+  currentQuestion++;
+  if (currentQuestion < questions.length) {
+    loadQuestion();
+  } else {
+    document.getElementById('quizBox').classList.add('hidden');
+    document.getElementById('reflectieBox').classList.remove('hidden');
+    document.getElementById('endScreen').classList.remove('hidden');
+    document.getElementById('xpScore').innerText = score;
+  }
+}
+
+function bewaarReflectie() {
+  document.getElementById('reflectieFeedback').innerText = "✅ Opgeslagen!";
+}
+
+window.onload = loadQuestion;
+</script>
+
+</body>
+</html>
