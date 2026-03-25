@@ -16,7 +16,7 @@
 .theme-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
 .thema-card{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
 .thema-card img{width:100%;height:120px;object-fit:cover;display:block}.thema-card .body{padding:10px}
-.thema-card h4{margin:0 0 6px}.thema-card a{display:inline-block;background:#1d4ed8;color:#fff;text-decoration:none;padding:8px 10px;border-radius:8px;font-weight:700}
+.thema-card h4{margin:0 0 6px}.thema-card a{display:inline-block;background:#1d4ed8;color:#fff;text-decoration:none;padding:8px 10px;border-radius:8px;font-weight:700}.card-progress{margin-top:8px}.card-progress-track{height:7px;background:#e2e8f0;border-radius:999px;overflow:hidden}.card-progress-fill{height:100%;width:0;background:#22c55e}.card-progress-text{font-size:12px;color:#64748b;margin-top:4px}
 .bottom-nav{position:fixed;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(5,1fr);gap:8px;background:rgba(255,255,255,.97);border-top:1px solid var(--line);padding:10px}
 .bottom-nav a{background:#3f5f73;color:#fff;text-decoration:none;text-align:center;padding:10px 6px;border-radius:10px;font-size:12px;font-weight:700}
 </style>
@@ -67,6 +67,57 @@
   <a href="index.html">Home</a><a href="thema.html">Thema's</a><a href="login.html">Mijn voortgang</a><a href="login.html">Resultaten</a><a href="portfolio.html">Profiel</a>
 </nav>
 
+
+
+<script>
+(function renderHomeThemeProgress(){
+  const GOAL_IDS = {
+    'hoofdthema1.html': ['thema1unit1','thema1unit2','thema1unit3','thema1unit4','thema1unit5','landschap_d6','landschap_d7','landschap_d8','landschap_d9','landschap_d10','landschap_d11','landschap_d12'],
+    'hoofdthema2.html': ['thema2unit1','thema2unit2'],
+    'hoofdthema3.html': ['thema9unit1','thema9unit2','thema9unit3','thema9unit4','thema9unit5','thema9unit6','thema9unit7','thema9unit8','belg_d9'],
+    'hoofdthema4.html': ['monsterunit1','monsterunit2','monsterunit3_alt'],
+    'hoofdthema5.html': ['veiligonderweg_unit1','veiligonderweg_unit2','veiligonderweg_unit3','veiligonderweg_unit4','veiligonderweg_unit5','veiligonderweg_unit6','veiligonderweg_unit7'],
+    'hoofdthema6.html': ['thema11unit1','thema11_overzicht','factuur_begrijpen_shared'],
+    'oefenthema1.html': ['thema3_1','thema3_2','thema3_all_unit1'],
+    'oefenthema2.html': ['thema4unit1','thema4unit2','thema4unit3','thema4unit4','thema4unit5','thema4unit6','thema4unit7','thema4unit8','thema4unit9','thema4unit11','thema4unit12','thema4unit10'],
+    'oefenthema3.html': ['thema5unit1','thema5unit2','thema5unit3'],
+    'oefenthema4.html': ['thema6unit1','thema6unit2','thema6unit3'],
+    'oefenthema5.html': ['thema7unit1','thema7unit2','thema7unit3'],
+    'oefenthema8.html': ['mechanica8doel1','mechanica8doel2','mechanica8doel3','mechanica8doel4','mechanica8doel5','mechanica8doel6','mechanica8doel7','mechanica8doel8']
+  };
+
+  function getProgressStorageKey(){
+    try {
+      const raw = localStorage.getItem('pavo_leerling_profiel');
+      const profile = raw ? JSON.parse(raw) : null;
+      if (profile?.voornaam && profile?.klas) {
+        return `pavProgressV2_${String(profile.voornaam).toLowerCase()}_${String(profile.klas).toLowerCase()}`;
+      }
+    } catch (error) {
+      console.warn('Kon leerlingprofiel niet lezen.', error);
+    }
+    return 'pavProgressV2';
+  }
+
+  const progress = JSON.parse(localStorage.getItem(getProgressStorageKey()) || '{}');
+
+  document.querySelectorAll('.thema-card').forEach((card) => {
+    const link = card.querySelector('a[href]');
+    if (!link) return;
+    const href = link.getAttribute('href');
+    const goalIds = GOAL_IDS[href];
+    if (!goalIds || !goalIds.length) return;
+
+    const completed = goalIds.filter((id) => progress[id]).length;
+    const percent = Math.round((completed / goalIds.length) * 100);
+
+    const wrap = document.createElement('div');
+    wrap.className = 'card-progress';
+    wrap.innerHTML = `<div class="card-progress-track"><div class="card-progress-fill" style="width:${percent}%"></div></div><div class="card-progress-text">${completed}/${goalIds.length} doelen voltooid (${percent}%)</div>`;
+    link.insertAdjacentElement('afterend', wrap);
+  });
+})();
+</script>
 
 <script>
 (function showLoggedInStudentWelcome(){
