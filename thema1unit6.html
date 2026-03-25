@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thema 1 – Doel 6: Atlasopdracht met werkblad</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background: #eef3fb; margin: 0; padding: 2rem; color: #1f2937; }
+    .page { max-width: 900px; margin: 0 auto; }
+    h1 { text-align: center; color: #1a237e; }
+    .card { background: #fff; border-radius: 14px; padding: 1.25rem; margin-bottom: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,.08); }
+    .instruction { background: #e8eaf6; border-left: 5px solid #1a237e; padding: .9rem; border-radius: 8px; margin-bottom: .9rem; }
+    label { display: block; margin: .45rem 0; }
+    input[type="text"], textarea { width: 100%; padding: .6rem; border: 1px solid #cbd5e1; border-radius: 8px; margin-top: .35rem; }
+    button { background: #1a237e; color: #fff; border: none; border-radius: 8px; padding: .65rem 1rem; cursor: pointer; margin-top: .8rem; }
+    .feedback { margin-top: .6rem; font-weight: 700; }
+    .success { color: #2e7d32; }
+    .error { color: #b91c1c; }
+    .nav { display: flex; justify-content: center; gap: .7rem; margin-top: 1.5rem; }
+    .nav a { text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <h1>Thema 1 – Doel 6: Atlasopdracht met werkblad</h1>
+
+    <div class="card">
+      <div class="instruction">
+        Gebruik je atlas en werkblad. Zoek de juiste kaart, lees de legende en noteer je antwoorden op het werkblad.
+      </div>
+      <p><strong>Oefening 1:</strong> Welke kaart gebruik je om hoogteverschillen en reliëf te bestuderen?</p>
+      <label><input type="radio" name="q1" value="politiek"> Politieke kaart</label>
+      <label><input type="radio" name="q1" value="fysisch"> Fysische kaart</label>
+      <label><input type="radio" name="q1" value="klimaat"> Klimaatkaart</label>
+      <button onclick="checkQ1()">Controleer oefening 1</button>
+      <div id="fb1" class="feedback"></div>
+    </div>
+
+    <div class="card">
+      <p><strong>Oefening 2:</strong> Schrijf de titel van de atlaskaart die je koos op je werkblad en noteer hieronder een voorbeeld van een kaartteken uit de legende.</p>
+      <input id="q2" type="text" placeholder="Bijv. driehoek = berg" />
+      <button onclick="checkQ2()">Controleer oefening 2</button>
+      <div id="fb2" class="feedback"></div>
+    </div>
+
+    <div class="card">
+      <p><strong>Oefening 3:</strong> In welke richting ligt Frankrijk ten opzichte van België?</p>
+      <label><input type="radio" name="q3" value="noord"> Noord</label>
+      <label><input type="radio" name="q3" value="zuid"> Zuid</label>
+      <label><input type="radio" name="q3" value="oost"> Oost</label>
+      <button onclick="checkQ3()">Controleer oefening 3</button>
+      <div id="fb3" class="feedback"></div>
+    </div>
+
+    <div class="card">
+      <p><strong>Oefening 4:</strong> Reflectie: hoe hielp de atlas jou om het werkblad in te vullen?</p>
+      <textarea id="q4" rows="4" placeholder="Schrijf 2 à 3 zinnen."></textarea>
+      <button onclick="checkQ4()">Controleer oefening 4</button>
+      <div id="fb4" class="feedback"></div>
+    </div>
+
+
+
+    <div class="card">
+      <h2>Remediëring – extra inoefenen</h2>
+      <p>Maak deze oefeningen als je nog moeilijkheden hebt met atlaslezen en kaartlegendes.</p>
+      <p><strong>Remediëring 1:</strong> Welke kaart gebruik je vooral om landen en grenzen te zien?</p>
+      <label><input type="radio" name="r1" value="politiek"> Politieke kaart</label>
+      <label><input type="radio" name="r1" value="fysisch"> Fysische kaart</label>
+      <button onclick="checkR1()">Controleer remediëring 1</button>
+      <div id="fbr1" class="feedback"></div>
+
+      <p style="margin-top:1rem;"><strong>Remediëring 2:</strong> Noteer een stap die je altijd doet vóór je info opzoekt in de atlas.</p>
+      <input id="r2" type="text" placeholder="Bijv. eerst de juiste kaart kiezen" />
+      <button onclick="checkR2()">Controleer remediëring 2</button>
+      <div id="fbr2" class="feedback"></div>
+    </div>
+
+    <div class="card">
+      <h2>Verdieping – extra uitdaging</h2>
+      <p>Maak deze oefeningen als je klaar bent voor een moeilijkere toepassing onder hetzelfde onderwerp.</p>
+      <p><strong>Verdieping 1:</strong> Je vergelijkt reliëf en bevolkingsspreiding. Welke twee kaartsoorten combineer je best?</p>
+      <label><input type="radio" name="v1" value="politiek_klimaat"> Politieke kaart + klimaatkaart</label>
+      <label><input type="radio" name="v1" value="fysisch_bevolking"> Fysische kaart + bevolkingskaart</label>
+      <label><input type="radio" name="v1" value="wegen_bodem"> Wegenkaart + bodemkaart</label>
+      <button onclick="checkV1()">Controleer verdieping 1</button>
+      <div id="fbv1" class="feedback"></div>
+
+      <p style="margin-top:1rem;"><strong>Verdieping 2:</strong> Leg in 2 à 3 zinnen uit hoe de legende je helpt om betrouwbare antwoorden op je werkblad te geven.</p>
+      <textarea id="v2" rows="4" placeholder="Gebruik woorden zoals symbool, schaal, richting, hoogte."></textarea>
+      <button onclick="checkV2()">Controleer verdieping 2</button>
+      <div id="fbv2" class="feedback"></div>
+    </div>
+
+    <div class="nav">
+      <a href="thema1unit5.html"><button>← Vorig doel</button></a>
+      <a href="hoofdthema1.html"><button>← Terug naar thema</button></a>
+      <a href="hoofdthema1.html"><button>→ Volgend doel</button></a>
+    </div>
+  </div>
+
+  <script>
+    function setFeedback(id, ok, good, bad) {
+      const el = document.getElementById(id);
+      el.textContent = ok ? good : bad;
+      el.className = `feedback ${ok ? 'success' : 'error'}`;
+    }
+
+    function checkQ1() {
+      const answer = document.querySelector('input[name="q1"]:checked')?.value;
+      setFeedback('fb1', answer === 'fysisch', 'Juist! Een fysische kaart toont reliëf en hoogte.', 'Nog niet juist. Gebruik de kaart voor reliëf en hoogte.');
+    }
+
+    function checkQ2() {
+      const value = document.getElementById('q2').value.trim();
+      setFeedback('fb2', value.length >= 4, 'Goed! Je noteerde een bruikbaar kaartteken.', 'Vul een concreet kaartteken uit de legende in.');
+    }
+
+    function checkQ3() {
+      const answer = document.querySelector('input[name="q3"]:checked')?.value;
+      setFeedback('fb3', answer === 'zuid', 'Correct! Frankrijk ligt ten zuiden van België.', 'Kijk nog eens op de atlas naar de ligging van België en Frankrijk.');
+    }
+
+    function checkQ4() {
+      const value = document.getElementById('q4').value.trim();
+      setFeedback('fb4', value.split(/\s+/).filter(Boolean).length >= 8, 'Mooi! Je reflectie is duidelijk.', 'Schrijf minstens 2 korte zinnen over hoe de atlas hielp.');
+    }
+
+    function checkR1() {
+      const answer = document.querySelector('input[name="r1"]:checked')?.value;
+      setFeedback('fbr1', answer === 'politiek', 'Juist! Een politieke kaart toont landen en grenzen.', 'Nog niet juist. Denk aan grenzen en landen.');
+    }
+
+    function checkR2() {
+      const value = document.getElementById('r2').value.trim();
+      setFeedback('fbr2', value.length >= 5, 'Goed! Deze stap helpt je nauwkeurig werken.', 'Schrijf een duidelijke voorbereidende stap.');
+    }
+
+    function checkV1() {
+      const answer = document.querySelector('input[name="v1"]:checked')?.value;
+      setFeedback('fbv1', answer === 'fysisch_bevolking', 'Correct! Zo koppel je reliëf aan waar mensen wonen.', 'Kies de combinatie die reliëf én bevolkingsspreiding toont.');
+    }
+
+    function checkV2() {
+      const value = document.getElementById('v2').value.trim();
+      setFeedback('fbv2', value.split(/\s+/).filter(Boolean).length >= 12, 'Sterk uitgelegd! Je koppelt atlasinformatie aan betrouwbare antwoorden.', 'Schrijf nog iets uitgebreider (minstens 2 zinnen).');
+    }
+  </script>
+</body>
+</html>

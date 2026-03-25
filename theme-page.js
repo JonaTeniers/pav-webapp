@@ -48,7 +48,7 @@ const THEME_CONFIG = {
       { id: 'thema1unit3', title: 'Doel 3 · Landschappen vergelijken', href: 'thema1unit3.html', themes: ['landschappen'] },
       { id: 'thema1unit4', title: 'Doel 4 · Mens en landschap', href: 'thema1unit4.html', themes: ['landschappen'] },
       { id: 'thema1unit5', title: 'Doel 5 · Toepassen in context', href: 'thema1unit5.html', themes: ['landschappen'] },
-      { id: 'landschap_d6', title: 'Doel 6 · Verdieping landschap', development: true, themes: ['landschappen'] },
+      { id: 'landschap_d6', title: 'Doel 6 · Atlasopdracht met werkblad', href: 'thema1unit6.html', themes: ['landschappen'], ovur: ['Lees het werkblad en markeer welke plaatsen of landschapselementen je moet opzoeken.', 'Neem je atlas, kies de juiste kaart (fysisch/politiek) en noteer de kaartlegende die je nodig hebt.', 'Zoek de gevraagde info in de atlas en vul de oefeningen op het werkblad stap voor stap in.', 'Controleer of elke oefening volledig is ingevuld en verbeter waar nodig met de atlas als bron.'] },
       { id: 'landschap_d7', title: 'Doel 7 · Landschap en klimaat', development: true, themes: ['landschappen'] },
       { id: 'landschap_d8', title: 'Doel 8 · Kaartvaardigheid extra', development: true, themes: ['landschappen'] },
       { id: 'landschap_d9', title: 'Doel 9 · Infrastructuur analyseren', development: true, themes: ['landschappen'] },
