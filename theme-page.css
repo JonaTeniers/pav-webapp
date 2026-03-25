@@ -44,6 +44,27 @@ body {
   padding: 1rem;
 }
 
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.home-btn {
+  text-decoration: none;
+  font-weight: 700;
+  color: #fff;
+  background: color-mix(in srgb, var(--theme-color) 88%, black);
+  border-radius: 999px;
+  padding: 0.45rem 0.85rem;
+  box-shadow: 0 6px 14px rgba(15, 23, 42, 0.18);
+}
+
+.home-btn:hover { filter: brightness(1.05); }
+
 .theme-title {
   margin: 0 0 0.6rem;
   color: var(--theme-color);
@@ -119,6 +140,8 @@ body {
 .stop.completed .node { border-color: var(--completed); background: var(--completed); }
 .stop.completed .connector { background: color-mix(in srgb, var(--completed) 66%, white); }
 .stop.locked { cursor: not-allowed; opacity: 0.72; }
+.stop.development { opacity: 0.86; }
+.stop.development .node { border-style: dashed; }
 
 .stop-content { margin-top: 0.55rem; padding-right: 0.5rem; }
 .stop-title { font-weight: 700; font-size: 0.9rem; line-height: 1.35; }
@@ -147,6 +170,7 @@ body {
 
 .goal-card strong { display: block; }
 .goal-card span { font-size: 0.88rem; color: var(--muted); }
+.goal-card .status-dev { color: #b45309; font-weight: 700; }
 
 .goal-action,
 .complete-btn {

@@ -43,16 +43,12 @@ const THEME_CONFIG = {
   hoofdthema3: {
     title: 'Hoofdthema 3 – Belgische geschiedenis',
     key: 'belgische_geschiedenis',
-    goals: [
-      { id: 'thema9unit1', title: 'Doel 1 · Napoleon en gelijke regels', href: 'thema9unit1.html', themes: ['belgische_geschiedenis'] },
-      { id: 'thema9unit2', title: 'Doel 2 · Vrijheden en grondrechten', href: 'thema9unit2.html', themes: ['belgische_geschiedenis'] },
-      { id: 'thema9unit3', title: 'Doel 3 · Eerste treinrit en modernisering', href: 'thema9unit3.html', themes: ['belgische_geschiedenis'] },
-      { id: 'thema9unit4', title: 'Doel 4 · Emilie Claeys en sociale rechten', href: 'thema9unit4.html', themes: ['belgische_geschiedenis'] },
-      { id: 'thema9unit5', title: 'Doel 5 · Dossinkazerne in context', href: 'thema9unit5.html', themes: ['belgische_geschiedenis'] },
-      { id: 'thema9unit6', title: 'Doel 6 · Euro en Europa vandaag', href: 'thema9unit6.html', themes: ['belgische_geschiedenis'] },
-      { id: 'thema9unit7', title: 'Doel 7 · Brabantse Omwenteling', href: 'thema9unit7.html', themes: ['belgische_geschiedenis'] },
-      { id: 'thema9unit8', title: 'Doel 8 · Belgische Revolutie', href: 'thema9unit8.html', themes: ['belgische_geschiedenis', 'landschappen'] }
-    ]
+    goals: Array.from({ length: 8 }, (_, i) => ({
+      id: `thema9unit${i + 1}`,
+      title: `Doel ${i + 1} · Belgische geschiedenis`,
+      href: `thema9unit${i + 1}.html`,
+      themes: i === 7 ? ['belgische_geschiedenis', 'landschappen'] : ['belgische_geschiedenis']
+    }))
   },
   hoofdthema4: {
     title: 'Hoofdthema 4 – Monsterlijke groene groei',
@@ -60,7 +56,7 @@ const THEME_CONFIG = {
     goals: [
       { id: 'monsterunit1', title: 'Doel 1 · Wat hebben planten nodig?', href: 'monsterunit1.html', themes: ['monsterlijke_groene_groei'] },
       { id: 'monsterunit2', title: 'Doel 2 · Fotosynthese begrijpen', href: 'monsterunit2.html', themes: ['monsterlijke_groene_groei'] },
-      { id: 'monsterunit3', title: 'Doel 3 · Waarom planten belangrijk zijn', href: 'thema4unit3.html', themes: ['monsterlijke_groene_groei', 'levende_natuur'] }
+      { id: 'monsterunit3_alt', title: 'Doel 3 · Waarom planten belangrijk zijn', href: 'thema4unit3.html', themes: ['monsterlijke_groene_groei', 'levende_natuur'] }
     ]
   },
   hoofdthema5: {
@@ -68,6 +64,11 @@ const THEME_CONFIG = {
     key: 'veilig_onderweg',
     goals: [
       { id: 'veiligonderweg_unit1', title: 'Doel 1 · Onderweg herkennen', href: 'veiligonderweg_unit1.html', themes: ['veilig_onderweg'] },
+      { id: 'veiligonderweg_unit2', title: 'Doel 2 · Verkeerssituaties inschatten', development: true, themes: ['veilig_onderweg'] },
+      { id: 'veiligonderweg_unit3', title: 'Doel 3 · Veilige keuzes maken', development: true, themes: ['veilig_onderweg'] },
+      { id: 'veiligonderweg_unit4', title: 'Doel 4 · Signalen juist lezen', development: true, themes: ['veilig_onderweg'] },
+      { id: 'veiligonderweg_unit5', title: 'Doel 5 · Gedrag onderweg', development: true, themes: ['veilig_onderweg'] },
+      { id: 'veiligonderweg_unit6', title: 'Doel 6 · Route voorbereiden', development: true, themes: ['veilig_onderweg'] },
       { id: 'veiligonderweg_unit7', title: 'Doel 7 · Openbaar vervoer', href: 'veiligonderweg_unit7.html', themes: ['veilig_onderweg', 'communiceren'] }
     ]
   },
@@ -76,7 +77,8 @@ const THEME_CONFIG = {
     key: 'sparen',
     goals: [
       { id: 'thema11unit1', title: 'Doel 1 · Inkomsten en uitgaven', href: 'thema11unit1.html', themes: ['sparen'] },
-      { id: 'factuur_begrijpen_shared', title: 'Doel 2 · Factuur begrijpen', href: 'thema5unit2.html', themes: ['sparen', 'fictie_en_nonfictie'] }
+      { id: 'thema11_overzicht', title: 'Doel 2 · Spaarkeuzes in context', href: 'thema11.html', themes: ['sparen'] },
+      { id: 'factuur_begrijpen_shared', title: 'Doel 3 · Factuur begrijpen', href: 'thema5unit2.html', themes: ['sparen', 'fictie_en_nonfictie'] }
     ]
   },
   hoofdthema7: {
@@ -90,16 +92,12 @@ const THEME_CONFIG = {
   hoofdthema8: {
     title: 'Hoofdthema 8 – Mechanica & Lassen',
     key: 'mechanica',
-    goals: [
-      { id: 'mechanica8doel1', title: 'Doel 1 · Start mechanica', href: 'mechanica8doel1.html', themes: ['mechanica'] },
-      { id: 'mechanica8doel2', title: 'Doel 2 · Verbindingstechnieken', href: 'mechanica8doel2.html', themes: ['mechanica'] },
-      { id: 'mechanica8doel3', title: 'Doel 3 · Meten en controleren', href: 'mechanica8doel3.html', themes: ['mechanica', 'wiskunde'] },
-      { id: 'mechanica8doel4', title: 'Doel 4 · Materiaal verwerken', href: 'mechanica8doel4.html', themes: ['mechanica'] },
-      { id: 'mechanica8doel5', title: 'Doel 5 · Veilig werken', href: 'mechanica8doel5.html', themes: ['mechanica', 'veilig_onderweg'] },
-      { id: 'mechanica8doel6', title: 'Doel 6 · Montage toepassen', href: 'mechanica8doel6.html', themes: ['mechanica'] },
-      { id: 'mechanica8doel7', title: 'Doel 7 · Afwerken', href: 'mechanica8doel7.html', themes: ['mechanica'] },
-      { id: 'mechanica8doel8', title: 'Doel 8 · Eindcontrole', href: 'mechanica8doel8.html', themes: ['mechanica'] }
-    ]
+    goals: Array.from({ length: 8 }, (_, i) => ({
+      id: `mechanica8doel${i + 1}`,
+      title: `Doel ${i + 1} · Mechanica`,
+      href: `mechanica8doel${i + 1}.html`,
+      themes: i === 2 ? ['mechanica', 'wiskunde'] : ['mechanica']
+    }))
   },
   oefenthema1: {
     title: 'Oefenthema 1 – Werkwoordstijden',
@@ -113,20 +111,12 @@ const THEME_CONFIG = {
   oefenthema2: {
     title: 'Oefenthema 2 – Wiskunde',
     key: 'wiskunde',
-    goals: [
-      { id: 'thema4unit1', title: 'Doel 1 · Basis omtrek', href: 'thema4unit1.html', themes: ['wiskunde'] },
-      { id: 'thema4unit2', title: 'Doel 2 · Basis oppervlakte', href: 'thema4unit2.html', themes: ['wiskunde'] },
-      { id: 'thema4unit3', title: 'Doel 3 · Driehoeken', href: 'thema4unit3.html', themes: ['wiskunde'] },
-      { id: 'thema4unit4', title: 'Doel 4 · Samengestelde figuren', href: 'thema4unit4.html', themes: ['wiskunde'] },
-      { id: 'thema4unit5', title: 'Doel 5 · Cirkels', href: 'thema4unit5.html', themes: ['wiskunde'] },
-      { id: 'thema4unit6', title: 'Doel 6 · Contextopgaven', href: 'thema4unit6.html', themes: ['wiskunde'] },
-      { id: 'thema4unit7', title: 'Doel 7 · Polygonen', href: 'thema4unit7.html', themes: ['wiskunde'] },
-      { id: 'thema4unit8', title: 'Doel 8 · Rooster-oppervlakte', href: 'thema4unit8.html', themes: ['wiskunde'] },
-      { id: 'thema4unit9', title: 'Doel 9 · Vermenigvuldigen', href: 'thema4unit9.html', themes: ['wiskunde'] },
-      { id: 'thema4unit11', title: 'Doel 10 · Breuken', href: 'thema4unit11.html', themes: ['wiskunde'] },
-      { id: 'thema4unit12', title: 'Doel 11 · Procenten', href: 'thema4unit12.html', themes: ['wiskunde', 'sparen'] },
-      { id: 'thema4unit10', title: 'Doel 12 · Toets en herhaling', href: 'thema4unit10.html', themes: ['wiskunde'] }
-    ]
+    goals: [1,2,3,4,5,6,7,8,9,11,12,10].map((n, i) => ({
+      id: `thema4unit${n}`,
+      title: `Doel ${i + 1} · Wiskunde`,
+      href: `thema4unit${n}.html`,
+      themes: n === 12 ? ['wiskunde', 'sparen'] : ['wiskunde']
+    }))
   },
   oefenthema3: {
     title: 'Oefenthema 3 – Fictie en non-fictie',
@@ -140,29 +130,32 @@ const THEME_CONFIG = {
   oefenthema4: {
     title: 'Oefenthema 4 – Schatten',
     key: 'schatten',
-    goals: [
-      { id: 'thema6unit1', title: 'Doel 1 · Getallen slim afronden', href: 'thema6unit1.html', themes: ['schatten', 'wiskunde'] },
-      { id: 'thema6unit2', title: 'Doel 2 · Schatten bij plus en min', href: 'thema6unit2.html', themes: ['schatten'] },
-      { id: 'thema6unit3', title: 'Doel 3 · Schatten bij keer en delen', href: 'thema6unit3.html', themes: ['schatten'] }
-    ]
+    goals: [1,2,3].map((n) => ({
+      id: `thema6unit${n}`,
+      title: `Doel ${n} · Schatten`,
+      href: `thema6unit${n}.html`,
+      themes: n === 1 ? ['schatten', 'wiskunde'] : ['schatten']
+    }))
   },
   oefenthema5: {
     title: 'Oefenthema 5 – Communiceren',
     key: 'communiceren',
-    goals: [
-      { id: 'thema7unit1', title: 'Doel 1 · Communicatiemodel herkennen', href: 'thema7unit1.html', themes: ['communiceren'] },
-      { id: 'thema7unit2', title: 'Doel 2 · Formeel en beleefd formuleren', href: 'thema7unit2.html', themes: ['communiceren'] },
-      { id: 'thema7unit3', title: 'Doel 3 · Duidelijke berichten maken', href: 'thema7unit3.html', themes: ['communiceren'] }
-    ]
+    goals: [1,2,3].map((n) => ({
+      id: `thema7unit${n}`,
+      title: `Doel ${n} · Communiceren`,
+      href: `thema7unit${n}.html`,
+      themes: ['communiceren']
+    }))
   },
   oefenthema6: {
     title: 'Oefenthema 6 – Actualiteit',
     key: 'fictie_en_nonfictie',
-    goals: [
-      { id: 'thema8unit1', title: 'Doel 1 · Nieuws analyseren', href: 'thema8unit1.html', themes: ['fictie_en_nonfictie'] },
-      { id: 'thema8unit2', title: 'Doel 2 · Bronnen vergelijken', href: 'thema8unit2.html', themes: ['fictie_en_nonfictie'] },
-      { id: 'thema8unit3', title: 'Doel 3 · Reflecteren op actualiteit', href: 'thema8unit3.html', themes: ['fictie_en_nonfictie', 'communiceren'] }
-    ]
+    goals: [1,2,3].map((n) => ({
+      id: `thema8unit${n}`,
+      title: `Doel ${n} · Actualiteit`,
+      href: `thema8unit${n}.html`,
+      themes: n === 3 ? ['fictie_en_nonfictie', 'communiceren'] : ['fictie_en_nonfictie']
+    }))
   }
 };
 
@@ -181,8 +174,9 @@ function setStoredProgress(progress) {
 function getGoalStatus(goals) {
   const progress = getStoredProgress();
   return goals.map((goal, index) => {
+    if (goal.development) return 'development';
     if (progress[goal.id]) return 'completed';
-    if (index === 0 || progress[goals[index - 1].id]) return 'active';
+    if (index === 0 || progress[goals[index - 1].id] || goals[index - 1].development) return 'active';
     return 'locked';
   });
 }
@@ -203,11 +197,12 @@ function renderThemePage(themeId) {
   const ovur = document.getElementById('ovurGrid');
 
   function renderGoal(goal, status) {
+    const canOpen = Boolean(goal.href && !goal.development);
     assignment.innerHTML = `
       <h3>${goal.title}</h3>
-      <p>Werk aan dit doel via de opdracht en duid daarna je voortgang aan.</p>
-      <p><a class="goal-action" href="${goal.href}" style="text-decoration:none;display:inline-block;">Open opdracht</a></p>
-      <button class="complete-btn" id="completeGoalBtn" ${status === 'locked' ? 'disabled' : ''}>Doel voltooien</button>
+      <p>${goal.development ? 'Dit doel staat klaar in de leerlijn en wordt binnenkort toegevoegd.' : 'Werk aan dit doel via de opdracht en duid daarna je voortgang aan.'}</p>
+      <p>${canOpen ? `<a class="goal-action" href="${goal.href}" style="text-decoration:none;display:inline-block;">Open opdracht</a>` : '<button class="goal-action" disabled>Binnenkort beschikbaar</button>'}</p>
+      <button class="complete-btn" id="completeGoalBtn" ${status === 'locked' || goal.development ? 'disabled' : ''}>Doel voltooien</button>
     `;
 
     const ovurItems = goal.ovur || SHARED_OVUR;
@@ -227,8 +222,9 @@ function renderThemePage(themeId) {
 
   function draw(selectedGoalId = config.goals[0].id, pulseGoalId = null) {
     const statuses = getGoalStatus(config.goals);
+    const playableGoals = statuses.filter((s) => s !== 'development').length || 1;
     const completed = statuses.filter((s) => s === 'completed').length;
-    const pct = Math.round((completed / config.goals.length) * 100);
+    const pct = Math.round((completed / playableGoals) * 100);
 
     document.getElementById('progressPercent').textContent = `${pct}%`;
     document.getElementById('progressFill').style.width = `${pct}%`;
@@ -253,11 +249,11 @@ function renderThemePage(themeId) {
 
       const card = document.createElement('article');
       card.className = 'goal-card';
-      card.innerHTML = `<div><strong>${goal.title}</strong><span>Status: ${status}</span></div>`;
+      card.innerHTML = `<div><strong>${goal.title}</strong><span class="${status === 'development' ? 'status-dev' : ''}">Status: ${status === 'development' ? 'in ontwikkeling' : status}</span></div>`;
       const action = document.createElement('button');
       action.className = 'goal-action';
       action.disabled = status === 'locked';
-      action.textContent = status === 'completed' ? 'Herbekijk' : 'Open';
+      action.textContent = status === 'development' ? 'Bekijk' : status === 'completed' ? 'Herbekijk' : 'Open';
       action.addEventListener('click', () => renderGoal(goal, status));
       card.appendChild(action);
       overview.appendChild(card);
