@@ -1,293 +1,45 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Oefenthema – Schatten</title>
-
-<link rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
-
-<style>
-:root {
-  --bg: #f8fafc;
-  --panel: #ffffff;
-  --accent: #7aa132;
-  --accent-dark: #5f8324;
-  --text: #1f2937;
-  --muted: #4b5563;
-  --border-soft: #dce8c5;
-  --soft-bg: #f7fbe8;
-}
-
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  font-family: 'Nunito', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-}
-
-header {
-  background: #87b43b;
-  color: white;
-  padding: 1.8rem 1rem;
-  text-align: center;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 2.1rem;
-}
-
-header p {
-  margin: 0.6rem 0 0;
-  opacity: 0.95;
-}
-
-main {
-  width: min(1200px, 95%);
-  margin: 1.6rem auto 2.5rem;
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 1.2rem;
-}
-
-.panel {
-  background: var(--panel);
-  border-radius: 14px;
-  padding: 1.3rem;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
-}
-
-/* INFO BOX */
-.info-box {
-  background: var(--soft-bg);
-  border-left: 5px solid var(--accent);
-  border-radius: 12px;
-  padding: 1rem 1.2rem;
-  margin-top: 1.2rem;
-}
-
-/* STAPPEN */
-.steps {
-  display: grid;
-  gap: 0.75rem;
-  margin: 1rem 0;
-}
-
-.step {
-  border-left: 5px solid #a4c85f;
-  background: #f7fbe8;
-  border-radius: 10px;
-  padding: 0.8rem;
-}
-
-/* TABLE */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 0.8rem;
-  font-size: 0.95rem;
-}
-
-th, td {
-  border: 1px solid var(--border-soft);
-  padding: 0.5rem;
-  text-align: left;
-}
-
-th {
-  background: #f4f9e2;
-}
-
-/* UNITS */
-.panel-title {
-  font-size: 1.25rem;
-  margin-top: 1.5rem;
-  margin-bottom: 0.6rem;
-}
-
-.unit-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 0.9rem;
-  margin-top: 0.8rem;
-}
-
-.unit-card {
-  background: var(--soft-bg);
-  border: 2px solid var(--border-soft);
-  border-radius: 12px;
-  padding: 0.9rem;
-  display: flex;
-  flex-direction: column;
-}
-
-.unit-card h4 {
-  margin: 0 0 0.35rem;
-}
-
-.unit-card p {
-  margin: 0 0 0.5rem;
-  color: var(--muted);
-  font-size: 0.95rem;
-}
-
-.unit-card a {
-  margin-top: auto;
-  text-decoration: none;
-}
-
-.unit-card button {
-  width: 100%;
-  border: none;
-  border-radius: 8px;
-  padding: 0.45rem 0.7rem;
-  font-weight: 700;
-  color: white;
-  background: var(--accent);
-  cursor: pointer;
-}
-
-.unit-card button:hover {
-  background: var(--accent-dark);
-}
-
-/* BACK BUTTON */
-.btn-back {
-  display: inline-block;
-  margin-top: 1.6rem;
-  text-decoration: none;
-  background: var(--accent);
-  color: white;
-  padding: 0.5rem 0.9rem;
-  border-radius: 999px;
-  font-weight: 700;
-}
-
-.btn-back:hover {
-  background: var(--accent-dark);
-}
-
-/* CHAT */
-.chat-embed {
-  width: 100%;
-  min-height: 520px;
-  border: none;
-  border-radius: 12px;
-  background: #f3f7ff;
-}
-
-@media (max-width: 900px) {
-  main { grid-template-columns: 1fr; }
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PAV Thema</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="theme-page.css" />
 </head>
+<body data-theme-id="oefenthema4">
+  <div class="theme-shell">
+    <main class="theme-main">
+      <section class="theme-header">
+        <h1 class="theme-title" id="themeTitle">Thema</h1>
+        <div class="progress-meta">
+          <span>Voortgang</span>
+          <strong id="progressPercent">0%</strong>
+        </div>
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      </section>
 
-<body>
+      <section>
+        <h2>Metro leerlijn</h2>
+        <div class="metro-line" id="metroLine"></div>
+      </section>
 
-<header>
-  <h1>Oefenthema – Schatten</h1>
-  <p>Leer redeneren met schattingen en controleer je exacte uitkomst</p>
-</header>
+      <section>
+        <h2>Doelen overzicht</h2>
+        <div class="goals-overview" id="goalsOverview"></div>
+      </section>
 
-<main>
+      <section class="assignment-view" id="assignmentView"></section>
+    </main>
 
-<section class="panel">
-
-  <h2>Focus van dit thema</h2>
-  <p>
-    In dit thema leer je getallen slim afronden om snel een
-    realistische schatting te maken. Daarna controleer je
-    of je exacte antwoord logisch is.
-  </p>
-
-  <div class="info-box">
-    <strong>Belangrijk in dit thema</strong>
-    <p>
-      Je noteert niet alleen je antwoord, maar legt ook uit
-      waarom je afrondt zoals je doet.
-      Een correcte redenering is even belangrijk als het juiste resultaat.
-    </p>
+    <aside class="theme-side">
+      <h2 class="ovur-title">OVUR per doel</h2>
+      <div class="ovur-grid" id="ovurGrid"></div>
+    </aside>
   </div>
 
-  <h2>Stappenplan schatten</h2>
-
-  <div class="steps">
-    <div class="step"><strong>Stap 1:</strong> Rond getallen af naar handige getallen.</div>
-    <div class="step"><strong>Stap 2:</strong> Reken met de afgeronde getallen.</div>
-    <div class="step"><strong>Stap 3:</strong> Vergelijk je exacte antwoord met je schatting.</div>
-  </div>
-
-  <h3>Voorbeeld</h3>
-
-  <table>
-    <thead>
-      <tr>
-        <th>Som</th>
-        <th>Schatting</th>
-        <th>Exact</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>319 + 86</td>
-        <td>≈ 320 + 90 = 410</td>
-        <td>405</td>
-      </tr>
-      <tr>
-        <td>24 × 19</td>
-        <td>≈ 20 × 20 = 400</td>
-        <td>456</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div class="info-box">
-    <strong>Argumenteren is verplicht</strong>
-    <ul>
-      <li>Waarom rond je bepaalde getallen af?</li>
-      <li>Waarom is je schatting logisch?</li>
-      <li>Moest je exacte antwoord hoger of lager zijn?</li>
-    </ul>
-    Zonder uitleg is je oplossing niet volledig.
-  </div>
-
-  <h2 class="panel-title">Units</h2>
-
-  <div class="unit-grid">
-    <div class="unit-card">
-      <h4>Unit 1</h4>
-      <p>Getallen slim afronden</p>
-      <a href="thema6unit1.html"><button>Start</button></a>
-    </div>
-
-    <div class="unit-card">
-      <h4>Unit 2</h4>
-      <p>Schatten bij plus en min</p>
-      <a href="thema6unit2.html"><button>Start</button></a>
-    </div>
-
-    <div class="unit-card">
-      <h4>Unit 3</h4>
-      <p>Schatten bij keer en delen</p>
-      <a href="thema6unit3.html"><button>Start</button></a>
-    </div>
-  </div>
-
-  <a href="index.html" class="btn-back">Terug naar thema-overzicht</a>
-
-</section>
-
-<aside class="panel">
-  <h2 class="panel-title">Chattie</h2>
-  <iframe class="chat-embed"
-    src="chattie.html?thema=Thema%206%20Schatten"></iframe>
-</aside>
-
-</main>
-
+  <script src="theme-page.js"></script>
 </body>
 </html>
