@@ -1,179 +1,219 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Atlasoefeningen – Gecombineerd</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlasoefeningen Niveau 2</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap" rel="stylesheet">
 
-  <style>
-    body { margin:0; font-family:'Nunito',sans-serif; background:#eef3fb; color:#1f2937; }
-    header { background:#1a237e; color:#fff; text-align:center; padding:1.2rem; }
-    main { width:min(960px,95%); margin:1.2rem auto; }
-    .card { background:#fff; border-radius:14px; padding:1.2rem; margin-bottom:1rem; box-shadow:0 6px 16px rgba(0,0,0,.08); }
-    label { display:block; margin:.5rem 0; }
-    button { background:#1a237e; color:#fff; border:none; border-radius:8px; padding:.6rem 1rem; cursor:pointer; }
-    .feedback { margin-top:.6rem; font-weight:700; }
-    .success { color:#2e7d32; }
-    .error { color:#b91c1c; }
-    .hidden { display:none; }
-    input, textarea, select { width:100%; padding:.6rem; border-radius:8px; border:1px solid #cbd5e1; }
-  </style>
+<style>
+body { margin:0; font-family:'Nunito',sans-serif; background:#eef3fb; }
+header { background:#1a237e; color:white; text-align:center; padding:1rem; }
+main { width:min(900px,95%); margin:1rem auto; }
+.card { background:white; padding:1.2rem; border-radius:14px; margin-bottom:1rem; box-shadow:0 5px 15px rgba(0,0,0,.08); }
+label { display:block; margin:.4rem 0; }
+button { background:#1a237e; color:white; border:none; padding:.6rem 1rem; border-radius:8px; cursor:pointer; }
+.feedback { font-weight:700; margin-top:.5rem; }
+.success { color:green; }
+.error { color:red; }
+.hint { color:#444; font-style:italic; margin-top:.3rem; }
+.hidden { display:none; }
+input, textarea { width:100%; padding:.5rem; border-radius:8px; border:1px solid #ccc; }
+</style>
 </head>
 
 <body>
 
 <header>
-  <h1>Atlasoefeningen</h1>
-  <p>Werken met kaartvaardigheden</p>
+<h1>Atlasoefeningen</h1>
+<p>Niveau 2 – Denk, zoek en controleer</p>
 </header>
 
 <main>
 
-<!-- DEEL 1: BASISVAARDIGHEDEN -->
+<!-- BASIS -->
 <div class="card">
-  <h2>Deel 1: Basisvaardigheden</h2>
+<h2>Basisvaardigheden</h2>
 
-  <p><strong>1. Welke kaart gebruik je voor reliëf?</strong></p>
-  <label><input type="radio" name="q1" value="politiek"> Politieke kaart</label>
-  <label><input type="radio" name="q1" value="fysisch"> Fysische kaart</label>
-  <label><input type="radio" name="q1" value="klimaat"> Klimaatkaart</label>
-  <button onclick="checkQ1()">Controleer</button>
-  <div id="fb1" class="feedback"></div>
+<p><strong>1. Welke kaart gebruik je voor reliëf?</strong></p>
+<label><input type="radio" name="q1" value="politiek"> Politieke kaart</label>
+<label><input type="radio" name="q1" value="fysisch"> Fysische kaart</label>
+<label><input type="radio" name="q1" value="klimaat"> Klimaatkaart</label>
+<button onclick="checkQ1()">Controleer</button>
+<div id="fb1" class="feedback"></div>
+<div id="hint1" class="hint"></div>
 
-  <p><strong>2. Geef een voorbeeld van een kaartteken</strong></p>
-  <input id="q2" type="text">
-  <button onclick="checkQ2()">Controleer</button>
-  <div id="fb2" class="feedback"></div>
+<p><strong>2. In welke richting ligt Frankrijk t.o.v. België?</strong></p>
+<label><input type="radio" name="q2" value="noord"> Noord</label>
+<label><input type="radio" name="q2" value="zuid"> Zuid</label>
+<label><input type="radio" name="q2" value="oost"> Oost</label>
+<button onclick="checkQ2()">Controleer</button>
+<div id="fb2" class="feedback"></div>
+<div id="hint2" class="hint"></div>
 
-  <p><strong>3. In welke richting ligt Frankrijk t.o.v. België?</strong></p>
-  <label><input type="radio" name="q3" value="noord"> Noord</label>
-  <label><input type="radio" name="q3" value="zuid"> Zuid</label>
-  <label><input type="radio" name="q3" value="oost"> Oost</label>
-  <button onclick="checkQ3()">Controleer</button>
-  <div id="fb3" class="feedback"></div>
 </div>
 
-<!-- DEEL 2: QUIZ -->
+<!-- QUIZ -->
 <div class="card" id="quizBox">
-  <h2 id="qCount"></h2>
-  <p id="questionText"></p>
-  <form id="answerForm"></form>
-  <button onclick="checkAnswer()">Controleer</button>
-  <div id="feedback" class="feedback"></div>
-  <button id="nextBtn" class="hidden" onclick="nextQuestion()">Volgende →</button>
+<h2 id="qCount"></h2>
+<p id="questionText"></p>
+<input id="answer" placeholder="Gebruik komma's bij meerdere antwoorden">
+<button onclick="checkAnswer()">Controleer</button>
+<div id="feedback" class="feedback"></div>
+<div id="hint" class="hint"></div>
+<button id="nextBtn" class="hidden" onclick="nextQuestion()">Volgende →</button>
 </div>
 
 <!-- REFLECTIE -->
 <div class="card hidden" id="reflectieBox">
-  <h2>Reflectie</h2>
+<h2>Reflectie</h2>
 
-  <p><strong>Bastogne:</strong> Ligt dit in Belgische Luxemburg of Groothertogdom?</p>
-  <textarea id="vraag4"></textarea>
+<p><strong>Ligt Bastogne in Belgische Luxemburg of Groothertogdom?</strong></p>
+<textarea></textarea>
 
-  <p><strong>Wat is een reliëfkaart?</strong></p>
-  <textarea id="vraag5"></textarea>
+<p><strong>Wat is een reliëfkaart?</strong></p>
+<textarea></textarea>
 
-  <button onclick="bewaarReflectie()">Bewaar</button>
-  <p id="reflectieFeedback"></p>
+<button onclick="finish()">Afronden</button>
 </div>
 
 <!-- EINDE -->
 <div class="card hidden" id="endScreen">
-  <h2>Klaar!</h2>
-  <p>Score: <span id="xpScore"></span> XP</p>
+<h2>Klaar!</h2>
+<p>Score: <span id="xpScore"></span> XP</p>
 </div>
 
 </main>
 
 <script>
+
 // ================= BASISVRAGEN =================
 
-function setFeedback(id, ok, good, bad) {
-  const el = document.getElementById(id);
-  el.textContent = ok ? good : bad;
-  el.className = `feedback ${ok ? 'success' : 'error'}`;
+function checkQ1(){
+let val = document.querySelector('input[name="q1"]:checked')?.value;
+if(val === "fysisch"){
+fb1.innerText="✅ Juist!";
+fb1.className="feedback success";
+hint1.innerText="";
+}else{
+fb1.innerText="❌ Niet juist";
+fb1.className="feedback error";
+hint1.innerText="💡 Denk: waar zie je bergen en hoogte?";
+}
 }
 
-function checkQ1() {
-  const val = document.querySelector('input[name="q1"]:checked')?.value;
-  setFeedback('fb1', val === 'fysisch', 'Juist!', 'Niet juist.');
+function checkQ2(){
+let val = document.querySelector('input[name="q2"]:checked')?.value;
+if(val === "zuid"){
+fb2.innerText="✅ Correct!";
+fb2.className="feedback success";
+hint2.innerText="";
+}else{
+fb2.innerText="❌ Kijk opnieuw";
+fb2.className="feedback error";
+hint2.innerText="💡 Kijk naar de kaart: Frankrijk ligt onder België";
 }
-
-function checkQ2() {
-  const val = document.getElementById('q2').value.trim();
-  setFeedback('fb2', val.length > 3, 'Goed!', 'Geef een duidelijk voorbeeld.');
-}
-
-function checkQ3() {
-  const val = document.querySelector('input[name="q3"]:checked')?.value;
-  setFeedback('fb3', val === 'zuid', 'Correct!', 'Kijk opnieuw op de kaart.');
 }
 
 // ================= QUIZ =================
 
 const questions = [
-  { question: "Buurlanden van België?", accepted: ["nederland","frankrijk","duitsland","luxemburg"] },
-  { question: "Hoofdstad van Noorwegen?", accepted: ["oslo"] },
-  { question: "Hoofdstad van Polen?", accepted: ["warschau"] },
-  { question: "Welke landen doorkruist opa Marcel naar Zweden?", accepted: ["duitsland","denemarken"] },
-  { question: "Noem 2 steden tussen Tienen en Oostende", accepted: ["brussel","gent","brugge"] }
+{
+q:"Geef 2 buurlanden van België",
+a:["nederland","frankrijk","duitsland","luxemburg"],
+min:2,
+hint:"💡 België ligt tussen 4 landen"
+},
+{
+q:"Hoofdstad van Noorwegen",
+a:["oslo"],
+min:1,
+hint:"💡 Bekende Scandinavische hoofdstad"
+},
+{
+q:"Hoofdstad van Polen",
+a:["warschau"],
+min:1,
+hint:"💡 Moeilijke naam, begint met W"
+},
+{
+q:"Welke landen doorkruist opa Marcel naar Zweden?",
+a:["duitsland","denemarken"],
+min:2,
+hint:"💡 Denk aan de route naar Scandinavië"
+},
+{
+q:"Noem 2 steden tussen Tienen en Oostende",
+a:["brussel","gent","brugge"],
+min:2,
+hint:"💡 Grote Belgische steden op de lijn"
+}
 ];
 
-let currentQuestion = 0;
-let score = 0;
+let current=0;
+let score=0;
+let correctAlready=false;
 
-function loadQuestion() {
-  const q = questions[currentQuestion];
-  document.getElementById('qCount').innerText = `Vraag ${currentQuestion+1}/${questions.length}`;
-  document.getElementById('questionText').innerText = q.question;
-  document.getElementById('answerForm').innerHTML = `<input id="answer">`;
-  document.getElementById('feedback').innerText = '';
-  document.getElementById('nextBtn').classList.add('hidden');
+function normalize(v){
+return v.toLowerCase().trim()
+.replace("brusel","brussel")
+.replace("warsaw","warschau");
 }
 
-function normalize(v){ return v.toLowerCase().trim(); }
+function loadQuestion(){
+qCount.innerText=`Vraag ${current+1}/${questions.length}`;
+questionText.innerText=questions[current].q;
+answer.value="";
+feedback.innerText="";
+hint.innerText="";
+nextBtn.classList.add("hidden");
+correctAlready=false;
+}
 
 function checkAnswer(){
-  const input = document.getElementById('answer').value;
-  if(!input) return;
 
-  const correct = questions[currentQuestion].accepted.some(a =>
-    normalize(input).includes(a)
-  );
+if(correctAlready) return;
 
-  const fb = document.getElementById('feedback');
+let input=answer.value;
+if(!input) return;
 
-  if(correct){
-    score += 3;
-    fb.innerText = "✅ Juist!";
-    fb.className = "feedback success";
-  } else {
-    fb.innerText = "❌ Probeer opnieuw";
-    fb.className = "feedback error";
-  }
+let parts=input.split(",").map(x=>normalize(x));
 
-  document.getElementById('nextBtn').classList.remove('hidden');
+let correct=parts.filter(p=>questions[current].a.includes(p));
+
+if(correct.length>=questions[current].min){
+score+=3;
+feedback.innerText=`✅ Juist (${correct.length} goed)`;
+feedback.className="feedback success";
+correctAlready=true;
+}else{
+feedback.innerText="❌ Nog niet juist";
+feedback.className="feedback error";
+hint.innerText=questions[current].hint;
+}
+
+nextBtn.classList.remove("hidden");
 }
 
 function nextQuestion(){
-  currentQuestion++;
-  if(currentQuestion < questions.length){
-    loadQuestion();
-  } else {
-    document.getElementById('quizBox').classList.add('hidden');
-    document.getElementById('reflectieBox').classList.remove('hidden');
-    document.getElementById('endScreen').classList.remove('hidden');
-    document.getElementById('xpScore').innerText = score;
-  }
+current++;
+if(current<questions.length){
+loadQuestion();
+}else{
+quizBox.classList.add("hidden");
+reflectieBox.classList.remove("hidden");
+endScreen.classList.remove("hidden");
+xpScore.innerText=score;
+}
 }
 
-function bewaarReflectie(){
-  document.getElementById('reflectieFeedback').innerText = "✅ Opgeslagen!";
+function finish(){
+reflectieBox.classList.add("hidden");
 }
 
-window.onload = loadQuestion;
+window.onload=loadQuestion;
+
 </script>
 
 </body>
