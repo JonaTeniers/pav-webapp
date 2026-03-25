@@ -2,7 +2,7 @@
   const PROFILE_KEY = 'pavo_leerling_profiel';
 
   const CARD_CONFIG = {
-    hoofdthema1: { key: 'thema1', totalGoals: 5 },
+    hoofdthema1: { key: 'thema1', totalGoals: 6 },
     hoofdthema2: { key: 'thema2', totalGoals: 2 },
     hoofdthema3: { key: 'thema9', totalGoals: 8 },
     hoofdthema4: { key: 'thema11', totalGoals: 2 },
