@@ -10,22 +10,86 @@
 <style>
 body { margin:0; font-family:'Nunito',sans-serif; background:#eef3fb; }
 header { background:#1a237e; color:white; text-align:center; padding:1rem; }
+
 main { width:min(900px,95%); margin:1rem auto; }
 
-.card { background:white; padding:1.2rem; border-radius:14px; margin-bottom:1rem; box-shadow:0 5px 15px rgba(0,0,0,.08); }
+.card {
+  background:white;
+  padding:1.2rem;
+  border-radius:14px;
+  margin-bottom:1rem;
+  box-shadow:0 5px 15px rgba(0,0,0,.08);
+}
 
-label { display:block; margin-bottom:15px; cursor:pointer; }
-label img { width:100%; max-width:300px; border-radius:10px; margin-top:5px; }
-input[type="radio"]:checked + img { border:3px solid #1a237e; }
+/* TIMER */
+#timer {
+  font-weight:800;
+  font-size:1.2rem;
+}
 
-button { background:#1a237e; color:white; border:none; padding:.6rem 1rem; border-radius:8px; cursor:pointer; }
+/* IMAGE OPTIONS */
+.image-options {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:15px;
+}
+
+.option {
+  border:2px solid #ddd;
+  border-radius:12px;
+  padding:10px;
+  text-align:center;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.option img {
+  width:100%;
+  height:140px;
+  object-fit:cover;
+  border-radius:8px;
+}
+
+.option input { display:none; }
+
+.option span {
+  display:block;
+  margin-top:8px;
+  font-weight:bold;
+}
+
+.option:hover {
+  transform:scale(1.03);
+  border-color:#3949ab;
+}
+
+.option input:checked + img {
+  outline:4px solid #1a237e;
+}
+
+/* BUTTON */
+button {
+  background:#1a237e;
+  color:white;
+  border:none;
+  padding:.6rem 1rem;
+  border-radius:8px;
+  cursor:pointer;
+}
+
 button:hover { background:#3949ab; }
 
 .feedback { font-weight:700; margin-top:.5rem; }
 .success { color:green; }
 .error { color:red; }
 
-input, textarea { width:100%; padding:.5rem; border-radius:8px; border:1px solid #ccc; margin-top:5px; }
+input, textarea {
+  width:100%;
+  padding:.5rem;
+  border-radius:8px;
+  border:1px solid #ccc;
+  margin-top:5px;
+}
 
 .hidden { display:none; }
 </style>
@@ -36,62 +100,60 @@ input, textarea { width:100%; padding:.5rem; border-radius:8px; border:1px solid
 <header>
 <h1>🌍 Atlasvaardigheidstoets</h1>
 <p>Gebruik je atlas om alle antwoorden te vinden 📖</p>
+<p id="timer">⏱️ Tijd start na vraag 1</p>
 <p id="liveScore">Score: 0 XP</p>
 </header>
 
 <main>
 
 <!-- VRAAG 1 -->
+<div class="card">
 <h2>Vraag 1</h2>
-<p><strong>Welke kaart gebruik je om reliëf (hoogteverschillen) te zien?</strong></p>
+<p><strong>Welke kaart gebruik je om reliëf te zien?</strong></p>
 
 <div class="image-options">
 
 <label class="option">
-  <input type="radio" name="q1" value="klimaat">
-  <img src="img/klimaatkaart.png">
-  <span>Klimaatkaart</span>
+<input type="radio" name="q1" value="klimaat">
+<img src="img/klimaatkaart.png">
+<span>Klimaatkaart</span>
 </label>
 
 <label class="option">
-  <input type="radio" name="q1" value="politiek">
-  <img src="img/politiekkaart.jpg">
-  <span>Politieke kaart</span>
+<input type="radio" name="q1" value="politiek">
+<img src="img/politiekkaart.jpg">
+<span>Politieke kaart</span>
 </label>
 
 <label class="option">
-  <input type="radio" name="q1" value="fysisch">
-  <img src="img/fysischekaart.jpg">
-  <span>Fysische kaart</span>
+<input type="radio" name="q1" value="fysisch">
+<img src="img/fysischekaart.jpg">
+<span>Fysische kaart</span>
 </label>
 
 </div>
 
+<p>Waar heb je dit gevonden?</p>
+<input id="bron1">
+
+<button onclick="checkQ1()">Start toets</button>
+<div id="fb1" class="feedback"></div>
+</div>
+
 <!-- QUIZ -->
-<div class="card" id="quizBox">
+<div class="card hidden" id="quizBox">
 <h2 id="qCount"></h2>
 <p id="questionText"></p>
 
-<input id="answer" placeholder="Gebruik komma's bij meerdere antwoorden">
+<input id="answer">
 
 <p>Waar heb je dit gevonden?</p>
 <input id="bron">
 
 <button onclick="checkAnswer()">Controleer</button>
 <div id="feedback" class="feedback"></div>
-<div id="hint"></div>
 
 <button id="nextBtn" class="hidden" onclick="nextQuestion()">Volgende →</button>
-</div>
-
-<!-- REFLECTIE -->
-<div class="card hidden" id="reflectieBox">
-<h2>Reflectie</h2>
-
-<p><strong>Hoe heb je de antwoorden gevonden in de atlas?</strong></p>
-<textarea placeholder="Beschrijf je stappen..."></textarea>
-
-<button onclick="finish()">Afronden</button>
 </div>
 
 <!-- EINDE -->
@@ -105,32 +167,56 @@ input, textarea { width:100%; padding:.5rem; border-radius:8px; border:1px solid
 <script>
 
 let score = 0;
+let timerStarted = false;
+let timeLeft = 40 * 60; // 40 minuten
+
+// TIMER FUNCTION
+function startTimer(){
+if(timerStarted) return;
+timerStarted = true;
+
+let interval = setInterval(() => {
+timeLeft--;
+
+let min = Math.floor(timeLeft / 60);
+let sec = timeLeft % 60;
+
+document.getElementById("timer").innerText =
+`⏱️ ${min}:${sec.toString().padStart(2,'0')}`;
+
+if(timeLeft <= 0){
+clearInterval(interval);
+finishTest();
+}
+},1000);
+}
 
 // ================= VRAAG 1 =================
 function checkQ1(){
 let val = document.querySelector('input[name="q1"]:checked')?.value;
-let fb = document.getElementById("fb1");
-let hint = document.getElementById("hint1");
-let bron = document.getElementById("bron1").value;
 
 if(!val){
-fb.innerText="⚠️ Kies eerst een antwoord";
-fb.className="feedback error";
+fb1.innerText="⚠️ Kies een antwoord";
+fb1.className="feedback error";
 return;
 }
 
 if(val === "fysisch"){
 score += 3;
-if(bron) score += 1;
+if(bron1.value) score += 1;
 
-fb.innerText="✅ Juist!";
-fb.className="feedback success";
+fb1.innerText="✅ Start toets!";
+fb1.className="feedback success";
+
+startTimer();
+
+document.getElementById("quizBox").classList.remove("hidden");
+loadQuestion();
+
 }else{
-fb.innerText="❌ Fout";
-fb.className="feedback error";
-hint.innerText="💡 Reliëf = hoogte → kijk naar kleuren (bruin = hoog)";
+fb1.innerText="❌ Niet juist";
+fb1.className="feedback error";
 }
-
 updateScore();
 }
 
@@ -140,67 +226,49 @@ const questions = [
 {
 q:"Geef minstens 2 buurlanden van België",
 a:["nederland","frankrijk","duitsland","luxemburg"],
-min:2,
-hint:"💡 Gebruik de kaart van Europa"
+min:2
 },
 {
 q:"Wat is de hoofdstad van Noorwegen?",
 a:["oslo"],
-min:1,
-hint:"💡 Zoek via het register of Europa kaart"
+min:1
 },
 {
 q:"Wat is de hoofdstad van Polen?",
 a:["warschau"],
-min:1,
-hint:"💡 Moeilijke naam, begint met W"
+min:1
 },
 {
-q:"Welke landen doorkruis je van België naar Zweden met de auto?",
+q:"Welke landen doorkruis je van België naar Zweden?",
 a:["duitsland","denemarken"],
-min:2,
-hint:"💡 Kijk naar Noord-Europa"
-},
-{
-q:"Noem 2 grote steden tussen Tienen en Oostende",
-a:["brussel","gent","brugge"],
-min:2,
-hint:"💡 Volg de lijn op de kaart"
+min:2
 },
 {
 q:"Welke zee ligt ten noorden van Nederland?",
 a:["noordzee"],
-min:1,
-hint:"💡 Kijk boven Nederland"
+min:1
 }
 ];
 
 let current=0;
-let attempts=0;
 
 function normalize(v){
 return v.toLowerCase().trim();
 }
 
 function loadQuestion(){
-attempts = 0;
 qCount.innerText=`Vraag ${current+2}/${questions.length+1}`;
 questionText.innerText=questions[current].q;
 answer.value="";
 bron.value="";
 feedback.innerText="";
-hint.innerText="";
 nextBtn.classList.add("hidden");
 }
 
 function checkAnswer(){
 
 let input = answer.value;
-let bronInput = bron.value;
-
 if(!input) return;
-
-attempts++;
 
 let parts=[...new Set(input.split(",").map(x=>normalize(x)))];
 let correct=parts.filter(p=>questions[current].a.includes(p));
@@ -208,7 +276,7 @@ let correct=parts.filter(p=>questions[current].a.includes(p));
 if(correct.length>=questions[current].min){
 
 score += 3;
-if(bronInput) score += 1;
+if(bron.value) score += 1;
 
 feedback.innerText="✅ Juist!";
 feedback.className="feedback success";
@@ -219,10 +287,6 @@ nextBtn.classList.remove("hidden");
 }else{
 feedback.innerText="❌ Nog niet juist";
 feedback.className="feedback error";
-
-if(attempts >= 2){
-hint.innerText=questions[current].hint;
-}
 }
 }
 
@@ -231,38 +295,34 @@ current++;
 if(current<questions.length){
 loadQuestion();
 }else{
-quizBox.classList.add("hidden");
-reflectieBox.classList.remove("hidden");
+finishTest();
 }
 }
 
 function updateScore(){
-document.getElementById("liveScore").innerText = `Score: ${score} XP`;
+liveScore.innerText = `Score: ${score} XP`;
 }
 
 // ================= EINDE =================
 
-function finish(){
-reflectieBox.classList.add("hidden");
+function finishTest(){
+quizBox.classList.add("hidden");
 endScreen.classList.remove("hidden");
 
 let tekst = "";
 
 if(score < 10){
-tekst = `${score} XP → Oefen nog met de atlas 🔍`;
+tekst = `${score} XP → Oefen nog met de atlas`;
 }else if(score < 20){
-tekst = `${score} XP → Goed bezig! 👍`;
+tekst = `${score} XP → Goed bezig`;
 }else{
-tekst = `${score} XP → Atlas expert! 🏆`;
+tekst = `${score} XP → Atlas expert 🏆`;
 }
 
 document.getElementById("eindFeedback").innerText = tekst;
 }
 
-// ================= START =================
-window.onload=loadQuestion;
-
 </script>
 
 </body>
-</html>>
+</html>
