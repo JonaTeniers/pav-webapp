@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Doel 3 · Nieuwsartikel lezen en samenvatten | Nieuws en media</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#f4f8fb;--card:#fff;--line:#d8e2ec;--text:#1f2937;--muted:#64748b;--accent:#0284c7;--ok:#166534;--bad:#b45309}
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);font-family:Inter,sans-serif;color:var(--text)}
+    .wrap{max-width:1000px;margin:0 auto;padding:18px 14px 80px} .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px}
+    .btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;padding:10px 14px;border-radius:10px;font-weight:700;margin:6px 6px 0 0}
+    .article-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px} .article-card{border:1px solid var(--line);border-radius:10px;padding:12px;background:#f8fbff}
+    .question{border:1px solid var(--line);border-radius:10px;padding:10px;margin:10px 0} .options label{display:block;margin:6px 0}
+    .drag-bank{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px} .drag-item{border:1px solid #7dd3fc;background:#e0f2fe;padding:8px 10px;border-radius:999px;cursor:grab}
+    .drop-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px} .dropzone{min-height:110px;border:2px dashed #93c5fd;border-radius:10px;padding:8px;background:#f8fafc}
+    .dropzone h4{margin:0 0 6px} .feedback{margin-top:8px;font-weight:700} .ok{color:var(--ok)} .bad{color:var(--bad)}
+    textarea{width:100%;min-height:90px;border:1px solid #cbd5e1;border-radius:10px;padding:10px;font:inherit}
+    @media(max-width:800px){.article-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="card">
+      <h1>Doel 3 · Nieuwsartikel lezen en samenvatten</h1>
+      <p><strong>Focus:</strong> Je vat een nieuwsartikel samen met de 5W-vragen (wie, wat, waar, wanneer, waarom).</p>
+      <p style="color:var(--muted)">Lees eerst de artikels, maak daarna de oefeningen. Werk nauwkeurig met taal: kernwoorden, signaalwoorden, feiten en meningen.</p>
+      <a class="btn" href="https://jonateniers.github.io/Nieuws/index.html" target="_blank" rel="noopener noreferrer">Open nieuws site</a>
+      <a class="btn" href="hoofdthema9.html">Terug naar Hoofdthema 9</a>
+    </section>
+
+    <section class="card">
+      <h2>1) Artikels om te analyseren</h2>
+      <div class="article-grid">
+      <article class="article-card"><h3>Artikel A: "Nieuwe fietsbrug geopend"</h3><p>In Gent is maandag een nieuwe fietsbrug geopend. De stad wil fietsverkeer veiliger maken en files verminderen.</p></article>
+      <article class="article-card"><h3>Artikel B: "Bibliotheek breidt openingsuren uit"</h3><p>De bibliotheek opent vanaf volgende week ook op zondag. Zo kunnen meer leerlingen in stilte studeren.</p></article>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>2) Meerkeuze: wat is juist?</h2>
+      <form id="mcqForm"><div class="question"><p><strong>Vraag 1.</strong> Welke vraag hoort NIET bij de 5W?</p><div class="options"><label><input type="radio" name="q1" value="0"> Wie?</label><label><input type="radio" name="q1" value="1"> Waarom?</label><label><input type="radio" name="q1" value="2"> Welk lettertype?</label></div></div><div class="question"><p><strong>Vraag 2.</strong> Wat is een goede samenvatting?</p><div class="options"><label><input type="radio" name="q2" value="0"> Kort en feitelijk</label><label><input type="radio" name="q2" value="1"> Lang en vol mening</label><label><input type="radio" name="q2" value="2"> Alleen de titel</label></div></div><div class="question"><p><strong>Vraag 3.</strong> Waarom is "wanneer" belangrijk?</p><div class="options"><label><input type="radio" name="q3" value="0"> Voor actualiteit</label><label><input type="radio" name="q3" value="1"> Voor kleurgebruik</label><label><input type="radio" name="q3" value="2"> Voor lettergrootte</label></div></div><button type="button" class="btn" id="checkMcq">Controleer meerkeuze</button></form>
+      <p id="mcqFeedback" class="feedback"></p>
+    </section>
+
+    <section class="card">
+      <h2>3) Sleepoefening</h2>
+      <p>Sleep elk label naar de juiste categorie.</p>
+      <div class="drag-bank" id="dragBank"><button class="drag-item" draggable="true" data-category="Wie">Stad Gent</button><button class="drag-item" draggable="true" data-category="Wat">Nieuwe fietsbrug geopend</button><button class="drag-item" draggable="true" data-category="Waar">Aan het station</button><button class="drag-item" draggable="true" data-category="Wanneer">Maandag 12 mei</button></div>
+      <div class="drop-grid" id="dropGrid"><div class="dropzone" data-category="Wie"><h4>Wie</h4></div><div class="dropzone" data-category="Wat"><h4>Wat</h4></div><div class="dropzone" data-category="Waar"><h4>Waar</h4></div><div class="dropzone" data-category="Wanneer"><h4>Wanneer</h4></div></div>
+      <button type="button" class="btn" id="checkDrag">Controleer sleepoefening</button>
+      <p id="dragFeedback" class="feedback"></p>
+    </section>
+
+    <section class="card">
+      <h2>4) Taalopdracht</h2>
+      <p>Maak een samenvatting van 5 zinnen van één artikel van de nieuwssite. Begin elke zin met één 5W-vraag.</p>
+      <textarea placeholder="Schrijf hier je antwoord..."></textarea>
+    </section>
+  </main>
+
+<script>
+(function(){
+  const answers = [{'q': 'Welke vraag hoort NIET bij de 5W?', 'options': ['Wie?', 'Waarom?', 'Welk lettertype?'], 'correct': 2}, {'q': 'Wat is een goede samenvatting?', 'options': ['Kort en feitelijk', 'Lang en vol mening', 'Alleen de titel'], 'correct': 0}, {'q': 'Waarom is "wanneer" belangrijk?', 'options': ['Voor actualiteit', 'Voor kleurgebruik', 'Voor lettergrootte'], 'correct': 0}];
+  document.getElementById('checkMcq').addEventListener('click', () => {
+    let score = 0;
+    answers.forEach((q, idx) => {
+      const picked = document.querySelector(`input[name="q${idx+1}"]:checked`);
+      if (picked && Number(picked.value) === q.correct) score += 1;
+    });
+    const fb = document.getElementById('mcqFeedback');
+    fb.textContent = `Score: ${score}/${answers.length}`;
+    fb.className = 'feedback ' + (score === answers.length ? 'ok' : 'bad');
+  });
+
+  let dragged = null;
+  document.querySelectorAll('.drag-item').forEach((item) => {
+    item.addEventListener('dragstart', () => dragged = item);
+  });
+  document.querySelectorAll('.dropzone, #dragBank').forEach((zone) => {
+    zone.addEventListener('dragover', (e) => e.preventDefault());
+    zone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      if (dragged) zone.appendChild(dragged);
+    });
+  });
+
+  document.getElementById('checkDrag').addEventListener('click', () => {
+    let total = 0; let correct = 0;
+    document.querySelectorAll('.dropzone').forEach((zone) => {
+      const need = zone.dataset.category;
+      zone.querySelectorAll('.drag-item').forEach((item) => {
+        total += 1;
+        if (item.dataset.category === need) correct += 1;
+      });
+    });
+    const expected = document.querySelectorAll('.drag-item').length;
+    const fb = document.getElementById('dragFeedback');
+    if (total < expected) {
+      fb.textContent = 'Sleep eerst alle labels naar een categorie.';
+      fb.className = 'feedback bad';
+      return;
+    }
+    fb.textContent = `Correct: ${correct}/${expected}`;
+    fb.className = 'feedback ' + (correct === expected ? 'ok' : 'bad');
+  });
+})();
+</script>
+</body>
+</html>

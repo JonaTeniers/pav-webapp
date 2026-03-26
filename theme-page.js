@@ -10,7 +10,8 @@ const THEME_COLORS = {
   fictie_en_nonfictie: '#3949AB',
   schatten: '#00897B',
   communiceren: '#42A5F5',
-  mechanica: '#546E7A'
+  mechanica: '#546E7A',
+  nieuws_media: '#0EA5E9'
 };
 
 const SHARED_OVUR = [
@@ -30,6 +31,7 @@ const THEME_META = {
   hoofdthema6: { infoTitle: 'Sparen en budgetteren', infoText: 'Begrijp inkomsten/uitgaven en oefen met realistische budgetkeuzes voor leerlingen.', courseHref: '#' },
   hoofdthema7: { infoTitle: 'Veiligheid en preventie', infoText: 'Kies in noodsituaties een correcte aanpak en communiceer duidelijk.', courseHref: '#' },
   hoofdthema8: { infoTitle: 'Mechanica en lassen', infoText: 'Volg een technische leerlijn: meten, monteren, veilig werken en afwerken.', courseHref: 'cursus/hoofdthema8/hoofdthema8.cursus.html' },
+  hoofdthema9: { infoTitle: 'Nieuws en media', infoText: 'Werk rond fake news, clickbait, nieuwsartikels lezen en correcte bronvermelding.', courseHref: 'https://jonateniers.github.io/Nieuws/index.html' },
   oefenthema1: { infoTitle: 'Werkwoordstijden', infoText: 'Gebruik de juiste tijdsvorm in context en reflecteer op taalkeuzes.', courseHref: 'cursus/thema3/thema3_cursus.html' },
   oefenthema2: { infoTitle: 'Wiskunde oefenlijn', infoText: 'Werk van basis omtrek naar breuken en procenten. Houd je eigen voortgang bij.', courseHref: 'cursus/wiskunde/breuken-procenten.cursus.html' },
   oefenthema3: { infoTitle: 'Fictie en non-fictie', infoText: 'Herken tekstdoel, bronsoort en betrouwbaarheid van informatie.', courseHref: 'cursus/thema5/thema5.cursus.html' },
@@ -128,6 +130,17 @@ const THEME_CONFIG = {
       href: `mechanica8doel${i + 1}.html`,
       themes: i === 2 ? ['mechanica', 'wiskunde'] : ['mechanica']
     }))
+  },
+  hoofdthema9: {
+    title: 'Hoofdthema 9 – Nieuws en media',
+    key: 'nieuws_media',
+    goals: [
+      { id: 'nieuws_media_fake_news', title: 'Doel 1 · Fake nieuws herkennen', href: 'nieuwsmedia_doel1.html', themes: ['nieuws_media'] },
+      { id: 'nieuws_media_clickbait', title: 'Doel 2 · Clickbait analyseren', href: 'nieuwsmedia_doel2.html', themes: ['nieuws_media'] },
+      { id: 'nieuws_media_lezen', title: 'Doel 3 · Nieuwsartikel lezen en samenvatten', href: 'nieuwsmedia_doel3.html', themes: ['nieuws_media', 'communiceren'] },
+      { id: 'nieuws_media_bronnen', title: 'Doel 4 · Bronvermelding controleren', href: 'nieuwsmedia_doel4.html', themes: ['nieuws_media', 'fictie_en_nonfictie'] },
+      { id: 'nieuws_media_factcheck', title: 'Doel 5 · Factcheck uitvoeren', href: 'nieuwsmedia_doel5.html', themes: ['nieuws_media', 'communiceren'] }
+    ]
   },
   oefenthema1: {
     title: 'Oefenthema 1 – Werkwoordstijden',
