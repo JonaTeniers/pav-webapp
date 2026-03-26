@@ -141,6 +141,7 @@ let startTime = null;
 let timerStarted = false;
 let timeLeft = 40 * 60;
 let timerInterval;
+let scoreSaved = false;
 
 // VRAGEN (duidelijk geformuleerd)
 const questions = [
@@ -180,10 +181,18 @@ fb1.innerText="⚠️ Kies eerst een kaart";
 return;
 }
 
-if(val === "fysisch"){
+const q1Juist = val === "fysisch";
+if(q1Juist){
 score += 3;
 if(bron1.value) score += 1;
 }
+
+antwoorden.push({
+vraag: "Welke kaart gebruik je om hoogteverschillen (reliëf) te zien?",
+antwoord: val || "-",
+bron: bron1.value || "-",
+juist: q1Juist
+});
 
 startTime = Date.now();
 startTimer();
@@ -267,8 +276,24 @@ function updateScore(){
 liveScore.innerText = `Score: ${score} XP`;
 }
 
+function getLeerlingNaam(){
+const authNaam = firebase.auth().currentUser?.email;
+if(authNaam) return authNaam;
+
+try{
+const profiel = JSON.parse(localStorage.getItem('pavo_leerling_profiel') || 'null');
+if(profiel?.voornaam) return profiel.voornaam;
+}catch(e){
+console.warn('Kon leerlingprofiel niet lezen', e);
+}
+
+return 'onbekend';
+}
+
 // EINDE
 async function finishTest(){
+
+if(scoreSaved) return;
 
 clearInterval(timerInterval);
 
@@ -281,12 +306,14 @@ eindFeedback.innerText = `Je score: ${score} XP`;
 
 try{
 await firebase.firestore().collection("results").add({
-leerling: firebase.auth().currentUser?.email || "onbekend",
+leerling: getLeerlingNaam(),
 score: score,
 duration: duration,
 antwoorden: antwoorden,
-timestamp: new Date()
+timestamp: new Date(),
+bronPagina: '/thema1unit6.html'
 });
+scoreSaved = true;
 }catch(e){
 console.log("Opslaan mislukt:", e);
 }
