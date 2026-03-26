@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Atlasoefeningen Niveau 2</title>
+<title>Atlasvaardigheidstoets</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap" rel="stylesheet">
 
@@ -11,57 +11,81 @@
 body { margin:0; font-family:'Nunito',sans-serif; background:#eef3fb; }
 header { background:#1a237e; color:white; text-align:center; padding:1rem; }
 main { width:min(900px,95%); margin:1rem auto; }
+
 .card { background:white; padding:1.2rem; border-radius:14px; margin-bottom:1rem; box-shadow:0 5px 15px rgba(0,0,0,.08); }
-label { display:block; margin:.4rem 0; }
+
+label { display:block; margin-bottom:15px; cursor:pointer; }
+label img { width:100%; max-width:300px; border-radius:10px; margin-top:5px; }
+input[type="radio"]:checked + img { border:3px solid #1a237e; }
+
 button { background:#1a237e; color:white; border:none; padding:.6rem 1rem; border-radius:8px; cursor:pointer; }
+button:hover { background:#3949ab; }
+
 .feedback { font-weight:700; margin-top:.5rem; }
 .success { color:green; }
 .error { color:red; }
-.hint { color:#444; font-style:italic; margin-top:.3rem; }
+
+input, textarea { width:100%; padding:.5rem; border-radius:8px; border:1px solid #ccc; margin-top:5px; }
+
 .hidden { display:none; }
-input, textarea { width:100%; padding:.5rem; border-radius:8px; border:1px solid #ccc; }
 </style>
 </head>
 
 <body>
 
 <header>
-<h1>Atlasoefeningen</h1>
-<p>Niveau 2 – Denk, zoek en controleer</p>
+<h1>🌍 Atlasvaardigheidstoets</h1>
+<p>Gebruik je atlas om alle antwoorden te vinden 📖</p>
+<p id="liveScore">Score: 0 XP</p>
 </header>
 
 <main>
 
-<!-- BASIS -->
+<!-- VRAAG 1 -->
 <div class="card">
-<h2>Basisvaardigheden</h2>
+<h2>Vraag 1</h2>
+<p><strong>Welke kaart gebruik je om reliëf (hoogteverschillen) te zien?</strong></p>
 
-<p><strong>1. Welke kaart gebruik je voor reliëf?</strong></p>
-<label><input type="radio" name="q1" value="politiek"> Politieke kaart</label>
-<label><input type="radio" name="q1" value="fysisch"> Fysische kaart</label>
-<label><input type="radio" name="q1" value="klimaat"> Klimaatkaart</label>
+<label>
+<input type="radio" name="q1" value="klimaat">
+<img src="img/klimaatkaart.png">
+Klimaatkaart
+</label>
+
+<label>
+<input type="radio" name="q1" value="politiek">
+<img src="img/politiekkaart.jpg">
+Politieke kaart
+</label>
+
+<label>
+<input type="radio" name="q1" value="fysisch">
+<img src="img/fysischekaart.jpg">
+Fysische kaart
+</label>
+
+<p>Waar heb je dit gevonden?</p>
+<input id="bron1" placeholder="bv. fysische kaart Europa">
+
 <button onclick="checkQ1()">Controleer</button>
 <div id="fb1" class="feedback"></div>
-<div id="hint1" class="hint"></div>
-
-<p><strong>2. In welke richting ligt Frankrijk t.o.v. België?</strong></p>
-<label><input type="radio" name="q2" value="noord"> Noord</label>
-<label><input type="radio" name="q2" value="zuid"> Zuid</label>
-<label><input type="radio" name="q2" value="oost"> Oost</label>
-<button onclick="checkQ2()">Controleer</button>
-<div id="fb2" class="feedback"></div>
-<div id="hint2" class="hint"></div>
-
+<div id="hint1"></div>
 </div>
 
 <!-- QUIZ -->
 <div class="card" id="quizBox">
 <h2 id="qCount"></h2>
 <p id="questionText"></p>
+
 <input id="answer" placeholder="Gebruik komma's bij meerdere antwoorden">
+
+<p>Waar heb je dit gevonden?</p>
+<input id="bron">
+
 <button onclick="checkAnswer()">Controleer</button>
 <div id="feedback" class="feedback"></div>
-<div id="hint" class="hint"></div>
+<div id="hint"></div>
+
 <button id="nextBtn" class="hidden" onclick="nextQuestion()">Volgende →</button>
 </div>
 
@@ -69,11 +93,8 @@ input, textarea { width:100%; padding:.5rem; border-radius:8px; border:1px solid
 <div class="card hidden" id="reflectieBox">
 <h2>Reflectie</h2>
 
-<p><strong>Ligt Bastogne in Belgische Luxemburg of Groothertogdom?</strong></p>
-<textarea></textarea>
-
-<p><strong>Wat is een reliëfkaart?</strong></p>
-<textarea></textarea>
+<p><strong>Hoe heb je de antwoorden gevonden in de atlas?</strong></p>
+<textarea placeholder="Beschrijf je stappen..."></textarea>
 
 <button onclick="finish()">Afronden</button>
 </div>
@@ -81,119 +102,133 @@ input, textarea { width:100%; padding:.5rem; border-radius:8px; border:1px solid
 <!-- EINDE -->
 <div class="card hidden" id="endScreen">
 <h2>Klaar!</h2>
-<p>Score: <span id="xpScore"></span> XP</p>
+<p id="eindFeedback"></p>
 </div>
 
 </main>
 
 <script>
 
-// ================= BASISVRAGEN =================
+let score = 0;
 
+// ================= VRAAG 1 =================
 function checkQ1(){
 let val = document.querySelector('input[name="q1"]:checked')?.value;
-if(val === "fysisch"){
-fb1.innerText="✅ Juist!";
-fb1.className="feedback success";
-hint1.innerText="";
-}else{
-fb1.innerText="❌ Niet juist";
-fb1.className="feedback error";
-hint1.innerText="💡 Denk: waar zie je bergen en hoogte?";
-}
+let fb = document.getElementById("fb1");
+let hint = document.getElementById("hint1");
+let bron = document.getElementById("bron1").value;
+
+if(!val){
+fb.innerText="⚠️ Kies eerst een antwoord";
+fb.className="feedback error";
+return;
 }
 
-function checkQ2(){
-let val = document.querySelector('input[name="q2"]:checked')?.value;
-if(val === "zuid"){
-fb2.innerText="✅ Correct!";
-fb2.className="feedback success";
-hint2.innerText="";
+if(val === "fysisch"){
+score += 3;
+if(bron) score += 1;
+
+fb.innerText="✅ Juist!";
+fb.className="feedback success";
 }else{
-fb2.innerText="❌ Kijk opnieuw";
-fb2.className="feedback error";
-hint2.innerText="💡 Kijk naar de kaart: Frankrijk ligt onder België";
+fb.innerText="❌ Fout";
+fb.className="feedback error";
+hint.innerText="💡 Reliëf = hoogte → kijk naar kleuren (bruin = hoog)";
 }
+
+updateScore();
 }
 
 // ================= QUIZ =================
 
 const questions = [
 {
-q:"Geef 2 buurlanden van België",
+q:"Geef minstens 2 buurlanden van België",
 a:["nederland","frankrijk","duitsland","luxemburg"],
 min:2,
-hint:"💡 België ligt tussen 4 landen"
+hint:"💡 Gebruik de kaart van Europa"
 },
 {
-q:"Hoofdstad van Noorwegen",
+q:"Wat is de hoofdstad van Noorwegen?",
 a:["oslo"],
 min:1,
-hint:"💡 Bekende Scandinavische hoofdstad"
+hint:"💡 Zoek via het register of Europa kaart"
 },
 {
-q:"Hoofdstad van Polen",
+q:"Wat is de hoofdstad van Polen?",
 a:["warschau"],
 min:1,
 hint:"💡 Moeilijke naam, begint met W"
 },
 {
-q:"Welke landen doorkruist opa Marcel naar Zweden? Opa Marcel wil met zijn kleindochter op vakantie naar Zweden. Ze vertrekken met de auto vanuit België. Onderweg rijden ze door verschillende landen richting het noorden van Europa.Na een lange rit komen ze aan in een land dat aan Zweden grenst. Daar nemen ze een ferry om de oversteek te maken naar Zweden.",
+q:"Welke landen doorkruis je van België naar Zweden met de auto?",
 a:["duitsland","denemarken"],
 min:2,
-hint:"💡 Denk aan de route naar Scandinavië"
+hint:"💡 Kijk naar Noord-Europa"
 },
 {
-q:"Noem 2 steden tussen Tienen en Oostende",
+q:"Noem 2 grote steden tussen Tienen en Oostende",
 a:["brussel","gent","brugge"],
 min:2,
-hint:"💡 Grote Belgische steden op de lijn"
+hint:"💡 Volg de lijn op de kaart"
+},
+{
+q:"Welke zee ligt ten noorden van Nederland?",
+a:["noordzee"],
+min:1,
+hint:"💡 Kijk boven Nederland"
 }
 ];
 
 let current=0;
-let score=0;
-let correctAlready=false;
+let attempts=0;
 
 function normalize(v){
-return v.toLowerCase().trim()
-.replace("brusel","brussel")
-.replace("warsaw","warschau");
+return v.toLowerCase().trim();
 }
 
 function loadQuestion(){
-qCount.innerText=`Vraag ${current+1}/${questions.length}`;
+attempts = 0;
+qCount.innerText=`Vraag ${current+2}/${questions.length+1}`;
 questionText.innerText=questions[current].q;
 answer.value="";
+bron.value="";
 feedback.innerText="";
 hint.innerText="";
 nextBtn.classList.add("hidden");
-correctAlready=false;
 }
 
 function checkAnswer(){
 
-if(correctAlready) return;
+let input = answer.value;
+let bronInput = bron.value;
 
-let input=answer.value;
 if(!input) return;
 
-let parts=input.split(",").map(x=>normalize(x));
+attempts++;
 
+let parts=[...new Set(input.split(",").map(x=>normalize(x)))];
 let correct=parts.filter(p=>questions[current].a.includes(p));
 
 if(correct.length>=questions[current].min){
-score+=3;
-feedback.innerText=`✅ Juist (${correct.length} goed)`;
+
+score += 3;
+if(bronInput) score += 1;
+
+feedback.innerText="✅ Juist!";
 feedback.className="feedback success";
-correctAlready=true;
+
+updateScore();
+nextBtn.classList.remove("hidden");
+
 }else{
 feedback.innerText="❌ Nog niet juist";
 feedback.className="feedback error";
+
+if(attempts >= 2){
 hint.innerText=questions[current].hint;
 }
-
-nextBtn.classList.remove("hidden");
+}
 }
 
 function nextQuestion(){
@@ -203,18 +238,36 @@ loadQuestion();
 }else{
 quizBox.classList.add("hidden");
 reflectieBox.classList.remove("hidden");
-endScreen.classList.remove("hidden");
-xpScore.innerText=score;
 }
 }
+
+function updateScore(){
+document.getElementById("liveScore").innerText = `Score: ${score} XP`;
+}
+
+// ================= EINDE =================
 
 function finish(){
 reflectieBox.classList.add("hidden");
+endScreen.classList.remove("hidden");
+
+let tekst = "";
+
+if(score < 10){
+tekst = `${score} XP → Oefen nog met de atlas 🔍`;
+}else if(score < 20){
+tekst = `${score} XP → Goed bezig! 👍`;
+}else{
+tekst = `${score} XP → Atlas expert! 🏆`;
 }
 
+document.getElementById("eindFeedback").innerText = tekst;
+}
+
+// ================= START =================
 window.onload=loadQuestion;
 
 </script>
 
 </body>
-</html>
+</html>>
