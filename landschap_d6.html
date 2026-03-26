@@ -3,14 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thema – Atlasoefeningen</title>
+  <title>Thema 1 Unit 6 – Atlasoefeningen</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap">
   <style>
     body { margin:0; font-family:'Nunito',sans-serif; background:#f5f3ff; color:#1f2937; }
     header { background:#2563eb; color:#fff; text-align:center; padding:1.2rem; }
     main { width:min(960px,95%); margin:1.2rem auto 2rem; }
-    .card { background:#fff; border-radius:14px; box-shadow:0 6px 16px rgba(0,0,0,.08); padding:1.1rem; margin-bottom:1rem; }
-    .question-box { background:#fff; border-radius:14px; box-shadow:0 6px 16px rgba(0,0,0,.08); padding:1.1rem; }
+    .question-box { background:#fff; border-radius:14px; box-shadow:0 6px 16px rgba(0,0,0,.08); padding:1.1rem; margin-bottom:1rem; }
     label { display:block; margin:.5rem 0; }
     button { border:none; background:#1d4ed8; color:#fff; border-radius:8px; padding:.6rem 1rem; font-weight:700; cursor:pointer; }
     button:hover { background:#1e40af; }
@@ -25,7 +24,7 @@
 <body>
   <header>
     <h1>Atlasoefeningen</h1>
-    <p>Werken met kaartkennis</p>
+    <p>Thema 1 – Unit 6: Werken met kaartkennis</p>
   </header>
 
   <main>
@@ -40,13 +39,10 @@
 
     <section class="question-box hidden" id="reflectieBox">
       <h2>✍️ Opdracht 4 & 5</h2>
-
       <p><strong>Opdracht 4:</strong> Ligt Bastogne in de Belgische provincie Luxemburg of in het Groothertogdom Luxemburg?</p>
       <textarea id="vraag4"></textarea>
-
       <p><strong>Opdracht 5:</strong> Wat is een reliëfkaart?</p>
       <textarea id="vraag5"></textarea>
-
       <button onclick="bewaarReflectie()">Bewaar</button>
       <p id="reflectieFeedback"></p>
     </section>
@@ -57,6 +53,7 @@
     </section>
   </main>
 
+<script src="./firebase.js"></script>
 <script>
 const questions = [
   {
@@ -91,43 +88,111 @@ const questions = [
   }
 ];
 
+const PROFILE_KEY = 'pavo_leerling_profiel';
 let currentQuestion = 0;
 let score = 0;
-
-function loadQuestion() {
-  const q = questions[currentQuestion];
-  document.getElementById('qCount').innerText = `Vraag ${currentQuestion + 1} van ${questions.length}`;
-  document.getElementById('questionText').innerText = q.question;
-  document.getElementById('answerForm').innerHTML =
-    `<input class="text-input" type="text" id="answer">`;
-  document.getElementById('feedback').innerText = '';
-  document.getElementById('nextBtn').classList.add('hidden');
-}
+const gegevenAntwoorden = [];
+let scoreOpgeslagen = false;
 
 function normalize(v) {
   return v.toLowerCase().trim();
 }
 
+function getProfile() {
+  try {
+    const raw = localStorage.getItem(PROFILE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
+function loadQuestion() {
+  const q = questions[currentQuestion];
+  document.getElementById('qCount').innerText = `Vraag ${currentQuestion + 1} van ${questions.length}`;
+  document.getElementById('questionText').innerText = q.question;
+  document.getElementById('answerForm').innerHTML = `<input class="text-input" type="text" id="answer">`;
+  document.getElementById('feedback').innerText = '';
+  document.getElementById('nextBtn').classList.add('hidden');
+}
+
 function checkAnswer() {
-  const input = document.getElementById('answer').value;
+  const input = (document.getElementById('answer').value || '').trim();
   if (!input) return;
 
-  const correct = questions[currentQuestion].accepted.some(a =>
-    normalize(input).includes(a)
-  );
-
+  const vraag = questions[currentQuestion];
+  const correct = vraag.accepted.some((a) => normalize(input).includes(a));
   const feedback = document.getElementById('feedback');
+
+  gegevenAntwoorden[currentQuestion] = {
+    vraag: vraag.question,
+    antwoord: input,
+    juist: correct
+  };
 
   if (correct) {
     score += 3;
-    feedback.innerText = "✅ Juist!";
-    feedback.className = "feedback success";
+    feedback.innerText = '✅ Juist!';
+    feedback.className = 'feedback success';
   } else {
-    feedback.innerText = "❌ Probeer opnieuw (gebruik atlas)";
-    feedback.className = "feedback error";
+    feedback.innerText = '❌ Probeer opnieuw (gebruik atlas)';
+    feedback.className = 'feedback error';
   }
 
   document.getElementById('nextBtn').classList.remove('hidden');
+}
+
+async function slaScoreOp() {
+  if (scoreOpgeslagen) return;
+
+  const profile = getProfile();
+  if (!profile || !profile.voornaam || !profile.klas) {
+    document.getElementById('reflectieFeedback').innerText = 'ℹ️ Log in als leerling om score/antwoorden op te slaan voor je leerkracht.';
+    return;
+  }
+
+  const scoreData = {
+    naam: profile.voornaam,
+    klas: profile.klas,
+    thema: 'thema1',
+    unit: 'unit6',
+    score,
+    bronPagina: '/landschap_d6.html',
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  };
+
+  const antwoordenSamenvatting = gegevenAntwoorden
+    .map((item, index) => `V${index + 1}: ${item ? item.antwoord : '-'}`)
+    .join(' | ');
+
+  const reflectieData = {
+    naam: profile.voornaam,
+    klas: profile.klas,
+    thema: 'thema1',
+    unit: 'unit6',
+    score,
+    bronPagina: '/landschap_d6.html',
+    antwoord1: (document.getElementById('vraag4').value || '').trim() || '-',
+    antwoord2: (document.getElementById('vraag5').value || '').trim() || '-',
+    antwoord3: antwoordenSamenvatting || '-',
+    quizAntwoorden: gegevenAntwoorden,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  };
+
+  try {
+    await window.firebaseReady;
+    if (window.db) {
+      await window.db.collection('scores').add(scoreData);
+      await window.db.collection('score_reflections').add(reflectieData);
+      scoreOpgeslagen = true;
+      document.getElementById('reflectieFeedback').innerText = '✅ Score en antwoorden opgeslagen voor je leerkracht.';
+      return;
+    }
+  } catch (error) {
+    console.error('Opslaan in Firestore mislukt', error);
+  }
+
+  document.getElementById('reflectieFeedback').innerText = '⚠️ Opslaan voor leerkracht is niet gelukt.';
 }
 
 function nextQuestion() {
@@ -142,12 +207,11 @@ function nextQuestion() {
   }
 }
 
-function bewaarReflectie() {
-  document.getElementById('reflectieFeedback').innerText = "✅ Opgeslagen!";
+async function bewaarReflectie() {
+  await slaScoreOp();
 }
 
 window.onload = loadQuestion;
 </script>
-
 </body>
 </html>

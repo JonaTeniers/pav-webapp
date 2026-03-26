@@ -4,170 +4,244 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>PAV-O | Leerkracht Dashboard</title>
-
 <style>
 :root{--bg:#f6f8fb;--panel:#fff;--line:#dbe4ef;--text:#1f2b37;--muted:#64748b;--blue:#0b4da2}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);font-family:Inter,Segoe UI,sans-serif;color:var(--text)}
-.wrap{max-width:1150px;margin:0 auto;padding:20px 16px 90px}
+.wrap{max-width:1200px;margin:0 auto;padding:20px 16px 90px}
 .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
 .header{display:flex;align-items:center;gap:12px}
 .header img{width:58px;height:58px;object-fit:contain}
 .btn{background:var(--blue);color:#fff;border:none;border-radius:8px;padding:9px 12px;font-weight:700;cursor:pointer}
-input,select{padding:9px;border:1px solid #c9d5e7;border-radius:8px;width:100%}
-table{width:100%;border-collapse:collapse}
-th,td{padding:10px;border-bottom:1px solid #e8eef5;text-align:left}
+input,select{padding:9px;border:1px solid #c9d5e7;border-radius:8px}
+.table-wrap{overflow:auto}
+table{width:100%;border-collapse:collapse;min-width:800px}
+th,td{padding:10px;border-bottom:1px solid #e8eef5;text-align:left;vertical-align:top}
 th{font-size:.78rem;text-transform:uppercase;color:#5f6f82}
+.muted{color:var(--muted)}
+.filters{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .bottom-nav{position:fixed;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(5,1fr);gap:8px;background:#fff;border-top:1px solid var(--line);padding:10px}
 .bottom-nav a{background:#3f5f73;color:#fff;text-decoration:none;text-align:center;padding:10px;border-radius:10px;font-size:12px}
 </style>
 </head>
-
 <body>
-
 <main class="wrap">
+  <section class="card header">
+    <img src="img/pavomascotte.png" alt="Pavo mascotte">
+    <div>
+      <h1>Leerkrachtdashboard</h1>
+      <p class="muted">Scores en leerlingantwoorden per doel</p>
+    </div>
+  </section>
 
-<section class="card header">
-<img src="img/pavomascotte.png">
-<div>
-<h1>Leerkrachtdashboard</h1>
-<p>Resultaten van toetsen</p>
-</div>
-</section>
+  <section class="card">
+    <div class="filters">
+      <label for="klasFilter">Klas:</label>
+      <select id="klasFilter"><option value="">Alle klassen</option></select>
+      <button id="refreshButton" class="btn" type="button">Vernieuwen</button>
+      <span id="status" class="muted">Laden…</span>
+    </div>
+  </section>
 
-<section class="card">
-<h3>Resultaten</h3>
+  <section class="card">
+    <h3>Laatste scores</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Leerling</th>
+            <th>Klas</th>
+            <th>Thema</th>
+            <th>Unit</th>
+            <th>Score</th>
+            <th>Datum</th>
+            <th>Pagina</th>
+          </tr>
+        </thead>
+        <tbody id="scoresTableBody"></tbody>
+      </table>
+    </div>
+  </section>
 
-<table>
-<thead>
-<tr>
-<th>Leerling</th>
-<th>Score</th>
-<th>Tijd</th>
-<th>Datum</th>
-</tr>
-</thead>
-
-<tbody id="scoresTableBody"></tbody>
-
-</table>
-</section>
-
+  <section class="card">
+    <h3>Leerlingantwoorden</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Leerling</th>
+            <th>Klas</th>
+            <th>Thema</th>
+            <th>Unit</th>
+            <th>Score</th>
+            <th>Antwoord 1</th>
+            <th>Antwoord 2</th>
+            <th>Antwoord 3 / quizantwoorden</th>
+            <th>Datum</th>
+          </tr>
+        </thead>
+        <tbody id="reflectionAnswerTableBody"></tbody>
+      </table>
+    </div>
+  </section>
 </main>
 
-<!-- 🔥 POPUP TOEGEVOEGD -->
-<div id="detailModal" style="
-display:none;
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.5);
-z-index:999;
-">
-
-<div style="
-background:white;
-margin:5% auto;
-padding:20px;
-width:90%;
-max-width:700px;
-border-radius:12px;
-max-height:80vh;
-overflow:auto;
-">
-
-<h2>Toets detail</h2>
-<div id="detailContent"></div>
-
-<br>
-<button onclick="closeDetail()" class="btn">Sluiten</button>
-
-</div>
-</div>
-
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 <script src="./firebase.js"></script>
-
 <script>
+(function () {
+  let allScores = [];
+  let allReflections = [];
 
-const db = firebase.firestore();
+  function setStatus(message, isError = false) {
+    const el = document.getElementById('status');
+    if (!el) return;
+    el.textContent = message;
+    el.style.color = isError ? '#b00020' : '#166534';
+  }
 
-// 🔥 RESULTATEN LADEN
-async function loadResults(){
+  function escapeHtml(value) {
+    return String(value ?? '-')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
 
-const snapshot = await db.collection("results").orderBy("timestamp","desc").get();
+  function timestampMs(ts) {
+    if (!ts) return 0;
+    if (typeof ts.toDate === 'function') return ts.toDate().getTime();
+    const d = new Date(ts);
+    return Number.isNaN(d.getTime()) ? 0 : d.getTime();
+  }
 
-let html = "";
+  function formatDate(value) {
+    const ms = timestampMs(value);
+    if (!ms) return '-';
+    return new Intl.DateTimeFormat('nl-BE', { dateStyle: 'short', timeStyle: 'short' }).format(new Date(ms));
+  }
 
-snapshot.forEach(doc=>{
-const data = doc.data();
+  function populateClassFilter() {
+    const select = document.getElementById('klasFilter');
+    if (!select) return;
+    const unique = [...new Set([...allScores, ...allReflections].map((x) => x.klas).filter(Boolean))].sort();
+    select.innerHTML = '<option value="">Alle klassen</option>';
+    unique.forEach((klas) => {
+      const option = document.createElement('option');
+      option.value = klas;
+      option.textContent = klas;
+      select.appendChild(option);
+    });
+  }
 
-html += `
-<tr onclick="openDetail('${doc.id}')" style="cursor:pointer">
-<td>${data.leerling}</td>
-<td>${data.score}</td>
-<td>${Math.floor(data.duration/60)} min</td>
-<td>${new Date(data.timestamp.seconds * 1000).toLocaleString()}</td>
-</tr>
-`;
-});
+  function renderScores(klas = '') {
+    const tbody = document.getElementById('scoresTableBody');
+    if (!tbody) return;
+    const items = (klas ? allScores.filter((x) => x.klas === klas) : allScores)
+      .sort((a, b) => timestampMs(b.createdAt) - timestampMs(a.createdAt))
+      .slice(0, 300);
 
-document.getElementById("scoresTableBody").innerHTML = html;
-}
+    if (!items.length) {
+      tbody.innerHTML = '<tr><td colspan="7">Nog geen scores.</td></tr>';
+      return;
+    }
 
-// 🔥 DETAIL VIEW
-async function openDetail(id){
+    tbody.innerHTML = items.map((item) => `
+      <tr>
+        <td>${escapeHtml(item.naam)}</td>
+        <td>${escapeHtml(item.klas)}</td>
+        <td>${escapeHtml(item.thema)}</td>
+        <td>${escapeHtml(item.unit)}</td>
+        <td>${escapeHtml(item.score)}</td>
+        <td>${escapeHtml(formatDate(item.createdAt))}</td>
+        <td>${escapeHtml(item.bronPagina)}</td>
+      </tr>
+    `).join('');
+  }
 
-const doc = await db.collection("results").doc(id).get();
-const data = doc.data();
+  function renderReflections(klas = '') {
+    const tbody = document.getElementById('reflectionAnswerTableBody');
+    if (!tbody) return;
+    const items = (klas ? allReflections.filter((x) => x.klas === klas) : allReflections)
+      .sort((a, b) => timestampMs(b.createdAt) - timestampMs(a.createdAt))
+      .slice(0, 300);
 
-let html = `
-<p><strong>Leerling:</strong> ${data.leerling}</p>
-<p><strong>Score:</strong> ${data.score}</p>
-<p><strong>Tijd:</strong> ${Math.floor(data.duration/60)} min ${data.duration%60} sec</p>
-<hr>
-<h3>Antwoorden</h3>
-`;
+    if (!items.length) {
+      tbody.innerHTML = '<tr><td colspan="9">Nog geen leerlingantwoorden.</td></tr>';
+      return;
+    }
 
-data.antwoorden.forEach((a,i)=>{
+    tbody.innerHTML = items.map((item) => `
+      <tr>
+        <td>${escapeHtml(item.naam)}</td>
+        <td>${escapeHtml(item.klas)}</td>
+        <td>${escapeHtml(item.thema)}</td>
+        <td>${escapeHtml(item.unit)}</td>
+        <td>${escapeHtml(item.score)}</td>
+        <td>${escapeHtml(item.antwoord1)}</td>
+        <td>${escapeHtml(item.antwoord2)}</td>
+        <td>${escapeHtml(item.antwoord3)}</td>
+        <td>${escapeHtml(formatDate(item.createdAt))}</td>
+      </tr>
+    `).join('');
+  }
 
-html += `
-<div style="
-margin-bottom:12px;
-padding:10px;
-border-radius:8px;
-background:${a.juist ? '#e8f5e9' : '#ffebee'};
-">
+  async function loadScoresAndAnswers() {
+    setStatus('Gegevens laden…');
+    let hadError = false;
 
-<strong>Vraag ${i+1}:</strong><br>
-${a.vraag}<br><br>
+    try {
+      const scoreSnap = await window.db.collection('scores').limit(500).get();
+      allScores = scoreSnap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    } catch (error) {
+      hadError = true;
+      console.error('scores ophalen mislukt', error);
+      allScores = [];
+    }
 
-<strong>Antwoord:</strong><br>
-${a.antwoord}<br><br>
+    try {
+      const reflectionSnap = await window.db.collection('score_reflections').limit(500).get();
+      allReflections = reflectionSnap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    } catch (error) {
+      hadError = true;
+      console.error('score_reflections ophalen mislukt', error);
+      allReflections = [];
+    }
 
-<strong>Bron:</strong><br>
-${a.bron || "-"}
+    populateClassFilter();
+    const activeClass = (document.getElementById('klasFilter') || {}).value || '';
+    renderScores(activeClass);
+    renderReflections(activeClass);
 
-</div>
-`;
-});
+    if (hadError) {
+      setStatus('Gedeeltelijk geladen. Controleer Firestore rechten.', true);
+      return;
+    }
 
-document.getElementById("detailContent").innerHTML = html;
-document.getElementById("detailModal").style.display = "block";
-}
+    setStatus(`Klaar: ${allScores.length} scores en ${allReflections.length} antwoorden geladen.`);
+  }
 
-// SLUITEN
-function closeDetail(){
-document.getElementById("detailModal").style.display = "none";
-}
+  async function init() {
+    await window.firebaseReady;
+    const klass = document.getElementById('klasFilter');
+    const refresh = document.getElementById('refreshButton');
 
-// START
-loadResults();
+    if (klass) {
+      klass.addEventListener('change', (event) => {
+        renderScores(event.target.value || '');
+        renderReflections(event.target.value || '');
+      });
+    }
 
+    if (refresh) refresh.addEventListener('click', loadScoresAndAnswers);
+    loadScoresAndAnswers();
+  }
+
+  init().catch((error) => {
+    console.error('Init dashboard mislukt', error);
+    setStatus('Dashboard kon niet opstarten.', true);
+  });
+})();
 </script>
-
 </body>
 </html>
