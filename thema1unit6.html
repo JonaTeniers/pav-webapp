@@ -142,6 +142,7 @@ let timerStarted = false;
 let timeLeft = 40 * 60;
 let timerInterval;
 let scoreSaved = false;
+const RESULT_PAGE = '/thema1unit6.html';
 
 // VRAGEN (duidelijk geformuleerd)
 const questions = [
@@ -311,7 +312,7 @@ score: score,
 duration: duration,
 antwoorden: antwoorden,
 timestamp: new Date(),
-bronPagina: '/thema1unit6.html'
+bronPagina: RESULT_PAGE
 });
 scoreSaved = true;
 }catch(e){
