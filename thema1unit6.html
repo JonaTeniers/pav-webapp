@@ -13,83 +13,21 @@ header { background:#1a237e; color:white; text-align:center; padding:1rem; }
 
 main { width:min(900px,95%); margin:1rem auto; }
 
-.card {
-  background:white;
-  padding:1.2rem;
-  border-radius:14px;
-  margin-bottom:1rem;
-  box-shadow:0 5px 15px rgba(0,0,0,.08);
-}
+.card { background:white; padding:1.2rem; border-radius:14px; margin-bottom:1rem; }
 
-/* TIMER */
-#timer {
-  font-weight:800;
-  font-size:1.2rem;
-}
-
-/* IMAGE OPTIONS */
 .image-options {
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
   gap:15px;
 }
 
-.option {
-  border:2px solid #ddd;
-  border-radius:12px;
-  padding:10px;
-  text-align:center;
-  cursor:pointer;
-  transition:0.2s;
-}
-
-.option img {
-  width:100%;
-  height:140px;
-  object-fit:cover;
-  border-radius:8px;
-}
-
+.option { border:2px solid #ddd; border-radius:12px; padding:10px; cursor:pointer; }
+.option img { width:100%; height:140px; object-fit:cover; border-radius:8px; }
 .option input { display:none; }
+.option input:checked + img { outline:4px solid #1a237e; }
 
-.option span {
-  display:block;
-  margin-top:8px;
-  font-weight:bold;
-}
-
-.option:hover {
-  transform:scale(1.03);
-  border-color:#3949ab;
-}
-
-.option input:checked + img {
-  outline:4px solid #1a237e;
-}
-
-/* BUTTON */
-button {
-  background:#1a237e;
-  color:white;
-  border:none;
-  padding:.6rem 1rem;
-  border-radius:8px;
-  cursor:pointer;
-}
-
-button:hover { background:#3949ab; }
-
-.feedback { font-weight:700; margin-top:.5rem; }
-.success { color:green; }
-.error { color:red; }
-
-input, textarea {
-  width:100%;
-  padding:.5rem;
-  border-radius:8px;
-  border:1px solid #ccc;
-  margin-top:5px;
-}
+button { background:#1a237e; color:white; border:none; padding:.6rem 1rem; border-radius:8px; cursor:pointer; }
+.feedback { margin-top:.5rem; font-weight:700; }
 
 .hidden { display:none; }
 </style>
@@ -99,7 +37,6 @@ input, textarea {
 
 <header>
 <h1>🌍 Atlasvaardigheidstoets</h1>
-<p>Gebruik je atlas om alle antwoorden te vinden 📖</p>
 <p id="timer">⏱️ Tijd start na vraag 1</p>
 <p id="liveScore">Score: 0 XP</p>
 </header>
@@ -109,34 +46,26 @@ input, textarea {
 <!-- VRAAG 1 -->
 <div class="card">
 <h2>Vraag 1</h2>
-<p><strong>Welke kaart gebruik je om reliëf te zien?</strong></p>
 
 <div class="image-options">
-
 <label class="option">
 <input type="radio" name="q1" value="klimaat">
-<img src="img/klimaatkaart.png">
-<span>Klimaatkaart</span>
+<img src="img/images/klimaatkaart.png">
 </label>
 
 <label class="option">
 <input type="radio" name="q1" value="politiek">
-<img src="img/politiekkaart.jpg">
-<span>Politieke kaart</span>
+<img src="img/images/politiekkaart.jpg">
 </label>
 
 <label class="option">
 <input type="radio" name="q1" value="fysisch">
-<img src="img/fysischekaart.jpg">
-<span>Fysische kaart</span>
+<img src="img/images/fysischekaart.jpg">
 </label>
-
 </div>
 
-<p>Waar heb je dit gevonden?</p>
-<input id="bron1">
-
-<button onclick="checkQ1()">Start toets</button>
+<input id="bron1" placeholder="Waar gevonden?">
+<button onclick="startTest()">Start toets</button>
 <div id="fb1" class="feedback"></div>
 </div>
 
@@ -146,14 +75,12 @@ input, textarea {
 <p id="questionText"></p>
 
 <input id="answer">
+<input id="bron" placeholder="Waar gevonden?">
 
-<p>Waar heb je dit gevonden?</p>
-<input id="bron">
+<button onclick="saveAnswer()">Opslaan</button>
+<button onclick="nextQuestion()">Volgende</button>
 
-<button onclick="checkAnswer()">Controleer</button>
-<div id="feedback" class="feedback"></div>
-
-<button id="nextBtn" class="hidden" onclick="nextQuestion()">Volgende →</button>
+<div id="feedback"></div>
 </div>
 
 <!-- EINDE -->
@@ -164,132 +91,97 @@ input, textarea {
 
 </main>
 
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+<script src="./firebase.js"></script>
+
 <script>
 
 let score = 0;
+let current = 0;
+let antwoorden = [];
+let startTime = null;
 let timerStarted = false;
-let timeLeft = 40 * 60; // 40 minuten
+let timeLeft = 40 * 60;
 
-// TIMER FUNCTION
+const questions = [
+{q:"Geef 2 buurlanden van België", a:["nederland","frankrijk","duitsland","luxemburg"], min:2},
+{q:"Hoofdstad van Noorwegen", a:["oslo"], min:1},
+{q:"Hoofdstad van Polen", a:["warschau"], min:1},
+{q:"Welke landen naar Zweden?", a:["duitsland","denemarken"], min:2},
+{q:"Welke zee ligt boven Nederland?", a:["noordzee"], min:1}
+];
+
+function normalize(v){ return v.toLowerCase().trim(); }
+
+// START TOETS
+function startTest(){
+let val = document.querySelector('input[name="q1"]:checked')?.value;
+
+if(!val){
+fb1.innerText="Kies een antwoord";
+return;
+}
+
+startTime = Date.now();
+startTimer();
+
+quizBox.classList.remove("hidden");
+loadQuestion();
+}
+
+// TIMER
 function startTimer(){
 if(timerStarted) return;
 timerStarted = true;
 
-let interval = setInterval(() => {
+setInterval(()=>{
 timeLeft--;
 
-let min = Math.floor(timeLeft / 60);
-let sec = timeLeft % 60;
+let m = Math.floor(timeLeft/60);
+let s = timeLeft%60;
 
-document.getElementById("timer").innerText =
-`⏱️ ${min}:${sec.toString().padStart(2,'0')}`;
+timer.innerText = `⏱️ ${m}:${s.toString().padStart(2,'0')}`;
 
-if(timeLeft <= 0){
-clearInterval(interval);
-finishTest();
-}
+if(timeLeft<=0) finishTest();
+
 },1000);
 }
 
-// ================= VRAAG 1 =================
-function checkQ1(){
-let val = document.querySelector('input[name="q1"]:checked')?.value;
-
-if(!val){
-fb1.innerText="⚠️ Kies een antwoord";
-fb1.className="feedback error";
-return;
-}
-
-if(val === "fysisch"){
-score += 3;
-if(bron1.value) score += 1;
-
-fb1.innerText="✅ Start toets!";
-fb1.className="feedback success";
-
-startTimer();
-
-document.getElementById("quizBox").classList.remove("hidden");
-loadQuestion();
-
-}else{
-fb1.innerText="❌ Niet juist";
-fb1.className="feedback error";
-}
-updateScore();
-}
-
-// ================= QUIZ =================
-
-const questions = [
-{
-q:"Geef minstens 2 buurlanden van België",
-a:["nederland","frankrijk","duitsland","luxemburg"],
-min:2
-},
-{
-q:"Wat is de hoofdstad van Noorwegen?",
-a:["oslo"],
-min:1
-},
-{
-q:"Wat is de hoofdstad van Polen?",
-a:["warschau"],
-min:1
-},
-{
-q:"Welke landen doorkruis je van België naar Zweden?",
-a:["duitsland","denemarken"],
-min:2
-},
-{
-q:"Welke zee ligt ten noorden van Nederland?",
-a:["noordzee"],
-min:1
-}
-];
-
-let current=0;
-
-function normalize(v){
-return v.toLowerCase().trim();
-}
-
+// LOAD VRAAG
 function loadQuestion(){
-qCount.innerText=`Vraag ${current+2}/${questions.length+1}`;
+qCount.innerText=`Vraag ${current+1}/${questions.length}`;
 questionText.innerText=questions[current].q;
 answer.value="";
 bron.value="";
-feedback.innerText="";
-nextBtn.classList.add("hidden");
 }
 
-function checkAnswer(){
+// OPSLAAN ANTWOORD
+function saveAnswer(){
 
 let input = answer.value;
 if(!input) return;
 
-let parts=[...new Set(input.split(",").map(x=>normalize(x)))];
-let correct=parts.filter(p=>questions[current].a.includes(p));
+let parts = input.split(",").map(normalize);
+let correct = parts.filter(p=>questions[current].a.includes(p));
 
 if(correct.length>=questions[current].min){
-
 score += 3;
 if(bron.value) score += 1;
-
-feedback.innerText="✅ Juist!";
-feedback.className="feedback success";
-
-updateScore();
-nextBtn.classList.remove("hidden");
-
-}else{
-feedback.innerText="❌ Nog niet juist";
-feedback.className="feedback error";
-}
 }
 
+antwoorden.push({
+vraag: questions[current].q,
+antwoord: input,
+bron: bron.value
+});
+
+liveScore.innerText = `Score: ${score} XP`;
+feedback.innerText = "Antwoord opgeslagen";
+}
+
+// VOLGENDE
 function nextQuestion(){
 current++;
 if(current<questions.length){
@@ -299,27 +191,24 @@ finishTest();
 }
 }
 
-function updateScore(){
-liveScore.innerText = `Score: ${score} XP`;
-}
+// EINDE + OPSLAAN
+async function finishTest(){
 
-// ================= EINDE =================
-
-function finishTest(){
 quizBox.classList.add("hidden");
 endScreen.classList.remove("hidden");
 
-let tekst = "";
+let duration = Math.floor((Date.now() - startTime)/1000);
 
-if(score < 10){
-tekst = `${score} XP → Oefen nog met de atlas`;
-}else if(score < 20){
-tekst = `${score} XP → Goed bezig`;
-}else{
-tekst = `${score} XP → Atlas expert 🏆`;
-}
+eindFeedback.innerText = `${score} XP`;
 
-document.getElementById("eindFeedback").innerText = tekst;
+await firebase.firestore().collection("results").add({
+leerling: firebase.auth().currentUser?.email || "onbekend",
+score: score,
+duration: duration,
+antwoorden: antwoorden,
+timestamp: new Date()
+});
+
 }
 
 </script>
