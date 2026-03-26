@@ -31,7 +31,7 @@ const THEME_META = {
   hoofdthema6: { infoTitle: 'Sparen en budgetteren', infoText: 'Begrijp inkomsten/uitgaven en oefen met realistische budgetkeuzes voor leerlingen.', courseHref: '#' },
   hoofdthema7: { infoTitle: 'Veiligheid en preventie', infoText: 'Kies in noodsituaties een correcte aanpak en communiceer duidelijk.', courseHref: '#' },
   hoofdthema8: { infoTitle: 'Mechanica en lassen', infoText: 'Volg een technische leerlijn: meten, monteren, veilig werken en afwerken.', courseHref: 'cursus/hoofdthema8/hoofdthema8.cursus.html' },
-  hoofdthema9: { infoTitle: 'Nieuws en media', infoText: 'Werk rond actualiteit: nieuws lezen, bronnen checken en je mening onderbouwen.', courseHref: 'https://jonateniers.github.io/Nieuws/index.html' },
+  hoofdthema9: { infoTitle: 'Nieuws en media', infoText: 'Werk rond fake news, clickbait, nieuwsartikels lezen en correcte bronvermelding.', courseHref: 'https://jonateniers.github.io/Nieuws/index.html' },
   oefenthema1: { infoTitle: 'Werkwoordstijden', infoText: 'Gebruik de juiste tijdsvorm in context en reflecteer op taalkeuzes.', courseHref: 'cursus/thema3/thema3_cursus.html' },
   oefenthema2: { infoTitle: 'Wiskunde oefenlijn', infoText: 'Werk van basis omtrek naar breuken en procenten. Houd je eigen voortgang bij.', courseHref: 'cursus/wiskunde/breuken-procenten.cursus.html' },
   oefenthema3: { infoTitle: 'Fictie en non-fictie', infoText: 'Herken tekstdoel, bronsoort en betrouwbaarheid van informatie.', courseHref: 'cursus/thema5/thema5.cursus.html' },
@@ -135,8 +135,11 @@ const THEME_CONFIG = {
     title: 'Hoofdthema 9 – Nieuws en media',
     key: 'nieuws_media',
     goals: [
-      { id: 'nieuws_media_hub', title: 'Doel 1 · Nieuwswebsite verkennen', href: 'https://jonateniers.github.io/Nieuws/index.html', themes: ['nieuws_media'] },
-      { id: 'nieuws_media_duiding', title: 'Doel 2 · Kritisch nieuws lezen', development: true, themes: ['nieuws_media', 'communiceren'] }
+      { id: 'nieuws_media_fake_news', title: 'Doel 1 · Fake nieuws herkennen', href: 'https://jonateniers.github.io/Nieuws/index.html', themes: ['nieuws_media'] },
+      { id: 'nieuws_media_clickbait', title: 'Doel 2 · Clickbait analyseren', href: 'https://jonateniers.github.io/Nieuws/index.html', themes: ['nieuws_media'] },
+      { id: 'nieuws_media_lezen', title: 'Doel 3 · Nieuwsartikel lezen en samenvatten', href: 'https://jonateniers.github.io/Nieuws/index.html', themes: ['nieuws_media', 'communiceren'] },
+      { id: 'nieuws_media_bronnen', title: 'Doel 4 · Bronvermelding controleren', href: 'https://jonateniers.github.io/Nieuws/index.html', themes: ['nieuws_media', 'fictie_en_nonfictie'] },
+      { id: 'nieuws_media_factcheck', title: 'Doel 5 · Factcheck uitvoeren', href: 'https://jonateniers.github.io/Nieuws/index.html', themes: ['nieuws_media', 'communiceren'] }
     ]
   },
   oefenthema1: {
