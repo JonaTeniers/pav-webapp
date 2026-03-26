@@ -246,8 +246,27 @@ function getGoalStatus(goals) {
 }
 
 function renderThemePage(themeId) {
-  const config = THEME_CONFIG[themeId];
-  if (!config) return;
+  const baseConfig = THEME_CONFIG[themeId];
+  if (!baseConfig) return;
+
+  const config = {
+    ...baseConfig,
+    goals: (baseConfig.goals || []).map((goal) => ({ ...goal }))
+  };
+
+  if (themeId === 'hoofdthema9') {
+    const localGoalLinks = {
+      nieuws_media_fake_news: './nieuwsmedia_doel1.html',
+      nieuws_media_clickbait: './nieuwsmedia_doel2.html',
+      nieuws_media_lezen: './nieuwsmedia_doel3.html',
+      nieuws_media_bronnen: './nieuwsmedia_doel4.html',
+      nieuws_media_factcheck: './nieuwsmedia_doel5.html'
+    };
+    config.goals = config.goals.map((goal) => ({
+      ...goal,
+      href: localGoalLinks[goal.id] || goal.href
+    }));
+  }
 
   const color = THEME_COLORS[config.key] || '#4CAF50';
   document.documentElement.style.setProperty('--theme-color', color);
