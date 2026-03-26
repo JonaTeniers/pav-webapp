@@ -135,11 +135,11 @@ const THEME_CONFIG = {
     title: 'Hoofdthema 9 – Nieuws en media',
     key: 'nieuws_media',
     goals: [
-      { id: 'nieuws_media_fake_news', title: 'Doel 1 · Fake nieuws herkennen', href: 'https://jonateniers.github.io/Nieuws/index.html', themes: ['nieuws_media'] },
-      { id: 'nieuws_media_clickbait', title: 'Doel 2 · Clickbait analyseren', href: 'https://jonateniers.github.io/Nieuws/index.html', themes: ['nieuws_media'] },
-      { id: 'nieuws_media_lezen', title: 'Doel 3 · Nieuwsartikel lezen en samenvatten', href: 'https://jonateniers.github.io/Nieuws/index.html', themes: ['nieuws_media', 'communiceren'] },
-      { id: 'nieuws_media_bronnen', title: 'Doel 4 · Bronvermelding controleren', href: 'https://jonateniers.github.io/Nieuws/index.html', themes: ['nieuws_media', 'fictie_en_nonfictie'] },
-      { id: 'nieuws_media_factcheck', title: 'Doel 5 · Factcheck uitvoeren', href: 'https://jonateniers.github.io/Nieuws/index.html', themes: ['nieuws_media', 'communiceren'] }
+      { id: 'nieuws_media_fake_news', title: 'Doel 1 · Fake nieuws herkennen', href: 'nieuwsmedia_doel1.html', themes: ['nieuws_media'] },
+      { id: 'nieuws_media_clickbait', title: 'Doel 2 · Clickbait analyseren', href: 'nieuwsmedia_doel2.html', themes: ['nieuws_media'] },
+      { id: 'nieuws_media_lezen', title: 'Doel 3 · Nieuwsartikel lezen en samenvatten', href: 'nieuwsmedia_doel3.html', themes: ['nieuws_media', 'communiceren'] },
+      { id: 'nieuws_media_bronnen', title: 'Doel 4 · Bronvermelding controleren', href: 'nieuwsmedia_doel4.html', themes: ['nieuws_media', 'fictie_en_nonfictie'] },
+      { id: 'nieuws_media_factcheck', title: 'Doel 5 · Factcheck uitvoeren', href: 'nieuwsmedia_doel5.html', themes: ['nieuws_media', 'communiceren'] }
     ]
   },
   oefenthema1: {
