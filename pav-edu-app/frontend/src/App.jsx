@@ -125,6 +125,7 @@ function App() {
   return (
     <div className="app-shell">
       <header className="top-header">
+        <p className="eyebrow">PAV Learn Path</p>
         <h1>PAV Leren</h1>
         <p>Zelfstandig leren met duidelijke structuur en thema's.</p>
       </header>
@@ -302,11 +303,11 @@ function App() {
       </main>
 
       <nav className="bottom-nav">
-        <button type="button" onClick={() => setActivePage('home')}>Home</button>
-        <button type="button" onClick={() => setActivePage('themas')}>Thema's</button>
-        <button type="button" onClick={() => setActivePage('progress')}>Mijn voortgang</button>
-        <button type="button" onClick={() => setActivePage('results')}>Resultaten</button>
-        <button type="button" onClick={() => setActivePage('profile')}>Profiel</button>
+        <button className={activePage === 'home' ? 'is-active' : ''} type="button" onClick={() => setActivePage('home')}>Home</button>
+        <button className={activePage === 'themas' ? 'is-active' : ''} type="button" onClick={() => setActivePage('themas')}>Thema's</button>
+        <button className={activePage === 'progress' ? 'is-active' : ''} type="button" onClick={() => setActivePage('progress')}>Mijn voortgang</button>
+        <button className={activePage === 'results' ? 'is-active' : ''} type="button" onClick={() => setActivePage('results')}>Resultaten</button>
+        <button className={activePage === 'profile' ? 'is-active' : ''} type="button" onClick={() => setActivePage('profile')}>Profiel</button>
       </nav>
     </div>
   );
